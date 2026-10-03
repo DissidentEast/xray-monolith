@@ -3111,7 +3111,8 @@ START_API_FUNC
 
     const ALuint count{DoubleValsByProp(param)};
     float fvals[MaxValues];
-    std::copy_n(values, count, fvals);
+    for(ALuint i{0}; i < count; ++i)
+        fvals[i] = static_cast<float>(values[i]);
     SetSourcefv(Source, context.get(), static_cast<SourceProp>(param), {fvals, count});
 }
 END_API_FUNC

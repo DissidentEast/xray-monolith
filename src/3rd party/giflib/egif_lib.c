@@ -60,15 +60,15 @@ static int EGifBufferedOutput(GifFileType *GifFile, GifByteType *Buf, int c);
 GifFileType *EGifOpenFileName(const char *FileName, const bool TestExistence,
                               int *Error) {
 
-	int FileHandle;
+	int FileHandle = -1;
 	GifFileType *GifFile;
 
 	if (TestExistence) {
-		FileHandle = open(FileName, O_WRONLY | O_CREAT | O_EXCL,
-		                  S_IREAD | S_IWRITE);
+		(void)_sopen_s(&FileHandle, FileName, _O_WRONLY | _O_CREAT | _O_EXCL,
+		              _SH_DENYNO, _S_IREAD | _S_IWRITE);
 	} else {
-		FileHandle = open(FileName, O_WRONLY | O_CREAT | O_TRUNC,
-		                  S_IREAD | S_IWRITE);
+		(void)_sopen_s(&FileHandle, FileName, _O_WRONLY | _O_CREAT | _O_TRUNC,
+		              _SH_DENYNO, _S_IREAD | _S_IWRITE);
 	}
 
 	if (FileHandle == -1) {
@@ -79,7 +79,7 @@ GifFileType *EGifOpenFileName(const char *FileName, const bool TestExistence,
 	}
 	GifFile = EGifOpenFileHandle(FileHandle, Error);
 	if (GifFile == (GifFileType *)NULL) {
-		(void)close(FileHandle);
+		(void)_close(FileHandle);
 	}
 	return GifFile;
 }
@@ -125,7 +125,7 @@ GifFileType *EGifOpenFileHandle(const int FileHandle, int *Error) {
 	_setmode(FileHandle, O_BINARY); /* Make sure it is in binary mode. */
 #endif                                  /* _WIN32 */
 
-	f = fdopen(FileHandle, "wb"); /* Make it into a stream: */
+	f = _fdopen(FileHandle, "wb"); /* Make it into a stream: */
 
 	GifFile->Private = (void *)Private;
 	Private->FileHandle = FileHandle;
@@ -260,9 +260,9 @@ static int InternalWrite(GifFileType *GifFileOut, const unsigned char *buf,
                          size_t len) {
 	GifFilePrivateType *Private = (GifFilePrivateType *)GifFileOut->Private;
 	if (Private->Write) {
-		return Private->Write(GifFileOut, buf, len);
+		return Private->Write(GifFileOut, buf, (int)len);
 	} else {
-		return fwrite(buf, 1, len, Private->File);
+		return (int)fwrite(buf, 1, len, Private->File);
 	}
 }
 
@@ -523,7 +523,7 @@ int EGifPutComment(GifFileType *GifFile, const char *Comment) {
 	unsigned int length;
 	char *buf;
 
-	length = strlen(Comment);
+	length = (unsigned int)strlen(Comment);
 	if (length <= 255) {
 		return EGifPutExtension(GifFile, COMMENT_EXT_FUNC_CODE, length,
 		                        Comment);
@@ -699,7 +699,7 @@ int EGifGCBToSavedExtension(const GraphicsControlBlock *GCB,
 	if (GifAddExtensionBlock(
 	        &GifFile->SavedImages[ImageIndex].ExtensionBlockCount,
 	        &GifFile->SavedImages[ImageIndex].ExtensionBlocks,
-	        GRAPHICS_EXT_FUNC_CODE, Len,
+	        GRAPHICS_EXT_FUNC_CODE, (int)Len,
 	        (unsigned char *)buf) == GIF_ERROR) {
 		return (GIF_ERROR);
 	}

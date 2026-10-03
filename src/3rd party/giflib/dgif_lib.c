@@ -34,7 +34,7 @@ static int InternalRead(GifFileType *gif, GifByteType *buf, int len) {
 	// fprintf(stderr, "### Read: %d\n", len);
 	return (((GifFilePrivateType *)gif->Private)->Read
 	            ? ((GifFilePrivateType *)gif->Private)->Read(gif, buf, len)
-	            : fread(buf, 1, len,
+	            : (int)fread(buf, 1, len,
 	                    ((GifFilePrivateType *)gif->Private)->File));
 }
 
@@ -54,10 +54,11 @@ static int DGifBufferedInput(GifFileType *GifFile, GifByteType *Buf,
  info record.
 ******************************************************************************/
 GifFileType *DGifOpenFileName(const char *FileName, int *Error) {
-	int FileHandle;
+	int FileHandle = -1;
 	GifFileType *GifFile;
 
-	if ((FileHandle = open(FileName, O_RDONLY)) == -1) {
+	(void)_sopen_s(&FileHandle, FileName, _O_RDONLY, _SH_DENYNO, 0);
+	if (FileHandle == -1) {
 		if (Error != NULL) {
 			*Error = D_GIF_ERR_OPEN_FAILED;
 		}
@@ -84,7 +85,7 @@ GifFileType *DGifOpenFileHandle(int FileHandle, int *Error) {
 		if (Error != NULL) {
 			*Error = D_GIF_ERR_NOT_ENOUGH_MEM;
 		}
-		(void)close(FileHandle);
+		(void)_close(FileHandle);
 		return NULL;
 	}
 
@@ -99,7 +100,7 @@ GifFileType *DGifOpenFileHandle(int FileHandle, int *Error) {
 		if (Error != NULL) {
 			*Error = D_GIF_ERR_NOT_ENOUGH_MEM;
 		}
-		(void)close(FileHandle);
+		(void)_close(FileHandle);
 		free((char *)GifFile);
 		return NULL;
 	}
@@ -110,7 +111,7 @@ GifFileType *DGifOpenFileHandle(int FileHandle, int *Error) {
 	_setmode(FileHandle, O_BINARY); /* Make sure it is in binary mode. */
 #endif                                  /* _WIN32 */
 
-	f = fdopen(FileHandle, "rb"); /* Make it into a stream: */
+	f = _fdopen(FileHandle, "rb"); /* Make it into a stream: */
 
 	/*@-mustfreeonly@*/
 	GifFile->Private = (void *)Private;
@@ -391,7 +392,7 @@ int DGifGetImageHeader(GifFileType *GifFile) {
 	}
 	/* Does this image have local color map? */
 	if (Buf[0] & 0x80) {
-		unsigned int i;
+		int i;
 
 		GifFile->Image.ColorMap =
 		    GifMakeMapObject(1 << BitsPerPixel, NULL);
@@ -401,7 +402,7 @@ int DGifGetImageHeader(GifFileType *GifFile) {
 		}
 
 		/* Get the image local color map: */
-		for (i = 0; i < GifFile->Image.ColorMap->ColorCount; i++) {
+		for (i = 0; i < (int)GifFile->Image.ColorMap->ColorCount; i++) {
 			/* coverity[check_return] */
 			if (InternalRead(GifFile, Buf, 3) != 3) {
 				GifFreeMapObject(GifFile->Image.ColorMap);
@@ -1255,8 +1256,8 @@ int DGifSlurp(GifFileType *GifFile) {
 					}
 				}
 			} else {
-				if (DGifGetLine(GifFile, sp->RasterBits,
-				                ImageSize) == GIF_ERROR) {
+			if (DGifGetLine(GifFile, sp->RasterBits,
+			                (int)ImageSize) == GIF_ERROR) {
 					DGifDecreaseImageCounter(GifFile);
 					return GIF_ERROR;
 				}
