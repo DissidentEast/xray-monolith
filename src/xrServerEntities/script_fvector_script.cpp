@@ -11,6 +11,21 @@
 
 using namespace luabind;
 
+// HUD transforms live on Device (xrEngine), not in xrCore math, so they are
+// exposed to Lua via free functions instead of Fvector methods.
+// Follows the script_time_global() XRGAME_EXPORTS pattern below.
+#ifdef XRGAME_EXPORTS
+ICF Fvector& fvector_hud_to_world(Fvector& v) { Device.hud_to_world(v); return v; }
+ICF Fvector& fvector_world_to_hud(Fvector& v) { Device.world_to_hud(v); return v; }
+ICF Fvector& fvector_hud_to_world_dir(Fvector& v) { Device.hud_to_world_dir(v); return v; }
+ICF Fvector& fvector_world_to_hud_dir(Fvector& v) { Device.world_to_hud_dir(v); return v; }
+#else
+ICF Fvector& fvector_hud_to_world(Fvector& v) { return v; }
+ICF Fvector& fvector_world_to_hud(Fvector& v) { return v; }
+ICF Fvector& fvector_hud_to_world_dir(Fvector& v) { return v; }
+ICF Fvector& fvector_world_to_hud_dir(Fvector& v) { return v; }
+#endif // XRGAME_EXPORTS
+
 #pragma optimize("s",on)
 void CScriptFvector::script_register(lua_State* L)
 {
@@ -106,7 +121,11 @@ void CScriptFvector::script_register(lua_State* L)
 
 		// demonized: new exports
 		.def("project", (Fvector & (Fvector::*)(const Fvector&, const Fvector&))(&Fvector::project), return_reference_to<1>())
-		.def("project", (Fvector & (Fvector::*)(const Fvector&))(&Fvector::project), return_reference_to<1>()),
+		.def("project", (Fvector & (Fvector::*)(const Fvector&))(&Fvector::project), return_reference_to<1>())
+		.def("hud_to_world", &fvector_hud_to_world, return_reference_to<1>())
+		.def("world_to_hud", &fvector_world_to_hud, return_reference_to<1>())
+		.def("hud_to_world_dir", &fvector_hud_to_world_dir, return_reference_to<1>())
+		.def("world_to_hud_dir", &fvector_world_to_hud_dir, return_reference_to<1>()),
 
 		class_<Fvector2>("vector2")
 		.def_readwrite("x", &Fvector2::x)

@@ -981,7 +981,7 @@ function update_overheat()
 				local pos = wpn:bone_position(fire_bone, hud_mode)
 				local mat = wpn:bone_transform(fire_bone, hud_mode)
 				mat:transform_tiny(pos, offset)
-				if hud_mode and pos.hud_to_world then
+				if hud_mode then
 					pos:hud_to_world()
 				end
 				smoke:move_to(pos, VEC_ZERO)

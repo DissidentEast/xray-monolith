@@ -23,6 +23,15 @@ void matrix_transform(Fmatrix* self, Fvector* v)
 	self->transform(*v);
 }
 
+// See script_fvector_script.cpp: HUD transforms live on Device (xrEngine).
+#ifdef XRGAME_EXPORTS
+ICF Fmatrix& fmatrix_hud_to_world(Fmatrix& m) { Device.hud_to_world(m); return m; }
+ICF Fmatrix& fmatrix_world_to_hud(Fmatrix& m) { Device.world_to_hud(m); return m; }
+#else
+ICF Fmatrix& fmatrix_hud_to_world(Fmatrix& m) { return m; }
+ICF Fmatrix& fmatrix_world_to_hud(Fmatrix& m) { return m; }
+#endif // XRGAME_EXPORTS
+
 #pragma optimize("s",on)
 void CScriptFmatrix::script_register(lua_State* L)
 {
@@ -80,5 +89,7 @@ void CScriptFmatrix::script_register(lua_State* L)
 			.def("setXYZi", (Fmatrix & (Fmatrix::*)(float, float, float))(&Fmatrix::setXYZi), return_reference_to<1>())
 			.def("setXYZi", (Fmatrix & (Fmatrix::*)(const Fvector&))(&Fmatrix::setXYZi), return_reference_to<1>())
 			.def("getHPB", &get_matrix_hpb)
+			.def("hud_to_world", &fmatrix_hud_to_world, return_reference_to<1>())
+			.def("world_to_hud", &fmatrix_world_to_hud, return_reference_to<1>())
 		];
 }
