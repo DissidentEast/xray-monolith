@@ -77,9 +77,9 @@ template <typename T>
 inline T* CResourceManager::CreateShader(const char* name)
 {
 	xrCriticalSectionGuard guard(creationGuard);
-	ShaderTypeTraits<T>::MapType& sh_map = GetShaderMap<ShaderTypeTraits<T>::MapType>();
+	typename ShaderTypeTraits<T>::MapType& sh_map = this->template GetShaderMap<typename ShaderTypeTraits<T>::MapType>();
 	LPSTR N = LPSTR(name);
-	ShaderTypeTraits<T>::MapType::iterator I = sh_map.find(N);
+	typename ShaderTypeTraits<T>::MapType::iterator I = sh_map.find(N);
 
 	if (I != sh_map.end())
 		return I->second;
@@ -135,7 +135,7 @@ template <typename T>
 inline void CResourceManager::DestroyShader(const T* sh)
 {
 	xrCriticalSectionGuard guard(creationGuard);
-	ShaderTypeTraits<T>::MapType& sh_map = GetShaderMap<ShaderTypeTraits<T>::MapType>();
+	typename ShaderTypeTraits<T>::MapType& sh_map = this->template GetShaderMap<typename ShaderTypeTraits<T>::MapType>();
 
 	if (0 == (sh->dwFlags & xr_resource_flagged::RF_REGISTERED))
 		return;

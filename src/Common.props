@@ -21,8 +21,11 @@
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
-      <!-- Staged conformance: only clean libs opt-in. xrGame/xrEngine/R4 stay permissive until graph-engine rewrite. 'default' is ode's default.vcxproj. -->
-      <ConformanceMode Condition="'$(MSBuildProjectName)'=='xrCore' or '$(MSBuildProjectName)'=='xrPhysics' or '$(MSBuildProjectName)'=='xrNetServer' or '$(MSBuildProjectName)'=='NVTT' or '$(MSBuildProjectName)'=='default'">true</ConformanceMode>
+      <!-- Staged conformance: only verified-clean libs opt into /permissive-.
+           xrGame stays permissive until the graph-engine (AStar/DataStorage) rewrite.
+           Vendored C-only libs (luajit, libjpeg, libogg, libtheora, libvorbis) are excluded:
+           /permissive- is C++-only. 'default' is ode's default.vcxproj. -->
+      <ConformanceMode Condition="'$(MSBuildProjectName)'=='xrCore' or '$(MSBuildProjectName)'=='xrPhysics' or '$(MSBuildProjectName)'=='xrNetServer' or '$(MSBuildProjectName)'=='NVTT' or '$(MSBuildProjectName)'=='default' or '$(MSBuildProjectName)'=='DXERR' or '$(MSBuildProjectName)'=='xrXMLParser' or '$(MSBuildProjectName)'=='xrCPU_Pipe' or '$(MSBuildProjectName)'=='crypto' or '$(MSBuildProjectName)'=='giflib' or '$(MSBuildProjectName)'=='xrCDB' or '$(MSBuildProjectName)'=='imgui' or '$(MSBuildProjectName)'=='lua_extensions' or '$(MSBuildProjectName)'=='ReShadeCompat' or '$(MSBuildProjectName)'=='xrAPI' or '$(MSBuildProjectName)'=='xrSound' or '$(MSBuildProjectName)'=='xrParticles' or '$(MSBuildProjectName)'=='OpenAL-new' or '$(MSBuildProjectName)'=='optick' or '$(MSBuildProjectName)'=='cximage' or '$(MSBuildProjectName)'=='luabind' or '$(MSBuildProjectName)'=='xrRender_R1' or '$(MSBuildProjectName)'=='xrRender_R2' or '$(MSBuildProjectName)'=='xrRender_R3' or '$(MSBuildProjectName)'=='xrRender_R4' or '$(MSBuildProjectName)'=='xrEngine'">true</ConformanceMode>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <Optimization>Full</Optimization>

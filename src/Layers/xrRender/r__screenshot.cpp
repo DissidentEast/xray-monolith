@@ -260,14 +260,16 @@ void CRender::ScreenshotImpl(ScreenshotMode mode, LPCSTR name, CMemoryWriter* me
 	if (FAILED(hr)) goto _end_;
 
 	// Image processing (gamma-correct)
-	u32* pPixel = (u32*)D.pBits;
-	u32* pEnd = pPixel + (Device.dwWidth * Device.dwHeight);
-
-	//	Kill alpha
-	for (; pPixel != pEnd; pPixel++)
 	{
-		u32 p = *pPixel;
-		*pPixel = color_xrgb(color_get_R(p), color_get_G(p), color_get_B(p));
+		u32* pPixel = (u32*)D.pBits;
+		u32* pEnd = pPixel + (Device.dwWidth * Device.dwHeight);
+
+		//	Kill alpha
+		for (; pPixel != pEnd; pPixel++)
+		{
+			u32 p = *pPixel;
+			*pPixel = color_xrgb(color_get_R(p), color_get_G(p), color_get_B(p));
+		}
 	}
 
 	hr = pFB->UnlockRect();
@@ -715,6 +717,12 @@ void CRender::TakeScreenshot(LPCSTR path, Fvector2 dimensions, DxEncoding encodi
 	// Create temp-surface
 	IDirect3DSurface9* pFB;
 	D3DLOCKED_RECT D;
+	u32* pPixel = NULL;
+	u32* pEnd = NULL;
+	ID3DTexture2D* texture = NULL;
+	IDirect3DSurface9* surface = NULL;
+	ID3DBlob* saved = NULL;
+	IWriter* fs = NULL;
 	HRESULT hr = HW.pDevice->CreateOffscreenPlainSurface(Device.dwWidth, Device.dwHeight, HW.DevPP.BackBufferFormat,
 		D3DPOOL_SYSTEMMEM, &pFB, nullptr);
 	if (FAILED(hr)) return;
@@ -725,8 +733,8 @@ void CRender::TakeScreenshot(LPCSTR path, Fvector2 dimensions, DxEncoding encodi
 	hr = pFB->LockRect(&D, 0, D3DLOCK_NOSYSLOCK);
 	if (FAILED(hr)) goto _end_;
 	// Image processing (gamma-correct)
-	u32* pPixel = (u32*)D.pBits;
-	u32* pEnd = pPixel + (Device.dwWidth * Device.dwHeight);
+	pPixel = (u32*)D.pBits;
+	pEnd = pPixel + (Device.dwWidth * Device.dwHeight);
 	//	Kill alpha
 	for (; pPixel != pEnd; pPixel++)
 	{
@@ -737,13 +745,11 @@ void CRender::TakeScreenshot(LPCSTR path, Fvector2 dimensions, DxEncoding encodi
 	hr = pFB->UnlockRect();
 	if (hr != D3D_OK) goto _end_;
 	// texture width/height = resolution
-	ID3DTexture2D* texture = NULL;
 	hr = D3DXCreateTexture(HW.pDevice, u32(width), u32(height), 1, 0, dx_encoding, D3DPOOL_SCRATCH,
 		&texture);
 	if (hr != D3D_OK) goto _end_;
 	if (NULL == texture) goto _end_;
 	// resize&convert to surface
-	IDirect3DSurface9* surface = 0;
 	hr = texture->GetSurfaceLevel(0, &surface);
 	if (hr != D3D_OK) goto _end_;
 	VERIFY(surface);
@@ -752,11 +758,10 @@ void CRender::TakeScreenshot(LPCSTR path, Fvector2 dimensions, DxEncoding encodi
 	_RELEASE(surface);
 	if (hr != D3D_OK) goto _end_;
 	// save (logical & physical)
-	ID3DBlob* saved = 0;
 	hr = D3DXSaveTextureToFileInMemory(&saved, D3DXIFF_DDS, texture, 0);
 	if (hr != D3D_OK) goto _end_;
 
-	IWriter* fs = FS.w_open(fname);
+	fs = FS.w_open(fname);
 	if (fs)
 	{
 		fs->w(saved->GetBufferPointer(), saved->GetBufferSize());

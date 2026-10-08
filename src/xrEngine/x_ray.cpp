@@ -82,7 +82,7 @@ extern void GetMonitorPosition(int& x, int& y);
 //ImGui
 #pragma comment(lib, "imgui.lib")
 
-static LPSTR month_id[12] =
+static LPCSTR month_id[12] =
 {
 	"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
 };
