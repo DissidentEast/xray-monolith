@@ -281,6 +281,39 @@ jobs:
         # Duration after which artifact will expire in days. 0 means using default retention. Minimum 1 day. Maximum 90 days unless changed from the repository settings page.
         retention-days: 1
 
+  conformance:
+    name: conformance-job
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v4
+
+    - name: Init submodules
+      uses: snickerbockers/submodules-init@v4
+
+    - name: setup-msbuild
+      uses: microsoft/setup-msbuild@v1.3.1
+      with:
+        # Version of Visual Studio to search; defaults to latest if not specified
+        # vs-version: '[17.6, 17.7)'
+        # The preferred processor architecture of MSBuild. Can be either "x86", "x64", or "arm64". "x64" is only available from Visual Studio version 17.0 and later.
+        msbuild-architecture: "x64"
+
+    # Fast guard for staged ConformanceMode (see src/Common.props):
+    # these libs opt into /permissive-, so any non-conforming change fails here
+    # without waiting for the full 8-config solution matrix.
+    - name: Build conformance libs
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: |
+        $solutionDir = "${{env.GITHUB_WORKSPACE}}\src\"
+        msbuild /p:Configuration=Release /p:Platform=x64 "/p:SolutionDir=$solutionDir" /m /v:m src\xrCore\xrCore.vcxproj
+        msbuild /p:Configuration=Release /p:Platform=x64 "/p:SolutionDir=$solutionDir" /m /v:m src\xrPhysics\xrPhysics.vcxproj
+        msbuild /p:Configuration=Release /p:Platform=x64 "/p:SolutionDir=$solutionDir" /m /v:m src\xrNetServer\xrNetServer.vcxproj
+        msbuild /p:Configuration=Release /p:Platform=x64 "/p:SolutionDir=$solutionDir" /m /v:m "src\3rd party\ode\contrib\msvc7\ode_default\default.vcxproj"
+        msbuild /p:Configuration=Release /p:Platform=x64 "/p:SolutionDir=$solutionDir" /m /v:m "src\3rd party\NVTT\NVTT.vcxproj"
+        msbuild /p:Configuration=Release /p:Platform=x64 "/p:SolutionDir=$solutionDir" /m /v:m src\xrSound\xrSound.vcxproj
+
   release:
     needs: [pack_gamedata, build, build_mt]
     name: Release
