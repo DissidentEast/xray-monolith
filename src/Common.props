@@ -21,8 +21,8 @@
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
-      <!-- Staged conformance: only clean libs opt-in. xrGame/xrEngine/R4 stay permissive until graph-engine rewrite. -->
-      <ConformanceMode Condition="'$(MSBuildProjectName)'=='xrCore' or '$(MSBuildProjectName)'=='xrPhysics' or '$(MSBuildProjectName)'=='xrNetServer'">true</ConformanceMode>
+      <!-- Staged conformance: only clean libs opt-in. xrGame/xrEngine/R4 stay permissive until graph-engine rewrite. 'default' is ode's default.vcxproj. -->
+      <ConformanceMode Condition="'$(MSBuildProjectName)'=='xrCore' or '$(MSBuildProjectName)'=='xrPhysics' or '$(MSBuildProjectName)'=='xrNetServer' or '$(MSBuildProjectName)'=='NVTT' or '$(MSBuildProjectName)'=='default'">true</ConformanceMode>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <Optimization>Full</Optimization>
