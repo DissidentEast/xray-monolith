@@ -714,7 +714,8 @@ static inline void UpdateModel(PPM_CONTEXT* MinContext)
 
 	*pText++ = FSymbol;
 
-	PPM_CONTEXT* Successor = (PPM_CONTEXT*)pText;
+	PPM_CONTEXT* Successor;
+	Successor = (PPM_CONTEXT*)pText;
 
 	if (pText >= UnitsStart)
 		goto RESTART_MODEL;

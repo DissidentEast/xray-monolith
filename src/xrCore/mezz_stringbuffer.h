@@ -26,7 +26,7 @@ private:
 // String utils
 std::vector<std::string> splitStringMulti(const std::string& inputString, std::string separator = " ", bool includeSeparators = false, bool trimStrings = false);
 std::vector<std::string> splitStringLimit(const std::string& inputString, std::string separator = " ", int limit = 0, bool trimStrings = false);
-std::string getFilename(std::string& s);
+std::string getFilename(const std::string& s);
 void printIniItemLine(const CInifile::Item& s);
 void trim(std::string& s, const char* t = " \t\n\r\f\v");
 void trim(xr_string& s, const char* t = " \t\n\r\f\v");

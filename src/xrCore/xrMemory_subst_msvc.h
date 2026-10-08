@@ -153,6 +153,7 @@ IC T* xr_new(const P1& p1, const P2& p2, const P3& p3, const P4& p4, const P5& p
 }
 #endif // DEBUG_MEMORY_NAME
 
+#include <type_traits>
 #include <fast_dynamic_cast/fast_dynamic_cast.hpp>
 
 template <bool _is_pm, typename T>
@@ -181,7 +182,7 @@ IC void xr_delete(T*& ptr)
 {
 	if (ptr)
 	{
-		xr_special_free<is_polymorphic<T>::result, T>()(ptr);
+		xr_special_free<std::is_polymorphic<T>::value, T>()(ptr);
 		ptr = NULL;
 	}
 }
@@ -191,7 +192,7 @@ IC void xr_delete(T* const& ptr)
 {
 	if (ptr)
 	{
-		xr_special_free<is_polymorphic<T>::result, T> (ptr);
+		xr_special_free<std::is_polymorphic<T>::value, T> (ptr);
 		const_cast<T*&>(ptr) = NULL;
 	}
 }

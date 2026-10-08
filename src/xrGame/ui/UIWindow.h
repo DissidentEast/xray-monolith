@@ -78,8 +78,8 @@ public:
 		ui_allocator.destroy(p_);
 	}
 
-	void construct(pointer p, const T& _Val) { std::_Construct(p, _Val); }
-	void destroy(pointer p) { std::_Destroy(p); }
+	void construct(pointer p, const T& _Val) { ::new (static_cast<void*>(p)) T(_Val); }
+	void destroy(pointer p) { p->~T(); }
 
 	size_type max_size() const
 	{

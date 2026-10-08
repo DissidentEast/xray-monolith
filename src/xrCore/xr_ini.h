@@ -132,7 +132,7 @@ private:
 
 public:
 	static void InvalidateCache(LPCSTR path = nullptr);
-	static void CInifile::GetCacheStats(u64& files_cached, u64& total_bytes, u64& section_count)
+	static void GetCacheStats(u64& files_cached, u64& total_bytes, u64& section_count)
 	{
 		total_bytes = 0;
 		section_count = 0;

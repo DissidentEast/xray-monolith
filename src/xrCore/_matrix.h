@@ -915,18 +915,6 @@ public:
 		getXYZ(xyz.x, xyz.y, xyz.z);
 		xyz.mul(-1.f);
 	}
-
-	IC SelfRef hud_to_world()
-	{
-		Device.hud_to_world(*this);
-		return *this;
-	}
-
-	IC SelfRef world_to_hud()
-	{
-		Device.world_to_hud(*this);
-		return *this;
-	}
 };
 
 typedef _matrix<float> Fmatrix;

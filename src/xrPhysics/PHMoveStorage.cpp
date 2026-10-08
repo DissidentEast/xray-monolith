@@ -16,7 +16,7 @@ struct dxGeomTransform : public dxGeom
 	dVector3 final_pos;
 	dMatrix3 final_R;
 
-	dxGeomTransform::dxGeomTransform(dSpaceID space) : dxGeom(space, 1)
+	dxGeomTransform(dSpaceID space) : dxGeom(space, 1)
 	{
 		type = dGeomTransformClass;
 		obj = 0;

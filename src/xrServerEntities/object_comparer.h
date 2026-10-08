@@ -58,8 +58,8 @@ struct CComparer
 		if (_1.size() != _2.size())
 			return (p());
 
-		svector<T, size>::const_iterator I = _1.begin(), J = _2.begin();
-		svector<T, size>::const_iterator E = _1.end();
+		typename svector<T, size>::const_iterator I = _1.begin(), J = _2.begin();
+		typename svector<T, size>::const_iterator E = _1.end();
 		for (; I != E; ++I, ++J)
 			if (!compare(*I, *J, p))
 				return (false);
@@ -132,8 +132,8 @@ struct CComparer
 			if (_1.size() != _2.size())
 				return (p());
 
-			T::const_iterator I = _1.begin(), J = _2.begin();
-			T::const_iterator E = _1.end();
+			typename T::const_iterator I = _1.begin(), J = _2.begin();
+			typename T::const_iterator E = _1.end();
 			for (; I != E; ++I, ++J)
 				if (!CComparer::compare(*I, *J, p))
 					return (false);
@@ -147,7 +147,7 @@ struct CComparer
 		template <bool a>
 		IC static bool compare(const T& _1, const T& _2, const P& p)
 		{
-			return (CHelper<T>::compare < object_type_traits::is_pointer<T>::value > (_1, _2, p));
+			return (CHelper<T>::template compare < object_type_traits::is_pointer<T>::value > (_1, _2, p));
 		}
 
 		template <>
@@ -160,7 +160,7 @@ struct CComparer
 	template <typename T>
 	IC static bool compare(const T& _1, const T& _2, const P& p)
 	{
-		return (CHelper4<T>::compare < object_type_traits::is_stl_container<T>::value > (_1, _2, p));
+		return (CHelper4<T>::template compare < object_type_traits::is_stl_container<T>::value > (_1, _2, p));
 	}
 };
 

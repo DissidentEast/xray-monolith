@@ -77,10 +77,10 @@ IC bool CProblemSolverAbstract::actual() const
 	if (!m_actuality)
 		return (false);
 
-	xr_vector<COperatorCondition>::const_iterator I = current_state().conditions().begin();
-	xr_vector<COperatorCondition>::const_iterator E = current_state().conditions().end();
-	EVALUATORS::const_iterator i = evaluators().begin();
-	EVALUATORS::const_iterator e = evaluators().end();
+	typename xr_vector<COperatorCondition>::const_iterator I = current_state().conditions().begin();
+	typename xr_vector<COperatorCondition>::const_iterator E = current_state().conditions().end();
+	typename EVALUATORS::const_iterator i = evaluators().begin();
+	typename EVALUATORS::const_iterator e = evaluators().end();
 	for (; I != E; ++I)
 	{
 		if ((*i).first < (*I).condition())
@@ -96,7 +96,7 @@ IC bool CProblemSolverAbstract::actual() const
 TEMPLATE_SPECIALIZATION
 IC void CProblemSolverAbstract::add_operator(const _edge_type& operator_id, _operator_ptr _operator)
 {
-	OPERATOR_VECTOR::iterator I = std::lower_bound(m_operators.begin(), m_operators.end(), operator_id);
+	typename OPERATOR_VECTOR::iterator I = std::lower_bound(m_operators.begin(), m_operators.end(), operator_id);
 	THROW((I == m_operators.end()) || ((*I).m_operator_id != operator_id));
 #ifdef DEBUG
 	validate_properties			(_operator->conditions());
@@ -108,10 +108,10 @@ IC void CProblemSolverAbstract::add_operator(const _edge_type& operator_id, _ope
 
 #ifdef DEBUG
 TEMPLATE_SPECIALIZATION
-IC	void CProblemSolverAbstract::validate_properties	(const CState &conditions) const
+	IC	void CProblemSolverAbstract::validate_properties	(const CState &conditions) const
 {
-	xr_vector<COperatorCondition>::const_iterator	I = conditions.conditions().begin();
-	xr_vector<COperatorCondition>::const_iterator	E = conditions.conditions().end();
+	typename xr_vector<COperatorCondition>::const_iterator	I = conditions.conditions().begin();
+	typename xr_vector<COperatorCondition>::const_iterator	E = conditions.conditions().end();
 	for ( ; I != E; ++I) {
 		if (evaluators().find((*I).condition()) == evaluators().end()) {
 			Msg		("! cannot find corresponding evaluator to the property with id %d",(*I).condition());
@@ -124,7 +124,7 @@ IC	void CProblemSolverAbstract::validate_properties	(const CState &conditions) c
 TEMPLATE_SPECIALIZATION
 IC void CProblemSolverAbstract::remove_operator(const _edge_type& operator_id)
 {
-	OPERATOR_VECTOR::iterator I = std::lower_bound(m_operators.begin(), m_operators.end(), operator_id);
+	typename OPERATOR_VECTOR::iterator I = std::lower_bound(m_operators.begin(), m_operators.end(), operator_id);
 	THROW(m_operators.end() != I);
 	try
 	{
@@ -174,7 +174,7 @@ IC void CProblemSolverAbstract::add_evaluator(const _condition_type& condition_i
 TEMPLATE_SPECIALIZATION
 IC void CProblemSolverAbstract::remove_evaluator(const _condition_type& condition_id)
 {
-	EVALUATORS::iterator I = m_evaluators.find(condition_id);
+	typename EVALUATORS::iterator I = m_evaluators.find(condition_id);
 	THROW(I != m_evaluators.end());
 	try
 	{
@@ -192,7 +192,7 @@ TEMPLATE_SPECIALIZATION
 IC typename CProblemSolverAbstract::_condition_evaluator_ptr CProblemSolverAbstract::evaluator(
 	const _condition_type& condition_id) const
 {
-	EVALUATORS::const_iterator I = evaluators().find(condition_id);
+	typename EVALUATORS::const_iterator I = evaluators().find(condition_id);
 	THROW(evaluators().end() != I);
 	return ((*I).second);
 }
@@ -274,12 +274,12 @@ TEMPLATE_SPECIALIZATION
 IC bool CProblemSolverAbstract::is_goal_reached_impl(const _index_type& vertex_index) const
 {
 	STATIC_CHECK(!reverse_search, This_function_cannot_be_used_in_the_REVERSE_search);
-	xr_vector<COperatorCondition>::const_iterator I = vertex_index.conditions().begin();
-	xr_vector<COperatorCondition>::const_iterator E = vertex_index.conditions().end();
-	xr_vector<COperatorCondition>::const_iterator i = target_state().conditions().begin();
-	xr_vector<COperatorCondition>::const_iterator e = target_state().conditions().end();
-	xr_vector<COperatorCondition>::const_iterator II = current_state().conditions().begin();
-	xr_vector<COperatorCondition>::const_iterator EE = current_state().conditions().end();
+	typename xr_vector<COperatorCondition>::const_iterator I = vertex_index.conditions().begin();
+	typename xr_vector<COperatorCondition>::const_iterator E = vertex_index.conditions().end();
+	typename xr_vector<COperatorCondition>::const_iterator i = target_state().conditions().begin();
+	typename xr_vector<COperatorCondition>::const_iterator e = target_state().conditions().end();
+	typename xr_vector<COperatorCondition>::const_iterator II = current_state().conditions().begin();
+	typename xr_vector<COperatorCondition>::const_iterator EE = current_state().conditions().end();
 	for (; (i != e) && (I != E);)
 	{
 		if ((*I).condition() < (*i).condition())
@@ -337,10 +337,10 @@ TEMPLATE_SPECIALIZATION
 IC bool CProblemSolverAbstract::is_goal_reached_impl(const _index_type& vertex_index, bool) const
 {
 	STATIC_CHECK(reverse_search, This_function_cannot_be_used_in_the_STRAIGHT_search);
-	xr_vector<COperatorCondition>::const_iterator I = m_current_state.conditions().begin();
-	xr_vector<COperatorCondition>::const_iterator E = m_current_state.conditions().end();
-	xr_vector<COperatorCondition>::const_iterator i = vertex_index.conditions().begin();
-	xr_vector<COperatorCondition>::const_iterator e = vertex_index.conditions().end();
+	typename xr_vector<COperatorCondition>::const_iterator I = m_current_state.conditions().begin();
+	typename xr_vector<COperatorCondition>::const_iterator E = m_current_state.conditions().end();
+	typename xr_vector<COperatorCondition>::const_iterator i = vertex_index.conditions().begin();
+	typename xr_vector<COperatorCondition>::const_iterator e = vertex_index.conditions().end();
 	for (; i != e;)
 	{
 		if ((I == E) || ((*I).condition() > (*i).condition()))
@@ -368,7 +368,7 @@ IC const xr_vector<typename CProblemSolverAbstract::_edge_type>&CProblemSolverAb
 TEMPLATE_SPECIALIZATION
 IC typename CProblemSolverAbstract::_operator_ptr CProblemSolverAbstract::get_operator(const _edge_type& operator_id)
 {
-	OPERATOR_VECTOR::iterator I = std::lower_bound(m_operators.begin(), m_operators.end(), operator_id);
+	typename OPERATOR_VECTOR::iterator I = std::lower_bound(m_operators.begin(), m_operators.end(), operator_id);
 	if (m_operators.end() == I) return 0;
 	THROW(m_operators.end() != I);
 	return ((*I).get_operator());
@@ -415,10 +415,10 @@ IC typename CProblemSolverAbstract::_edge_value_type CProblemSolverAbstract::est
 {
 	STATIC_CHECK(!reverse_search, This_function_cannot_be_used_in_the_REVERSE_search);
 	_edge_value_type result = 0;
-	xr_vector<COperatorCondition>::const_iterator I = target_state().conditions().begin();
-	xr_vector<COperatorCondition>::const_iterator E = target_state().conditions().end();
-	xr_vector<COperatorCondition>::const_iterator i = condition.conditions().begin();
-	xr_vector<COperatorCondition>::const_iterator e = condition.conditions().end();
+	typename xr_vector<COperatorCondition>::const_iterator I = target_state().conditions().begin();
+	typename xr_vector<COperatorCondition>::const_iterator E = target_state().conditions().end();
+	typename xr_vector<COperatorCondition>::const_iterator i = condition.conditions().begin();
+	typename xr_vector<COperatorCondition>::const_iterator e = condition.conditions().end();
 	for (; (I != E) && (i != e);)
 		if ((*I).condition() < (*i).condition())
 		{
@@ -443,10 +443,10 @@ IC typename CProblemSolverAbstract::_edge_value_type CProblemSolverAbstract::est
 {
 	STATIC_CHECK(reverse_search, This_function_cannot_be_used_in_the_STRAIGHT_search);
 	_edge_value_type result = 0;
-	xr_vector<COperatorCondition>::const_iterator I = current_state().conditions().begin();
-	xr_vector<COperatorCondition>::const_iterator E = current_state().conditions().end();
-	xr_vector<COperatorCondition>::const_iterator i = condition.conditions().begin();
-	xr_vector<COperatorCondition>::const_iterator e = condition.conditions().end();
+	typename xr_vector<COperatorCondition>::const_iterator I = current_state().conditions().begin();
+	typename xr_vector<COperatorCondition>::const_iterator E = current_state().conditions().end();
+	typename xr_vector<COperatorCondition>::const_iterator i = condition.conditions().begin();
+	typename xr_vector<COperatorCondition>::const_iterator e = condition.conditions().end();
 	for (; (i != e);)
 	{
 		if ((I == E) || ((*I).condition() > (*i).condition()))
