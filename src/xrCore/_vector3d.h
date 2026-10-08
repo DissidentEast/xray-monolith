@@ -706,34 +706,9 @@ public:
 		}
 	}
 
-	IC SelfRef hud_to_world()
-	{
-		Device.hud_to_world(*this);
-		return *this;
-	}
-
-	IC SelfRef world_to_hud()
-	{
-		Device.world_to_hud(*this);
-		return *this;
-	}
-
-	IC SelfRef hud_to_world_dir()
-	{
-		Device.hud_to_world_dir(*this);
-		return *this;
-	}
-
-	IC SelfRef world_to_hud_dir()
-	{
-		Device.world_to_hud_dir(*this);
-		return *this;
-	}
-
-    // demonized: EMA smoothing
-    IC SelfRef ema(Self& target, unsigned int steps) {
+    // EMA smoothing - delta time must be supplied by caller (xrCore has no Device dependency)
+    IC SelfRef ema(Self& target, unsigned int steps, float delta) {
         float smoothing_alpha = 2.0f / (steps + 1);
-        float delta = Device.dwTimeDelta;
 
         if (steps <= 1 || (fis_zero(x) && fis_zero(y) && fis_zero(z))) {
             x = target.x;

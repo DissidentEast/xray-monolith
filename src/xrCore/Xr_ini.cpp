@@ -555,8 +555,8 @@ void CInifile::LTXLoad (
 
 			_splitpath_s(m_file_name, split_drive, split_drive.GetSize(), split_dir, split_dir.GetSize(), split_name, split_name.GetSize(), NULL, 0);
 
-			xr_string FilePath = xr_string(split_drive) + xr_string(split_dir);
-			xr_string FileName = split_name;
+			xr_string FilePath = xr_string(split_drive.GetBuffer()) + xr_string(split_dir.GetBuffer());
+			xr_string FileName = split_name.GetBuffer();
 
 			// Collect all files that could potentially be confused as a root file by our mod files
 			FS_FileSet AmbiguousFiles;
@@ -613,7 +613,7 @@ void CInifile::LTXLoad (
 
 			continue;
 		}
-		xr_string currentLine = str;
+		xr_string currentLine = str.GetBuffer();
 
 		// Parse comment - single pass instead of multiple strchr calls
 		LPSTR comm = strchr(str, ';');
@@ -728,7 +728,7 @@ void CInifile::LTXLoad (
 			);
 
 			u32 SectionNameStartPos = 3;
-			xr_string SecName = xr_string(str).substr(SectionNameStartPos, strchr(str, ']') - str - SectionNameStartPos).c_str();
+			xr_string SecName = xr_string(str.GetBuffer()).substr(SectionNameStartPos, strchr(str, ']') - str - SectionNameStartPos).c_str();
 			for (auto i = SecName.begin(); i != SecName.end(); ++i)
 			{
 				*i = tolower(*i);
@@ -748,7 +748,7 @@ void CInifile::LTXLoad (
 			);
 
 			u32 SectionNameStartPos = (isModSection(str) ? 2 : 1);
-			xr_string SecName = xr_string(str).substr(SectionNameStartPos, strchr(str, ']') - str - SectionNameStartPos).c_str();
+			xr_string SecName = xr_string(str.GetBuffer()).substr(SectionNameStartPos, strchr(str, ']') - str - SectionNameStartPos).c_str();
 			for (auto i = SecName.begin(); i != SecName.end(); ++i)
 			{
 				*i = tolower(*i);
@@ -1313,7 +1313,7 @@ void CInifile::Load(IReader* F, LPCSTR path
 
 	_splitpath_s(m_file_name, split_drive, split_drive.GetSize(), split_dir, split_dir.GetSize(), split_name, split_name.GetSize(), split_ext, split_ext.GetSize());
 
-	xr_string FileName = xr_string(split_name) + xr_string(split_ext);
+	xr_string FileName = xr_string(split_name.GetBuffer()) + xr_string(split_ext.GetBuffer());
 	strcpy(currentFileName, FileName.c_str());
 
 	// CRITICAL OPTIMIZATION: Single-pass load instead of double read

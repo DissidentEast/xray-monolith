@@ -121,7 +121,7 @@ BOOL CWeaponStatMgun::SStmAnimWeapon::net_Spawn(CSE_Abstract *DC)
 		}
 		if (ini->section_exist(anim_weapon))
 		{
-			char *anim_name[eStmAnimWeapon_size] = {0};
+			LPCSTR anim_name[eStmAnimWeapon_size] = {0};
 			anim_name[eStmAnimWeapon_idle] = "anm_idle";
 			anim_name[eStmAnimWeapon_shot] = "anm_shot";
 			anim_name[eStmAnimWeapon_reload0] = "anm_reload0";

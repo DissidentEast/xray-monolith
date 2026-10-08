@@ -179,7 +179,7 @@ public:
 	virtual void LoadDefItemsForTeam(const shared_str& caSection, /*TEAM_WPN_LIST *pWpnList,*/
 	                                 DEF_ITEMS_LIST* pDefItems);
 
-	virtual char* GetAnomalySetBaseName() { return "deathmatch_game_anomaly_sets"; };
+	virtual LPCSTR GetAnomalySetBaseName() { return "deathmatch_game_anomaly_sets"; };
 	virtual void LoadAnomalySets();
 
 	void LoadItemRespawns();

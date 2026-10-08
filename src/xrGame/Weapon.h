@@ -84,7 +84,7 @@ public:
 		return inherited::net_SaveRelevant();
 	}
 
-	float CWeapon::GetSecondVPFov() const;
+	float GetSecondVPFov() const;
 	IC float GetZRotatingFactor()    const { return m_zoom_params.m_fZoomRotationFactor; }
 	IC float GetSecondVPZoomFactor() const { return m_zoom_params.m_fSecondVPFovFactor; }
 	IC float IsSecondVPZoomPresent() const { return GetSecondVPZoomFactor() > 0.005f; }

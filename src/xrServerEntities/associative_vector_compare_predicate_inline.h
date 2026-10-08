@@ -43,19 +43,19 @@ IC bool _associative_vector_compare_predicate::operator()(const _key_type& lhs, 
 TEMPLATE_SPECIALIZATION
 IC bool _associative_vector_compare_predicate::operator()(const value_type& lhs, const value_type& rhs) const
 {
-	return (operator()(lhs.first, rhs.first));
+	return (this->operator()(lhs.first, rhs.first));
 }
 
 TEMPLATE_SPECIALIZATION
 IC bool _associative_vector_compare_predicate::operator()(const value_type& lhs, const _key_type& rhs) const
 {
-	return (operator()(lhs.first, rhs));
+	return (this->operator()(lhs.first, rhs));
 }
 
 TEMPLATE_SPECIALIZATION
 IC bool _associative_vector_compare_predicate::operator()(const _key_type& lhs, const value_type& rhs) const
 {
-	return (operator()(lhs, rhs.first));
+	return (this->operator()(lhs, rhs.first));
 }
 
 #undef TEMPLATE_SPECIALIZATION

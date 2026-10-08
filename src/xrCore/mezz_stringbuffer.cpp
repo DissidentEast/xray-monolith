@@ -85,7 +85,7 @@ std::vector<std::string> splitStringLimit(const std::string& inputString, std::s
 	return wordVector;
 }
 
-std::string getFilename(std::string& s) {
+std::string getFilename(const std::string& s) {
 	auto path = splitStringMulti(s, "\\");
 	std::string fname = path.empty() ? "" : path.back();
 	return fname;

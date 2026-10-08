@@ -8,6 +8,18 @@
 
 #pragma once
 
+// Forward declarations for MSVC /permissive- (two-phase lookup).
+// Definitions: CWorldState overload in graph_engine.h,
+// shared_str overloads in smart_cover.cpp / stalker_movement_manager_smart_cover.cpp.
+template <typename _condition_type, typename _value_type> class COperatorConditionAbstract;
+template <typename _world_property> class CConditionState;
+class shared_str;
+namespace hash_fixed_vertex_manager
+{
+	IC u32 to_u32(CConditionState<COperatorConditionAbstract<u32, bool> > const&);
+	IC u32 to_u32(shared_str const&);
+}
+
 #define TEMPLATE_SPECIALIZATION \
 	template <\
 		typename _path_id_type,\

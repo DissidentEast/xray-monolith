@@ -108,7 +108,7 @@ public:
 
 	virtual void LoadTeams();
 
-	virtual char* GetAnomalySetBaseName() { return "artefacthunt_game_anomaly_sets"; };
+	virtual LPCSTR GetAnomalySetBaseName() { return "artefacthunt_game_anomaly_sets"; };
 
 	virtual void OnObjectEnterTeamBase(u16 id, u16 zone_team);
 	virtual void OnObjectLeaveTeamBase(u16 id, u16 zone_team);

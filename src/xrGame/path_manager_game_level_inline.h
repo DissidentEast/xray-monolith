@@ -52,8 +52,8 @@ IC void CGameVertexTypePathManager::setup(
 		_goal_node_index,
 		parameters
 	);
-	m_evaluator = &parameters;
-	m_evaluator->m_vertex_id = _index_type(-1);
+	this->m_evaluator = &parameters;
+	this->m_evaluator->m_vertex_id = _index_type(-1);
 }
 
 TEMPLATE_SPECIALIZATION
@@ -65,10 +65,10 @@ IC _dist_type CGameVertexTypePathManager::estimate(const _index_type& node_index
 TEMPLATE_SPECIALIZATION
 IC bool CGameVertexTypePathManager::is_goal_reached(const _index_type& node_index)
 {
-	VERIFY(m_evaluator);
-	if (graph->vertex(data_storage->get_best().index())->level_id() == m_evaluator->m_level_id)
+	VERIFY(this->m_evaluator);
+	if (this->graph->vertex(this->data_storage->get_best().index())->level_id() == this->m_evaluator->m_level_id)
 	{
-		m_evaluator->m_vertex_id = data_storage->get_best().index();
+		this->m_evaluator->m_vertex_id = this->data_storage->get_best().index();
 		return (true);
 	}
 	return (false);
@@ -78,7 +78,7 @@ TEMPLATE_SPECIALIZATION
 template <typename T>
 IC void CGameVertexTypePathManager::create_path(T& vertex)
 {
-	if (path)
+	if (this->path)
 		inherited::create_path(vertex);
 }
 

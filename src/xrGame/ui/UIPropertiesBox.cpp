@@ -149,7 +149,8 @@ CUIPropertiesBox* CUIPropertiesBox::BoxUnderCursor()
 
 	Frect r;
 	GetAbsoluteRect(r);
-	return r.in(GetUICursor().GetCursorPosition()) ? this : NULL;
+	Fvector2 cursor_pos = GetUICursor().GetCursorPosition();
+	return r.in(cursor_pos) ? this : NULL;
 }
 
 void CUIPropertiesBox::ClearSubmenus()
@@ -354,7 +355,8 @@ void CUIPropertiesBox::Update()
 	{
 		Frect ir;
 		m_active_sub_item->GetAbsoluteRect(ir);
-		bool inside = ir.in(GetUICursor().GetCursorPosition()) || m_active_submenu->BoxUnderCursor();
+		Fvector2 cursor_pos = GetUICursor().GetCursorPosition();
+		bool inside = ir.in(cursor_pos) || m_active_submenu->BoxUnderCursor();
 		if (inside)
 		{
 			m_submenu_close_at = 0;
