@@ -25,7 +25,9 @@
  * or vice versa.  This is called defining or undefining that symbol.
  */
 
+#if !defined(_CRT_SECURE_NO_WARNINGS)
 #define _CRT_SECURE_NO_WARNINGS
+#endif
 
 /* First we must see if your system has the include files we need.
  * We start out with the assumption that your system has all the ANSI-standard

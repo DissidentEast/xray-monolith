@@ -18,7 +18,8 @@
 #	define PROF_STOP_CAPTURE() OPTICK_STOP_CAPTURE()
 #	define PROF_SAVE_CAPTURE(Name) OPTICK_SAVE_CAPTURE(Name)
 #	define PROF_FRAME(Name) OPTICK_FRAME(Name)
-#	define PROF_EVENT(Name) OPTICK_EVENT(Name)
+// Variadic: bare PROF_EVENT() forwards to OPTICK_EVENT(), which records the enclosing function name
+#	define PROF_EVENT(...) OPTICK_EVENT(__VA_ARGS__)
 #	define START_PROFILE(a) { PROF_EVENT(a)
 #	define STOP_PROFILE		}
 #else
@@ -30,6 +31,6 @@
 #	define PROF_STOP_CAPTURE()
 #	define PROF_SAVE_CAPTURE(Name)
 #	define PROF_FRAME(Name)
-#	define PROF_EVENT(Name)
+#	define PROF_EVENT(...)
 #	define PROF_EVENT_DYNAMIC(...) {};
 #endif

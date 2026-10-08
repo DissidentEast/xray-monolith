@@ -1905,7 +1905,7 @@ void CScriptGameObject::SetBoneVisible(LPCSTR bone_name, bool bVisibility, bool 
 	if (bone_id == BI_NONE)
 		return;
 
-	if (bVisibility != k->LL_GetBoneVisible(bone_id))
+	if (bVisibility != (bool)k->LL_GetBoneVisible(bone_id))
 		k->LL_SetBoneVisible(bone_id, bVisibility, bRecursive);
 
 	return;

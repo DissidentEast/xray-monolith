@@ -229,7 +229,9 @@ BY ANY OTHER PARTY.
 /* Most of the conditionals here are to make ansi2knr work with */
 /* or without the GNU configure machinery. */
 
+#if !defined(_CRT_SECURE_NO_WARNINGS)
 #define _CRT_SECURE_NO_WARNINGS
+#endif
 
 #if HAVE_CONFIG_H
 # include <config.h>

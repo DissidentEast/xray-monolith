@@ -85,9 +85,9 @@ void hmatmult(Matrix A, Matrix B, Matrix C)
  * A *CAN* point to the same matrix as B or C.
  */
 {
-	register float *a, *b, *c, *bp, *cp;
-	register float *bmax, *cmax, *cpmax;
-	register float *b32, *c00, *c03;
+	float *a, *b, *c, *bp, *cp;
+	float *bmax, *cmax, *cpmax;
+	float *b32, *c00, *c03;
 	Matrix Bt, Ct;
 
 	if (A == B)
@@ -169,7 +169,7 @@ void inverthomomatrix(Matrix N, Matrix M)
  * n = inverse of m
  */
 {
-	register float *n, *m, *nmax, *C, *m3;
+	float *n, *m, *nmax, *C, *m3;
 
 	nmax = &N[2][3];
 	n = &N[0][0];
@@ -206,7 +206,7 @@ void vecmult0(float y[], float x[], Matrix M)
  * y = x * M, with y[3] = 0
  */
 {
-	register int i, j;
+	int i, j;
 	float Y[3];
 
 	for (i = 0; i < 3; i++)
