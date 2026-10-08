@@ -2,7 +2,9 @@
 /* jconfig.cfg --- source file edited by configure script */
 /* see jconfig.doc for explanations */
 
+#if !defined(_CRT_SECURE_NO_WARNINGS)
 #define _CRT_SECURE_NO_WARNINGS
+#endif
 
 #define HAVE_PROTOTYPES 
 #define HAVE_UNSIGNED_CHAR 

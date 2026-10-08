@@ -585,6 +585,8 @@ int CUIActorMenu::current_sort_mode()
 			return i;
 		}
 	}
+	// All buttons enabled: fall back to the default (first) tab
+	return 0;
 }
 
 void CUIActorMenu::SelectInventoryTab(int tab)

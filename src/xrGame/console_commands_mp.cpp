@@ -651,8 +651,8 @@ protected:
 		param_name[0] = 0;
 
 		sscanf_s(args_string, "%16s %32s",
-		         action_name, sizeof(action_name),
-		         param_name, sizeof(param_name));
+		         action_name, (unsigned)sizeof(action_name),
+		         param_name, (unsigned)sizeof(param_name));
 		m_action_param = param_name;
 
 		if (!xr_strcmp(action_name, "roundstart"))
@@ -1039,7 +1039,7 @@ public:
 
 		char hex_digest[64];
 		s32 ban_time = 0;
-		if (sscanf_s(args_, "%s %i", &hex_digest, sizeof(hex_digest), &ban_time) != 2)
+		if (sscanf_s(args_, "%s %i", &hex_digest, (unsigned)sizeof(hex_digest), &ban_time) != 2)
 		{
 			Msg("! ERROR: bad command parameters.");
 			Msg(
@@ -1082,7 +1082,7 @@ public:
 		}
 		else
 		{
-			size_t player_index = 0;
+			unsigned player_index = 0;
 			if (sscanf_s(args_, "%u", &player_index) != 1)
 			{
 				Msg("! ERROR: bad command parameters.");
@@ -1092,7 +1092,7 @@ public:
 				);
 				return;
 			}
-			tmp_sv_game->UnBanPlayer(player_index);
+			tmp_sv_game->UnBanPlayer((size_t)player_index);
 		}
 	}
 
@@ -1309,7 +1309,7 @@ public:
 			exclude_raid_from_args(args, tmp_dest, sizeof(tmp_dest));
 			if (xr_strlen(tmp_dest))
 			{
-				sscanf_s(tmp_dest, "%s", filter_string);
+				sscanf_s(tmp_dest, "%s", filter_string, (unsigned)sizeof(filter_string));
 				tmp_functor.filter_string = filter_string;
 			}
 		}
@@ -1401,7 +1401,7 @@ public:
 		exclude_raid_from_args(args, tmp_dest, sizeof(tmp_dest));
 		if (xr_strlen(tmp_dest))
 		{
-			sscanf_s(tmp_dest, "%s", filter_dest);
+			sscanf_s(tmp_dest, "%s", filter_dest, (unsigned)sizeof(filter_dest));
 		}
 		tmp_sv_game->PrintBanList(filter_dest);
 		Level().Server->Print_Banned_Addreses();
@@ -1435,9 +1435,9 @@ public:
 		GameType[0] = 0;
 
 		sscanf_s(args, "%255s %255s %255s",
-		         LevelName, sizeof(LevelName),
-		         LevelVersion, sizeof(LevelVersion),
-		         GameType, sizeof(GameType)
+		         LevelName, (unsigned)sizeof(LevelName),
+		         LevelVersion, (unsigned)sizeof(LevelVersion),
+		         GameType, (unsigned)sizeof(GameType)
 		);
 
 		EGameIDs GameTypeID = ParseStringToGameType(GameType);
@@ -1540,8 +1540,8 @@ public:
 		LevelName[0] = 0;
 		LevelVersion[0] = 0;
 		sscanf_s(args, "%255s %255s",
-		         LevelName, sizeof(LevelName),
-		         LevelVersion, sizeof(LevelVersion)
+		         LevelName, (unsigned)sizeof(LevelName),
+		         LevelVersion, (unsigned)sizeof(LevelVersion)
 		);
 
 		string1024 argsNew;

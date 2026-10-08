@@ -146,13 +146,14 @@ public:
 
 	BOOL _empty()
 	{
+		// NB: compare pointers directly instead of OR-ing truncated
+		// 32-bit casts (C4311 on x64); a non-null pointer with zero low
+		// 32 bits would otherwise read as empty.
 		return items.empty() && (
-			0 == (
-				ptrt(children[0]) | ptrt(children[1]) |
-				ptrt(children[2]) | ptrt(children[3]) |
-				ptrt(children[4]) | ptrt(children[5]) |
-				ptrt(children[6]) | ptrt(children[7])
-			)
+			!children[0] && !children[1] &&
+			!children[2] && !children[3] &&
+			!children[4] && !children[5] &&
+			!children[6] && !children[7]
 		);
 	}
 };
