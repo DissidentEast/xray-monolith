@@ -313,6 +313,26 @@ jobs:
         msbuild /p:Configuration=Release /p:Platform=x64 "/p:SolutionDir=$solutionDir" /m /v:m "src\3rd party\ode\contrib\msvc7\ode_default\default.vcxproj"
         msbuild /p:Configuration=Release /p:Platform=x64 "/p:SolutionDir=$solutionDir" /m /v:m "src\3rd party\NVTT\NVTT.vcxproj"
         msbuild /p:Configuration=Release /p:Platform=x64 "/p:SolutionDir=$solutionDir" /m /v:m src\xrSound\xrSound.vcxproj
+        msbuild /p:Configuration=Release /p:Platform=x64 "/p:SolutionDir=$solutionDir" /m /v:m "src\3rd party\DXERR\DXERR.vcxproj"
+        msbuild /p:Configuration=Release /p:Platform=x64 "/p:SolutionDir=$solutionDir" /m /v:m src\xrXMLParser\xrXMLParser.vcxproj
+        msbuild /p:Configuration=Release /p:Platform=x64 "/p:SolutionDir=$solutionDir" /m /v:m src\xrCPU_Pipe\xrCPU_Pipe.vcxproj
+        msbuild /p:Configuration=Release /p:Platform=x64 "/p:SolutionDir=$solutionDir" /m /v:m "src\3rd party\crypto\crypto.vcxproj"
+        msbuild /p:Configuration=Release /p:Platform=x64 "/p:SolutionDir=$solutionDir" /m /v:m "src\3rd party\giflib\giflib.vcxproj"
+        msbuild /p:Configuration=Release /p:Platform=x64 "/p:SolutionDir=$solutionDir" /m /v:m src\xrCDB\xrCDB.vcxproj
+        msbuild /p:Configuration=Release /p:Platform=x64 "/p:SolutionDir=$solutionDir" /m /v:m "src\3rd party\imgui\imgui.vcxproj"
+        msbuild /p:Configuration=Release /p:Platform=x64 "/p:SolutionDir=$solutionDir" /m /v:m "src\3rd party\lua-extensions\lua_extensions.vcxproj"
+        msbuild /p:Configuration=Release /p:Platform=x64 "/p:SolutionDir=$solutionDir" /m /v:m src\ReShadeCompat\ReShadeCompat.vcxproj
+        msbuild /p:Configuration=Release /p:Platform=x64 "/p:SolutionDir=$solutionDir" /m /v:m src\Layers\xrAPI\xrAPI.vcxproj
+        msbuild /p:Configuration=Release /p:Platform=x64 "/p:SolutionDir=$solutionDir" /m /v:m src\xrParticles\xrParticles.vcxproj
+        msbuild /p:Configuration=Release /p:Platform=x64 "/p:SolutionDir=$solutionDir" /m /v:m "src\3rd party\OpenAL-new\OpenAL-new.vcxproj"
+        msbuild /p:Configuration=Release /p:Platform=x64 "/p:SolutionDir=$solutionDir" /m /v:m "src\3rd party\optick\optick.vcxproj"
+        msbuild /p:Configuration=Release /p:Platform=x64 "/p:SolutionDir=$solutionDir" /m /v:m "src\3rd party\cximage\cximage.vcxproj"
+        msbuild /p:Configuration=Release /p:Platform=x64 "/p:SolutionDir=$solutionDir" /m /v:m "src\3rd party\luabind\luabind.vcxproj"
+        msbuild /p:Configuration=Release /p:Platform=x64 "/p:SolutionDir=$solutionDir" /m /v:m src\Layers\xrRenderPC_R1\xrRender_R1.vcxproj
+        msbuild /p:Configuration=Release /p:Platform=x64 "/p:SolutionDir=$solutionDir" /m /v:m src\Layers\xrRenderPC_R2\xrRender_R2.vcxproj
+        msbuild /p:Configuration=Release /p:Platform=x64 "/p:SolutionDir=$solutionDir" /m /v:m src\Layers\xrRenderPC_R3\xrRender_R3.vcxproj
+        msbuild /p:Configuration=Release /p:Platform=x64 "/p:SolutionDir=$solutionDir" /m /v:m src\Layers\xrRenderPC_R4\xrRender_R4.vcxproj
+        msbuild src\engine-vs2022.sln /t:xrEngine /p:Configuration=DX11 /p:Platform=x64 /m /v:m
 
   release:
     needs: [pack_gamedata, build, build_mt]

@@ -8,10 +8,14 @@
 
 #include "SkeletonCustom.h"
 #include "SkeletonXVertRender.h"
+#include "FVisual.h"
+// cl_intersect.h must come before the pick_bone templates below: /permissive-
+// resolves CDB::TestRayTri at the template definition point, and the DX9
+// pick_bone overload needs the complete Fvisual type there as well.
+#include "cl_intersect.h"
 
 // refs
 class CKinematics;
-class Fvisual;
 
 //.#pragma pack(push,4)
 
