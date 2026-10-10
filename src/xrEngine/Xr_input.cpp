@@ -1,6 +1,12 @@
 #include "stdafx.h"
 #pragma hdrstop
 
+// DIMOFS_* (dinput.h) are defined with the macro-based offsetof pattern,
+// which warns C4644 in constant expressions under /permissive-. The macros
+// come from the system header and can't be rewritten at the use site, and
+// their values are fixed API constants, so silence it for this TU.
+#pragma warning(disable: 4644)
+
 #include "xr_input.h"
 #include "IInputReceiver.h"
 //#include "../include/editor/ide.hpp"
