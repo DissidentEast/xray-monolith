@@ -2,29 +2,29 @@
 #include "UITabControl.h"
 #include "UITabButton.h"
 
-using namespace luabind;
+#include "LuaBridge/LuaBridge.h"
 
 #pragma optimize("s",on)
 void CUITabControl::script_register(lua_State* L)
 {
-	module(L)
-	[
-		class_<CUITabControl, CUIWindow>("CUITabControl")
-		.def(constructor<>())
-		.def("AddItem", (bool (CUITabControl::*)(CUITabButton*))(&CUITabControl::AddItem), adopt<2>())
-		.def("AddItem", (bool (CUITabControl::*)(LPCSTR, LPCSTR, Fvector2, Fvector2))&CUITabControl::AddItem)
-		.def("RemoveAll", &CUITabControl::RemoveAll)
-		.def("AddTab", &CUITabControl::AddTab)
-		.def("SetTabIcon", &CUITabControl::SetTabIcon)
-		.def("RecalcScroll", &CUITabControl::RecalcScroll)
-		.def("GetActiveId", &CUITabControl::GetActiveId_script)
-		.def("GetTabsCount", &CUITabControl::GetTabsCount)
-		.def("SetActiveTab", &CUITabControl::SetActiveTab_script)
-		.def("GetButtonById", &CUITabControl::GetButtonById_script)
-		.def("GetEnabled", &CUITabControl::GetAcceleratorsMode)
-		.def("SetEnabled", &CUITabControl::SetAcceleratorsMode),
+	luabridge::getGlobalNamespace(L)
+		.deriveClass<CUITabControl, CUIWindow>("CUITabControl")
+		.addConstructor<void(*)()>()
+		.addFunction("AddItem", (bool (CUITabControl::*)(CUITabButton*))(&CUITabControl::AddItem), (bool (CUITabControl::*)(LPCSTR, LPCSTR, Fvector2, Fvector2))&CUITabControl::AddItem)
+		.addFunction("RemoveAll", &CUITabControl::RemoveAll)
+			.addFunction("AddTab", &CUITabControl::AddTab)
+			.addFunction("SetTabIcon", &CUITabControl::SetTabIcon)
+		.addFunction("SetTabIcon", &CUITabControl::SetTabIcon)
+		.addFunction("RecalcScroll", &CUITabControl::RecalcScroll)
+		.addFunction("GetActiveId", &CUITabControl::GetActiveId_script)
+			.addFunction("GetTabsCount", [](CUITabControl const& self) { return self.GetTabsCount(); })
+		.addFunction("SetActiveTab", &CUITabControl::SetActiveTab_script)
+		.addFunction("GetButtonById", &CUITabControl::GetButtonById_script)
+		.addFunction("GetEnabled", &CUITabControl::GetAcceleratorsMode)
+		.addFunction("SetEnabled", &CUITabControl::SetAcceleratorsMode)
+		.endClass()
 
-		class_<CUITabButton, CUIButton>("CUITabButton")
-		.def(constructor<>())
-	];
+		.deriveClass<CUITabButton, CUIButton>("CUITabButton")
+		.addConstructor<void(*)()>()
+		.endClass();
 }

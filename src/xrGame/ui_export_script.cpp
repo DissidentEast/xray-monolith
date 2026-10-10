@@ -21,7 +21,7 @@
 #include "account_manager.h"
 #include "profile_store.h"
 
-using namespace luabind;
+#include "LuaBridge/LuaBridge.h"
 
 CMainMenu* MainMenu();
 
@@ -45,39 +45,40 @@ void UIRegistrator::script_register(lua_State* L)
 	CUIGameCustom::script_register(L);
 	CUIActorMenu::script_register(L);
 
-	module(L)
-	[
+	luabridge::getGlobalNamespace(L)
+		.beginClass<CGameFont>("CGameFont")
+		.endClass()
 
-		class_<CGameFont>("CGameFont")
-		.enum_("EAligment")
-		[
-			value("alLeft", int(CGameFont::alLeft)),
-			value("alRight", int(CGameFont::alRight)),
-			value("alCenter", int(CGameFont::alCenter))
-		],
+		.beginClass<Patch_Dawnload_Progress>("Patch_Dawnload_Progress")
+		.addFunction("GetInProgress", &Patch_Dawnload_Progress::GetInProgress)
+		.addFunction("GetStatus", &Patch_Dawnload_Progress::GetStatus)
+		.addFunction("GetFlieName", &Patch_Dawnload_Progress::GetFlieName)
+		.addFunction("GetProgress", &Patch_Dawnload_Progress::GetProgress)
+		.endClass()
 
+		.beginClass<CMainMenu>("CMainMenu")
+		.addFunction("GetPatchProgress", &CMainMenu::GetPatchProgress)
+		.addFunction("CancelDownload", &CMainMenu::CancelDownload)
+		.addFunction("ValidateCDKey", &CMainMenu::ValidateCDKey)
+		.addFunction("GetGSVer", &CMainMenu::GetGSVer)
+		.addFunction("GetCDKey", &CMainMenu::GetCDKeyFromRegistry)
+		.addFunction("GetPlayerName", &CMainMenu::GetPlayerName)
+		.addFunction("GetDemoInfo", &CMainMenu::GetDemoInfo)
+		//.addFunction("GetLoginMngr",			&CMainMenu::GetLoginMngr)
+		//.addFunction("GetAccountMngr",			&CMainMenu::GetAccountMngr)
+		//.addFunction("GetProfileStore",			&CMainMenu::GetProfileStore)
+		.endClass();
 
-		class_<Patch_Dawnload_Progress>("Patch_Dawnload_Progress")
-		.def("GetInProgress", &Patch_Dawnload_Progress::GetInProgress)
-		.def("GetStatus", &Patch_Dawnload_Progress::GetStatus)
-		.def("GetFlieName", &Patch_Dawnload_Progress::GetFlieName)
-		.def("GetProgress", &Patch_Dawnload_Progress::GetProgress),
+	lua_getglobal(L, "CGameFont");
+	lua_createtable(L, 0, 3);
+	lua_pushinteger(L, int(CGameFont::alLeft));	lua_setfield(L, -2, "alLeft");
+	lua_pushinteger(L, int(CGameFont::alRight));	lua_setfield(L, -2, "alRight");
+	lua_pushinteger(L, int(CGameFont::alCenter));	lua_setfield(L, -2, "alCenter");
+	lua_setfield(L, -2, "EAligment");
+	lua_pop(L, 1);
 
-		class_<CMainMenu>("CMainMenu")
-		.def("GetPatchProgress", &CMainMenu::GetPatchProgress)
-		.def("CancelDownload", &CMainMenu::CancelDownload)
-		.def("ValidateCDKey", &CMainMenu::ValidateCDKey)
-		.def("GetGSVer", &CMainMenu::GetGSVer)
-		.def("GetCDKey", &CMainMenu::GetCDKeyFromRegistry)
-		.def("GetPlayerName", &CMainMenu::GetPlayerName)
-		.def("GetDemoInfo", &CMainMenu::GetDemoInfo)
-		//.def("GetLoginMngr",			&CMainMenu::GetLoginMngr)
-		//.def("GetAccountMngr",			&CMainMenu::GetAccountMngr)
-		//.def("GetProfileStore",			&CMainMenu::GetProfileStore)
-	];
-
-	module(L, "main_menu")
-	[
-		def("get_main_menu", &MainMenu)
-	];
+	luabridge::getGlobalNamespace(L)
+		.beginNamespace("main_menu")
+		.addFunction("get_main_menu", &MainMenu)
+		.endNamespace();
 }

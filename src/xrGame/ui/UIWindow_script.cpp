@@ -169,225 +169,212 @@ T* ui_window_cast(CUIWindow* window)
 
 #define UI_WINDOW_CAST(class_name) &ui_window_cast<class_name>
 
-using namespace luabind;
+#include "LuaBridge/LuaBridge.h"
+
 #pragma optimize("s",on)
 void CUIWindow::script_register(lua_State* L)
 {
-	module(L)
-	[
-		def("GetARGB", &GetARGB),
-		def("ClrGetA", &ClrGetA),
-		def("ClrGetR", &ClrGetR),
-		def("ClrGetG", &ClrGetG),
-		def("ClrGetB", &ClrGetB),
-		def("ClrSetA", &ClrSetA),
-		def("ClrSetR", &ClrSetR),
-		def("ClrSetG", &ClrSetG),
-		def("ClrSetB", &ClrSetB),
+	luabridge::getGlobalNamespace(L)
+		.addFunction("GetARGB", &GetARGB)
+		.addFunction("ClrGetA", &ClrGetA)
+		.addFunction("ClrGetR", &ClrGetR)
+		.addFunction("ClrGetG", &ClrGetG)
+		.addFunction("ClrGetB", &ClrGetB)
+		.addFunction("ClrSetA", &ClrSetA)
+		.addFunction("ClrSetR", &ClrSetR)
+		.addFunction("ClrSetG", &ClrSetG)
+		.addFunction("ClrSetB", &ClrSetB)
 
-		def("GetFontSmall", &GetFontSmall),
-		def("GetFontMedium", &GetFontMedium),
-		def("GetFontDI", &GetFontDI),
-		def("GetFontGraffiti19Russian", &GetFontGraffiti19Russian),
-		def("GetFontGraffiti22Russian", &GetFontGraffiti22Russian),
-		def("GetFontLetterica16Russian", &GetFontLetterica16Russian),
-		def("GetFontLetterica18Russian", &GetFontLetterica18Russian),
-		def("GetFontGraffiti32Russian", &GetFontGraffiti32Russian),
-		def("GetFontGraffiti50Russian", &GetFontGraffiti50Russian),
-		def("GetFontLetterica25", &GetFontLetterica25),
-		def("GetCursorPosition", &GetCursorPosition_script),
-		def("SetCursorPosition", &SetCursorPosition_script),
-		def("FitInRect", &fit_in_rect),
+		.addFunction("GetFontSmall", &GetFontSmall)
+		.addFunction("GetFontMedium", &GetFontMedium)
+		.addFunction("GetFontDI", &GetFontDI)
+		.addFunction("GetFontGraffiti19Russian", &GetFontGraffiti19Russian)
+		.addFunction("GetFontGraffiti22Russian", &GetFontGraffiti22Russian)
+		.addFunction("GetFontLetterica16Russian", &GetFontLetterica16Russian)
+		.addFunction("GetFontLetterica18Russian", &GetFontLetterica18Russian)
+		.addFunction("GetFontGraffiti32Russian", &GetFontGraffiti32Russian)
+		.addFunction("GetFontGraffiti50Russian", &GetFontGraffiti50Russian)
+		.addFunction("GetFontLetterica25", &GetFontLetterica25)
+		.addFunction("GetCursorPosition", &GetCursorPosition_script)
+		.addFunction("SetCursorPosition", &SetCursorPosition_script)
+		.addFunction("FitInRect", &fit_in_rect)
 
-		class_<CUIWindow>("CUIWindow")
-		.def(constructor<>())
-		.def("AttachChild", &CUIWindow::AttachChild, adopt<2>())
-		.def("AttachChildKeepOwner", &CUIWindow::AttachChild)
-		.def("DetachChild", &CUIWindow::DetachChild)
-		.def("FindChild", &CUIWindow::FindChild)
-		.def("SetAutoDelete", &CUIWindow::SetAutoDelete)
-		.def("IsAutoDelete", &CUIWindow::IsAutoDelete)
+		.beginClass<CUIWindow>("CUIWindow")
+		.addConstructor<void(*)()>()
+		.addFunction("AttachChild", &CUIWindow::AttachChild)
+		.addFunction("AttachChildKeepOwner", &CUIWindow::AttachChild)
+		.addFunction("DetachChild", &CUIWindow::DetachChild)
+		.addFunction("FindChild", &CUIWindow::FindChild)
+		.addFunction("SetAutoDelete", &CUIWindow::SetAutoDelete)
+		.addFunction("IsAutoDelete", &CUIWindow::IsAutoDelete)
 
-		.def("IsCursorOverWindow", &CUIWindow::CursorOverWindow)
-		.def("FocusReceiveTime", &CUIWindow::FocusReceiveTime)
-		.def("GetAbsoluteRect", &CUIWindow::GetAbsoluteRect)
+		.addFunction("IsCursorOverWindow", &CUIWindow::CursorOverWindow)
+		.addFunction("FocusReceiveTime", &CUIWindow::FocusReceiveTime)
+		.addFunction("GetAbsoluteRect", &CUIWindow::GetAbsoluteRect)
 
-		.def("SetWndRect", (void (CUIWindow::*)(Frect))&CUIWindow::SetWndRect_script)
-		.def("SetWndPos", (void (CUIWindow::*)(Fvector2))&CUIWindow::SetWndPos_script)
-		.def("SetWndSize", (void (CUIWindow::*)(Fvector2))&CUIWindow::SetWndSize_script)
-		.def("GetWndPos", &get_wnd_pos)
-		.def("GetWidth", &CUIWindow::GetWidth)
-		.def("GetHeight", &CUIWindow::GetHeight)
+		.addFunction("SetWndRect", (void (CUIWindow::*)(Frect))&CUIWindow::SetWndRect_script)
+		.addFunction("SetWndPos", (void (CUIWindow::*)(Fvector2))&CUIWindow::SetWndPos_script)
+		.addFunction("SetWndSize", (void (CUIWindow::*)(Fvector2))&CUIWindow::SetWndSize_script)
+		.addFunction("GetWndPos", &get_wnd_pos)
+		.addFunction("GetWidth", &CUIWindow::GetWidth)
+		.addFunction("GetHeight", &CUIWindow::GetHeight)
 
-		.def("Enable", &CUIWindow::Enable)
-		.def("IsEnabled", &CUIWindow::IsEnabled)
-		.def("Show", &CUIWindow::Show)
-		.def("IsShown", &CUIWindow::IsShown)
+		.addFunction("Enable", &CUIWindow::Enable)
+		.addFunction("IsEnabled", &CUIWindow::IsEnabled)
+		.addFunction("Show", &CUIWindow::Show)
+		.addFunction("IsShown", &CUIWindow::IsShown)
 
-		.def("WindowName", &CUIWindow::WindowName_script)
-		.def("SetWindowName", &CUIWindow::SetWindowName)
-		.def("SetPPMode", &CUIWindow::SetPPMode)
-		.def("ResetPPMode", &CUIWindow::ResetPPMode)
+		.addFunction("WindowName", &CUIWindow::WindowName_script)
+		.addFunction("SetWindowName", &CUIWindow::SetWindowName)
+		.addFunction("SetPPMode", &CUIWindow::SetPPMode)
+		.addFunction("ResetPPMode", &CUIWindow::ResetPPMode)
 
-		.def("cast_3tButton", UI_WINDOW_CAST(CUI3tButton))
-		.def("cast_ActorMenu", UI_WINDOW_CAST(CUIActorMenu))
-		.def("cast_Button", UI_WINDOW_CAST(CUIButton))
-		.def("cast_CheckButton", UI_WINDOW_CAST(CUICheckButton))
-		.def("cast_ComboBox", UI_WINDOW_CAST(CUIComboBox))
-		.def("cast_CustomEdit", UI_WINDOW_CAST(CUICustomEdit))
-		.def("cast_CustomSpin", UI_WINDOW_CAST(CUICustomSpin))
-		.def("cast_DialogWnd", UI_WINDOW_CAST(CUIDialogWnd))
-		.def("cast_EditBox", UI_WINDOW_CAST(CUIEditBox))
-		.def("cast_FrameLineWnd", UI_WINDOW_CAST(CUIFrameLineWnd))
-		.def("cast_FrameWindow", UI_WINDOW_CAST(CUIFrameWindow))
-		.def("cast_Hint", UI_WINDOW_CAST(UIHint))
-		.def("cast_HudStatesWnd", UI_WINDOW_CAST(CUIHudStatesWnd))
-		.def("cast_ListBox", UI_WINDOW_CAST(CUIListBox))
-		.def("cast_ListBoxItem", UI_WINDOW_CAST(CUIListBoxItem))
-		.def("cast_ListBoxItemMsgChain", UI_WINDOW_CAST(CUIListBoxItemMsgChain))
-		.def("cast_MMShniaga", UI_WINDOW_CAST(CUIMMShniaga))
-		.def("cast_MainIngameWnd", UI_WINDOW_CAST(CUIMainIngameWnd))
-		.def("cast_MapInfo", UI_WINDOW_CAST(CUIMapInfo))
-		.def("cast_MapList", UI_WINDOW_CAST(CUIMapList))
-		.def("cast_MessageBox", UI_WINDOW_CAST(CUIMessageBox))
-		.def("cast_MessageBoxEx", UI_WINDOW_CAST(CUIMessageBoxEx))
-		.def("cast_MessagesWindow", UI_WINDOW_CAST(CUIMessagesWindow))
-		.def("cast_MotionIcon", UI_WINDOW_CAST(CUIMotionIcon))
-		.def("cast_PdaWnd", UI_WINDOW_CAST(CUIPdaWnd))
-		.def("cast_ProgressBar", UI_WINDOW_CAST(CUIProgressBar))
-		.def("cast_PropertiesBox", UI_WINDOW_CAST(CUIPropertiesBox))
-		.def("cast_ScriptWnd", UI_WINDOW_CAST(CUIDialogWndEx))
-		.def("cast_ScrollView", UI_WINDOW_CAST(CUIScrollView))
-		.def("cast_ServerList", UI_WINDOW_CAST(CServerList))
-		.def("cast_SleepStatic", UI_WINDOW_CAST(CUISleepStatic))
-		.def("cast_SpinFlt", UI_WINDOW_CAST(CUISpinFlt))
-		.def("cast_SpinNum", UI_WINDOW_CAST(CUISpinNum))
-		.def("cast_SpinText", UI_WINDOW_CAST(CUISpinText))
-		.def("cast_Static", UI_WINDOW_CAST(CUIStatic))
-		.def("cast_TabButton", UI_WINDOW_CAST(CUITabButton))
-		.def("cast_TabControl", UI_WINDOW_CAST(CUITabControl))
-		.def("cast_TextWnd", UI_WINDOW_CAST(CUITextWnd))
-		.def("cast_TrackBar", UI_WINDOW_CAST(CUITrackBar))
-	];
+		.addFunction("cast_3tButton", UI_WINDOW_CAST(CUI3tButton))
+		.addFunction("cast_ActorMenu", UI_WINDOW_CAST(CUIActorMenu))
+		.addFunction("cast_Button", UI_WINDOW_CAST(CUIButton))
+		.addFunction("cast_CheckButton", UI_WINDOW_CAST(CUICheckButton))
+		.addFunction("cast_ComboBox", UI_WINDOW_CAST(CUIComboBox))
+		.addFunction("cast_CustomEdit", UI_WINDOW_CAST(CUICustomEdit))
+		.addFunction("cast_CustomSpin", UI_WINDOW_CAST(CUICustomSpin))
+		.addFunction("cast_DialogWnd", UI_WINDOW_CAST(CUIDialogWnd))
+		.addFunction("cast_EditBox", UI_WINDOW_CAST(CUIEditBox))
+		.addFunction("cast_FrameLineWnd", UI_WINDOW_CAST(CUIFrameLineWnd))
+		.addFunction("cast_FrameWindow", UI_WINDOW_CAST(CUIFrameWindow))
+		.addFunction("cast_Hint", UI_WINDOW_CAST(UIHint))
+		.addFunction("cast_HudStatesWnd", UI_WINDOW_CAST(CUIHudStatesWnd))
+		.addFunction("cast_ListBox", UI_WINDOW_CAST(CUIListBox))
+		.addFunction("cast_ListBoxItem", UI_WINDOW_CAST(CUIListBoxItem))
+		.addFunction("cast_ListBoxItemMsgChain", UI_WINDOW_CAST(CUIListBoxItemMsgChain))
+		.addFunction("cast_MMShniaga", UI_WINDOW_CAST(CUIMMShniaga))
+		.addFunction("cast_MainIngameWnd", UI_WINDOW_CAST(CUIMainIngameWnd))
+		.addFunction("cast_MapInfo", UI_WINDOW_CAST(CUIMapInfo))
+		.addFunction("cast_MapList", UI_WINDOW_CAST(CUIMapList))
+		.addFunction("cast_MessageBox", UI_WINDOW_CAST(CUIMessageBox))
+		.addFunction("cast_MessageBoxEx", UI_WINDOW_CAST(CUIMessageBoxEx))
+		.addFunction("cast_MessagesWindow", UI_WINDOW_CAST(CUIMessagesWindow))
+		.addFunction("cast_MotionIcon", UI_WINDOW_CAST(CUIMotionIcon))
+		.addFunction("cast_PdaWnd", UI_WINDOW_CAST(CUIPdaWnd))
+		.addFunction("cast_ProgressBar", UI_WINDOW_CAST(CUIProgressBar))
+		.addFunction("cast_PropertiesBox", UI_WINDOW_CAST(CUIPropertiesBox))
+		.addFunction("cast_ScriptWnd", UI_WINDOW_CAST(CUIDialogWndEx))
+		.addFunction("cast_ScrollView", UI_WINDOW_CAST(CUIScrollView))
+		.addFunction("cast_ServerList", UI_WINDOW_CAST(CServerList))
+		.addFunction("cast_SleepStatic", UI_WINDOW_CAST(CUISleepStatic))
+		.addFunction("cast_SpinFlt", UI_WINDOW_CAST(CUISpinFlt))
+		.addFunction("cast_SpinNum", UI_WINDOW_CAST(CUISpinNum))
+		.addFunction("cast_SpinText", UI_WINDOW_CAST(CUISpinText))
+		.addFunction("cast_Static", UI_WINDOW_CAST(CUIStatic))
+		.addFunction("cast_TabButton", UI_WINDOW_CAST(CUITabButton))
+		.addFunction("cast_TabControl", UI_WINDOW_CAST(CUITabControl))
+		.addFunction("cast_TextWnd", UI_WINDOW_CAST(CUITextWnd))
+		.addFunction("cast_TrackBar", UI_WINDOW_CAST(CUITrackBar))
+		.endClass();
 
-	module(L)
-	[
-		class_<CDialogHolder>("CDialogHolder")
-		.def("AddDialogToRender", &CDialogHolder::AddDialogToRender)
-		.def("RemoveDialogToRender", &CDialogHolder::RemoveDialogToRender),
+	luabridge::getGlobalNamespace(L)
+		.beginClass<CDialogHolder>("CDialogHolder")
+		.addFunction("AddDialogToRender", &CDialogHolder::AddDialogToRender)
+		.addFunction("RemoveDialogToRender", &CDialogHolder::RemoveDialogToRender)
+		.endClass()
 
-		class_<CUIDialogWnd, CUIWindow>("CUIDialogWnd")
-		.def("ShowDialog", &CUIDialogWnd::ShowDialog)
-		.def("HideDialog", &CUIDialogWnd::HideDialog)
-		.def("GetHolder", &CUIDialogWnd::GetHolder)
-		.def("AllowMovement", &CUIDialogWnd::AllowMovement)
-		.def("AllowCursor", &CUIDialogWnd::AllowCursor)
-		.def("AllowCenterCursor", &CUIDialogWnd::AllowCenterCursor)
-		.def("AllowWorkInPause", &CUIDialogWnd::AllowWorkInPause),
+		.deriveClass<CUIDialogWnd, CUIWindow>("CUIDialogWnd")
+		.addFunction("ShowDialog", &CUIDialogWnd::ShowDialog)
+		.addFunction("HideDialog", &CUIDialogWnd::HideDialog)
+		.addFunction("GetHolder", &CUIDialogWnd::GetHolder)
+		.addFunction("AllowMovement", &CUIDialogWnd::AllowMovement)
+		.addFunction("AllowCursor", &CUIDialogWnd::AllowCursor)
+		.addFunction("AllowCenterCursor", &CUIDialogWnd::AllowCenterCursor)
+		.addFunction("AllowWorkInPause", &CUIDialogWnd::AllowWorkInPause)
+		.endClass()
 
-		class_<CUIFrameWindow, CUIWindow>("CUIFrameWindow")
-		.def(constructor<>())
-		.def("SetWidth", &CUIFrameWindow::SetWidth)
-		.def("SetHeight", &CUIFrameWindow::SetHeight)
-		.def("SetColor", &CUIFrameWindow::SetTextureColor),
+		.deriveClass<CUIFrameWindow, CUIWindow>("CUIFrameWindow")
+		.addConstructor<void(*)()>()
+		.addFunction("SetWidth", &CUIFrameWindow::SetWidth)
+		.addFunction("SetHeight", &CUIFrameWindow::SetHeight)
+		.addFunction("SetColor", &CUIFrameWindow::SetTextureColor)
+		.endClass()
 
-		class_<CUIFrameLineWnd, CUIWindow>("CUIFrameLineWnd")
-		.def(constructor<>())
-		.def("SetWidth", &CUIFrameLineWnd::SetWidth)
-		.def("SetHeight", &CUIFrameLineWnd::SetHeight)
-		.def("SetColor", &CUIFrameLineWnd::SetTextureColor),
+		.deriveClass<CUIFrameLineWnd, CUIWindow>("CUIFrameLineWnd")
+		.addConstructor<void(*)()>()
+		.addFunction("SetWidth", &CUIFrameLineWnd::SetWidth)
+		.addFunction("SetHeight", &CUIFrameLineWnd::SetHeight)
+		.addFunction("SetColor", &CUIFrameLineWnd::SetTextureColor)
+		.endClass()
 
-		class_<UIHint, CUIWindow>("UIHint")
-		.def(constructor<>())
-		.def("SetWidth", &UIHint::SetWidth)
-		.def("SetHeight", &UIHint::SetHeight)
-		.def("SetHintText", &UIHint::set_text)
-		.def("GetHintText", &UIHint::get_text),
+		.deriveClass<UIHint, CUIWindow>("UIHint")
+		.addConstructor<void(*)()>()
+		.addFunction("SetWidth", &UIHint::SetWidth)
+		.addFunction("SetHeight", &UIHint::SetHeight)
+		.addFunction("SetHintText", &UIHint::set_text)
+		.addFunction("GetHintText", &UIHint::get_text)
+		.endClass()
 
-		class_<CUIMMShniaga, CUIWindow>("CUIMMShniaga")
-		.enum_("enum_page_id")
-		[
-			value("epi_main", CUIMMShniaga::epi_main),
-			value("epi_new_game", CUIMMShniaga::epi_new_game),
-			value("epi_new_network_game", CUIMMShniaga::epi_new_network_game)
-		]
-		.def("SetVisibleMagnifier", &CUIMMShniaga::SetVisibleMagnifier)
-		.def("SetPage", &CUIMMShniaga::SetPage)
-		.def("ShowPage", &CUIMMShniaga::ShowPage),
+		.deriveClass<CUIMMShniaga, CUIWindow>("CUIMMShniaga")
+		.addFunction("SetVisibleMagnifier", &CUIMMShniaga::SetVisibleMagnifier)
+		.addFunction("SetPage", &CUIMMShniaga::SetPage)
+		.addFunction("ShowPage", &CUIMMShniaga::ShowPage)
+		.endClass()
 
+		.deriveClass<CUIScrollView, CUIWindow>("CUIScrollView")
+		.addConstructor<void(*)()>()
+		.addFunction("AddWindow", &CUIScrollView::AddWindow)
+		.addFunction("RemoveWindow", &CUIScrollView::RemoveWindow)
+		.addFunction("Clear", &CUIScrollView::Clear)
+		.addFunction("ScrollToBegin", &CUIScrollView::ScrollToBegin)
+		.addFunction("ScrollToEnd", &CUIScrollView::ScrollToEnd)
+		.addFunction("GetMinScrollPos", &CUIScrollView::GetMinScrollPos)
+		.addFunction("GetMaxScrollPos", &CUIScrollView::GetMaxScrollPos)
+		.addFunction("GetCurrentScrollPos", &CUIScrollView::GetCurrentScrollPos)
+		.addFunction("SetFixedScrollBar", &CUIScrollView::SetFixedScrollBar)
+		.addFunction("SetScrollPos", &CUIScrollView::SetScrollPos)
+		.endClass()
 
-		class_<CUIScrollView, CUIWindow>("CUIScrollView")
-		.def(constructor<>())
-		.def("AddWindow", &CUIScrollView::AddWindow)
-		.def("RemoveWindow", &CUIScrollView::RemoveWindow)
-		.def("Clear", &CUIScrollView::Clear)
-		.def("ScrollToBegin", &CUIScrollView::ScrollToBegin)
-		.def("ScrollToEnd", &CUIScrollView::ScrollToEnd)
-		.def("GetMinScrollPos", &CUIScrollView::GetMinScrollPos)
-		.def("GetMaxScrollPos", &CUIScrollView::GetMaxScrollPos)
-		.def("GetCurrentScrollPos", &CUIScrollView::GetCurrentScrollPos)
-		.def("SetFixedScrollBar", &CUIScrollView::SetFixedScrollBar)
-		.def("SetScrollPos", &CUIScrollView::SetScrollPos),
+		.beginClass<enum_exporter<EUIMessages>>("ui_events")
+		.endClass();
 
-		class_<enum_exporter<EUIMessages>>("ui_events")
-		.enum_("events")
-		[
-			// CUIWindow
-			value("WINDOW_LBUTTON_DOWN", int(WINDOW_LBUTTON_DOWN)),
-			value("WINDOW_RBUTTON_DOWN", int(WINDOW_RBUTTON_DOWN)),
-			value("WINDOW_LBUTTON_UP", int(WINDOW_LBUTTON_UP)),
-			value("WINDOW_RBUTTON_UP", int(WINDOW_RBUTTON_UP)),
-			value("WINDOW_MOUSE_MOVE", int(WINDOW_MOUSE_MOVE)),
-			value("WINDOW_MOUSE_WHEEL_UP", int(WINDOW_MOUSE_WHEEL_UP)),
-			value("WINDOW_MOUSE_WHEEL_DOWN", int(WINDOW_MOUSE_WHEEL_DOWN)),
-			value("WINDOW_LBUTTON_DB_CLICK", int(WINDOW_LBUTTON_DB_CLICK)),
-			value("WINDOW_KEY_PRESSED", int(WINDOW_KEY_PRESSED)),
-			value("WINDOW_KEY_RELEASED", int(WINDOW_KEY_RELEASED)),
-			value("WINDOW_KEYBOARD_CAPTURE_LOST", int(WINDOW_KEYBOARD_CAPTURE_LOST)),
+	lua_getglobal(L, "CUIMMShniaga");
+	lua_createtable(L, 0, 3);
+	lua_pushinteger(L, CUIMMShniaga::epi_main);	lua_setfield(L, -2, "epi_main");
+	lua_pushinteger(L, CUIMMShniaga::epi_new_game);	lua_setfield(L, -2, "epi_new_game");
+	lua_pushinteger(L, CUIMMShniaga::epi_new_network_game);	lua_setfield(L, -2, "epi_new_network_game");
+	lua_setfield(L, -2, "enum_page_id");
+	lua_pop(L, 1);
 
-
-			// CUIButton
-			value("BUTTON_CLICKED", int(BUTTON_CLICKED)),
-			value("BUTTON_DOWN", int(BUTTON_DOWN)),
-
-			// CUITabControl
-			value("TAB_CHANGED", int(TAB_CHANGED)),
-
-			// CUICheckButton
-			value("CHECK_BUTTON_SET", int(CHECK_BUTTON_SET)),
-			value("CHECK_BUTTON_RESET", int(CHECK_BUTTON_RESET)),
-
-			// CUIRadioButton
-			value("RADIOBUTTON_SET", int(RADIOBUTTON_SET)),
-
-			// CUIScrollBox
-			value("SCROLLBOX_MOVE", int(SCROLLBOX_MOVE)),
-
-			// CUIScrollBar
-			value("SCROLLBAR_VSCROLL", int(SCROLLBAR_VSCROLL)),
-			value("SCROLLBAR_HSCROLL", int(SCROLLBAR_HSCROLL)),
-
-			// CUIListWnd
-			value("LIST_ITEM_CLICKED", int(LIST_ITEM_CLICKED)),
-			value("LIST_ITEM_SELECT", int(LIST_ITEM_SELECT)),
-
-			// UIPropertiesBox
-			value("PROPERTY_CLICKED", int(PROPERTY_CLICKED)),
-
-			// CUIMessageBox
-			value("MESSAGE_BOX_OK_CLICKED", int(MESSAGE_BOX_OK_CLICKED)),
-			value("MESSAGE_BOX_YES_CLICKED", int(MESSAGE_BOX_YES_CLICKED)),
-			value("MESSAGE_BOX_NO_CLICKED", int(MESSAGE_BOX_NO_CLICKED)),
-			value("MESSAGE_BOX_CANCEL_CLICKED", int(MESSAGE_BOX_CANCEL_CLICKED)),
-			value("MESSAGE_BOX_COPY_CLICKED", int(MESSAGE_BOX_COPY_CLICKED)),
-			value("MESSAGE_BOX_QUIT_GAME_CLICKED", int(MESSAGE_BOX_QUIT_GAME_CLICKED)),
-			value("MESSAGE_BOX_QUIT_WIN_CLICKED", int(MESSAGE_BOX_QUIT_WIN_CLICKED)),
-
-			value("EDIT_TEXT_COMMIT", int(EDIT_TEXT_COMMIT)),
-			// CMainMenu
-			value("MAIN_MENU_RELOADED", int(MAIN_MENU_RELOADED))
-		]
-	];
+	lua_getglobal(L, "ui_events");
+	lua_createtable(L, 0, 34);
+	lua_pushinteger(L, int(WINDOW_LBUTTON_DOWN));	lua_setfield(L, -2, "WINDOW_LBUTTON_DOWN");
+	lua_pushinteger(L, int(WINDOW_RBUTTON_DOWN));	lua_setfield(L, -2, "WINDOW_RBUTTON_DOWN");
+	lua_pushinteger(L, int(WINDOW_LBUTTON_UP));	lua_setfield(L, -2, "WINDOW_LBUTTON_UP");
+	lua_pushinteger(L, int(WINDOW_RBUTTON_UP));	lua_setfield(L, -2, "WINDOW_RBUTTON_UP");
+	lua_pushinteger(L, int(WINDOW_MOUSE_MOVE));	lua_setfield(L, -2, "WINDOW_MOUSE_MOVE");
+	lua_pushinteger(L, int(WINDOW_MOUSE_WHEEL_UP));	lua_setfield(L, -2, "WINDOW_MOUSE_WHEEL_UP");
+	lua_pushinteger(L, int(WINDOW_MOUSE_WHEEL_DOWN));	lua_setfield(L, -2, "WINDOW_MOUSE_WHEEL_DOWN");
+	lua_pushinteger(L, int(WINDOW_LBUTTON_DB_CLICK));	lua_setfield(L, -2, "WINDOW_LBUTTON_DB_CLICK");
+	lua_pushinteger(L, int(WINDOW_KEY_PRESSED));	lua_setfield(L, -2, "WINDOW_KEY_PRESSED");
+	lua_pushinteger(L, int(WINDOW_KEY_RELEASED));	lua_setfield(L, -2, "WINDOW_KEY_RELEASED");
+	lua_pushinteger(L, int(WINDOW_KEYBOARD_CAPTURE_LOST));	lua_setfield(L, -2, "WINDOW_KEYBOARD_CAPTURE_LOST");
+	lua_pushinteger(L, int(BUTTON_CLICKED));	lua_setfield(L, -2, "BUTTON_CLICKED");
+	lua_pushinteger(L, int(BUTTON_DOWN));	lua_setfield(L, -2, "BUTTON_DOWN");
+	lua_pushinteger(L, int(TAB_CHANGED));	lua_setfield(L, -2, "TAB_CHANGED");
+	lua_pushinteger(L, int(CHECK_BUTTON_SET));	lua_setfield(L, -2, "CHECK_BUTTON_SET");
+	lua_pushinteger(L, int(CHECK_BUTTON_RESET));	lua_setfield(L, -2, "CHECK_BUTTON_RESET");
+	lua_pushinteger(L, int(RADIOBUTTON_SET));	lua_setfield(L, -2, "RADIOBUTTON_SET");
+	lua_pushinteger(L, int(SCROLLBOX_MOVE));	lua_setfield(L, -2, "SCROLLBOX_MOVE");
+	lua_pushinteger(L, int(SCROLLBAR_VSCROLL));	lua_setfield(L, -2, "SCROLLBAR_VSCROLL");
+	lua_pushinteger(L, int(SCROLLBAR_HSCROLL));	lua_setfield(L, -2, "SCROLLBAR_HSCROLL");
+	lua_pushinteger(L, int(LIST_ITEM_CLICKED));	lua_setfield(L, -2, "LIST_ITEM_CLICKED");
+	lua_pushinteger(L, int(LIST_ITEM_SELECT));	lua_setfield(L, -2, "LIST_ITEM_SELECT");
+	lua_pushinteger(L, int(PROPERTY_CLICKED));	lua_setfield(L, -2, "PROPERTY_CLICKED");
+	lua_pushinteger(L, int(MESSAGE_BOX_OK_CLICKED));	lua_setfield(L, -2, "MESSAGE_BOX_OK_CLICKED");
+	lua_pushinteger(L, int(MESSAGE_BOX_YES_CLICKED));	lua_setfield(L, -2, "MESSAGE_BOX_YES_CLICKED");
+	lua_pushinteger(L, int(MESSAGE_BOX_NO_CLICKED));	lua_setfield(L, -2, "MESSAGE_BOX_NO_CLICKED");
+	lua_pushinteger(L, int(MESSAGE_BOX_CANCEL_CLICKED));	lua_setfield(L, -2, "MESSAGE_BOX_CANCEL_CLICKED");
+	lua_pushinteger(L, int(MESSAGE_BOX_COPY_CLICKED));	lua_setfield(L, -2, "MESSAGE_BOX_COPY_CLICKED");
+	lua_pushinteger(L, int(MESSAGE_BOX_QUIT_GAME_CLICKED));	lua_setfield(L, -2, "MESSAGE_BOX_QUIT_GAME_CLICKED");
+	lua_pushinteger(L, int(MESSAGE_BOX_QUIT_WIN_CLICKED));	lua_setfield(L, -2, "MESSAGE_BOX_QUIT_WIN_CLICKED");
+	lua_pushinteger(L, int(EDIT_TEXT_COMMIT));	lua_setfield(L, -2, "EDIT_TEXT_COMMIT");
+	lua_pushinteger(L, int(MAIN_MENU_RELOADED));	lua_setfield(L, -2, "MAIN_MENU_RELOADED");
+	lua_setfield(L, -2, "events");
+	lua_pop(L, 1);
 }
 
 #undef UI_WINDOW_CAST

@@ -7,53 +7,57 @@
 #include "UISpinText.h"
 #include "UITrackBar.h"
 
-using namespace luabind;
+#include "LuaBridge/LuaBridge.h"
 
 #pragma optimize("s",on)
 void CUIButton::script_register(lua_State* L)
 {
-	module(L)
-	[
-		class_<CUIButton, CUIStatic>("CUIButton")
-		.def(constructor<>())
-		,
+	luabridge::getGlobalNamespace(L)
+		.deriveClass<CUIButton, CUIStatic>("CUIButton")
+		.addConstructor<void(*)()>()
+		.endClass()
 
-		class_<CUI3tButton, CUIButton>("CUI3tButton")
-		.def(constructor<>())
-		,
+		.deriveClass<CUI3tButton, CUIButton>("CUI3tButton")
+		.addConstructor<void(*)()>()
+		.endClass()
 
 
-		class_<CUICheckButton, CUI3tButton>("CUICheckButton")
-		.def(constructor<>())
-		.def("GetCheck", &CUICheckButton::GetCheck)
-		.def("SetCheck", &CUICheckButton::SetCheck)
-		.def("SetDependControl", &CUICheckButton::SetDependControl),
+		.deriveClass<CUICheckButton, CUI3tButton>("CUICheckButton")
+		.addConstructor<void(*)()>()
+		.addFunction("GetCheck", &CUICheckButton::GetCheck)
+		.addFunction("SetCheck", &CUICheckButton::SetCheck)
+		.addFunction("SetDependControl", &CUICheckButton::SetDependControl)
+		.endClass()
 
-		class_<CUICustomSpin, CUIWindow>("CUICustomSpin")
-		.def("GetText", &CUICustomSpin::GetText),
+		.deriveClass<CUICustomSpin, CUIWindow>("CUICustomSpin")
+		.addFunction("GetText", &CUICustomSpin::GetText)
+		.endClass()
 
-		class_<CUISpinNum, CUICustomSpin>("CUISpinNum")
-		.def(constructor<>()),
+		.deriveClass<CUISpinNum, CUICustomSpin>("CUISpinNum")
+		.addConstructor<void(*)()>()
+		.endClass()
 
-		class_<CUISpinFlt, CUICustomSpin>("CUISpinFlt")
-		.def(constructor<>()),
+		.deriveClass<CUISpinFlt, CUICustomSpin>("CUISpinFlt")
+		.addConstructor<void(*)()>()
+		.endClass()
 
-		class_<CUISpinText, CUICustomSpin>("CUISpinText")
-		.def(constructor<>()),
+		.deriveClass<CUISpinText, CUICustomSpin>("CUISpinText")
+		.addConstructor<void(*)()>()
+		.endClass()
 
-		class_<CUITrackBar, CUIWindow>("CUITrackBar")
-		.def(constructor<>())
-		.def("GetCheck", &CUITrackBar::GetCheck)
-		.def("SetCheck", &CUITrackBar::SetCheck)
-		.def("GetIValue", &CUITrackBar::GetIValue)
-		.def("GetFValue", &CUITrackBar::GetFValue)
-		.def("SetIValue", &CUITrackBar::SetIValue)
-		.def("SetFValue", &CUITrackBar::SetFValue)
-		.def("SetStep", &CUITrackBar::SetStep)
-		.def("GetInvert", &CUITrackBar::GetInvert)
-		.def("SetInvert", &CUITrackBar::SetInvert)
-		.def("SetOptIBounds", &CUITrackBar::SetOptIBounds)
-		.def("SetOptFBounds", &CUITrackBar::SetOptFBounds)
-		.def("SetCurrentValue", &CUITrackBar::SetCurrentOptValue)
-	];
+		.deriveClass<CUITrackBar, CUIWindow>("CUITrackBar")
+		.addConstructor<void(*)()>()
+		.addFunction("GetCheck", &CUITrackBar::GetCheck)
+		.addFunction("SetCheck", &CUITrackBar::SetCheck)
+		.addFunction("GetIValue", &CUITrackBar::GetIValue)
+		.addFunction("GetFValue", &CUITrackBar::GetFValue)
+		.addFunction("SetIValue", &CUITrackBar::SetIValue)
+		.addFunction("SetFValue", &CUITrackBar::SetFValue)
+		.addFunction("SetStep", &CUITrackBar::SetStep)
+		.addFunction("GetInvert", &CUITrackBar::GetInvert)
+		.addFunction("SetInvert", &CUITrackBar::SetInvert)
+		.addFunction("SetOptIBounds", &CUITrackBar::SetOptIBounds)
+		.addFunction("SetOptFBounds", &CUITrackBar::SetOptFBounds)
+		.addFunction("SetCurrentValue", &CUITrackBar::SetCurrentOptValue)
+		.endClass();
 }
