@@ -1,0 +1,16 @@
+# Vendored LuaBridge3 (kunitoki fork) @ tag 3.0-rc12
+- Source: https://github.com/kunitoki/LuaBridge3 (commit pinned by tag)
+- Content: `Source/LuaBridge/` header tree (43 headers) + MIT LICENSE.txt.
+  Tests, Benchmarks, Docs and build files intentionally omitted.
+- Why this fork/tag: v3 reworked the library for exception-free builds
+  (auto-detects _CPPUNWIND) and its CI tests Lua 5.4 with exceptions
+  disabled — exactly this repo's Release configuration (xrCore.h bans /EH).
+- Do NOT use amalgamate.py output: the amalgamated single header it
+  generates at this tag is misordered and does not compile under MSVC.
+  Use the multi-header tree with include root at `src/3rd party/LuaBridge3`
+  (i.e. `#include "LuaBridge/LuaBridge.h"`).
+- Verified 2026-10-10 with a spike (namespace/class/def/property,
+  C++->Lua and LuaRef calls, pcall error path) against vendored PUC
+  Lua 5.4.9, compiled with /EHsc- /std:c++17 /permissive-: builds clean,
+  runs correct. Spike source (not committed):
+  %LOCALAPPDATA%/Temp/opencode/lbs/spike.cpp

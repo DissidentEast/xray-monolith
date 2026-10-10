@@ -1,0 +1,9 @@
+# Vendored PUC Lua 5.4.9 (final 5.4 release — the 5.4 line is closed upstream)
+- Source: https://www.lua.org/ftp/lua-5.4.9.tar.gz
+- SHA256: 2335b6c582a52654f94612bf10d2f4672805d05329aa6568b1d8cd9e5c6fb8e6
+- Content: pristine upstream tree (src/, doc/, Makefile, README).
+- Build: lua-5.4.vcxproj (StaticLibrary, C, same 4-config shape as giflib;
+  `_CRT_SECURE_NO_WARNINGS` predefined; /permissive- accepted on C files).
+  Builds warning-free (0 warnings) with v143 Release|x64.
+- Status: INERT — nothing references it yet; the tree still builds and runs
+  on LuaJIT 2.0.4. Wiring (VM init, loader, bindings) follows in later commits.
