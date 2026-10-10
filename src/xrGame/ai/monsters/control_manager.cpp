@@ -14,7 +14,7 @@ enum EActiveComAction
 	eAdd
 };
 
-char* make_xrstr(ControlCom::EControlType e)
+const char* make_xrstr(ControlCom::EControlType e)
 {
 	switch (e)
 	{

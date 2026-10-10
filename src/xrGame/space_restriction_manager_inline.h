@@ -8,6 +8,9 @@
 
 #pragma once
 
+// CSpaceRestriction must be complete at the template definition point below.
+#include "space_restriction.h"
+
 #ifdef DEBUG
 IC	const CSpaceRestrictionManager::SPACE_RESTRICTIONS &CSpaceRestrictionManager::restrictions	() const
 {

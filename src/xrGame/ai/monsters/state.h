@@ -2,6 +2,18 @@
 
 #include "state_defs.h"
 #include "control_com_defs.h"
+#include "ai_monster_defs.h"
+// monster_squad(), ai() and CLevelGraph must be visible at the template
+// definition points in the state *_inline.h headers; /permissive- checks them
+// before the including TU's later includes become visible.
+#include "ai_monster_squad_manager.h"
+#include "../../ai_space.h"
+#include "../../level_graph.h"
+
+// Shared time helper, historically defined in monster_state_attack_on_run.h and
+// visible to other state headers only by include order luck. It must be visible
+// at every template definition point, so it lives here.
+inline TTime current_time() { return Device.dwTimeGlobal; }
 
 // Lain: added
 #ifdef DEBUG
@@ -96,7 +108,7 @@ public:
 	virtual void initialize()
 	{
 		inherited::initialize();
-		object->path().prepare_builder();
+		this->object->path().prepare_builder();
 	}
 };
 

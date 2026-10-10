@@ -42,8 +42,8 @@ struct CrosshairSettings
 
 	CrosshairSettings(
 		Flags32 _flags,
-		string32 _shader,
-		string32 _texture,
+		LPCSTR _shader,
+		LPCSTR _texture,
 		float _distance_lerp_rate,
 		float _size,
 		float _depth,

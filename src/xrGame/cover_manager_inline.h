@@ -8,6 +8,11 @@
 
 #pragma once
 
+// CCoverPoint must be complete at the template definition point below:
+// /permissive- checks member access on it when the template is defined,
+// not only when instantiated.
+#include "cover_point.h"
+
 IC CCoverManager::CPointQuadTree& CCoverManager::covers() const
 {
 	VERIFY(m_covers);

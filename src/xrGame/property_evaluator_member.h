@@ -17,15 +17,15 @@ protected:
 	typedef CPropertyEvaluator<_object_type> inherited;
 
 protected:
-	_condition_type m_condition_id;
-	_value_type m_value;
+	typename inherited::_condition_type m_condition_id;
+	typename inherited::_value_type m_value;
 	bool m_equality;
 
 public:
-	CPropertyEvaluatorMember(CPropertyStorage* storage, _condition_type condition_id, _value_type value,
+	CPropertyEvaluatorMember(CPropertyStorage* storage, typename CPropertyEvaluatorMember<_object_type>::_condition_type condition_id, typename CPropertyEvaluatorMember<_object_type>::_value_type value,
 	                         bool equality = true, LPCSTR evaluator_name = "");
 	virtual void setup(_object_type* object, CPropertyStorage* storage);
-	virtual _value_type evaluate();
+	virtual typename CPropertyEvaluatorMember<_object_type>::_value_type evaluate();
 };
 
 

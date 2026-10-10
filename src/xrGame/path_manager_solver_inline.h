@@ -8,6 +8,9 @@
 
 #pragma once
 
+// GraphEngineSpace must be visible at the template definition points below.
+#include "graph_engine_space.h"
+
 #define TEMPLATE_SPECIALIZATION \
 	template <\
 		typename T1,\
@@ -44,7 +47,7 @@ IC void CSolverPathManager::setup(
 {
 	this->graph = _graph;
 	this->data_storage = _data_storage;
-	m_edge_path = _path;
+	this->m_edge_path = _path;
 	this->start_node_index = _start_node_index;
 	this->goal_node_index = _goal_node_index;
 	this->max_visited_node_count = params.max_visited_node_count;

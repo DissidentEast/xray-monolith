@@ -20,14 +20,14 @@ IC CObjectActionBase<_item_type>::CObjectActionBase(_item_type* item, CAI_Stalke
 	inherited(owner, action_name),
 	m_item(item)
 {
-	m_storage = storage;
+	this->m_storage = storage;
 }
 
 template <typename _item_type>
 IC void CObjectActionBase<_item_type>::set_property(_condition_type condition_id, _value_type value)
 {
-	VERIFY(m_storage);
-	m_storage->set_property(condition_id, value);
+	VERIFY(this->m_storage);
+	this->m_storage->set_property(condition_id, value);
 }
 
 template <typename _item_type>
@@ -41,8 +41,8 @@ void CObjectActionBase<_item_type>::initialize()
 template <typename _item_type>
 IC CAI_Stalker& CObjectActionBase<_item_type>::object() const
 {
-	VERIFY(m_object);
-	return (*m_object);
+	VERIFY(this->m_object);
+	return (*this->m_object);
 }
 
 template <typename _item_type>
@@ -72,7 +72,7 @@ void CObjectActionBase<_item_type>::stop_hiding_operation_if_any() const
 
 template <typename _item_type>
 IC CObjectActionMember<_item_type>::CObjectActionMember(_item_type* item, CAI_Stalker* owner, CPropertyStorage* storage,
-                                                        _condition_type condition_id, _value_type value,
+                                                        typename inherited::_condition_type condition_id, typename inherited::_value_type value,
                                                         LPCSTR action_name) :
 	inherited(item, owner, storage, action_name),
 	m_condition_id(condition_id),
@@ -84,6 +84,6 @@ template <typename _item_type>
 void CObjectActionMember<_item_type>::execute()
 {
 	inherited::execute();
-	if (completed())
-		set_property(m_condition_id, m_value);
+	if (this->completed())
+		this->set_property(m_condition_id, m_value);
 }

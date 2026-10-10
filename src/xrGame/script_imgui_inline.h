@@ -47,12 +47,12 @@ IC void ImGui_SetNextWindowScroll(Fvector2& scroll)
 
 IC Fvector2 ImGui_GetWindowPos()
 {
-	return *(Fvector2*)&ImGui::GetWindowPos();
+	ImVec2 temp_value = ImGui::GetWindowPos(); return *(Fvector2*)&temp_value;
 }
 
 IC Fvector2 ImGui_GetWindowSize()
 {
-	return *(Fvector2*)&ImGui::GetWindowSize();
+	ImVec2 temp_value = ImGui::GetWindowSize(); return *(Fvector2*)&temp_value;
 }
 
 IC void ImGui_SetWindowPos(Fvector2& pos, ImGuiCond cond = 0)
@@ -82,7 +82,7 @@ IC void ImGui_SetScrollFromPosY(float pos)
 
 IC Fvector2 ImGui_GetCursorScreenPos()
 {
-	return *(Fvector2*)&ImGui::GetCursorScreenPos();
+	ImVec2 temp_value = ImGui::GetCursorScreenPos(); return *(Fvector2*)&temp_value;
 }
 
 IC void ImGui_SetCursorScreenPos(Fvector2& pos)
@@ -92,12 +92,12 @@ IC void ImGui_SetCursorScreenPos(Fvector2& pos)
 
 IC Fvector2 ImGui_GetContentRegionAvail()
 {
-	return *(Fvector2*)&ImGui::GetContentRegionAvail();
+	ImVec2 temp_value = ImGui::GetContentRegionAvail(); return *(Fvector2*)&temp_value;
 }
 
 IC Fvector2 ImGui_GetCursorPos()
 {
-	return *(Fvector2*)&ImGui::GetCursorPos();
+	ImVec2 temp_value = ImGui::GetCursorPos(); return *(Fvector2*)&temp_value;
 }
 
 IC void ImGui_SetCursorPos(Fvector2& pos)
@@ -107,7 +107,7 @@ IC void ImGui_SetCursorPos(Fvector2& pos)
 
 IC Fvector2 ImGui_GetCursorStartPos()
 {
-	return *(Fvector2*)&ImGui::GetCursorStartPos();
+	ImVec2 temp_value = ImGui::GetCursorStartPos(); return *(Fvector2*)&temp_value;
 }
 
 IC void ImGui_SameLine()
@@ -343,17 +343,17 @@ IC void ImGui_PushClipRect(Fvector2 min, Fvector2 max, bool intersect)
 
 IC Fvector2 ImGui_GetItemRectMin()
 {
-	return *(Fvector2*)&ImGui::GetItemRectMin();
+	ImVec2 temp_value = ImGui::GetItemRectMin(); return *(Fvector2*)&temp_value;
 }
 
 IC Fvector2 ImGui_GetItemRectMax()
 {
-	return *(Fvector2*)&ImGui::GetItemRectMax();
+	ImVec2 temp_value = ImGui::GetItemRectMax(); return *(Fvector2*)&temp_value;
 }
 
 IC Fvector2 ImGui_GetItemRectSize()
 {
-	return *(Fvector2*)&ImGui::GetItemRectSize();
+	ImVec2 temp_value = ImGui::GetItemRectSize(); return *(Fvector2*)&temp_value;
 }
 
 IC bool ImGui_IsKeyPressed(ImGuiKey key)
@@ -373,7 +373,7 @@ IC bool ImGui_Shortcut(ImGuiKeyChord keys)
 
 IC Fvector2 ImGui_CalcTextSize(LPCSTR text, bool hide_after_double_hash = false, float wrap_width = -1.f)
 {
-	return *(Fvector2*)&ImGui::CalcTextSize(text, 0, hide_after_double_hash, wrap_width);
+	ImVec2 temp_value = ImGui::CalcTextSize(text, 0, hide_after_double_hash, wrap_width); return *(Fvector2*)&temp_value;
 }
 
 IC bool ImGui_IsMouseHoveringRect(Fvector2 min, Fvector2 max)
@@ -393,17 +393,17 @@ IC bool ImGui_IsMousePosValid(Fvector2 pos = {0,0})
 
 IC Fvector2 ImGui_GetMousePos()
 {
-	return *(Fvector2*)&ImGui::GetMousePos();
+	ImVec2 temp_value = ImGui::GetMousePos(); return *(Fvector2*)&temp_value;
 }
 
 IC Fvector2 ImGui_GetMousePosOnOpeningCurrentPopup()
 {
-	return *(Fvector2*)&ImGui::GetMousePosOnOpeningCurrentPopup();
+	ImVec2 temp_value = ImGui::GetMousePosOnOpeningCurrentPopup(); return *(Fvector2*)&temp_value;
 }
 
 IC Fvector2 ImGui_GetMouseDragDelta(ImGuiMouseButton button = 0, float lock_treshold = -1.f)
 {
-	return *(Fvector2*)&ImGui::GetMouseDragDelta(button, lock_treshold);
+	ImVec2 temp_value = ImGui::GetMouseDragDelta(button, lock_treshold); return *(Fvector2*)&temp_value;
 }
 
 IC LPCSTR ImGui_GetClipboardText()
@@ -413,7 +413,7 @@ IC LPCSTR ImGui_GetClipboardText()
 
 IC Fcolor ImGui_GetStyleColorVec4(ImGuiCol idx)
 {
-	return *(Fcolor*)&ImGui::GetStyleColorVec4(idx);
+	ImVec4 temp_value = ImGui::GetStyleColorVec4(idx); return *(Fcolor*)&temp_value;
 }
 
 IC void ImGui_PushStyleVar(ImGuiStyleVar var,Fvector2 val)

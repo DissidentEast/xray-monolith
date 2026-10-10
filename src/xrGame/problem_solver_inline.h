@@ -8,6 +8,9 @@
 
 #pragma once
 
+// GraphEngineSpace must be visible at the template definition points below.
+#include "graph_engine_space.h"
+
 #define TEMPLATE_SPECIALIZATION template<\
 	typename _operator_condition,\
 	typename _operator,\
