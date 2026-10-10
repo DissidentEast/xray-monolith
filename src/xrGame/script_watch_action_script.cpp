@@ -11,38 +11,39 @@
 #include "script_game_object.h"
 #include "sight_manager_space.h"
 
-using namespace luabind;
+#include "LuaBridge/LuaBridge.h"
 
 #pragma optimize("s",on)
 void CScriptWatchAction::script_register(lua_State* L)
 {
-	module(L)
-	[
-		class_<CScriptWatchAction>("look")
-		.enum_("look")
-		[
-			value("path_dir", int(SightManager::eSightTypePathDirection)),
-			value("search", int(SightManager::eSightTypeSearch)),
-			value("danger", int(SightManager::eSightTypeCover)),
-			value("point", int(SightManager::eSightTypePosition)),
-			value("fire_point", int(SightManager::eSightTypeFirePosition)),
-			value("cur_dir", int(SightManager::eSightTypeCurrentDirection)),
-			value("direction", int(SightManager::eSightTypeDirection))
-		]
-		.def(constructor<>())
-		.def(constructor<SightManager::ESightType>())
-		.def(constructor<SightManager::ESightType, Fvector &>())
-		.def(constructor<SightManager::ESightType, CScriptGameObject*>())
-		.def(constructor<SightManager::ESightType, CScriptGameObject*, LPCSTR>())
+	luabridge::getGlobalNamespace(L)
+		.beginClass<CScriptWatchAction>("look")
+			.addConstructor<void(*)()>()
+			.addConstructor<void(*)(SightManager::ESightType)>()
+			.addConstructor<void(*)(SightManager::ESightType, Fvector&)>()
+			.addConstructor<void(*)(SightManager::ESightType, CScriptGameObject*)>()
+			.addConstructor<void(*)(SightManager::ESightType, CScriptGameObject*, LPCSTR)>()
 
-		// searchlight 
-		.def(constructor<const Fvector &, float, float>())
-		.def(constructor<CScriptGameObject*, float, float>())
+			// searchlight
+			.addConstructor<void(*)(const Fvector&, float, float)>()
+			.addConstructor<void(*)(CScriptGameObject*, float, float)>()
 
-		.def("object", &CScriptWatchAction::SetWatchObject) // time
-		.def("direct", &CScriptWatchAction::SetWatchDirection) // time
-		.def("type", &CScriptWatchAction::SetWatchType)
-		.def("bone", &CScriptWatchAction::SetWatchBone)
-		.def("completed", (bool (CScriptWatchAction::*)())(&CScriptWatchAction::completed))
-	];
+			.addFunction("object", &CScriptWatchAction::SetWatchObject) // time
+			.addFunction("direct", &CScriptWatchAction::SetWatchDirection) // time
+			.addFunction("type", &CScriptWatchAction::SetWatchType)
+			.addFunction("bone", &CScriptWatchAction::SetWatchBone)
+			.addFunction("completed", (bool (CScriptWatchAction::*)())(&CScriptWatchAction::completed))
+		.endClass();
+
+	lua_getglobal(L, "look");
+	lua_createtable(L, 0, 7);
+	lua_pushinteger(L, int(SightManager::eSightTypePathDirection));	lua_setfield(L, -2, "path_dir");
+	lua_pushinteger(L, int(SightManager::eSightTypeSearch));	lua_setfield(L, -2, "search");
+	lua_pushinteger(L, int(SightManager::eSightTypeCover));	lua_setfield(L, -2, "danger");
+	lua_pushinteger(L, int(SightManager::eSightTypePosition));	lua_setfield(L, -2, "point");
+	lua_pushinteger(L, int(SightManager::eSightTypeFirePosition));	lua_setfield(L, -2, "fire_point");
+	lua_pushinteger(L, int(SightManager::eSightTypeCurrentDirection));	lua_setfield(L, -2, "cur_dir");
+	lua_pushinteger(L, int(SightManager::eSightTypeDirection));	lua_setfield(L, -2, "direction");
+	lua_setfield(L, -2, "look");
+	lua_pop(L, 1);
 }

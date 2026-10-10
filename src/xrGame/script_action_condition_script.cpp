@@ -9,26 +9,27 @@
 #include "pch_script.h"
 #include "script_action_condition.h"
 
-using namespace luabind;
+#include "LuaBridge/LuaBridge.h"
 
 #pragma optimize("s",on)
 void CScriptActionCondition::script_register(lua_State* L)
 {
-	module(L)
-	[
-		class_<CScriptActionCondition>("cond")
-		.enum_("cond")
-		[
-			value("move_end", int(CScriptActionCondition::MOVEMENT_FLAG)),
-			value("look_end", int(CScriptActionCondition::WATCH_FLAG)),
-			value("anim_end", int(CScriptActionCondition::ANIMATION_FLAG)),
-			value("sound_end", int(CScriptActionCondition::SOUND_FLAG)),
-			value("object_end", int(CScriptActionCondition::OBJECT_FLAG)),
-			value("time_end", int(CScriptActionCondition::TIME_FLAG)),
-			value("act_end", int(CScriptActionCondition::ACT_FLAG))
-		]
-		.def(constructor<>())
-		.def(constructor<u32>())
-		.def(constructor<u32, double>())
-	];
+	luabridge::getGlobalNamespace(L)
+		.beginClass<CScriptActionCondition>("cond")
+			.addConstructor<void(*)()>()
+			.addConstructor<void(*)(u32)>()
+			.addConstructor<void(*)(u32, double)>()
+		.endClass();
+
+	lua_getglobal(L, "cond");
+	lua_createtable(L, 0, 7);
+	lua_pushinteger(L, int(CScriptActionCondition::MOVEMENT_FLAG));	lua_setfield(L, -2, "move_end");
+	lua_pushinteger(L, int(CScriptActionCondition::WATCH_FLAG));	lua_setfield(L, -2, "look_end");
+	lua_pushinteger(L, int(CScriptActionCondition::ANIMATION_FLAG));	lua_setfield(L, -2, "anim_end");
+	lua_pushinteger(L, int(CScriptActionCondition::SOUND_FLAG));	lua_setfield(L, -2, "sound_end");
+	lua_pushinteger(L, int(CScriptActionCondition::OBJECT_FLAG));	lua_setfield(L, -2, "object_end");
+	lua_pushinteger(L, int(CScriptActionCondition::TIME_FLAG));	lua_setfield(L, -2, "time_end");
+	lua_pushinteger(L, int(CScriptActionCondition::ACT_FLAG));	lua_setfield(L, -2, "act_end");
+	lua_setfield(L, -2, "cond");
+	lua_pop(L, 1);
 }

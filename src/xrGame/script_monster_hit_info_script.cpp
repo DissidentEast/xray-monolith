@@ -4,7 +4,7 @@
 #include "ai_monster_space.h"
 #include "AI/Monsters/monster_sound_defs.h"
 
-using namespace luabind;
+#include "LuaBridge/LuaBridge.h"
 
 struct CMonsterSpace
 {
@@ -13,25 +13,25 @@ struct CMonsterSpace
 #pragma optimize("s",on)
 void CScriptMonsterHitInfo::script_register(lua_State* L)
 {
-	module(L)
-	[
-		class_<CScriptMonsterHitInfo>("MonsterHitInfo")
-		.def_readwrite("who", &CScriptMonsterHitInfo::who)
-		.def_readwrite("direction", &CScriptMonsterHitInfo::direction)
-		.def_readwrite("time", &CScriptMonsterHitInfo::time),
+	luabridge::getGlobalNamespace(L)
+		.beginClass<CScriptMonsterHitInfo>("MonsterHitInfo")
+			.addPropertyReadWrite("who", &CScriptMonsterHitInfo::who)
+			.addPropertyReadWrite("direction", &CScriptMonsterHitInfo::direction)
+			.addPropertyReadWrite("time", &CScriptMonsterHitInfo::time)
+		.endClass()
 
-		class_<CMonsterSpace>("MonsterSpace")
-		.enum_("sounds")
-		[
-			value("sound_script", MonsterSound::eMonsterSoundScript)
-		]
+		.beginClass<CMonsterSpace>("MonsterSpace")
+		.endClass();
 
-		.enum_("head_anim")
-		[
-			value("head_anim_normal", MonsterSpace::eHeadAnimNormal),
-			value("head_anim_angry", MonsterSpace::eHeadAnimAngry),
-			value("head_anim_glad", MonsterSpace::eHeadAnimGlad),
-			value("head_anim_kind", MonsterSpace::eHeadAnimKind)
-		]
-	];
+	lua_getglobal(L, "MonsterSpace");
+	lua_createtable(L, 0, 1);
+	lua_pushinteger(L, MonsterSound::eMonsterSoundScript);	lua_setfield(L, -2, "sound_script");
+	lua_setfield(L, -2, "sounds");
+	lua_createtable(L, 0, 4);
+	lua_pushinteger(L, MonsterSpace::eHeadAnimNormal);	lua_setfield(L, -2, "head_anim_normal");
+	lua_pushinteger(L, MonsterSpace::eHeadAnimAngry);	lua_setfield(L, -2, "head_anim_angry");
+	lua_pushinteger(L, MonsterSpace::eHeadAnimGlad);	lua_setfield(L, -2, "head_anim_glad");
+	lua_pushinteger(L, MonsterSpace::eHeadAnimKind);	lua_setfield(L, -2, "head_anim_kind");
+	lua_setfield(L, -2, "head_anim");
+	lua_pop(L, 1);
 }

@@ -10,24 +10,24 @@
 #include "script_monster_action.h"
 #include "script_game_object.h"
 
-using namespace luabind;
+#include "LuaBridge/LuaBridge.h"
 
 #pragma optimize("s",on)
 void CScriptMonsterAction::script_register(lua_State* L)
 {
-	module(L)
-	[
-		class_<CScriptMonsterAction>("act")
-		.enum_("type")
-		[
-			value("rest", int(MonsterSpace::eGA_Rest)),
-			value("eat", int(MonsterSpace::eGA_Eat)),
-			value("attack", int(MonsterSpace::eGA_Attack)),
-			value("panic", int(MonsterSpace::eGA_Panic))
-		]
+	luabridge::getGlobalNamespace(L)
+		.beginClass<CScriptMonsterAction>("act")
+			.addConstructor<void(*)()>()
+			.addConstructor<void(*)(MonsterSpace::EScriptMonsterGlobalAction)>()
+			.addConstructor<void(*)(MonsterSpace::EScriptMonsterGlobalAction, CScriptGameObject*)>()
+		.endClass();
 
-		.def(constructor<>())
-		.def(constructor<MonsterSpace::EScriptMonsterGlobalAction>())
-		.def(constructor<MonsterSpace::EScriptMonsterGlobalAction, CScriptGameObject*>())
-	];
+	lua_getglobal(L, "act");
+	lua_createtable(L, 0, 4);
+	lua_pushinteger(L, int(MonsterSpace::eGA_Rest));	lua_setfield(L, -2, "rest");
+	lua_pushinteger(L, int(MonsterSpace::eGA_Eat));	lua_setfield(L, -2, "eat");
+	lua_pushinteger(L, int(MonsterSpace::eGA_Attack));	lua_setfield(L, -2, "attack");
+	lua_pushinteger(L, int(MonsterSpace::eGA_Panic));	lua_setfield(L, -2, "panic");
+	lua_setfield(L, -2, "type");
+	lua_pop(L, 1);
 }
