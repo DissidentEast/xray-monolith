@@ -2,18 +2,17 @@
 #include "script_sound_info.h"
 #include "script_game_object.h"
 
-using namespace luabind;
+#include "LuaBridge/LuaBridge.h"
 
 #pragma optimize("s",on)
 void CScriptSoundInfo::script_register(lua_State* L)
 {
-	module(L)
-	[
-		class_<CScriptSoundInfo>("SoundInfo")
-		.def_readwrite("who", &CScriptSoundInfo::who)
-		.def_readwrite("danger", &CScriptSoundInfo::dangerous)
-		.def_readwrite("position", &CScriptSoundInfo::position)
-		.def_readwrite("power", &CScriptSoundInfo::power)
-		.def_readwrite("time", &CScriptSoundInfo::time)
-	];
+	luabridge::getGlobalNamespace(L)
+		.beginClass<CScriptSoundInfo>("SoundInfo")
+			.addPropertyReadWrite("who", &CScriptSoundInfo::who)
+			.addPropertyReadWrite("danger", &CScriptSoundInfo::dangerous)
+			.addPropertyReadWrite("position", &CScriptSoundInfo::position)
+			.addPropertyReadWrite("power", &CScriptSoundInfo::power)
+			.addPropertyReadWrite("time", &CScriptSoundInfo::time)
+		.endClass();
 }

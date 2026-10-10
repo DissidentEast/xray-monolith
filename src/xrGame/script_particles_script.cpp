@@ -9,33 +9,32 @@
 #include "pch_script.h"
 #include "script_particles.h"
 
-using namespace luabind;
+#include "LuaBridge/LuaBridge.h"
 
 #pragma optimize("s",on)
 void CScriptParticles::script_register(lua_State* L)
 {
-	module(L)
-	[
-		class_<CScriptParticles>("particles_object")
-		.def(constructor<LPCSTR>())
-		.def("play", &CScriptParticles::Play)
-		.def("play_at_pos", &CScriptParticles::PlayAtPos)
-		.def("stop", &CScriptParticles::Stop)
-		.def("stop_deffered", &CScriptParticles::StopDeffered)
+	luabridge::getGlobalNamespace(L)
+		.beginClass<CScriptParticles>("particles_object")
+			.addConstructor<void(*)(LPCSTR)>()
+			.addFunction("play", &CScriptParticles::Play)
+			.addFunction("play_at_pos", &CScriptParticles::PlayAtPos)
+			.addFunction("stop", &CScriptParticles::Stop)
+			.addFunction("stop_deffered", &CScriptParticles::StopDeffered)
 
-		.def("playing", &CScriptParticles::IsPlaying)
-		.def("looped", &CScriptParticles::IsLooped)
+			.addFunction("playing", &CScriptParticles::IsPlaying)
+			.addFunction("looped", &CScriptParticles::IsLooped)
 
-		.def("move_to", &CScriptParticles::MoveTo)
-		.def("set_position", &CScriptParticles::XFORMMoveTo)
-		.def("set_direction", &CScriptParticles::SetDirection)
-		.def("set_orientation", &CScriptParticles::SetOrientation)
-		.def("set_hud_mode", &CScriptParticles::SetHudMode)
+			.addFunction("move_to", &CScriptParticles::MoveTo)
+			.addFunction("set_position", &CScriptParticles::XFORMMoveTo)
+			.addFunction("set_direction", &CScriptParticles::SetDirection)
+			.addFunction("set_orientation", &CScriptParticles::SetOrientation)
+			.addFunction("set_hud_mode", &CScriptParticles::SetHudMode)
 
-		.def("last_position", &CScriptParticles::LastPosition)
-		.def("load_path", &CScriptParticles::LoadPath)
-		.def("start_path", &CScriptParticles::StartPath)
-		.def("stop_path", &CScriptParticles::StopPath)
-		.def("pause_path", &CScriptParticles::PausePath)
-	];
+			.addFunction("last_position", &CScriptParticles::LastPosition)
+			.addFunction("load_path", &CScriptParticles::LoadPath)
+			.addFunction("start_path", &CScriptParticles::StartPath)
+			.addFunction("stop_path", &CScriptParticles::StopPath)
+			.addFunction("pause_path", &CScriptParticles::PausePath)
+		.endClass();
 }

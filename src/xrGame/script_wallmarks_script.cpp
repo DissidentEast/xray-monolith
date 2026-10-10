@@ -1,7 +1,7 @@
 #include "pch_script.h"
 #include "script_wallmarks_manager.h"
 
-using namespace luabind;
+#include "LuaBridge/LuaBridge.h"
 
 ScriptWallmarksManager* GetManager()
 {
@@ -11,18 +11,15 @@ ScriptWallmarksManager* GetManager()
 #pragma optimize("s",on)
 void CScriptWallmarksManager::script_register(lua_State *L)
 {
-	module(L)
-	[
-		class_<ScriptWallmarksManager>("ScriptWallmarksManager")
-		.def(constructor<>())
-		.def("place", (void (ScriptWallmarksManager::*)(Fvector, Fvector, float, float, LPCSTR, CScriptGameObject*, float))(&ScriptWallmarksManager::PlaceWallmark))
-		.def("place", (void (ScriptWallmarksManager::*)(Fvector, Fvector, float, float, LPCSTR, CScriptGameObject*, float, bool))(&ScriptWallmarksManager::PlaceWallmark))
+	luabridge::getGlobalNamespace(L)
+		.beginClass<ScriptWallmarksManager>("ScriptWallmarksManager")
+			.addConstructor<void(*)()>()
+			.addFunction("place", (void (ScriptWallmarksManager::*)(Fvector, Fvector, float, float, LPCSTR, CScriptGameObject*, float))(&ScriptWallmarksManager::PlaceWallmark), (void (ScriptWallmarksManager::*)(Fvector, Fvector, float, float, LPCSTR, CScriptGameObject*, float, bool))(&ScriptWallmarksManager::PlaceWallmark)
 
-		// demonized: add user defined rotation to wallmark
-		.def("place", (void (ScriptWallmarksManager::*)(Fvector, Fvector, float, float, LPCSTR, CScriptGameObject*, float, float))(&ScriptWallmarksManager::PlaceWallmark))
+			// demonized: add user defined rotation to wallmark
+			, (void (ScriptWallmarksManager::*)(Fvector, Fvector, float, float, LPCSTR, CScriptGameObject*, float, float))(&ScriptWallmarksManager::PlaceWallmark))
 
-		.def("place_skeleton", &ScriptWallmarksManager::PlaceSkeletonWallmark),
-
-		def("wallmarks_manager", &GetManager)
-	];
+			.addFunction("place_skeleton", &ScriptWallmarksManager::PlaceSkeletonWallmark)
+		.endClass()
+		.addFunction("wallmarks_manager", &GetManager);
 }

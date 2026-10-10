@@ -10,23 +10,21 @@
 #include "script_zone.h"
 #include "smart_zone.h"
 
-using namespace luabind;
+#include "LuaBridge/LuaBridge.h"
 
 #pragma optimize("s",on)
 void CScriptZone::script_register(lua_State* L)
 {
-	module(L)
-	[
-		class_<CScriptZone, DLL_Pure>("ce_script_zone")
-		.def(constructor<>())
-	];
+	luabridge::getGlobalNamespace(L)
+		.deriveClass<CScriptZone, DLL_Pure>("ce_script_zone")
+			.addConstructor<void(*)()>()
+		.endClass();
 }
 
 void CSmartZone::script_register(lua_State* L)
 {
-	module(L)
-	[
-		class_<CSmartZone, DLL_Pure>("ce_smart_zone")
-		.def(constructor<>())
-	];
+	luabridge::getGlobalNamespace(L)
+		.deriveClass<CSmartZone, DLL_Pure>("ce_smart_zone")
+			.addConstructor<void(*)()>()
+		.endClass();
 }
