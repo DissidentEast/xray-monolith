@@ -2,7 +2,11 @@
 #include "UIMainIngameWnd.h"
 #include "UIMotionIcon.h"
 #include "UIXmlInit.h"
-#include "../actor.cpp"
+#include "../Actor.h"
+// NOTE: Actor.cpp was #included here historically (unity-build leftover),
+// which defined every CActor symbol twice (178x LNK4006, Actor.obj vs
+// UIMotionIcon.obj). Actor.cpp is compiled as its own TU, so the include
+// is pure duplication.
 
 const LPCSTR MOTION_ICON_XML = "motion_icon.xml";
 

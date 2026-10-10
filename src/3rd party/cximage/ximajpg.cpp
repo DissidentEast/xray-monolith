@@ -11,7 +11,10 @@
 
 #define XMD_H
 #define HAVE_BOOLEAN
+// See ximajpg.h: map boolean to int so struct jpeg_* matches libjpeg.lib.
+#define boolean int
 #include <jpeg/jmorecfg.h>
+#undef boolean
 #undef HAVE_BOOLEAN
 #undef XMD_H
 
