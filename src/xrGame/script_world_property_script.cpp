@@ -10,18 +10,28 @@
 #include "script_world_property.h"
 #include "operator_abstract.h"
 
-using namespace luabind;
+#include "LuaBridge/LuaBridge.h"
 
 #pragma optimize("s",on)
+
+static bool world_property_less(CScriptWorldProperty const& a, CScriptWorldProperty const& b)
+{
+	return a < b;
+}
+
+static bool world_property_equal(CScriptWorldProperty const& a, CScriptWorldProperty const& b)
+{
+	return a == b;
+}
+
 void CScriptWorldPropertyWrapper::script_register(lua_State* L)
 {
-	module(L)
-	[
-		class_<CScriptWorldProperty>("world_property")
-		.def(constructor<CScriptWorldProperty::_condition_type, CScriptWorldProperty::_value_type>())
-		.def("condition", &CScriptWorldProperty::condition)
-		.def("value", &CScriptWorldProperty::value)
-		.def(const_self < other<CScriptWorldProperty>())
-		.def(const_self == other<CScriptWorldProperty>())
-	];
+	luabridge::getGlobalNamespace(L)
+		.beginClass<CScriptWorldProperty>("world_property")
+			.addConstructor<void(*)(CScriptWorldProperty::_condition_type, CScriptWorldProperty::_value_type)>()
+			.addFunction("condition", &CScriptWorldProperty::condition)
+			.addFunction("value", &CScriptWorldProperty::value)
+			.addFunction("__lt", &world_property_less)
+			.addFunction("__eq", &world_property_equal)
+		.endClass();
 }
