@@ -8,6 +8,10 @@
 
 #pragma once
 
+// CLevelGraph and ai() must be visible at the template definition points below.
+#include "level_graph.h"
+#include "ai_space.h"
+
 IC CSpaceRestrictionBridge::CSpaceRestrictionBridge(CSpaceRestrictionBase* object)
 {
 	VERIFY(object);

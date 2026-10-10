@@ -20,7 +20,7 @@ public:
 
 	virtual bool ability_can_drag() { return true; }
 
-	virtual char* get_monster_class_name() { return "flesh"; }
+	virtual const char* get_monster_class_name() { return "flesh"; }
 
 
 private:

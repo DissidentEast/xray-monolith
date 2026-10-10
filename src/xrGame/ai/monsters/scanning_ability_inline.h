@@ -1,5 +1,7 @@
 #pragma once
 #include "ai_monster_effector.h"
+// Actor() must be visible at the template definition points below.
+#include "../../Actor.h"
 
 #define TEMPLATE_SPECIALIZATION template <\
 	typename _Object\

@@ -97,15 +97,15 @@ namespace gamespy_profile
 
 	typedef mixed_delegate<void (bool, char const*), store_operation_cb_tag> store_operation_cb;
 
-	extern char* profile_table_name;
+	extern char const* profile_table_name;
 
-	extern char* profile_store_file_name;
-	extern char* award_count_line;
-	extern char* award_rdate_line;
-	extern char* best_score_value_line;
-	extern char* profile_data_section;
-	extern char* profile_id_line;
-	extern char* profile_last_submit_time;
+	extern char const* profile_store_file_name;
+	extern char const* award_count_line;
+	extern char const* award_rdate_line;
+	extern char const* best_score_value_line;
+	extern char const* profile_data_section;
+	extern char const* profile_id_line;
+	extern char const* profile_last_submit_time;
 } //namespace gamespy_profile
 
 

@@ -524,7 +524,7 @@ script_attachment* script_attachment::GetChild(LPCSTR name)
 {
 	if (m_children.size())
 	{
-		auto& pair = m_children.find(name);
+		auto pair = m_children.find(name);
 		if (pair != m_children.end())
 			return pair->second;
 	}
@@ -534,7 +534,7 @@ script_attachment* script_attachment::GetChild(LPCSTR name)
 
 void script_attachment::RemoveChild(LPCSTR name, bool destroy)
 {
-	auto& pair = m_children.find(name);
+	auto pair = m_children.find(name);
 	if (pair == m_children.end())
 		return;
 
@@ -768,7 +768,7 @@ void script_attachment::SetName(LPCSTR name)
 		// Remove old instance from parent (without destroying it)
 		Level().remove_child(GetName(), false);
 
-		auto& pair = Level().GetAttachments()->find(name);
+		auto pair = Level().GetAttachments()->find(name);
 		if (pair != Level().GetAttachments()->end())
 		{
 			// Attachment with name exists, replace it
@@ -786,7 +786,7 @@ void script_attachment::SetName(LPCSTR name)
 		// Remove old instance from parent (without destroying it)
 		m_parent_object->remove_child(GetName(), false);
 
-		auto& pair = m_parent_object->GetAttachments()->find(name);
+		auto pair = m_parent_object->GetAttachments()->find(name);
 		if (pair != m_parent_object->GetAttachments()->end())
 		{
 			// Attachment with name exists, replace it
@@ -805,7 +805,7 @@ void script_attachment::SetName(LPCSTR name)
 		// Remove old instance from parent (without destroying it)
 		m_parent_attachment->RemoveChild(GetName(), false);
 
-		auto& pair = m_parent_attachment->m_children.find(name);
+		auto pair = m_parent_attachment->m_children.find(name);
 		if (pair != m_parent_attachment->m_children.end())
 		{
 			// Attachment with name exists, replace it
@@ -826,7 +826,7 @@ const ::luabind::object& script_attachment::GetUserdata() const
 {
 	if (!m_userdata)
 	{
-		const_cast<::luabind::object*>(m_userdata) = xr_new<::luabind::object>();
+		m_userdata = xr_new<::luabind::object>();
 		*m_userdata = ::luabind::newtable(ai().script_engine().lua());
 	}
 	return *m_userdata;

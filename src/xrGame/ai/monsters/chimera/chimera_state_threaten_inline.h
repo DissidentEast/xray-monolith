@@ -15,9 +15,9 @@ TEMPLATE_SPECIALIZATION
 CStateChimeraThreatenAbstract::CStateChimeraThreaten(_Object* obj) : inherited(obj)
 {
 	m_last_time_threaten = 0;
-	add_state(eStateWalk, xr_new<CStateChimeraThreatenWalk<_Object>>(obj));
-	add_state(eStateThreaten, xr_new<CStateChimeraThreatenRoar<_Object>>(obj));
-	add_state(eStateSteal, xr_new<CStateChimeraThreatenSteal<_Object>>(obj));
+	this->add_state(eStateWalk, xr_new<CStateChimeraThreatenWalk<_Object>>(obj));
+	this->add_state(eStateThreaten, xr_new<CStateChimeraThreatenRoar<_Object>>(obj));
+	this->add_state(eStateSteal, xr_new<CStateChimeraThreatenSteal<_Object>>(obj));
 }
 
 TEMPLATE_SPECIALIZATION
@@ -41,10 +41,10 @@ void CStateChimeraThreatenAbstract::reinit()
 TEMPLATE_SPECIALIZATION
 bool CStateChimeraThreatenAbstract::check_start_conditions()
 {
-	if (object->tfGetRelationType(object->EnemyMan.get_enemy()) == ALife::eRelationTypeWorstEnemy) return false;
-	if (object->Position().distance_to(object->EnemyMan.get_enemy_position()) < MIN_DIST_TO_ENEMY) return false;
-	if (object->HitMemory.is_hit()) return false;
-	if (object->hear_dangerous_sound) return false;
+	if (this->object->tfGetRelationType(this->object->EnemyMan.get_enemy()) == ALife::eRelationTypeWorstEnemy) return false;
+	if (this->object->Position().distance_to(this->object->EnemyMan.get_enemy_position()) < MIN_DIST_TO_ENEMY) return false;
+	if (this->object->HitMemory.is_hit()) return false;
+	if (this->object->hear_dangerous_sound) return false;
 	if (m_last_time_threaten + THREATEN_DELAY > Device.dwTimeGlobal) return false;
 
 	return true;
@@ -53,9 +53,9 @@ bool CStateChimeraThreatenAbstract::check_start_conditions()
 TEMPLATE_SPECIALIZATION
 bool CStateChimeraThreatenAbstract::check_completion()
 {
-	if (object->Position().distance_to(object->EnemyMan.get_enemy_position()) < MIN_DIST_TO_ENEMY) return true;
-	if (object->HitMemory.is_hit()) return true;
-	if (object->tfGetRelationType(object->EnemyMan.get_enemy()) == ALife::eRelationTypeWorstEnemy) return true;
+	if (this->object->Position().distance_to(this->object->EnemyMan.get_enemy_position()) < MIN_DIST_TO_ENEMY) return true;
+	if (this->object->HitMemory.is_hit()) return true;
+	if (this->object->tfGetRelationType(this->object->EnemyMan.get_enemy()) == ALife::eRelationTypeWorstEnemy) return true;
 
 	return false;
 }
@@ -69,33 +69,33 @@ void CStateChimeraThreatenAbstract::initialize()
 TEMPLATE_SPECIALIZATION
 void CStateChimeraThreatenAbstract::reselect_state()
 {
-	if (prev_substate == u32(-1))
+	if (this->prev_substate == u32(-1))
 	{
-		select_state(eStateThreaten);
+		this->select_state(eStateThreaten);
 		return;
 	}
 
-	if (prev_substate == eStateSteal)
+	if (this->prev_substate == eStateSteal)
 	{
-		select_state(eStateThreaten);
+		this->select_state(eStateThreaten);
 		return;
 	}
 
-	if (prev_substate == eStateThreaten)
+	if (this->prev_substate == eStateThreaten)
 	{
-		if (get_state(eStateSteal)->check_start_conditions())
+		if (this->get_state(eStateSteal)->check_start_conditions())
 		{
-			select_state(eStateSteal);
+			this->select_state(eStateSteal);
 			return;
 		}
-		else if (get_state(eStateWalk)->check_start_conditions())
+		else if (this->get_state(eStateWalk)->check_start_conditions())
 		{
-			select_state(eStateWalk);
+			this->select_state(eStateWalk);
 			return;
 		}
 	}
 
-	select_state(eStateThreaten);
+	this->select_state(eStateThreaten);
 }
 
 TEMPLATE_SPECIALIZATION

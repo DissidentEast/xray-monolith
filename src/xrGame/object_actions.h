@@ -9,6 +9,10 @@
 #pragma once
 
 #include "action_base.h"
+// ObjectHandlerSpace, CHudItem and CHUDState must be complete at the template
+// definition points in object_actions_inline.h.
+#include "object_handler_space.h"
+#include "HudItem.h"
 
 class CAI_Stalker;
 class CInventoryItem;
@@ -55,12 +59,12 @@ protected:
 	typedef CObjectActionBase<_item_type> inherited;
 
 protected:
-	_condition_type m_condition_id;
-	_value_type m_value;
+	typename inherited::_condition_type m_condition_id;
+	typename inherited::_value_type m_value;
 
 public:
 	IC CObjectActionMember(_item_type* item, CAI_Stalker* owner, CPropertyStorage* storage,
-	                       _condition_type condition_id, _value_type value, LPCSTR action_name = "");
+	                       typename inherited::_condition_type condition_id, typename inherited::_value_type value, LPCSTR action_name = "");
 	virtual void execute();
 };
 

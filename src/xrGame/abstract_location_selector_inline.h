@@ -9,6 +9,8 @@
 #pragma once
 
 #include "profiler.h"
+// ai() must be visible at the template definition points below.
+#include "ai_space.h"
 
 #define TEMPLATE_SPECIALIZATION template <\
 	typename _Graph,\

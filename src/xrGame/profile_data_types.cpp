@@ -3,15 +3,15 @@
 
 namespace gamespy_profile
 {
-	char* profile_table_name = "PlayerStats_v1";
+	char const* profile_table_name = "PlayerStats_v1";
 
-	char* profile_store_file_name = "mp_profile.ltx";
-	char* award_count_line = "count";
-	char* award_rdate_line = "rdate";
-	char* best_score_value_line = "value";
-	char* profile_data_section = "profile_data";
-	char* profile_id_line = "id";
-	char* profile_last_submit_time = "last_submit";
+	char const* profile_store_file_name = "mp_profile.ltx";
+	char const* award_count_line = "count";
+	char const* award_rdate_line = "rdate";
+	char const* best_score_value_line = "value";
+	char const* profile_data_section = "profile_data";
+	char const* profile_id_line = "id";
+	char const* profile_last_submit_time = "last_submit";
 
 	static char const* awards_names[at_awards_count] =
 	{

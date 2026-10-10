@@ -5,8 +5,7 @@
 
 #include "../../weighted_random.h"
 
-inline
-TTime current_time() { return Device.dwTimeGlobal; }
+// current_time() now lives in ai/Monsters/state.h so every state header sees it.
 
 template <typename _Object>
 class CStateMonsterAttackOnRun : public CState<_Object>

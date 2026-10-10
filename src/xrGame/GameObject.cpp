@@ -344,16 +344,14 @@ BOOL CGameObject::net_Spawn(CSE_Abstract* DC)
 	CSE_ALifeObject* O = smart_cast<CSE_ALifeObject*>(E);
 	if (O && xr_strlen(O->m_ini_string))
 	{
-#pragma warning(push)
-#pragma warning(disable:4238)
+		IReader ini_reader(
+			(void*)(*(O->m_ini_string)),
+			O->m_ini_string.size()
+		);
 		m_ini_file = xr_new<CInifile>(
-			&IReader(
-				(void*)(*(O->m_ini_string)),
-				O->m_ini_string.size()
-			),
+			&ini_reader,
 			FS.get_path("$game_config$")->m_Path
 		);
-#pragma warning(pop)
 	}
 
 	m_story_id = ALife::_STORY_ID(-1);
@@ -885,7 +883,7 @@ script_attachment* CGameObject::get_attachment(LPCSTR name)
 {
 	if (m_script_attachments.size())
 	{
-		auto& att = m_script_attachments.find(name);
+		auto att = m_script_attachments.find(name);
 		if (att != m_script_attachments.end())
 			return att->second;
 	}

@@ -11,13 +11,13 @@
 TEMPLATE_SPECIALIZATION
 CStatePsyDogPsyAttackAbstract::CStatePsyDogPsyAttack(_Object* obj) : inherited(obj)
 {
-	add_state(eStateAttack_HideInCover, xr_new<CStatePsyDogHide<_Object>>(obj));
+	this->add_state(eStateAttack_HideInCover, xr_new<CStatePsyDogHide<_Object>>(obj));
 }
 
 TEMPLATE_SPECIALIZATION
 void CStatePsyDogPsyAttackAbstract::reselect_state()
 {
-	select_state(eStateAttack_HideInCover);
+	this->select_state(eStateAttack_HideInCover);
 }
 
 

@@ -8,7 +8,9 @@
 
 #pragma once
 
-//#include "script_game_object.h"
+// CScriptGameObject must be complete at the template definition points below
+// (/permissive- checks smart_cast instantiation at definition, not at use).
+#include "script_game_object.h"
 class CScriptGameObject;
 
 #define TEMPLATE_SPECIALIZATION \
