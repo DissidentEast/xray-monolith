@@ -920,3 +920,5 @@ IC CActorCondition& CActor::conditions() const
 extern CActor* g_actor;
 CActor* Actor();
 extern const float s_fFallTime;
+// Free functions living in Actor.cpp (used by ui/UIMotionIcon.cpp).
+float GetActorVisibility();

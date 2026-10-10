@@ -240,11 +240,6 @@
     <Lib />
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="ansi2knr.c" />
-    <ClCompile Include="cdjpeg.c" />
-    <ClCompile Include="cjpeg.c" />
-    <ClCompile Include="ckconfig.c" />
-    <ClCompile Include="djpeg.c" />
     <ClCompile Include="jcapimin.c" />
     <ClCompile Include="jcapistd.c" />
     <ClCompile Include="jccoefct.c" />
@@ -286,29 +281,11 @@
     <ClCompile Include="jidctfst.c" />
     <ClCompile Include="jidctint.c" />
     <ClCompile Include="jidctred.c" />
-    <ClCompile Include="jmemansi.c" />
     <ClCompile Include="jmemmgr.c" />
-    <ClCompile Include="jmemname.c" />
     <ClCompile Include="jmemnobs.c" />
-    <ClCompile Include="jpegtran.c" />
     <ClCompile Include="jquant1.c" />
     <ClCompile Include="jquant2.c" />
     <ClCompile Include="jutils.c" />
-    <ClCompile Include="rdbmp.c" />
-    <ClCompile Include="rdcolmap.c" />
-    <ClCompile Include="rdgif.c" />
-    <ClCompile Include="rdjpgcom.c" />
-    <ClCompile Include="rdppm.c" />
-    <ClCompile Include="rdrle.c" />
-    <ClCompile Include="rdswitch.c" />
-    <ClCompile Include="rdtarga.c" />
-    <ClCompile Include="transupp.c" />
-    <ClCompile Include="wrbmp.c" />
-    <ClCompile Include="wrgif.c" />
-    <ClCompile Include="wrjpgcom.c" />
-    <ClCompile Include="wrppm.c" />
-    <ClCompile Include="wrrle.c" />
-    <ClCompile Include="wrtarga.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cderror.h" />

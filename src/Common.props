@@ -26,7 +26,11 @@
            fixed with ::template disambiguators, monsters/planners fixed with
            typename/this->, see branch history). Vendored C-only libs (luajit,
            libjpeg, libogg, libtheora, libvorbis) are excluded: /permissive-
-           is C++-only. 'default' is ode's default.vcxproj. -->
+           is C++-only. 'default' is ode's default.vcxproj.
+           NOTE on C4530/EH: Release builds must NOT use /EHsc (xrCore.h
+           #errors on _CPPUNWIND in release, defines LUABIND_NO_EXCEPTIONS
+           and disables 4530 via pragma). Debug/Mixed configs require EH.
+           Leave ExceptionHandling to the per-project pins. -->
       <ConformanceMode Condition="'$(MSBuildProjectName)'=='xrGame' or '$(MSBuildProjectName)'=='xrCore' or '$(MSBuildProjectName)'=='xrPhysics' or '$(MSBuildProjectName)'=='xrNetServer' or '$(MSBuildProjectName)'=='NVTT' or '$(MSBuildProjectName)'=='default' or '$(MSBuildProjectName)'=='DXERR' or '$(MSBuildProjectName)'=='xrXMLParser' or '$(MSBuildProjectName)'=='xrCPU_Pipe' or '$(MSBuildProjectName)'=='crypto' or '$(MSBuildProjectName)'=='giflib' or '$(MSBuildProjectName)'=='xrCDB' or '$(MSBuildProjectName)'=='imgui' or '$(MSBuildProjectName)'=='lua_extensions' or '$(MSBuildProjectName)'=='ReShadeCompat' or '$(MSBuildProjectName)'=='xrAPI' or '$(MSBuildProjectName)'=='xrSound' or '$(MSBuildProjectName)'=='xrParticles' or '$(MSBuildProjectName)'=='OpenAL-new' or '$(MSBuildProjectName)'=='optick' or '$(MSBuildProjectName)'=='cximage' or '$(MSBuildProjectName)'=='luabind' or '$(MSBuildProjectName)'=='xrRender_R1' or '$(MSBuildProjectName)'=='xrRender_R2' or '$(MSBuildProjectName)'=='xrRender_R3' or '$(MSBuildProjectName)'=='xrRender_R4' or '$(MSBuildProjectName)'=='xrEngine'">true</ConformanceMode>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <BufferSecurityCheck>false</BufferSecurityCheck>

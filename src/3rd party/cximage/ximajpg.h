@@ -30,10 +30,17 @@
 
 #define XMD_H
 #define HAVE_BOOLEAN
+// rpcndr.h (via ximage.h -> windows.h) already typedef'd boolean as 1-byte
+// UCHAR, but libjpeg.lib was built with boolean=int (520-byte structs).
+// A 1-byte boolean here would shrink struct jpeg_* to 504 bytes and corrupt
+// the stack on every encode/decode call (MSVC C4789 at LTCG time). Map the
+// identifier to int for the duration of the jpeg headers so both sides agree.
+#define boolean int
 extern "C" {
  #include <jpeg/jpeglib.h>
  #include <jpeg/jerror.h>
 }
+#undef boolean
 #undef HAVE_BOOLEAN
 #undef XMD_H
 
@@ -215,7 +222,7 @@ public:
 		pDest->free_in_buffer = eBufSize;
 	}
 
-	static boolean EmptyOutputBuffer(j_compress_ptr cinfo)
+	static int EmptyOutputBuffer(j_compress_ptr cinfo)
 	{
 		CxFileJpg* pDest = (CxFileJpg*)cinfo->dest;
 		if (pDest->m_pFile->Write(pDest->m_pBuffer,1,eBufSize)!=(size_t)eBufSize)
@@ -246,7 +253,7 @@ public:
 		pSource->m_bStartOfFile = TRUE;
 	}
 
-	static boolean FillInputBuffer(j_decompress_ptr cinfo)
+	static int FillInputBuffer(j_decompress_ptr cinfo)
 	{
 		size_t nbytes;
 		CxFileJpg* pSource = (CxFileJpg*)cinfo->src;
