@@ -477,7 +477,7 @@ bool CControlManagerCustom::script_try_jump(const Fvector& position, float facto
 	if (enemy)
 	{
 		ctrl_data->target_object = enemy;
-		ctrl_data->flags.or(SControlJumpData::eUseTargetPosition);
+		ctrl_data->flags.or_(SControlJumpData::eUseTargetPosition);
 	}
 
 	m_man->activate(ControlCom::eControlJump);

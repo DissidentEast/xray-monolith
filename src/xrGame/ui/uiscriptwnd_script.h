@@ -28,7 +28,7 @@ struct CWrapperBase : public T, public ::luabind::wrap_base
 
 	virtual void OnMouseMoveRelative(float dx, float dy)
 	{
-		call_member<void>(this, "OnMouseMoveRelative", dx, dy);
+		::luabind::call_member<void>(this, "OnMouseMoveRelative", dx, dy);
 	}
 
 	static void OnMouseMoveRelative_static(inherited* ptr, float dx, float dy)
