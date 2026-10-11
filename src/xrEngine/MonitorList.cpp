@@ -399,10 +399,10 @@ HMONITOR ResolveSelectedMonitor()
     const xr_string& name = vid_monitor_name;
 
     if (name.empty() || name == "Auto")
-        return NULL;
+        return nullptr;
 
     if (!vid_monitor_token)
-        return NULL;
+        return nullptr;
 
     for (u32 i = 1; vid_monitor_token[i].name; ++i)
     {
@@ -414,7 +414,7 @@ HMONITOR ResolveSelectedMonitor()
     }
 
     Msg("! vid_monitor: '%s' not found on this system, using Auto", name.c_str());
-    return NULL;
+    return nullptr;
 }
 
 void refresh_vid_monitor_list()

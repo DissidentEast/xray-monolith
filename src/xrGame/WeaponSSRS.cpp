@@ -135,7 +135,7 @@ static LPCSTR rocket_section(const CCartridge& cartridge)
 	static xr_set<shared_str> logged;
 	if (logged.insert(cartridge.m_ammoSect).second)
 		Msg("! CWeaponSSRS ammo [%s] has no fake_grenade_name, its rounds get no rocket", cartridge.m_ammoSect.c_str());
-	return NULL;
+	return nullptr;
 }
 
 // One rocket per cartridge from its own ammo, waits while spawned rockets are still on the way
@@ -204,7 +204,7 @@ void CWeaponSSRS::ReloadMagazine()
 
 	if (!m_bLockType)
 	{
-		m_pCurrentAmmo = NULL;
+		m_pCurrentAmmo = nullptr;
 	}
 
 	if (!m_pInventory) return;
@@ -479,14 +479,14 @@ void CWeaponSSRS::state_Fire(float dt)
 
 		if (!H_Parent()) return;
 
-		if (smart_cast<CMPPlayersBag*>(H_Parent()) != NULL)
+		if (smart_cast<CMPPlayersBag*>(H_Parent()) != nullptr)
 		{
 			Msg("! WARNING: state_Fire of object [%d][%s] while parent is CMPPlayerBag...", ID(), cNameSect().c_str());
 			return;
 		}
 
 		CInventoryOwner* io = smart_cast<CInventoryOwner*>(H_Parent());
-		if (NULL == io->inventory().ActiveItem())
+		if (nullptr == io->inventory().ActiveItem())
 		{
 			Log("current_state", GetState());
 			Log("next_state", GetNextState());
@@ -516,7 +516,7 @@ void CWeaponSSRS::state_Fire(float dt)
 			m_iShotNum < m_iQueueSize))
 		{
 			// a rocketed round waits while any rocket is still on the way, a round whose ammo has none fires as a dud
-			const bool rocketed = rocket_section(m_magazine.back()) != NULL;
+			const bool rocketed = rocket_section(m_magazine.back()) != nullptr;
 			if (rocketed && (!getRocketCount() || !m_pendingRockets.empty() || m_bSyncRockets))
 				break;
 
@@ -539,7 +539,7 @@ void CWeaponSSRS::state_Fire(float dt)
 			if (E)
 			{
 				CInventoryOwner* io = smart_cast<CInventoryOwner*>(H_Parent());
-				if (NULL == io->inventory().ActiveItem())
+				if (nullptr == io->inventory().ActiveItem())
 				{
 					Log("current_state", GetState());
 					Log("next_state", GetNextState());

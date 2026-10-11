@@ -21,8 +21,8 @@ u32 C_CROSS D3DCOLOR_RGBA(0xff, 0xff, 0xff, 0xff);
 
 CHUDCrosshair::CHUDCrosshair()
 {
-	crosshairShader = NULL;
-	crosshairTexture = NULL;
+	crosshairShader = nullptr;
+	crosshairTexture = nullptr;
 	strcpy(lastCrosshairShader, "");
 	strcpy(lastCrosshairTexture, "");
 	transform = Fmatrix().identity();

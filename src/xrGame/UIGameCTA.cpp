@@ -271,7 +271,7 @@ void CUIGameCTA::UpdateSkinMenu(shared_str const& teamSection)
 			return;
 		}
 		xr_delete(m_pCurSkinMenu);
-		m_pCurSkinMenu = NULL;
+		m_pCurSkinMenu = nullptr;
 	}
 	m_teamSectionForSkinMenu = teamSection;
 	m_pCurSkinMenu = xr_new<CUISkinSelectorWnd>(m_teamSectionForSkinMenu.c_str(),
@@ -376,8 +376,8 @@ void TryToDefuseGrenadeLauncher(CWeaponMagazinedWGrenade const* weapon,
 	if (!weapon)
 		return;
 
-	xr_vector<shared_str> const* tmp_ammo_types = NULL;
-	u8 const* tmp_ammo_type = NULL;
+	xr_vector<shared_str> const* tmp_ammo_types = nullptr;
+	u8 const* tmp_ammo_type = nullptr;
 	u16 ammo_elapsed = 0;
 	if (weapon->m_bGrenadeMode)
 	{
@@ -445,8 +445,8 @@ void TryToDefuseWeapon(CWeapon const* weapon,
 	if (weapon->IsGrenadeLauncherAttached())
 		TryToDefuseGrenadeLauncher(tmp_gl_weapon, all_items, dest_ammo);
 
-	xr_vector<shared_str> const* tmp_ammo_types = NULL;
-	u8 const* tmp_ammo_type = NULL;
+	xr_vector<shared_str> const* tmp_ammo_types = nullptr;
+	u8 const* tmp_ammo_type = nullptr;
 	u16 ammo_elapsed = 0;
 	if (tmp_gl_weapon && tmp_gl_weapon->m_bGrenadeMode)
 	{

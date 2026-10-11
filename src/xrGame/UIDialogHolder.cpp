@@ -188,7 +188,7 @@ CUIDialogWnd* CDialogHolder::TopInputReceiver()
 {
 	if (!m_input_receivers.empty())
 		return m_input_receivers.back().m_item;
-	return NULL;
+	return nullptr;
 };
 
 void CDialogHolder::SetMainInputReceiver(CUIDialogWnd* ir, bool _find_remove)

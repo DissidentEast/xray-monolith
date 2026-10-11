@@ -48,7 +48,7 @@ void delete_call(CPHCall* & call)
 	}
 	catch (...)
 	{
-		call = NULL;
+		call = nullptr;
 	}
 }
 

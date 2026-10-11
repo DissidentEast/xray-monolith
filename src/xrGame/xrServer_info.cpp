@@ -24,7 +24,7 @@ server_info_uploader& xrServer::GetServerInfoUploader()
 		free_info_searcher()
 	);
 
-	server_info_uploader* result = NULL;
+	server_info_uploader* result = nullptr;
 	if (tmp_iter != m_info_uploaders.end())
 	{
 		result = *tmp_iter;
@@ -83,7 +83,7 @@ void xrServer::LoadServerInfo()
 	{
 		Msg("! ERROR: failed to open server rules file %s", SERVER_RULES_FN);
 		FS.r_close(m_server_logo);
-		m_server_logo = NULL;
+		m_server_logo = nullptr;
 		return;
 	}
 }
@@ -102,7 +102,7 @@ server_info_uploader::server_info_uploader(file_transfer::server_site* file_tran
 
 server_info_uploader::~server_info_uploader()
 {
-	R_ASSERT(m_file_transfers != NULL);
+	R_ASSERT(m_file_transfers != nullptr);
 	if (is_active())
 		terminate_upload();
 }

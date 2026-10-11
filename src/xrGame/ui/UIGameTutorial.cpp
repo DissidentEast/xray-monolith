@@ -203,7 +203,7 @@ void CUISequencer::Start(LPCSTR tutor_name)
 
 CUISequenceItem* CUISequencer::GetNextItem()
 {
-	CUISequenceItem* result = NULL;
+	CUISequenceItem* result = nullptr;
 
 	while (m_sequencer_items.size())
 	{
@@ -223,7 +223,7 @@ CUISequenceItem* CUISequencer::GetNextItem()
 		if (!call_result)
 		{
 			m_sequencer_items.pop_front();
-			result = NULL;
+			result = nullptr;
 		}
 		else
 		{
@@ -249,18 +249,18 @@ void CUISequencer::Destroy()
 	delete_data(m_UIWindow);
 	IR_Release();
 	m_flags.set(etsActive, FALSE);
-	m_pStoredInputReceiver = NULL;
+	m_pStoredInputReceiver = nullptr;
 
 	if (!m_on_destroy_event.empty())
 		m_on_destroy_event();
 
 	if (g_tutorial == this)
 	{
-		g_tutorial = NULL;
+		g_tutorial = nullptr;
 	}
 	if (g_tutorial2 == this)
 	{
-		g_tutorial2 = NULL;
+		g_tutorial2 = nullptr;
 	}
 }
 

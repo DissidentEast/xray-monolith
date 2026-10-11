@@ -323,7 +323,7 @@ void CActor::OnEvent(NET_Packet& P, u16 type)
 				Msg("! Error: No object to attach holder [%d]", id);
 				break;
 			}
-			VERIFY(m_holder==NULL);
+			VERIFY(m_holder== nullptr);
 			CHolderCustom* holder = smart_cast<CHolderCustom*>(O);
 			if (!holder->Engaged()) use_Holder(holder);
 		}

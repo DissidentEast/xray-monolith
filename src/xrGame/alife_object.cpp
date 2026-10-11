@@ -49,9 +49,9 @@ void CSE_ALifeObject::spawn_supplies(LPCSTR ini_string)
 		for (u32 k = 0; ini.r_line(loadout_section, k, &itmSection, &V); k++)
 		{
 			// If level=<lname> then only spawn items if object on that level
-			if (strstr(V, "level=") != NULL)
+			if (strstr(V, "level=") != nullptr)
 			{
-				if (strstr(V, lname) != NULL)
+				if (strstr(V, lname) != nullptr)
 					OnlyOne.push_back(k);
 			}
 			else
@@ -85,12 +85,12 @@ void CSE_ALifeObject::spawn_supplies(LPCSTR ini_string)
 						}
 
 						if (!spawn_count) spawn_count = 1;
-						if (NULL != strstr(V, "cond="))
+						if (nullptr != strstr(V, "cond="))
 							f_cond = (float)atof(strstr(V, "cond=") + 5);
-						bScope = (NULL != strstr(V, "scope"));
-						bSilencer = (NULL != strstr(V, "silencer"));
-						bLauncher = (NULL != strstr(V, "launcher"));
-						if (NULL != strstr(V, "ammo_type="))
+						bScope = (nullptr != strstr(V, "scope"));
+						bSilencer = (nullptr != strstr(V, "silencer"));
+						bLauncher = (nullptr != strstr(V, "launcher"));
+						if (nullptr != strstr(V, "ammo_type="))
 							i_ammo_type = atoi(strstr(V, "ammo_type=") + 10);
 					}
 
@@ -164,14 +164,14 @@ void CSE_ALifeObject::spawn_supplies(LPCSTR ini_string)
 					j = atoi(_GetItem(V, 0, buf));
 					if (!j) j = 1;
 
-					bScope = (NULL != strstr(V, "scope"));
-					bSilencer = (NULL != strstr(V, "silencer"));
-					bLauncher = (NULL != strstr(V, "launcher"));
+					bScope = (nullptr != strstr(V, "scope"));
+					bSilencer = (nullptr != strstr(V, "silencer"));
+					bLauncher = (nullptr != strstr(V, "launcher"));
 					//probability
-					if (NULL != strstr(V, "prob="))
+					if (nullptr != strstr(V, "prob="))
 						p = (float)atof(strstr(V, "prob=") + 5);
 					if (fis_zero(p)) p = 1.0f;
-					if (NULL != strstr(V, "cond="))
+					if (nullptr != strstr(V, "cond="))
 						f_cond = (float)atof(strstr(V, "cond=") + 5);
 				}
 				for (u32 i = 0; i < j; ++i)

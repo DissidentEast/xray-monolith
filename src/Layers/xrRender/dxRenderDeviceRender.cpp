@@ -586,7 +586,7 @@ bool dxRenderDeviceRender::SwitchOutputMonitor(HMONITOR hTargetMon, HWND hWnd,
                                                u32 g_screenmode_,
                                                u32& vidModeW, u32& vidModeH)
 {
-    if (hTargetMon == NULL)
+    if (hTargetMon == nullptr)
         return false;
 
     MONITORINFO mi;

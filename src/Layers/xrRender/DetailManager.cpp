@@ -185,7 +185,7 @@ void CDetailManager::Load()
 	// Open file stream
 	if (!FS.exist("$level$", "level.details"))
 	{
-		dtFS = NULL;
+		dtFS = nullptr;
 		return;
 	}
 

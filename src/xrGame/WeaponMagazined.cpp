@@ -32,7 +32,7 @@ ENGINE_API extern float psHUD_FOV_def;
 
 BOOL g_auto_reload = FALSE;
 
-CUIXml* pWpnScopeXml = NULL;
+CUIXml* pWpnScopeXml = nullptr;
 
 void createWpnScopeXML()
 {
@@ -53,8 +53,8 @@ CWeaponMagazined::CWeaponMagazined(ESoundTypes eSoundType) : CWeapon()
 	m_eSoundReloadEmpty = ESoundTypes(SOUND_TYPE_WEAPON_RECHARGING | eSoundType);
 
 	m_sounds_enabled = true;
-	m_sSndShotCurrent = NULL;
-	m_sSilencerFlameParticles = m_sSilencerSmokeParticles = NULL;
+	m_sSndShotCurrent = nullptr;
+	m_sSilencerFlameParticles = m_sSilencerSmokeParticles = nullptr;
 
 	m_bFireSingleShot = false;
 	m_iShotNum = 0;
@@ -491,7 +491,7 @@ void CWeaponMagazined::ReloadMagazine()
 
 	if (!m_bLockType)
 	{
-		m_pCurrentAmmo = NULL;
+		m_pCurrentAmmo = nullptr;
 	}
 
 	if (!m_pInventory) return;
@@ -741,14 +741,14 @@ void CWeaponMagazined::state_Fire(float dt)
 		d.set(get_LastFD());
 
 		if (!H_Parent()) return;
-		if (smart_cast<CMPPlayersBag*>(H_Parent()) != NULL)
+		if (smart_cast<CMPPlayersBag*>(H_Parent()) != nullptr)
 		{
 			Msg("! WARNING: state_Fire of object [%d][%s] while parent is CMPPlayerBag...", ID(), cNameSect().c_str());
 			return;
 		}
 
 		CInventoryOwner* io = smart_cast<CInventoryOwner*>(H_Parent());
-		if (NULL == io->inventory().ActiveItem())
+		if (nullptr == io->inventory().ActiveItem())
 		{
 			Log("current_state", GetState());
 			Log("next_state", GetNextState());
@@ -1438,14 +1438,14 @@ bool CWeaponMagazined::DetachScope(const char* item_section_name, bool b_spawn_i
 		if (m_modular_attachments) {
 			if (!xr_strcmp(*it, item_section_name))
 			{
-				m_cur_scope = NULL;
+				m_cur_scope = 0;
 				detached = true;
 			}
 		} else {
 			LPCSTR iter_scope_name = pSettings->r_string((*it), "scope_name");
 			if (!xr_strcmp(iter_scope_name, item_section_name))
 			{
-				m_cur_scope = NULL;
+				m_cur_scope = 0;
 				detached = true;
 			}
 		}
@@ -1532,7 +1532,7 @@ void CWeaponMagazined::InitAddons()
 				scope_2dtexactive = 0;//crookr
 			}
 
-			if (!g_dedicated_server && scope_tex_name != NULL)
+			if (!g_dedicated_server && scope_tex_name != nullptr)
 			{
 				m_UIScope = xr_new<CUIWindow>();
 				createWpnScopeXML();

@@ -430,13 +430,13 @@ void Manager::test_all_upgrades( CInventoryItem& item )
 		LPCSTR Manager::get_item_scheme(CInventoryItem& item)
 		{
 			Root* root_p = get_root(item.m_section_id);
-			if (!root_p) return NULL;
+			if (!root_p) return nullptr;
 			return root_p->scheme();
 		}
 
 		LPCSTR Manager::get_upgrade_by_index(CInventoryItem& item, Ivector2 const& index)
 		{
-			Upgrade* upgrade = NULL;
+			Upgrade* upgrade = nullptr;
 
 			Root* root_p = get_root(item.m_section_id);
 			if (root_p)
@@ -450,7 +450,7 @@ void Manager::test_all_upgrades( CInventoryItem& item )
 
 			VERIFY2(upgrade, make_string( "! Upgrade with index <%d,%d> in inventory item [%s] does not exist!",
 				        index.x, index.y, item.m_section_id.c_str() ));
-			return NULL;
+			return nullptr;
 		}
 
 		// -------------------------------------------------------------------------------------------------

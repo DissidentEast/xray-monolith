@@ -817,7 +817,7 @@ void CRenderTarget::phase_ssfx_sss_ext(light_Package& LP)
 
                     LightSlot[slot]->sss_id = -1;
                     LightSlot[slot]->sss_on_light_destroy.clear();
-                    LightSlot[slot] = NULL;
+                    LightSlot[slot] = nullptr;
 				}
 				else
 				{

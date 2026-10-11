@@ -57,7 +57,7 @@ BOOL CAviPlayerCustom::Load(char* fname)
 
 	// Открыть через mmioOpen( ) AVI файл
 	HMMIO hmmioFile = mmioOpen(fname, NULL, MMIO_READ /*MMIO_EXCLUSIVE*/);
-	if (hmmioFile == NULL)
+	if (hmmioFile == nullptr)
 	{
 		return FALSE;
 	}
@@ -210,7 +210,7 @@ BOOL CAviPlayerCustom::Load(char* fname)
 
 	// Выделить память под сжатые данные всего клипа
 	m_pMovieData = (BYTE*)xr_malloc(mmckinfoSubchunk.cksize);
-	if (m_pMovieData == NULL)
+	if (m_pMovieData == nullptr)
 	{
 		mmioClose(hmmioFile, 0);
 		return FALSE;
@@ -219,7 +219,7 @@ BOOL CAviPlayerCustom::Load(char* fname)
 	if (mmckinfoSubchunk.cksize != (DWORD)mmioRead(hmmioFile, (HPSTR)m_pMovieData, mmckinfoSubchunk.cksize))
 	{
 		xr_free(m_pMovieData);
-		m_pMovieData = NULL;
+		m_pMovieData = nullptr;
 		mmioClose(hmmioFile, 0);
 		return FALSE;
 	}
@@ -227,7 +227,7 @@ BOOL CAviPlayerCustom::Load(char* fname)
 	if (MMSYSERR_NOERROR != mmioAscend(hmmioFile, &mmckinfoSubchunk, 0))
 	{
 		xr_free(m_pMovieData);
-		m_pMovieData = NULL;
+		m_pMovieData = nullptr;
 		mmioClose(hmmioFile, 0);
 		return FALSE;
 	}
@@ -240,17 +240,17 @@ BOOL CAviPlayerCustom::Load(char* fname)
 		|| mmckinfoSubchunk.cksize <= 4)
 	{
 		xr_free(m_pMovieData);
-		m_pMovieData = NULL;
+		m_pMovieData = nullptr;
 		mmioClose(hmmioFile, 0);
 		return FALSE;
 	}
 
 	// Выделить память под индекс
 	m_pMovieIndex = (AVIINDEXENTRY*)xr_malloc(mmckinfoSubchunk.cksize);
-	if (m_pMovieIndex == NULL)
+	if (m_pMovieIndex == nullptr)
 	{
 		xr_free(m_pMovieData);
-		m_pMovieData = NULL;
+		m_pMovieData = nullptr;
 		mmioClose(hmmioFile, 0);
 		return FALSE;
 	}
@@ -258,9 +258,9 @@ BOOL CAviPlayerCustom::Load(char* fname)
 	if (mmckinfoSubchunk.cksize != (DWORD)mmioRead(hmmioFile, (HPSTR)m_pMovieIndex, mmckinfoSubchunk.cksize))
 	{
 		xr_free(m_pMovieIndex);
-		m_pMovieIndex = NULL;
+		m_pMovieIndex = nullptr;
 		xr_free(m_pMovieData);
-		m_pMovieData = NULL;
+		m_pMovieData = nullptr;
 		mmioClose(hmmioFile, 0);
 		return FALSE;
 	}

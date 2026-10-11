@@ -282,11 +282,11 @@ void CRender::ScreenshotImpl(ScreenshotMode mode, LPCSTR name, CMemoryWriter* me
 	case IRender_interface::SM_FOR_GAMESAVE:
 		{
 			// texture
-			ID3DTexture2D* texture = NULL;
+			ID3DTexture2D* texture = nullptr;
 			hr = D3DXCreateTexture(HW.pDevice,GAMESAVE_SIZE,GAMESAVE_SIZE, 1, 0, D3DFMT_DXT1, D3DPOOL_SCRATCH,
 			                       &texture);
 			if (hr != D3D_OK) goto _end_;
-			if (NULL == texture) goto _end_;
+			if (nullptr == texture) goto _end_;
 
 			// resize&convert to surface
 			IDirect3DSurface9* surface = 0;
@@ -317,11 +317,11 @@ void CRender::ScreenshotImpl(ScreenshotMode mode, LPCSTR name, CMemoryWriter* me
 	case IRender_interface::SM_FOR_MPSENDING:
 		{
 			// texture
-			ID3DTexture2D* texture = NULL;
+			ID3DTexture2D* texture = nullptr;
 			hr = D3DXCreateTexture(HW.pDevice,SM_FOR_SEND_WIDTH,SM_FOR_SEND_HEIGHT, 1, 0, D3DFMT_R8G8B8,
 			                       D3DPOOL_SCRATCH, &texture);
 			if (hr != D3D_OK) goto _end_;
-			if (NULL == texture) goto _end_;
+			if (nullptr == texture) goto _end_;
 
 			// resize&convert to surface
 			IDirect3DSurface9* surface = 0;
@@ -717,12 +717,12 @@ void CRender::TakeScreenshot(LPCSTR path, Fvector2 dimensions, DxEncoding encodi
 	// Create temp-surface
 	IDirect3DSurface9* pFB;
 	D3DLOCKED_RECT D;
-	u32* pPixel = NULL;
-	u32* pEnd = NULL;
-	ID3DTexture2D* texture = NULL;
-	IDirect3DSurface9* surface = NULL;
-	ID3DBlob* saved = NULL;
-	IWriter* fs = NULL;
+	u32* pPixel = nullptr;
+	u32* pEnd = nullptr;
+	ID3DTexture2D* texture = nullptr;
+	IDirect3DSurface9* surface = nullptr;
+	ID3DBlob* saved = nullptr;
+	IWriter* fs = nullptr;
 	HRESULT hr = HW.pDevice->CreateOffscreenPlainSurface(Device.dwWidth, Device.dwHeight, HW.DevPP.BackBufferFormat,
 		D3DPOOL_SYSTEMMEM, &pFB, nullptr);
 	if (FAILED(hr)) return;
@@ -748,7 +748,7 @@ void CRender::TakeScreenshot(LPCSTR path, Fvector2 dimensions, DxEncoding encodi
 	hr = D3DXCreateTexture(HW.pDevice, u32(width), u32(height), 1, 0, dx_encoding, D3DPOOL_SCRATCH,
 		&texture);
 	if (hr != D3D_OK) goto _end_;
-	if (NULL == texture) goto _end_;
+	if (nullptr == texture) goto _end_;
 	// resize&convert to surface
 	hr = texture->GetSurfaceLevel(0, &surface);
 	if (hr != D3D_OK) goto _end_;

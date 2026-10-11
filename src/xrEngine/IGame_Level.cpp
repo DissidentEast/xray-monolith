@@ -17,17 +17,17 @@
 
 //#include "securom_api.h"
 
-ENGINE_API IGame_Level* g_pGameLevel = NULL;
+ENGINE_API IGame_Level* g_pGameLevel = nullptr;
 extern BOOL g_bLoaded;
 
 IGame_Level::IGame_Level()
 {
 	m_pCameras = xr_new<CCameraManager>(true);
 	g_pGameLevel = this;
-	pLevel = NULL;
+	pLevel = nullptr;
 	bReady = false;
-	pCurrentEntity = NULL;
-	pCurrentViewEntity = NULL;
+	pCurrentEntity = nullptr;
+	pCurrentViewEntity = nullptr;
 	Device.DumpResourcesMemoryUsage();
 }
 

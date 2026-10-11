@@ -24,7 +24,7 @@ public:
 	//.	virtual void FlushLineStrip();
 	//.	virtual void StartLineList(u32 iMaxVerts);
 	//.	virtual void FlushLineList();
-	virtual void SetScissor(Irect* rect = NULL);
+	virtual void SetScissor(Irect* rect = nullptr);
 	virtual void GetActiveTextureResolution(Fvector2& res);
 	virtual bool GetTextureResolution(LPCSTR name, Fvector2& res);
 

@@ -20,17 +20,17 @@
 #include "CustomOutfit.h"
 #include "ActorHelmet.h"
 
-CUICellItem* CUICellItem::m_mouse_selected_item = NULL;
+CUICellItem* CUICellItem::m_mouse_selected_item = nullptr;
 
 CUICellItem::CUICellItem()
 {
-	m_pParentList = NULL;
-	m_pData = NULL;
-	m_custom_draw = NULL;
-	m_text = NULL;
+	m_pParentList = nullptr;
+	m_pData = nullptr;
+	m_custom_draw = nullptr;
+	m_text = nullptr;
 	//-	m_mark				= NULL;
-	m_upgrade = NULL;
-	m_pConditionState = NULL;
+	m_upgrade = nullptr;
+	m_pConditionState = nullptr;
 	m_drawn_frame = 0;
 	SetAccelerator(0);
 	m_b_destroy_childs = true;
@@ -166,7 +166,7 @@ bool CUICellItem::OnMouseAction(float x, float y, EUIMessages mouse_action)
 		return true;
 	}
 
-	m_mouse_selected_item = NULL;
+	m_mouse_selected_item = nullptr;
 	return false;
 };
 
@@ -345,8 +345,8 @@ void CUICellItem::SetCustomDraw(ICustomDrawCellItem* c)
 
 CUIDragItem::CUIDragItem(CUICellItem* parent)
 {
-	m_custom_draw = NULL;
-	m_back_list = NULL;
+	m_custom_draw = nullptr;
+	m_back_list = nullptr;
 	m_pParent = parent;
 	AttachChild(&m_static);
 	Device.seqRender.Add(this, REG_PRIORITY_LOW - 5000);

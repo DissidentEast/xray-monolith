@@ -85,7 +85,7 @@ void CUITabButton::ClearIcon()
 	if (m_icon)
 	{
 		DetachChild(m_icon);
-		m_icon = NULL;
+		m_icon = nullptr;
 	}
 }
 

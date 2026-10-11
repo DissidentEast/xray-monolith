@@ -48,7 +48,7 @@ public:
 
 	DEFINE_VECTOR(archive, archives_vec, archives_it);
 	archives_vec m_archives;
-	void LoadArchive(archive& A, LPCSTR entrypoint = NULL);
+	void LoadArchive(archive& A, LPCSTR entrypoint = nullptr);
 
 private:
 	struct file_pred

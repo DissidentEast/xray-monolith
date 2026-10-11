@@ -776,12 +776,12 @@ void free_vid_mode_list()
 		xr_free(vid_mode_token[i].name);
 	}
 	xr_free(vid_mode_token);
-	vid_mode_token = NULL;
+	vid_mode_token = nullptr;
 }
 
 void fill_vid_mode_list(CHW* _hw)
 {
-	if (vid_mode_token != NULL) return;
+	if (vid_mode_token != nullptr) return;
 	xr_vector<LPCSTR> _tmp;
 	u32 cnt = _hw->pD3D->GetAdapterModeCount(_hw->DevAdapter, _hw->Caps.fTarget);
 
@@ -808,7 +808,7 @@ void fill_vid_mode_list(CHW* _hw)
 	vid_mode_token = xr_alloc<xr_token>(_cnt);
 
 	vid_mode_token[_cnt - 1].id = -1;
-	vid_mode_token[_cnt - 1].name = NULL;
+	vid_mode_token[_cnt - 1].name = nullptr;
 
 #ifdef DEBUG
     Msg("Available video modes[%d]:",_tmp.size());

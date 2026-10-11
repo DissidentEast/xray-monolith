@@ -43,7 +43,7 @@ void CUIActorMenu::DeInitUpgradeMode()
 	if (m_upgrade_selected)
 	{
 		m_upgrade_selected->Mark(false);
-		m_upgrade_selected = NULL;
+		m_upgrade_selected = nullptr;
 	}
 	if (m_pPartnerInvOwner)
 	{
@@ -134,8 +134,8 @@ void CUIActorMenu::SeparateUpgradeItem()
 
 	m_upgrade_selected->Mark(false);
 	CUICellItem* ci = list_owner->RemoveItem(m_upgrade_selected, false);
-	m_upgrade_selected = NULL;
-	m_pCurrentCellItem = NULL;
+	m_upgrade_selected = nullptr;
+	m_pCurrentCellItem = nullptr;
 
 	// Remove using the old grid size, then create a cell with the upgraded size.
 	PIItem item = (PIItem)ci->m_pData;

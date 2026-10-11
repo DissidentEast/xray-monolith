@@ -11,13 +11,13 @@
 SSpecificCharacterData::SSpecificCharacterData()
 {
 	m_sGameName.clear();
-	m_sBioText = NULL;
+	m_sBioText = nullptr;
 	m_sVisual.clear();
 	m_sSupplySpawn.clear();
 	m_sNpcConfigSect.clear();
 
 
-	m_StartDialog = NULL;
+	m_StartDialog = nullptr;
 	m_ActorDialogs.clear();
 
 	m_Rank = NO_RANK;
@@ -49,7 +49,7 @@ SSpecificCharacterData::~SSpecificCharacterData()
 
 CSpecificCharacter::CSpecificCharacter()
 {
-	m_OwnId = NULL;
+	m_OwnId = nullptr;
 }
 
 
@@ -117,7 +117,7 @@ void CSpecificCharacter::load_shared(LPCSTR)
 		data()->m_StartDialog = start_dialog;
 	}
 	else
-		data()->m_StartDialog = NULL;
+		data()->m_StartDialog = nullptr;
 
 	int dialogs_num = pXML->GetNodesNum(pXML->GetLocalRoot(), "actor_dialog");
 	data()->m_ActorDialogs.clear();
@@ -213,7 +213,7 @@ void CSpecificCharacter::load_shared(LPCSTR)
 #ifdef  XRGAME_EXPORTS
 
 	LPCSTR team = pXML->Read("community", 0, NULL);
-	R_ASSERT3(team != NULL, "'community' field not fulfiled for specific character", *m_OwnId);
+	R_ASSERT3(team != nullptr, "'community' field not fulfiled for specific character", *m_OwnId);
 
 	char* buf_str = xr_strdup(team);
 	xr_strlwr(buf_str);

@@ -167,7 +167,7 @@ CGameFont::CGameFont(LPCSTR section, u32 flags)
 	fYStep = 0.0f;
 	uFlags = flags;
 	nNumChars = 0x100;
-	TCMap = NULL;
+	TCMap = nullptr;
 
 	Initialize(pSettings->r_string(section, "shader"), GetFontTextureName(section));
 	if (pSettings->line_exist(section, "size"))
@@ -188,7 +188,7 @@ CGameFont::CGameFont(LPCSTR shader, LPCSTR texture, u32 flags)
 	fYStep = 0.0f;
 	uFlags = flags;
 	nNumChars = 0x100;
-	TCMap = NULL;
+	TCMap = nullptr;
 	Initialize(shader, texture);
 }
 

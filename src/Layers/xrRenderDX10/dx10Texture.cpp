@@ -321,7 +321,7 @@ ID3DBaseTexture* CRender::texture_load(LPCSTR fRName, u32& ret_msize, bool bStag
 	static bool bAllowStaging = !RImplementation.o.no_ram_textures;
 	bStaging &= bAllowStaging;
 
-	ID3DBaseTexture* pTexture2D = NULL;
+	ID3DBaseTexture* pTexture2D = nullptr;
 	//IDirect3DCubeTexture9*	pTextureCUBE	= NULL;
 	string_path fn;
 	//u32						dwWidth,dwHeight;
@@ -337,7 +337,7 @@ ID3DBaseTexture* CRender::texture_load(LPCSTR fRName, u32& ret_msize, bool bStag
 	string_path fname;
 	xr_strcpy(fname, fRName); //. andy if (strext(fname)) *strext(fname)=0;
 	fix_texture_name(fname);
-	IReader* S = NULL;
+	IReader* S = nullptr;
 	//if (!FS.exist(fn,"$game_textures$",	fname,	".dds")	&& strstr(fname,"_bump"))	goto _BUMP_from_base;
 	if (strstr(fname, "_bump"))
 	{

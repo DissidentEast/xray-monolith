@@ -42,7 +42,7 @@ CUICharacterInfo::CUICharacterInfo()
 {
 	ZeroMemory(m_icons, sizeof(m_icons));
 	m_bForceUpdate = false;
-	m_texture_name = NULL;
+	m_texture_name = nullptr;
 }
 
 CUICharacterInfo::~CUICharacterInfo()
@@ -318,7 +318,7 @@ void CUICharacterInfo::Update()
 		CSE_ALifeTraderAbstract* T = detail::object_exists_in_alife_registry(m_ownerID)
 			                             ? ch_info_get_from_id(m_ownerID)
 			                             : NULL;
-		if (NULL == T)
+		if (nullptr == T)
 		{
 			m_ownerID = u16(-1);
 			return;

@@ -14,9 +14,9 @@ CUIPropertiesBox::CUIPropertiesBox()
 	m_UIListWnd.SetFont(UI().Font().pFontArial14);
 	m_UIListWnd.SetImmediateSelection(true);
 
-	m_active_submenu = NULL;
-	m_active_sub_item = NULL;
-	m_parent_menu = NULL;
+	m_active_submenu = nullptr;
+	m_active_sub_item = nullptr;
+	m_parent_menu = nullptr;
 	m_submenu_close_at = 0;
 }
 
@@ -135,8 +135,8 @@ void CUIPropertiesBox::HideActiveSubmenu()
 	{
 		if (m_active_submenu->IsShown())
 			m_active_submenu->Hide();
-		m_active_submenu = NULL;
-		m_active_sub_item = NULL;
+		m_active_submenu = nullptr;
+		m_active_sub_item = nullptr;
 	}
 	m_submenu_close_at = 0;
 }

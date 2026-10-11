@@ -29,13 +29,13 @@ typedef HANDLE (WINAPI *CREATESNAPSHOT)(DWORD dwFlags,
 // Has the function stuff here been initialized?  This is only to be
 // used by the InitPSAPI function and nothing else.
 static BOOL g_bInitialized = FALSE;
-static CREATESNAPSHOT g_pCreateToolhelp32Snapshot = NULL;
-static MODULEWALK g_pModule32First = NULL;
-static MODULEWALK g_pModule32Next = NULL;
-static PROCESSWALK g_pProcess32First = NULL;
-static PROCESSWALK g_pProcess32Next = NULL;
-static THREADWALK g_pThread32First = NULL;
-static THREADWALK g_pThread32Next = NULL;
+static CREATESNAPSHOT g_pCreateToolhelp32Snapshot = nullptr;
+static MODULEWALK g_pModule32First = nullptr;
+static MODULEWALK g_pModule32Next = nullptr;
+static PROCESSWALK g_pProcess32First = nullptr;
+static PROCESSWALK g_pProcess32Next = nullptr;
+static THREADWALK g_pThread32First = nullptr;
+static THREADWALK g_pThread32Next = nullptr;
 
 /*----------------------------------------------------------------------
 FUNCTION        :   InitTOOLHELP32
@@ -58,47 +58,47 @@ static BOOL InitTOOLHELP32(void)
 	}
 
 	BOOL bRet = FALSE;
-	HINSTANCE hKernel = NULL;
+	HINSTANCE hKernel = nullptr;
 
 	// Obtain the module handle of the kernel to retrieve addresses of
 	// the tool helper functions.
 	hKernel = GetModuleHandleA("KERNEL32.DLL");
-	ASSERT(NULL != hKernel) ;
+	ASSERT(nullptr != hKernel) ;
 
-	if (NULL != hKernel)
+	if (nullptr != hKernel)
 	{
 		g_pCreateToolhelp32Snapshot =
 			(CREATESNAPSHOT)GetProcAddress(hKernel,
 			                               "CreateToolhelp32Snapshot");
-		ASSERT(NULL != g_pCreateToolhelp32Snapshot) ;
+		ASSERT(nullptr != g_pCreateToolhelp32Snapshot) ;
 
 		g_pModule32First = (MODULEWALK)GetProcAddress(hKernel,
 		                                              "Module32First");
-		ASSERT(NULL != g_pModule32First) ;
+		ASSERT(nullptr != g_pModule32First) ;
 
 		g_pModule32Next = (MODULEWALK)GetProcAddress(hKernel,
 		                                             "Module32Next");
-		ASSERT(NULL != g_pModule32Next) ;
+		ASSERT(nullptr != g_pModule32Next) ;
 
 		g_pProcess32First =
 			(PROCESSWALK)GetProcAddress(hKernel,
 			                            "Process32First");
-		ASSERT(NULL != g_pProcess32First) ;
+		ASSERT(nullptr != g_pProcess32First) ;
 
 		g_pProcess32Next =
 			(PROCESSWALK)GetProcAddress(hKernel,
 			                            "Process32Next");
-		ASSERT(NULL != g_pProcess32Next) ;
+		ASSERT(nullptr != g_pProcess32Next) ;
 
 		g_pThread32First =
 			(THREADWALK)GetProcAddress(hKernel,
 			                           "Thread32First");
-		ASSERT(NULL != g_pThread32First) ;
+		ASSERT(nullptr != g_pThread32First) ;
 
 		g_pThread32Next =
 			(THREADWALK)GetProcAddress(hKernel,
 			                           "Thread32Next");
-		ASSERT(NULL != g_pThread32Next) ;
+		ASSERT(nullptr != g_pThread32Next) ;
 
 		// All addresses must be non-NULL to be successful.  If one of
 		// these addresses is NULL, one of the needed lists cannot be
@@ -167,7 +167,7 @@ BOOL __stdcall TLHELPGetLoadedModules(DWORD dwPID,
 	}
 
 	// The snapshot handle.
-	HANDLE hModSnap = NULL;
+	HANDLE hModSnap = nullptr;
 	// The module structure.
 	MODULEENTRY32 stME32;
 	// A flag kept to report if the buffer was too small.
@@ -255,7 +255,7 @@ DWORD __stdcall TLHELPGetModuleFileNameEx(DWORD dwPID,
 	}
 
 	// The snapshot handle.
-	HANDLE hModSnap = NULL;
+	HANDLE hModSnap = nullptr;
 	// The module structure.
 	MODULEENTRY32 stME32;
 

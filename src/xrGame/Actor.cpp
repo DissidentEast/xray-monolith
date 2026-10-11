@@ -179,12 +179,12 @@ CActor::CActor() : CEntityAlive(), current_ik_cam_shift(0)
 	m_fFallTime = s_fFallTime;
 	m_bAnimTorsoPlayed = false;
 
-	m_pPhysicsShell = NULL;
+	m_pPhysicsShell = nullptr;
 
     m_fFeelGrenadeRadius = 10.0f;
     m_fFeelGrenadeTime = 1.0f;
 
-	m_holder = NULL;
+	m_holder = nullptr;
 	m_holderID = u16(-1);
 
 
@@ -195,24 +195,24 @@ CActor::CActor() : CEntityAlive(), current_ik_cam_shift(0)
 	//ðàçðåøèòü èñïîëüçîâàíèå ïîÿñà â inventory
 	inventory().SetBeltUseful(true);
 
-	m_pPersonWeLookingAt = NULL;
-	m_pVehicleWeLookingAt = NULL;
-	m_pObjectWeLookingAt = NULL;
+	m_pPersonWeLookingAt = nullptr;
+	m_pVehicleWeLookingAt = nullptr;
+	m_pObjectWeLookingAt = nullptr;
 	m_bPickupMode = false;
 
-	pStatGraph = NULL;
+	pStatGraph = nullptr;
 
-	m_pActorEffector = NULL;
+	m_pActorEffector = nullptr;
 
 	SetZoomAimingMode(false);
 
-	m_sDefaultObjAction = NULL;
+	m_sDefaultObjAction = nullptr;
 
 	m_fSprintFactor = 4.f;
 
 	//hFriendlyIndicator.create(FVF::F_LIT,RCache.Vertex.Buffer(),RCache.QuadIB);
 
-	m_pUsableObject = NULL;
+	m_pUsableObject = nullptr;
 
 
 	m_anims = xr_new<SActorMotions>();
@@ -221,10 +221,10 @@ CActor::CActor() : CEntityAlive(), current_ik_cam_shift(0)
 	m_vehicle_anims = xr_new<SActorVehicleAnims>();
 #endif
 	//-Alundaio
-	m_entity_condition = NULL;
+	m_entity_condition = nullptr;
 	m_iLastHitterID = u16(-1);
 	m_iLastHittingWeaponID = u16(-1);
-	m_statistic_manager = NULL;
+	m_statistic_manager = nullptr;
 	//-----------------------------------------------------------------------------------
 	m_memory = g_dedicated_server ? 0 : xr_new<CActorMemory>(this);
 	m_bOutBorder = false;
@@ -242,7 +242,7 @@ CActor::CActor() : CEntityAlive(), current_ik_cam_shift(0)
 	// Alex ADD: for smooth crouch fix
 	CurrentHeight = -1.f;
 
-	m_night_vision = NULL;
+	m_night_vision = nullptr;
 	m_bNightVisionAllow = true;
 	m_bNightVisionOn = false;
 
@@ -254,7 +254,7 @@ CActor::CActor() : CEntityAlive(), current_ik_cam_shift(0)
 
 	m_bDelayDrawPickupItems = false;
 
-	m_FPCam = NULL;
+	m_FPCam = nullptr;
 }
 
 
@@ -301,7 +301,7 @@ void CActor::reinit()
 	character_physics_support()->in_Init();
 	material().reinit();
 
-	m_pUsableObject = NULL;
+	m_pUsableObject = nullptr;
 	if (!g_dedicated_server)
 		memory().reinit();
 
@@ -547,7 +547,7 @@ struct playing_pred
 {
 	IC bool operator()(ref_sound& s)
 	{
-		return (NULL != s._feedback());
+		return (nullptr != s._feedback());
 	}
 };
 
@@ -591,7 +591,7 @@ void CActor::Hit(SHit* pHDS)
 				CParticlesPlayer::MakeXFORM(this, HDS.bone(), HDS.dir, HDS.p_in_bone_space, pos);
 
 				// óñòàíîâèòü particles
-				CParticlesObject* ps = NULL;
+				CParticlesObject* ps = nullptr;
 
 				if (eacFirstEye == cam_active && this == Level().CurrentEntity())
 					ps = CParticlesObject::Create(invincibility_fire_shield_1st, TRUE);
@@ -1306,7 +1306,7 @@ void CActor::UpdateCL()
 		{
 			int disc_cur_health = roundf(GetfHealth() * 100);
 			if (disc_cur_health <= 0)
-				discord_gameinfo.health = NULL;
+				discord_gameinfo.health = 0;
 			else
 				discord_gameinfo.health = disc_cur_health;
 		}
@@ -1343,7 +1343,7 @@ void CActor::UpdateCL()
 			}
 
 			//Level
-			if (g_pGameLevel && g_pGameLevel->name() != NULL)
+			if (g_pGameLevel && g_pGameLevel->name() != nullptr)
 			{
 				snprintf(discord_gameinfo.level_name, 128, xr_ToUTF8(*CStringTable().translate(g_pGameLevel->name())));
 				srand(time(0));
@@ -1507,7 +1507,7 @@ bool CActor::attach_Vehicle(CHolderCustom *object, bool bForce)
 			if (pCamBobbing)
 			{
 				Cameras().RemoveCamEffector(eCEBobbing);
-				pCamBobbing = NULL;
+				pCamBobbing = nullptr;
 			}
 
 			if (actor_camera_shell)
@@ -1598,7 +1598,7 @@ void CActor::detach_Vehicle(bool bForce)
 #endif
 
 		m_holder->detach_Actor();
-		m_holder = NULL;
+		m_holder = nullptr;
 		m_holderID = u16(-1);
 
 		SetCallbacks();
@@ -1654,7 +1654,7 @@ bool CActor::use_HolderEx(CHolderCustom* object, bool bForce)
 
 				SetCallbacks();
 
-				m_holder = NULL;
+				m_holder = nullptr;
 				m_holderID = u16(-1);
 
 				IKinematicsAnimated* V = smart_cast<IKinematicsAnimated*>(Visual()); R_ASSERT(V);
@@ -1687,7 +1687,7 @@ bool CActor::use_HolderEx(CHolderCustom* object, bool bForce)
 
 				if (pCamBobbing) {
 					Cameras().RemoveCamEffector(eCEBobbing);
-					pCamBobbing = NULL;
+					pCamBobbing = nullptr;
 				}
 
 				if (actor_camera_shell)
@@ -1744,7 +1744,7 @@ void CActor::on_requested_spawn(CObject *object)
 	character_physics_support()->movement()->SetPosition(oHolder->ExitPosition());
 	character_physics_support()->movement()->SetVelocity(oHolder->ExitVelocity());
 
-	m_holder = NULL;
+	m_holder = nullptr;
 	m_holderID = (u16)(-1);
 
 	use_HolderEx(oHolder, true);
@@ -1806,7 +1806,7 @@ void CActor::shedule_Update(u32 DT)
 
 	if (m_holder || !getEnabled() || !Ready())
 	{
-		m_sDefaultObjAction = NULL;
+		m_sDefaultObjAction = nullptr;
 		inherited::shedule_Update(DT);
 		return;
 	}
@@ -2068,19 +2068,19 @@ void CActor::shedule_Update(u32 DT)
 				}
 				else
 				{
-					m_sDefaultObjAction = NULL;
+					m_sDefaultObjAction = nullptr;
 				}
 			}
 		}
 	}
 	else
 	{
-		m_pPersonWeLookingAt = NULL;
-		m_sDefaultObjAction = NULL;
-		m_pUsableObject = NULL;
-		m_pObjectWeLookingAt = NULL;
-		m_pVehicleWeLookingAt = NULL;
-		m_pInvBoxWeLookingAt = NULL;
+		m_pPersonWeLookingAt = nullptr;
+		m_sDefaultObjAction = nullptr;
+		m_pUsableObject = nullptr;
+		m_pObjectWeLookingAt = nullptr;
+		m_pVehicleWeLookingAt = nullptr;
+		m_pInvBoxWeLookingAt = nullptr;
 	}
 
 	//	UpdateSleep									();
@@ -2634,7 +2634,7 @@ void CActor::OnItemDrop(CInventoryItem* inventory_item, bool just_before_destroy
 
 	if (!just_before_destroy &&
 		inventory_item->BaseSlot() == GRENADE_SLOT &&
-		NULL == inventory().ItemFromSlot(GRENADE_SLOT))
+		nullptr == inventory().ItemFromSlot(GRENADE_SLOT))
 	{
 		PIItem grenade = inventory().SameSlot(GRENADE_SLOT, inventory_item, true);
 
@@ -3122,7 +3122,7 @@ void CActor::removeFPCam()
 {
 	if (m_FPCam) {
 		Cameras().RemoveCamEffector(m_FPCam);
-		m_FPCam = NULL;
+		m_FPCam = nullptr;
 	}
 }
 

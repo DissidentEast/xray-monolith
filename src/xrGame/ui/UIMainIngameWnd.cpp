@@ -409,11 +409,11 @@ void CUIMainIngameWnd::RenderQuickInfos()
 	if (!pActor)
 		return;
 
-	static CGameObject* pObject = NULL;
+	static CGameObject* pObject = nullptr;
 	LPCSTR actor_action = pActor->GetDefaultActionForObject();
-	UIStaticQuickHelp->Show(NULL != actor_action);
+	UIStaticQuickHelp->Show(nullptr != actor_action);
 
-	if (NULL != actor_action)
+	if (nullptr != actor_action)
 	{
 		if (stricmp(actor_action, UIStaticQuickHelp->GetText()))
 			UIStaticQuickHelp->SetTextST(actor_action);
@@ -517,7 +517,7 @@ void CUIMainIngameWnd::InitFlashingIcons(CUIXml* node)
 	int staticsCount = node->GetNodesNum("", 0, flashingIconNodeName);
 
 	CUIXmlInit xml_init;
-	CUIStatic* pIcon = NULL;
+	CUIStatic* pIcon = nullptr;
 	// Пробегаемся по всем нодам и инициализируем из них статики
 	for (int i = 0; i < staticsCount; ++i)
 	{
@@ -649,7 +649,7 @@ void CUIMainIngameWnd::OnSectorChanged(int sector)
 
 void CUIMainIngameWnd::reset_ui()
 {
-	m_pPickUpItem = NULL;
+	m_pPickUpItem = nullptr;
 	if (m_ui_hud_states)
 	{
 		m_ui_hud_states->reset_ui();

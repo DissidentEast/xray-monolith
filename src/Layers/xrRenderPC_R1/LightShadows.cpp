@@ -115,7 +115,7 @@ void CLightShadows::set_object(IRenderable* O)
 			((CROS_impl*)O->renderable_ROS())->shadow_gen_frame = Device.dwFrame;
 
 			// alloc
-			caster* cs = NULL;
+			caster* cs = nullptr;
 			if (casters_pool.empty()) cs = xr_new<caster>();
 			else
 			{

@@ -10,7 +10,7 @@ BOOL g_telekinetic_objects_include_corpses = 0;
 template <typename Object>
 CStateBurerAttackTele<Object>::CStateBurerAttackTele(Object* obj) : inherited(obj), m_action()
 {
-	selected_object = NULL;
+	selected_object = nullptr;
 	time_started = 0;
 	m_end_tick = 0;
 	m_initial_health = 0.0f;

@@ -69,12 +69,12 @@ CPHShell::CPHShell()
 	m_flags.assign(0);
 	m_flags.set(flActivating,FALSE);
 	m_flags.set(flActive,FALSE);
-	m_space = NULL;
-	m_pKinematics = NULL;
-	m_spliter_holder = NULL;
+	m_space = nullptr;
+	m_pKinematics = nullptr;
+	m_spliter_holder = nullptr;
 	m_object_in_root.identity();
 	m_active_count = 0;
-	m_pPhysicsShellAnimatorC = NULL;
+	m_pPhysicsShellAnimatorC = nullptr;
 }
 
 void CPHShell::EnableObject(CPHObject* obj)
@@ -476,7 +476,7 @@ CPhysicsElement* CPHShell::get_Element(u16 bone_id)
 	for (; e != i; ++i)
 		if ((*i)->m_SelfID == bone_id)
 			return (CPhysicsElement*)(*i);
-	return NULL;
+	return nullptr;
 }
 
 CPhysicsJoint* CPHShell::get_Joint(u16 bone_id)
@@ -485,7 +485,7 @@ CPhysicsJoint* CPHShell::get_Joint(u16 bone_id)
 	for (; e != i; i++)
 		if ((*i)->BoneID() == bone_id)
 			return (CPhysicsJoint*)(*i);
-	return NULL;
+	return nullptr;
 }
 
 CPhysicsJoint* CPHShell::get_Joint(const shared_str& bone_name)
@@ -736,7 +736,7 @@ void CPHShell::addEquelInertiaToEls(const dMass& M)
 	}
 }
 
-static BONE_P_MAP* spGetingMap = NULL;
+static BONE_P_MAP* spGetingMap = nullptr;
 
 void CPHShell::build_FromKinematics(IKinematics* K, BONE_P_MAP* p_geting_map)
 {
@@ -1315,7 +1315,7 @@ CPhysicsElement* CPHShell::NearestToPoint(const Fvector& point, NearestToPointCa
 	i = elements.begin();
 	e = elements.end();
 	float min_distance = dInfinity;
-	CPHElement* nearest_element = NULL;
+	CPHElement* nearest_element = nullptr;
 	for (; i != e; ++i)
 	{
 		Fvector tmp;
@@ -1649,7 +1649,7 @@ CODEGeom* CPHShell::get_GeomByID(u16 bone_id)
 		CODEGeom* ret = (*i)->GeomByBoneID(bone_id);
 		if (ret) return ret;
 	}
-	return NULL;
+	return nullptr;
 }
 
 void CPHShell::PureStep(float step)

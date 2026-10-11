@@ -82,7 +82,7 @@ void CUIGameSP::OnFrame()
 		{
 			RemoveCustomStatic("main_task");
 			RemoveCustomStatic("secondary_task");
-			m_game_objective = NULL;
+			m_game_objective = nullptr;
 		}
 	}
 }

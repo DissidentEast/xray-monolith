@@ -32,7 +32,7 @@ void gsc_dsigned_ltx_writer::sign_and_save(IWriter& writer)
 	);
 
 	m_mem_writer.seek(tmp_write_pos);
-	LPCSTR append_value = NULL;
+	LPCSTR append_value = nullptr;
 	STRCONCAT(append_value,
 	          "\r\n[",
 	          dsign_secion,
@@ -61,7 +61,7 @@ static char* search_dsign_section(u8* buffer, u32 buffer_size)
 		--r_size;
 	}
 	while (r_size > 0);
-	return NULL;
+	return nullptr;
 }
 
 
@@ -82,7 +82,7 @@ gsc_dsigned_ltx_reader::~gsc_dsigned_ltx_reader()
 bool gsc_dsigned_ltx_reader::load_and_verify(u8* buffer, u32 const size)
 {
 	char* dsign_section = search_dsign_section(buffer, size);
-	if (dsign_section == NULL)
+	if (dsign_section == nullptr)
 		return false;
 
 	dsign_section -= 3; // \r\n[

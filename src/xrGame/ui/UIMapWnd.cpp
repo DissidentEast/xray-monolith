@@ -25,7 +25,7 @@
 
 #include "../../xrEngine/xr_input.h"		//remove me !!!
 
-CUIMapWnd* g_map_wnd = NULL; // quick temporary solution -(
+CUIMapWnd* g_map_wnd = nullptr; // quick temporary solution -(
 CUIMapWnd* GetMapWnd()
 {
 	return g_map_wnd;
@@ -33,12 +33,12 @@ CUIMapWnd* GetMapWnd()
 
 CUIMapWnd::CUIMapWnd()
 {
-	m_tgtMap = NULL;
-	m_GlobalMap = NULL;
+	m_tgtMap = nullptr;
+	m_GlobalMap = nullptr;
 	m_view_actor = false;
 	m_prev_actor_pos.set(0, 0);
 	m_currentZoom = 1.0f;
-	m_map_location_hint = NULL;
+	m_map_location_hint = nullptr;
 	m_map_move_step = 10.0f;
 	/*
 	#ifdef DEBUG
@@ -49,8 +49,8 @@ CUIMapWnd::CUIMapWnd()
 	//	UIMainMapHeader			= NULL;
 	m_scroll_mode = false;
 	m_nav_timing = Device.dwTimeGlobal;
-	hint_wnd = NULL;
-	m_UIScratchBox = NULL;
+	hint_wnd = nullptr;
+	m_UIScratchBox = nullptr;
 	g_map_wnd = this;
 }
 
@@ -64,7 +64,7 @@ CUIMapWnd::~CUIMapWnd()
 		delete_data( m_dbg_text_hint );
 		delete_data( m_dbg_info );
 	#endif // DEBUG/**/
-	g_map_wnd = NULL;
+	g_map_wnd = nullptr;
 }
 
 
@@ -739,7 +739,7 @@ void CUIMapWnd::ActivatePropertiesBox(const xr_vector<CMapSpot*>& spots)
 	}
 
 	{
-		CMapSpot* top = spots.empty() ? NULL : spots.front();
+		CMapSpot* top = spots.empty() ? nullptr : spots.front();
 		shared_str pos_level;
 		shared_str pos_hint = (top && top->MapLocation()) ? top->MapLocation()->GetHint() : NULL;
 		u32 before = m_UIPropertiesBox->GetItemsCount();
@@ -1059,7 +1059,7 @@ void CUIMapWnd::ViewActor()
 	Fvector v = Level().CurrentEntity()->Position();
 	m_prev_actor_pos.set(v.x, v.z);
 
-	CUICustomMap* lm = NULL;
+	CUICustomMap* lm = nullptr;
 	u16 idx = GetIdxByName(Level().name());
 	if (idx != u16(-1))
 	{

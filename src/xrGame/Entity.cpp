@@ -233,7 +233,7 @@ BOOL CEntity::net_Spawn(CSE_Abstract* DC)
 
 	//	SetfHealth			(E->fHealth);
 	IKinematics* pKinematics = smart_cast<IKinematics*>(Visual());
-	CInifile* ini = NULL;
+	CInifile* ini = nullptr;
 
 	if (pKinematics) ini = pKinematics->LL_UserData();
 	if (ini)

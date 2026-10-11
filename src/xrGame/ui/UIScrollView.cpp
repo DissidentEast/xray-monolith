@@ -15,8 +15,8 @@ CUIScrollView::CUIScrollView()
 	m_downIndent = 0.0f;
 	m_flags.zero();
 	SetFixedScrollBar(true);
-	m_pad = NULL;
-	m_VScrollBar = NULL;
+	m_pad = nullptr;
+	m_VScrollBar = nullptr;
 	m_visible_rgn.set(-1, -1);
 }
 
@@ -29,7 +29,7 @@ CUIScrollView::CUIScrollView(CUIFixedScrollBar* scroll_bar)
 	m_downIndent = 0.0f;
 	m_flags.zero();
 	SetFixedScrollBar(true);
-	m_pad = NULL;
+	m_pad = nullptr;
 	m_visible_rgn.set(-1, -1);
 
 	m_VScrollBar = scroll_bar;
@@ -228,7 +228,7 @@ void CUIScrollView::Draw()
 		for (int idx = m_visible_rgn.x; idx <= m_visible_rgn.y; ++it, ++idx)
 		{
 			CUIScrollView* sw = smart_cast<CUIScrollView*>(*it);
-			VERIFY(sw==NULL);
+			VERIFY(sw== nullptr);
 
 			if ((*it)->GetVisible())
 				(*it)->Draw();
@@ -382,7 +382,7 @@ u32 CUIScrollView::GetSize()
 CUIWindow* CUIScrollView::GetItem(u32 idx)
 {
 	if (m_pad->GetChildWndList().size() <= idx)
-		return NULL;
+		return nullptr;
 
 	WINDOW_LIST_it it = m_pad->GetChildWndList().begin();
 	std::advance(it, idx);
@@ -421,7 +421,7 @@ void CUIScrollView::SetSelected(CUIWindow* w)
 CUIWindow* CUIScrollView::GetSelected()
 {
 	if (!m_flags.test(eItemsSelectabe))
-		return NULL;
+		return nullptr;
 
 	for (WINDOW_LIST_it it = m_pad->GetChildWndList().begin(); m_pad->GetChildWndList().end() != it; ++it)
 	{
@@ -429,7 +429,7 @@ CUIWindow* CUIScrollView::GetSelected()
 			return *it;
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 void CUIScrollView::UpdateChildrenLenght()

@@ -34,7 +34,7 @@
 
 UITaskListWnd::UITaskListWnd()
 {
-	hint_wnd = NULL;
+	hint_wnd = nullptr;
 }
 
 UITaskListWnd::~UITaskListWnd()
@@ -179,7 +179,7 @@ void UITaskListWnd::UpdateCounter()
 
 UITaskListWndItem::UITaskListWndItem()
 {
-	m_task = NULL;
+	m_task = nullptr;
 
 	m_color_states[0] = (u32)(-1);
 	m_color_states[1] = (u32)(-1);

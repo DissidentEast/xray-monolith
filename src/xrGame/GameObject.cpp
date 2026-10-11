@@ -315,7 +315,7 @@ BOOL CGameObject::net_Spawn(CSE_Abstract* DC)
 	{
 		//R_ASSERT(Level().Objects.net_Find(E->ID) == NULL);
 		CObject* o = Level().Objects.net_Find(E->ID);
-		if (o != NULL)
+		if (o != nullptr)
 		{
 			Msg("ERROR: CGameObject:net_spawn() Object with ID already exists! ID=%d self=%s other=%s", E->ID,
 			    *(cName()), *(o->cName()));
@@ -577,15 +577,15 @@ void CGameObject::spawn_supplies()
 				if (n > 0)
 					j = atoi(_GetItem(V, 0, temp)); //count
 
-				if (NULL != strstr(V, "prob="))
+				if (nullptr != strstr(V, "prob="))
 					p = (float)atof(strstr(V, "prob=") + 5);
 				if (fis_zero(p))p = 1.f;
 				if (!j) j = 1;
-				if (NULL != strstr(V, "cond="))
+				if (nullptr != strstr(V, "cond="))
 					f_cond = (float)atof(strstr(V, "cond=") + 5);
-				bScope = (NULL != strstr(V, "scope"));
-				bSilencer = (NULL != strstr(V, "silencer"));
-				bLauncher = (NULL != strstr(V, "launcher"));
+				bScope = (nullptr != strstr(V, "scope"));
+				bSilencer = (nullptr != strstr(V, "silencer"));
+				bLauncher = (nullptr != strstr(V, "launcher"));
 			}
 			for (u32 i = 0; i < j; ++i)
 			{
@@ -1041,12 +1041,12 @@ void VisualCallback(IKinematics* tpKinematics)
 
 CScriptGameObject* CGameObject::lua_game_object() const
 {
-	if (!this) return NULL;
+	if (!this) return nullptr;
 	if (!m_spawned)
 	{
 		Msg("! you are trying to use a destroyed object [%i]", ID());
 		ai().script_engine().print_stack();
-		return NULL;
+		return nullptr;
 	}
 	if (!m_lua_game_object)
 		m_lua_game_object = xr_new<CScriptGameObject>(const_cast<CGameObject*>(this));

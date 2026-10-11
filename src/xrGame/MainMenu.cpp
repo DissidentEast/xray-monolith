@@ -65,14 +65,14 @@ CMainMenu* MainMenu() { return (CMainMenu*)g_pGamePersistent->m_pMainMenu; };
 CMainMenu::CMainMenu()
 {
 	m_Flags.zero();
-	m_startDialog = NULL;
+	m_startDialog = nullptr;
 	m_screenshotFrame = u32(-1);
 	g_pGamePersistent->m_pMainMenu = this;
 	if (Device.b_is_Ready) OnDeviceCreate();
 	ReadTextureInfo();
 	CUIXmlInit::InitColorDefs();
-	g_btnHint = NULL;
-	g_statHint = NULL;
+	g_btnHint = nullptr;
+	g_statHint = nullptr;
 	m_deactivated_frame = 0;
 
 	m_sPatchURL = "";
@@ -93,7 +93,7 @@ CMainMenu::CMainMenu()
 
 	GetPlayerName();
 	GetCDKeyFromRegistry();
-	m_demo_info_loader = NULL;
+	m_demo_info_loader = nullptr;
 
 	if (!g_dedicated_server)
 	{
@@ -137,7 +137,7 @@ CMainMenu::~CMainMenu()
 	xr_delete(g_btnHint);
 	xr_delete(g_statHint);
 	xr_delete(m_startDialog);
-	g_pGamePersistent->m_pMainMenu = NULL;
+	g_pGamePersistent->m_pMainMenu = nullptr;
 
 	//xr_delete						(m_account_mngr);
 	//xr_delete						(m_login_mngr);
@@ -612,7 +612,7 @@ void CMainMenu::OnNewPatchFound(LPCSTR VersionName, LPCSTR URL)
 	if (m_pMB_ErrDlgs[NewPatchFound])
 	{
 		delete_data(m_pMB_ErrDlgs[NewPatchFound]);
-		m_pMB_ErrDlgs[NewPatchFound] = NULL;
+		m_pMB_ErrDlgs[NewPatchFound] = nullptr;
 	}
 	if (!m_pMB_ErrDlgs[NewPatchFound])
 	{
@@ -902,7 +902,7 @@ void CMainMenu::OnDownloadMPMap_CopyURL(CUIWindow* w, void* d)
 void CMainMenu::OnDownloadMPMap(CUIWindow* w, void* d)
 {
 	LPCSTR url = m_downloaded_mp_map_url.c_str();
-	LPCSTR params = NULL;
+	LPCSTR params = nullptr;
 	STRCONCAT(params, "/C start ", url);
 	//ShellExecute(0, "open", "cmd.exe", params, NULL, SW_SHOW);
 }

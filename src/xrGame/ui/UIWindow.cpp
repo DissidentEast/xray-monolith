@@ -300,7 +300,7 @@ void CUIWindow::AttachChild(CUIWindow* pChild)
 void CUIWindow::DetachChild(CUIWindow* pChild)
 {
 	R_ASSERT(pChild);
-	if (NULL == pChild)
+	if (nullptr == pChild)
 		return;
 
 	erase_capture_subtree(pChild);
@@ -326,7 +326,7 @@ void CUIWindow::DetachAll()
 
 void CUIWindow::GetAbsoluteRect(Frect& r)
 {
-	if (GetParent() == NULL)
+	if (GetParent() == nullptr)
 	{
 		GetWndRect(r);
 		return;
@@ -369,7 +369,7 @@ bool CUIWindow::OnMouseAction(float x, float y, EUIMessages mouse_action)
 		m_dwLastClickTime = dwCurTime;
 	}
 
-	if (GetParent() == NULL)
+	if (GetParent() == nullptr)
 	{
 		// the window that captured the mouse gets every message, wherever the cursor is
 		CUIWindow* cap = MouseCapturer();
@@ -541,7 +541,7 @@ void CUIWindow::SetCapture(CUIWindow* pChildWindow, bool capture_status)
 
 CUIWindow* CUIWindow::MouseCapturer()
 {
-	return s_capture_stack.empty() ? NULL : s_capture_stack.back();
+	return s_capture_stack.empty() ? nullptr : s_capture_stack.back();
 }
 
 void CUIWindow::ReleaseMouseCapture()
@@ -580,7 +580,7 @@ bool CUIWindow::OnKeyboardAction(int dik, EUIMessages keyboard_action)
 
 	//если есть дочернее окно,захватившее клавиатуру, то
 	//сообщение направляем ему сразу
-	if (NULL != m_pKeyboardCapturer)
+	if (nullptr != m_pKeyboardCapturer)
 	{
 		result = m_pKeyboardCapturer->OnKeyboardAction(dik, keyboard_action);
 
@@ -605,7 +605,7 @@ bool CUIWindow::OnKeyboardHold(int dik)
 {
 	bool result;
 
-	if (NULL != m_pKeyboardCapturer)
+	if (nullptr != m_pKeyboardCapturer)
 	{
 		result = m_pKeyboardCapturer->OnKeyboardHold(dik);
 
@@ -629,19 +629,19 @@ bool CUIWindow::OnKeyboardHold(int dik)
 
 void CUIWindow::SetKeyboardCapture(CUIWindow* pChildWindow, bool capture_status)
 {
-	if (NULL != GetParent())
+	if (nullptr != GetParent())
 		GetParent()->SetKeyboardCapture(this, capture_status);
 
 	if (capture_status)
 	{
 		//оповестить дочернее окно о потере фокуса клавиатуры
-		if (NULL != m_pKeyboardCapturer)
+		if (nullptr != m_pKeyboardCapturer)
 			m_pKeyboardCapturer->SendMessage(this, WINDOW_KEYBOARD_CAPTURE_LOST);
 
 		m_pKeyboardCapturer = pChildWindow;
 	}
 	else
-		m_pKeyboardCapturer = NULL;
+		m_pKeyboardCapturer = nullptr;
 }
 
 
@@ -722,10 +722,10 @@ CUIWindow* CUIWindow::FindChild(const LPCSTR name)
 	for (; it != it_e; ++it)
 	{
 		CUIWindow* pRes = (*it)->FindChild(name);
-		if (pRes != NULL)
+		if (pRes != nullptr)
 			return pRes;
 	}
-	return NULL;
+	return nullptr;
 }
 
 void CUIWindow::SetParent(CUIWindow* pNewParent)

@@ -18,7 +18,7 @@ void BuildStackTrace	(struct _EXCEPTION_POINTERS *g_BlackBoxUIExPtrs)
 	g_stackTraceCount = 0;
 
 	int incr = 85;
-	while ( NULL != traceDump ) {
+	while ( nullptr != traceDump ) {
 		int				length = strlen(traceDump);
 		if (length < 4096)
 			lstrcpy		(g_stackTrace[g_stackTraceCount], traceDump);

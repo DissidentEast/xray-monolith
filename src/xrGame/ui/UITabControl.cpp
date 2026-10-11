@@ -36,7 +36,7 @@ void CUITabControl::SetCurrentOptValue()
 	CUIOptionsItem::SetCurrentOptValue();
 	shared_str v = GetOptStringValue();
 	CUITabButton* b = GetButtonById(v);
-	if (NULL == b)
+	if (nullptr == b)
 	{
 #ifndef MASTER_GOLD
 		Msg("! tab named [%s] doesnt exist", v.c_str());
@@ -268,7 +268,7 @@ CUITabButton* CUITabControl::GetButtonById(const shared_str& id)
 	if (it != m_TabsArr.end())
 		return *it;
 	else
-		return NULL;
+		return nullptr;
 }
 
 /*

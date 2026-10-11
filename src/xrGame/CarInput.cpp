@@ -115,7 +115,7 @@ bool CCar::bfAssignObject(CScriptEntityAction* tpEntityAction)
 		}
 		return (false);
 	}
-	SCarLight* light = NULL;
+	SCarLight* light = nullptr;
 	if (m_lights.findLight(l_sBoneID, light))
 	{
 		switch (l_tObjectAction.m_tGoalType)
@@ -368,7 +368,7 @@ bool CCar::isObjectVisible(CScriptGameObject* O_)
 
 bool CCar::HasWeapon()
 {
-	return (m_car_weapon != NULL);
+	return (m_car_weapon != nullptr);
 }
 
 Fvector CCar::CurrentVel()

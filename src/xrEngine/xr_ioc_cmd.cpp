@@ -16,7 +16,7 @@
 #include "xr_object.h"
 #include "MonitorList.h"
 
-xr_token* vid_quality_token = NULL;
+xr_token* vid_quality_token = nullptr;
 
 u32 g_screenmode = 1;
 xr_token screen_mode_tokens[] =
@@ -309,16 +309,16 @@ void CCC_LoadCFG::Execute(LPCSTR args)
 
 	FS.update_path(cfg_full_name, "$app_data_root$", cfg_name);
 
-	if (NULL == FS.exist(cfg_full_name))
+	if (nullptr == FS.exist(cfg_full_name))
 		FS.update_path(cfg_full_name, "$fs_root$", cfg_name);
 
-	if (NULL == FS.exist(cfg_full_name))
+	if (nullptr == FS.exist(cfg_full_name))
 		xr_strcpy(cfg_full_name, cfg_name);
 
 	IReader* F = FS.r_open(cfg_full_name);
 
 	string1024 str;
-	if (F != NULL)
+	if (F != nullptr)
 	{
 		while (!F->eof())
 		{

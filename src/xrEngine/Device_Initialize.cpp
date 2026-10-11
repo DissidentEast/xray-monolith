@@ -46,7 +46,7 @@ PROTECT_API void CRenderDevice::Initialize()
 #endif // #ifdef INGAME_EDITOR
 
 	// Unless a substitute hWnd has been specified, create a window to render into
-	if (m_hWnd == NULL)
+	if (m_hWnd == nullptr)
 	{
 		const char* wndclass = "_XRAY_1.5";
 

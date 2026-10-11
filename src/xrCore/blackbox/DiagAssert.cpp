@@ -177,7 +177,7 @@ BOOL __stdcall RealAssert  ( DWORD  dwOverrideOpts  ,
     // The module name.
     char   szModName[ MAX_PATH + 1 ] ;
     // The decoded message from FormatMessage
-    LPSTR  szFmtMsg = NULL ;
+    LPSTR  szFmtMsg = nullptr ;
     // The options.
     DWORD  dwOpts = dwOverrideOpts ;
     // The last error value.  (Which is preserved across the call).
@@ -210,7 +210,7 @@ BOOL __stdcall RealAssert  ( DWORD  dwOverrideOpts  ,
     }
 
     // If the message was not translated, just look in the system.
-    if ( NULL == szFmtMsg )
+    if ( nullptr == szFmtMsg )
     {
         FormatMessageA ( FORMAT_MESSAGE_ALLOCATE_BUFFER    |
                            FORMAT_MESSAGE_IGNORE_INSERTS   |
@@ -225,7 +225,7 @@ BOOL __stdcall RealAssert  ( DWORD  dwOverrideOpts  ,
 
     // Make sure the message got translated into something.
     LPSTR szRealLastErr ;
-    if ( NULL != szFmtMsg )
+    if ( nullptr != szFmtMsg )
     {
         szRealLastErr = szFmtMsg ;
     }
@@ -252,7 +252,7 @@ BOOL __stdcall RealAssert  ( DWORD  dwOverrideOpts  ,
                              szFmtMsg                        ) ) ;
 
     // Get rid of the allocated memory from FormatMessage.
-    if ( NULL != szFmtMsg )
+    if ( nullptr != szFmtMsg )
     {
         LocalFree ( (LPVOID)szFmtMsg ) ;
     }
@@ -300,7 +300,7 @@ BOOL __stdcall RealAssert  ( DWORD  dwOverrideOpts  ,
     if ( DA_SHOWMSGBOX == ( DA_SHOWMSGBOX & dwOpts ) )
     {
         HWND hWndParent = GetActiveWindow ( ) ;
-        if ( NULL != hWndParent )
+        if ( nullptr != hWndParent )
         {
             hWndParent = GetLastActivePopup ( hWndParent ) ;
         }
@@ -446,7 +446,7 @@ static DWORD __stdcall GetModBase ( HANDLE hProcess , DWORD dwAddr )
                                             szFile                   ,
                                             MAX_PATH                  );
 
-            HANDLE hFile = NULL ;
+            HANDLE hFile = nullptr ;
 
             if ( 0 != dwNameLen )
             {
@@ -509,7 +509,7 @@ static DWORD ConvertAddress ( DWORD dwAddr , LPTSTR szOutBuff )
     {
         // Strip off the path.
         LPTSTR szName = _tcsrchr ( stIHM.ImageName , _T ( '\\' ) ) ;
-        if ( NULL != szName )
+        if ( nullptr != szName )
         {
             szName++ ;
         }

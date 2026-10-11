@@ -65,7 +65,7 @@ static DWORD __stdcall
     // Find the last '\' mark.
     char * pStart = strrchr ( szBuff , '\\' ) ;
     int iMin ;
-    if ( NULL != pStart )
+    if ( nullptr != pStart )
     {
         // Move up one character.
         pStart++ ;

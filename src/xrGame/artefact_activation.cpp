@@ -214,7 +214,7 @@ shared_str clear_brackets(LPCSTR src)
 {
 	if (0 == src) return shared_str(0);
 
-	if (NULL == strchr(src, '"')) return shared_str(src);
+	if (nullptr == strchr(src, '"')) return shared_str(src);
 
 	string512 _original;
 	xr_strcpy(_original, src);

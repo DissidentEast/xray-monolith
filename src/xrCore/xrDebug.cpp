@@ -31,8 +31,8 @@ static BOOL bException = FALSE;
 XRCORE_API xrDebug Debug;
 
 // Dialog support
-static const char* dlgExpr = NULL;
-static const char* dlgFile = NULL;
+static const char* dlgExpr = nullptr;
+static const char* dlgFile = nullptr;
 static char dlgLine[16];
 
 static INT_PTR CALLBACK DialogProc(HWND hw, UINT msg, WPARAM wp, LPARAM lp)
@@ -224,7 +224,7 @@ LONG WINAPI UnhandledFilter(struct _EXCEPTION_POINTERS* pExceptionInfo)
 	// firstly see if dbghelp.dll is around and has the function we need
 	// look next to the EXE first, as the one in System32 might be old
 	// (e.g. Windows 2000)
-	HMODULE hDll = NULL;
+	HMODULE hDll = nullptr;
 	string_path szDbgHelpPath;
 
 	if (GetModuleFileName(NULL, szDbgHelpPath, _MAX_PATH))
@@ -237,13 +237,13 @@ LONG WINAPI UnhandledFilter(struct _EXCEPTION_POINTERS* pExceptionInfo)
 		}
 	}
 
-	if (hDll == NULL)
+	if (hDll == nullptr)
 	{
 		// load any version we can
 		hDll = ::LoadLibrary("DBGHELP.DLL");
 	}
 
-	LPCTSTR szResult = NULL;
+	LPCTSTR szResult = nullptr;
 
 	if (hDll)
 	{
@@ -280,7 +280,7 @@ LONG WINAPI UnhandledFilter(struct _EXCEPTION_POINTERS* pExceptionInfo)
 
 				ExInfo.ThreadId = ::GetCurrentThreadId();
 				ExInfo.ExceptionPointers = pExceptionInfo;
-				ExInfo.ClientPointers = NULL;
+				ExInfo.ClientPointers = nullptr;
 
 				// write the dump
 				MINIDUMP_TYPE dump_flags = MINIDUMP_TYPE(MiniDumpNormal | MiniDumpFilterMemory | MiniDumpScanMemory);

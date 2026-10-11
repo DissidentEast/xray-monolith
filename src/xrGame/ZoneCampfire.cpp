@@ -56,7 +56,7 @@ void CZoneCampfire::GoDisabledState()
 {
 	inherited::GoDisabledState();
 
-	R_ASSERT(NULL==m_pDisabledParticles);
+	R_ASSERT(nullptr ==m_pDisabledParticles);
 	LPCSTR str = pSettings->r_string(cNameSect(), "disabled_particles");
 	m_pDisabledParticles = CParticlesObject::Create(str,FALSE);
 	m_pDisabledParticles->UpdateParent(XFORM(), zero_vel);

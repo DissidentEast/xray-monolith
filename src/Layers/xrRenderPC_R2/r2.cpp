@@ -501,7 +501,7 @@ void CRender::model_Delete(IRender_DetailModel* & F)
 		CDetail* D = (CDetail*)F;
 		D->Unload();
 		xr_delete(D);
-		F = NULL;
+		F = nullptr;
 	}
 }
 
@@ -784,7 +784,7 @@ static HRESULT create_shader(
 			return E_FAIL;
 		}
 
-		LPCVOID data = NULL;
+		LPCVOID data = nullptr;
 		_result = D3DXFindShaderComment(buffer,MAKEFOURCC('C', 'T', 'A', 'B'), &data,NULL);
 		if (SUCCEEDED(_result) && data)
 		{
@@ -808,7 +808,7 @@ static HRESULT create_shader(
 			return E_FAIL;
 		}
 
-		LPCVOID data = NULL;
+		LPCVOID data = nullptr;
 		_result = D3DXFindShaderComment(buffer,MAKEFOURCC('C', 'T', 'A', 'B'), &data,NULL);
 		if (SUCCEEDED(_result) && data)
 		{
@@ -1389,9 +1389,9 @@ HRESULT CRender::shader_compile(
 		}
 
 		includer Includer;
-		LPD3DXBUFFER pShaderBuf = NULL;
-		LPD3DXBUFFER pErrorBuf = NULL;
-		LPD3DXCONSTANTTABLE pConstants = NULL;
+		LPD3DXBUFFER pShaderBuf = nullptr;
+		LPD3DXBUFFER pErrorBuf = nullptr;
+		LPD3DXCONSTANTTABLE pConstants = nullptr;
 		LPD3DXINCLUDE pInclude = (LPD3DXINCLUDE)&Includer;
 
 		_result = D3DXCompileShader((LPCSTR)pSrcData, SrcDataLen, defines, pInclude, pFunctionName, pTarget,

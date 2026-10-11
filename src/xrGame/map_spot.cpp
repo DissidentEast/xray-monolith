@@ -22,7 +22,7 @@ CMapSpot::CMapSpot(CMapLocation* ml)
 	m_mark_focused = false;
 	m_bScale = false;
 	m_location_level = 0;
-	m_border_static = NULL;
+	m_border_static = nullptr;
 	m_scale_bounds.set(-1.0f, -1.0f);
 	m_lbtn_down_pos.set(0.0f, 0.0f);
 	m_lbtn_armed = false;
@@ -163,7 +163,7 @@ CMapSpotPointer::~CMapSpotPointer()
 
 LPCSTR CMapSpotPointer::GetHint()
 {
-	return NULL;
+	return nullptr;
 }
 
 //////////////////////////////////////////////////
@@ -181,7 +181,7 @@ void CMiniMapSpot::Load(CUIXml* xml, LPCSTR path)
 	inherited::Load(xml, path);
 
 	string256 buf;
-	XML_NODE* n = NULL;
+	XML_NODE* n = nullptr;
 
 	Frect base_rect;
 	base_rect.x1 = 0;
@@ -353,10 +353,10 @@ CComplexMapSpot::CComplexMapSpot(CMapLocation* ml)
 	m_infinity_time = false;
 	m_last_delay = 0;
 	m_timer_finish = 0;
-	m_left_icon = NULL;
-	m_right_icon = NULL;
-	m_top_icon = NULL;
-	m_timer = NULL;
+	m_left_icon = nullptr;
+	m_right_icon = nullptr;
+	m_top_icon = nullptr;
+	m_timer = nullptr;
 }
 
 CComplexMapSpot::~CComplexMapSpot()

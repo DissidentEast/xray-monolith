@@ -159,7 +159,7 @@ void SBinocVisibleObj::Update()
 			u32 clr = subst_alpha(m_lt.GetTextureColor(), 255);
 
 			//-----------------------------------------------------
-			CActor* pActor = NULL;
+			CActor* pActor = nullptr;
 			if (IsGameTypeSingle()) pActor = Actor();
 			else
 			{
@@ -239,7 +239,7 @@ void CBinocularsVision::Update()
 	if (g_dedicated_server)
 		return;
 	//-----------------------------------------------------
-	const CActor* pActor = NULL;
+	const CActor* pActor = nullptr;
 	if (IsGameTypeSingle()) pActor = Actor();
 	else
 	{

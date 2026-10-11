@@ -53,7 +53,7 @@ BOOL CBulletManager::test_callback(const collide::ray_defs& rd, CObject* object,
 	if (entity && entity->g_Alive() && (entity->ID() != bullet->parent_id))
 	{
 		ICollisionForm* cform = entity->collidable.model;
-		if ((NULL != cform) && (cftObject == cform->Type()))
+		if ((nullptr != cform) && (cftObject == cform->Type()))
 		{
 			CActor* actor = smart_cast<CActor*>(entity);
 			CAI_Stalker* stalker = smart_cast<CAI_Stalker*>(entity);
@@ -210,7 +210,7 @@ void CBulletManager::FireShotmark(SBullet* bullet, const Fvector& vDir, const Fv
 	}
 
 	ref_sound* pSound = (!mtl_pair || mtl_pair->CollideSounds.empty())
-		                    ? NULL
+		                    ? nullptr
 		                    : &mtl_pair->CollideSounds[::Random.randI(0, mtl_pair->CollideSounds.size())];
 
 	//проиграть звук
@@ -222,7 +222,7 @@ void CBulletManager::FireShotmark(SBullet* bullet, const Fvector& vDir, const Fv
 	}
 
 	LPCSTR ps_name = (!mtl_pair || mtl_pair->CollideParticles.empty())
-		                 ? NULL
+		                 ? nullptr
 		                 : *mtl_pair->CollideParticles[::Random.randI(0, mtl_pair->CollideParticles.size())];
 
 	SGameMtl* tgt_mtl = GMLib.GetMaterialByIdx(target_material);

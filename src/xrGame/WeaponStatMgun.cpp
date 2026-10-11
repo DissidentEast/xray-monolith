@@ -123,7 +123,7 @@ CWeaponStatMgun::CWeaponStatMgun()
 	camera->Load("mounted_weapon_cam");
 #endif
 
-	p_overheat = NULL;
+	p_overheat = nullptr;
 }
 
 CWeaponStatMgun::~CWeaponStatMgun()
@@ -620,7 +620,7 @@ void CWeaponStatMgun::Hit(SHit* pHDS)
 #ifdef STATIONARYMGUN_NEW
 	inheritedPH::Hit(pHDS);
 #else
-	if (NULL == Owner())
+	if (nullptr == Owner())
 		//		inheritedPH::Hit(P,dir,who,element,p_in_object_space,impulse,hit_type);
 		inheritedPH::Hit(pHDS);
 #endif

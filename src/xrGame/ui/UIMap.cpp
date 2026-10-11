@@ -27,7 +27,7 @@ CUICustomMap::CUICustomMap()
 
 void CUICustomMap::Initialize(shared_str name, LPCSTR sh_name)
 {
-	CInifile* levelIni = NULL;
+	CInifile* levelIni = nullptr;
 	if (name == g_pGameLevel->name())
 		levelIni = g_pGameLevel->pLevel;
 	else
@@ -1369,13 +1369,13 @@ CUIMiniMapWidget::SPoolEntry* CUIMiniMapWidget::acquire(CMapLocation* loc)
 	if (found != m_pool.end()) return &found->second;
 
 	LPCSTR type = loc->CurrentSpotType();
-	if (!type) return NULL;
+	if (!type) return nullptr;
 
 	string512 spot_path, pointer_path;
-	if (!GetMiniMapSpotPaths(type, spot_path, pointer_path)) return NULL;
+	if (!GetMiniMapSpotPaths(type, spot_path, pointer_path)) return nullptr;
 
 	SPoolEntry e;
-	e.pointer = NULL;
+	e.pointer = nullptr;
 	e.pointer_path = xr_strlen(pointer_path) != 0;
 	e.color = 0;
 	e.stamp = m_stamp;

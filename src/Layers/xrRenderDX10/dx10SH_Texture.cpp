@@ -30,10 +30,10 @@ void resptrcode_texture::create(LPCSTR _name)
 //////////////////////////////////////////////////////////////////////
 CTexture::CTexture()
 {
-	pSurface = NULL;
-	m_pSRView = NULL;
-	pAVI = NULL;
-	pTheora = NULL;
+	pSurface = nullptr;
+	m_pSRView = nullptr;
+	pAVI = nullptr;
+	pTheora = nullptr;
     gifPlayer = nullptr;
 	desc_cache = 0;
 	ZeroMemory(&desc, sizeof(desc));

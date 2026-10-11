@@ -39,8 +39,8 @@ bool /*_declspec(dllexport)*/ SupportsAdvancedRendering()
 	// DPI context, which later causes SetWindowPos to use the wrong scale on
 	// secondary monitors with different DPI.
 	typedef HANDLE(WINAPI* pfnSetThreadDpiAwarenessContext)(HANDLE);
-	pfnSetThreadDpiAwarenessContext fnSetCtx = NULL;
-	HANDLE prevDpiContext = NULL;
+	pfnSetThreadDpiAwarenessContext fnSetCtx = nullptr;
+	HANDLE prevDpiContext = nullptr;
 	HMODULE user32 = GetModuleHandleA("user32.dll");
 	if (user32)
 	{

@@ -160,7 +160,7 @@ _VertexStream::_VertexStream()
 
 void _VertexStream::_clear()
 {
-	pVB = NULL;
+	pVB = nullptr;
 	mSize = 0;
 	mPosition = 0;
 	mDiscardID = 0;

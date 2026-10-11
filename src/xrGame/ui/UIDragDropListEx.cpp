@@ -10,13 +10,13 @@
 #include <dinput.h>
 //-Alundaio
 
-CUIDragItem* CUIDragDropListEx::m_drag_item = NULL;
+CUIDragItem* CUIDragDropListEx::m_drag_item = nullptr;
 
 void CUICell::Clear()
 {
 	m_bMainItem = false;
 	if (m_item) m_item->SetOwnerList(NULL);
-	m_item = NULL;
+	m_item = nullptr;
 }
 
 CUIDragDropListEx::CUIDragDropListEx()
@@ -25,7 +25,7 @@ CUIDragDropListEx::CUIDragDropListEx()
 	m_container = xr_new<CUICellContainer>(this);
 	m_vScrollBar = xr_new<CUIScrollBar>();
 	m_vScrollBar->SetAutoDelete(true);
-	m_selected_item = NULL;
+	m_selected_item = nullptr;
 	m_bConditionProgBarVisible = false;
 
 	SetCellSize(Ivector2().set(50, 50));
@@ -238,7 +238,7 @@ void CUIDragDropListEx::OnItemDBClick(CUIWindow* w, void* pData)
 	}
 
 	CUIDragDropListEx* old_owner = itm->OwnerList();
-	VERIFY(m_drag_item==NULL);
+	VERIFY(m_drag_item== nullptr);
 	VERIFY(old_owner == this);
 
 	if (old_owner && old_owner->GetCustomPlacement())
@@ -312,7 +312,7 @@ void CUIDragDropListEx::ClearAll(bool bDestroy)
 {
 	DestroyDragItem();
 	m_container->ClearAll(bDestroy);
-	m_selected_item = NULL;
+	m_selected_item = nullptr;
 	m_container->SetWndPos(Fvector2().set(0, 0));
 	ResetCellsCapacity();
 }
@@ -358,7 +358,7 @@ void CUIDragDropListEx::Update()
 		Fvector2 cp = GetUICursor().GetCursorPosition();
 		if (wndRect.in(cp))
 		{
-			if (NULL == m_drag_item->BackList())
+			if (nullptr == m_drag_item->BackList())
 				m_drag_item->SetBackList(this);
 		}
 		else if (this == m_drag_item->BackList())
@@ -596,7 +596,7 @@ bool CUICellContainer::AddSimilar(CUICellItem* itm)
 	//-Alundaio
 
 	CUICellItem* i = FindSimilar(itm);
-	if (i == NULL || i == itm || itm->ChildsCount() > 0)
+	if (i == nullptr || i == itm || itm->ChildsCount() > 0)
 		return false;
 
 	i->PushChild(itm);
@@ -633,7 +633,7 @@ CUICellItem* CUICellContainer::FindSimilar(CUICellItem* itm)
 		if (i->EqualTo(itm))
 			return i;
 	}
-	return NULL;
+	return nullptr;
 }
 
 void CUICellContainer::PlaceItemAtPos(CUICellItem* itm, Ivector2& cell_pos)

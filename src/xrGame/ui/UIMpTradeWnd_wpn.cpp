@@ -23,7 +23,7 @@ void CUIMpTradeWnd::OnBtnPistolAmmoClicked(CUIWindow* w, void* d)
 	if (wpn->m_ammoTypes.size() < ammo_idx + 1) return;
 	const shared_str& ammo_name = wpn->m_ammoTypes[ammo_idx];
 
-	if (NULL == m_store_hierarchy->FindItem(ammo_name))
+	if (nullptr == m_store_hierarchy->FindItem(ammo_name))
 		return;
 
 	SBuyItemInfo* pitem = CreateItem(ammo_name, SBuyItemInfo::e_undefined, false);
@@ -51,7 +51,7 @@ void CUIMpTradeWnd::OnBtnPistolSilencerClicked(CUIWindow* w, void* d)
 		//attach
 		shared_str addon_name = GetAddonNameSect(pitem, at_silencer);
 
-		if (NULL == m_store_hierarchy->FindItem(addon_name))
+		if (nullptr == m_store_hierarchy->FindItem(addon_name))
 			return;
 
 		SBuyItemInfo* addon_item = CreateItem(addon_name, SBuyItemInfo::e_undefined, false);
@@ -79,7 +79,7 @@ void CUIMpTradeWnd::OnBtnRifleAmmoClicked(CUIWindow* w, void* d)
 
 	const shared_str& ammo_name = wpn->m_ammoTypes[ammo_idx];
 
-	if (NULL == m_store_hierarchy->FindItem(ammo_name))
+	if (nullptr == m_store_hierarchy->FindItem(ammo_name))
 		return;
 
 	SBuyItemInfo* pitem = CreateItem(ammo_name, SBuyItemInfo::e_undefined, false);
@@ -107,7 +107,7 @@ void CUIMpTradeWnd::OnBtnRifleSilencerClicked(CUIWindow* w, void* d)
 		//attach
 		shared_str addon_name = GetAddonNameSect(pitem, at_silencer);
 
-		if (NULL == m_store_hierarchy->FindItem(addon_name))
+		if (nullptr == m_store_hierarchy->FindItem(addon_name))
 			return;
 
 		SBuyItemInfo* addon_item = CreateItem(addon_name, SBuyItemInfo::e_undefined, false);
@@ -136,7 +136,7 @@ void CUIMpTradeWnd::OnBtnRifleScopeClicked(CUIWindow* w, void* d)
 		//attach
 		shared_str addon_name = GetAddonNameSect(pitem, at_scope);
 
-		if (NULL == m_store_hierarchy->FindItem(addon_name))
+		if (nullptr == m_store_hierarchy->FindItem(addon_name))
 			return;
 
 		SBuyItemInfo* addon_item = CreateItem(addon_name, SBuyItemInfo::e_undefined, false);
@@ -165,7 +165,7 @@ void CUIMpTradeWnd::OnBtnRifleGLClicked(CUIWindow* w, void* d)
 		//attach
 		shared_str addon_name = GetAddonNameSect(pitem, at_glauncher);
 
-		if (NULL == m_store_hierarchy->FindItem(addon_name))
+		if (nullptr == m_store_hierarchy->FindItem(addon_name))
 			return;
 
 		SBuyItemInfo* addon_item = CreateItem(addon_name, SBuyItemInfo::e_undefined, false);
@@ -195,7 +195,7 @@ void CUIMpTradeWnd::OnBtnRifleAmmo2Clicked(CUIWindow* w, void* d)
 
 	const shared_str& ammo_name = wpn->m_ammoTypes2[ammo_idx];
 
-	if (NULL == m_store_hierarchy->FindItem(ammo_name))
+	if (nullptr == m_store_hierarchy->FindItem(ammo_name))
 		return;
 
 	SBuyItemInfo* pitem = CreateItem(ammo_name, SBuyItemInfo::e_undefined, false);
@@ -266,11 +266,11 @@ void CUIMpTradeWnd::SellItemAddons(SBuyItemInfo* sell_itm, item_addon_type addon
 			     ++ammo_idx)
 			{
 				const shared_str& ammo_name = wpn2->m_ammoTypes2[ammo_idx];
-				SBuyItemInfo* ammo = NULL;
+				SBuyItemInfo* ammo = nullptr;
 
-				while ((ammo = FindItem(ammo_name, SBuyItemInfo::e_bought)) != NULL)
+				while ((ammo = FindItem(ammo_name, SBuyItemInfo::e_bought)) != nullptr)
 				{
-					SBuyItemInfo* tempo = NULL;
+					SBuyItemInfo* tempo = nullptr;
 					TryToSellItem(ammo, true, tempo);
 				}
 			}
@@ -384,7 +384,7 @@ shared_str CUIMpTradeWnd::GetAddonNameSect(SBuyItemInfo* itm, item_addon_type at
 		}
 		break;
 	};
-	return NULL;
+	return nullptr;
 }
 
 bool CUIMpTradeWnd::AttachAddon(SBuyItemInfo* itm, item_addon_type at)

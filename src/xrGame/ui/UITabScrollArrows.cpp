@@ -32,7 +32,7 @@ static shared_str StateArt(const shared_str& base, IBState ib_state)
 CUIScrollArrowButton::CUIScrollArrowButton()
 	: m_applied_state(S_Enabled)
 {
-	m_half[0] = m_half[1] = NULL;
+	m_half[0] = m_half[1] = nullptr;
 }
 
 void CUIScrollArrowButton::SetupHalves(const shared_str& art_base)
@@ -97,7 +97,7 @@ void CUIScrollArrowButton::Update()
 CUITabScrollArrows::CUITabScrollArrows()
 	: m_parent(NULL), m_msg_target(NULL)
 {
-	m_arrow[0] = m_arrow[1] = NULL;
+	m_arrow[0] = m_arrow[1] = nullptr;
 	m_pin[0].set(0.0f, 0.0f);
 	m_pin[1].set(0.0f, 0.0f);
 }

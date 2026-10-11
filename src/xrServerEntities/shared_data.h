@@ -17,7 +17,7 @@ public:
 	{
 	}
 
-	virtual ~CSingleton() { _self = NULL; }
+	virtual ~CSingleton() { _self = nullptr; }
 
 	static void DestroySingleton()
 	{
@@ -49,7 +49,7 @@ public:
 };
 
 template <class T>
-T* CSingleton<T>::_self = NULL;
+T* CSingleton<T>::_self = nullptr;
 template <class T>
 int CSingleton<T>::_refcount = 0;
 template <class T>

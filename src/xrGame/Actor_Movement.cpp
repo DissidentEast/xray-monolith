@@ -320,7 +320,7 @@ void CActor::g_cl_CheckControls(u32 mstate_wf, Fvector& vControlAccel, float& Ju
 
 	if (IsGameTypeSingle() && cam_eff_factor > EPS)
 	{
-		LPCSTR state_anm = NULL;
+		LPCSTR state_anm = nullptr;
 
 		if (mstate_real & mcSprint && !(mstate_old & mcSprint))
 			state_anm = "sprint";
@@ -341,7 +341,7 @@ void CActor::g_cl_CheckControls(u32 mstate_wf, Fvector& vControlAccel, float& Ju
 			{
 				R_ASSERT2(control_entity, "current control entity is NULL");
 				CEffectorCam* ec = control_entity->Cameras().GetCamEffector(eCEActorMoving);
-				if (NULL == ec)
+				if (nullptr == ec)
 				{
 					string_path			eff_name;
 					xr_sprintf(eff_name, sizeof(eff_name), "%s.anm", state_anm);

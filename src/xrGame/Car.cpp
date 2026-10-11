@@ -46,7 +46,7 @@ CCar::CCar()
 :m_visual_camera(this)
 #endif
 {
-	m_memory = NULL;
+	m_memory = nullptr;
 	m_driver_anim_type = 0;
 	m_bone_steer = BI_NONE;
 	active_camera = 0;
@@ -98,7 +98,7 @@ CCar::CCar()
 	m_breaks_to_back_rate = 1.f;
 
 	b_exploded = false;
-	m_car_weapon = NULL;
+	m_car_weapon = nullptr;
 	m_power_neutral_factor = 0.25f;
 	m_steer_angle = 0.f;
 	m_speed_governed = false;
@@ -120,9 +120,9 @@ CCar::CCar()
 
     m_scope_active = 0;
 
-	m_on_before_hit_callback = NULL;
-	m_on_before_use_callback = NULL;
-	m_on_before_engine_callback = NULL;
+	m_on_before_hit_callback = nullptr;
+	m_on_before_use_callback = nullptr;
+	m_on_before_engine_callback = nullptr;
 #endif
 }
 

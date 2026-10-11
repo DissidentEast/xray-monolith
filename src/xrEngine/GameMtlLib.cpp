@@ -10,7 +10,7 @@
 CGameMtlLibrary GMLib;
 //CSound_manager_interface* Sound = NULL;
 #ifdef _EDITOR
-CGameMtlLibrary* PGMLib = NULL;
+CGameMtlLibrary* PGMLib = nullptr;
 #endif
 CGameMtlLibrary::CGameMtlLibrary()
 {

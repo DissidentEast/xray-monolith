@@ -407,7 +407,7 @@ IReader* IReader::open_chunk_iterator(u32& ID, IReader* _prev)
 	}
 
 	// open
-	if (elapsed() < 8) return NULL;
+	if (elapsed() < 8) return nullptr;
 	ID = r_u32();
 	u32 _size = r_u32();
 	if (ID & CFS_CompressMark)

@@ -185,7 +185,7 @@ void CActor::IR_OnKeyboardPress(int cmd)
 			{
 				CCustomDevice* dev = smart_cast<CCustomDevice*>(dev_active);
 				if (dev)
-					dev->ToggleDevice(g_player_hud->attached_item(0) != NULL);
+					dev->ToggleDevice(g_player_hud->attached_item(0) != nullptr);
 			}
 		}
 		break;
@@ -541,7 +541,7 @@ void CActor::ActorUse()
 		character_physics_support()->movement()->PHReleaseObject();
 
 
-	if (m_pUsableObject && NULL == m_pObjectWeLookingAt->cast_inventory_item())
+	if (m_pUsableObject && nullptr == m_pObjectWeLookingAt->cast_inventory_item())
 	{
 		m_pUsableObject->use(this);
 	}
@@ -836,7 +836,7 @@ void CActor::NoClipFly(int cmd)
 			if(det_active)
 			{
 				CCustomDetector* det = smart_cast<CCustomDetector*>(det_active);
-					det->ToggleDetector(g_player_hud->attached_item(0)!=NULL);
+					det->ToggleDetector(g_player_hud->attached_item(0)!= nullptr);
 				return;
 			}
 		}

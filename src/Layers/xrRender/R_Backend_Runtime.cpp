@@ -62,22 +62,22 @@ void CBackend::OnFrameBegin()
 
 void CBackend::Invalidate()
 {
-	pRT[0] = NULL;
-	pRT[1] = NULL;
-	pRT[2] = NULL;
-	pRT[3] = NULL;
-	pZB = NULL;
+	pRT[0] = nullptr;
+	pRT[1] = nullptr;
+	pRT[2] = nullptr;
+	pRT[3] = nullptr;
+	pZB = nullptr;
 
-	decl = NULL;
-	vb = NULL;
-	ib = NULL;
+	decl = nullptr;
+	vb = nullptr;
+	ib = nullptr;
 	vb_stride = 0;
 
-	state = NULL;
-	ps = NULL;
-	vs = NULL;
+	state = nullptr;
+	ps = nullptr;
+	vs = nullptr;
 #if defined(USE_DX10) || defined(USE_DX11)	
-	gs = NULL;
+	gs = nullptr;
 #endif
 	
 #ifdef USE_DX11
@@ -85,11 +85,11 @@ void CBackend::Invalidate()
 	ds = 0;
 	cs = 0;
 #endif
-	ctable = NULL;
+	ctable = nullptr;
 
-	T = NULL;
-	M = NULL;
-	C = NULL;
+	T = nullptr;
+	M = nullptr;
+	C = nullptr;
 
 	stencil_enable = u32(-1);
 	stencil_func = u32(-1);
@@ -111,10 +111,10 @@ void CBackend::Invalidate()
 	xforms.unmap();
 
 #if defined(USE_DX10) || defined(USE_DX11)
-	m_pInputLayout = NULL;
+	m_pInputLayout = nullptr;
 	m_PrimitiveTopology = D3D_PRIMITIVE_TOPOLOGY_UNDEFINED;
 	m_bChangedRTorZB = false;
-	m_pInputSignature = NULL;
+	m_pInputSignature = nullptr;
 	for (int i = 0; i < MaxCBuffers; ++i)
 	{
 		m_aPixelConstants[i] = 0;

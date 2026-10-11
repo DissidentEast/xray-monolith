@@ -105,7 +105,7 @@ void CTrade::TransferItem(CInventoryItem* pItem, bool bBuying, bool bFree)
 		pPartner.inv_owner->set_money(pPartner.inv_owner->get_money() - dwTransferMoney, false);
 
 
-	CAI_Trader* pTrader = NULL;
+	CAI_Trader* pTrader = nullptr;
 
 	if (pThis.type == TT_TRADER && bBuying)
 	{

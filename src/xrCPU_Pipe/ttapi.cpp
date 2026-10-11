@@ -11,12 +11,12 @@ typedef struct TTAPI_WORKER_PARAMS
 
 typedef PTTAPI_WORKER_PARAMS LPTTAPI_WORKER_PARAMS;
 
-static LPHANDLE ttapi_threads_handles = NULL;
+static LPHANDLE ttapi_threads_handles = nullptr;
 static BOOL ttapi_initialized = FALSE;
 static DWORD ttapi_workers_count = 0;
 static DWORD ttapi_threads_count = 0;
 static DWORD ttapi_assigned_workers = 0;
-static LPTTAPI_WORKER_PARAMS ttapi_worker_params = NULL;
+static LPTTAPI_WORKER_PARAMS ttapi_worker_params = nullptr;
 
 static DWORD ttapi_dwFastIter = 0;
 static DWORD ttapi_dwSlowIter = 0;
@@ -138,9 +138,9 @@ DWORD ttapi_Init(_processor_info* ID)
 	// Helper threads count
 	ttapi_threads_count = ttapi_workers_count - 1;
 
-	if ((ttapi_threads_handles = (LPHANDLE)malloc(sizeof(HANDLE) * ttapi_threads_count)) == NULL)
+	if ((ttapi_threads_handles = (LPHANDLE)malloc(sizeof(HANDLE) * ttapi_threads_count)) == nullptr)
 		return 0;
-	if ((ttapi_worker_params = (PTTAPI_WORKER_PARAMS)malloc(sizeof(TTAPI_WORKER_PARAMS) * ttapi_workers_count)) == NULL)
+	if ((ttapi_worker_params = (PTTAPI_WORKER_PARAMS)malloc(sizeof(TTAPI_WORKER_PARAMS) * ttapi_workers_count)) == nullptr)
 		return 0;
 
 	// Clear params
@@ -165,7 +165,7 @@ DWORD ttapi_Init(_processor_info* ID)
 			&dwThreadId
 		);
 
-		if (ttapi_threads_handles[i] == NULL)
+		if (ttapi_threads_handles[i] == nullptr)
 			return 0;
 
 		// Modern Thread Naming (Windows 10 Build 1607+)
@@ -236,7 +236,7 @@ VOID ttapi_Done()
 	// Asking helper threads to terminate
 	for (DWORD i = 0; i < ttapi_threads_count; i++)
 	{
-		ttapi_worker_params[i].lpWorkerFunc = NULL;
+		ttapi_worker_params[i].lpWorkerFunc = nullptr;
 		_InterlockedExchange(&ttapi_worker_params[i].vlFlag, 0);
 	}
 
@@ -245,9 +245,9 @@ VOID ttapi_Done()
 
 	// Freeing resources
 	free(ttapi_threads_handles);
-	ttapi_threads_handles = NULL;
+	ttapi_threads_handles = nullptr;
 	free(ttapi_worker_params);
-	ttapi_worker_params = NULL;
+	ttapi_worker_params = nullptr;
 
 	ttapi_workers_count = 0;
 	ttapi_threads_count = 0;

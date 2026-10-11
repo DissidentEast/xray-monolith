@@ -49,14 +49,14 @@ screenshot_manager::screenshot_manager()
 {
 	m_state = 0;
 
-	m_jpeg_buffer = NULL;
+	m_jpeg_buffer = nullptr;
 	m_jpeg_buffer_capacity = 0;
 
-	m_buffer_for_compress = NULL;
+	m_buffer_for_compress = nullptr;
 	m_buffer_for_compress_capacity = 0;
 
-	m_make_start_event = NULL;
-	m_make_done_event = NULL;
+	m_make_start_event = nullptr;
+	m_make_done_event = nullptr;
 }
 
 screenshot_manager::~screenshot_manager()

@@ -17,12 +17,12 @@ CUICustomEdit::CUICustomEdit()
 	TextItemControl()->SetCutWordsMode(true);
 	TextItemControl()->SetUseNewLineMode(false);
 
-	m_out_str[0] = NULL;
+	m_out_str[0] = '\0';
 	m_dx_cur = 0.0f;
 	m_read_mode = false;
 	m_force_update = true;
 	m_last_key_state_time = 0;
-	m_next_focus_capturer = NULL;
+	m_next_focus_capturer = nullptr;
 }
 
 

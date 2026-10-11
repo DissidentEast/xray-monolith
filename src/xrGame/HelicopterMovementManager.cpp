@@ -88,8 +88,8 @@ void SHeliMovementState::Update()
 void SHeliMovementState::reinit()
 {
 	type = eMovNone;
-	currPatrolPath = NULL;
-	currPatrolVertex = NULL;
+	currPatrolPath = nullptr;
+	currPatrolVertex = nullptr;
 	patrol_begin_idx = 0;
 	patrol_path_name = "";
 	need_to_del_path = false;

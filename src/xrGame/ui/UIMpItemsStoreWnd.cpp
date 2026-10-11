@@ -13,8 +13,8 @@ void CStoreHierarchy::item::destroy()
 
 CStoreHierarchy::CStoreHierarchy()
 {
-	m_root = NULL;
-	m_current_level = NULL;
+	m_root = nullptr;
+	m_current_level = nullptr;
 }
 
 CStoreHierarchy::~CStoreHierarchy()
@@ -171,7 +171,7 @@ CStoreHierarchy::item* CStoreHierarchy::FindItem(const shared_str& name_sect, CS
 		for (; it != it_e; ++it)
 			if (*it == name_sect) return recurse_from;
 	}
-	return NULL;
+	return nullptr;
 }
 
 bool CStoreHierarchy::MoveUp()

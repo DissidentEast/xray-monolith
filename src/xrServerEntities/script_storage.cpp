@@ -97,7 +97,7 @@ static void* lua_alloc(void* ud, void* ptr, size_t osize, size_t nsize)
 	if (nsize == 0)
 	{
 		xr_free(ptr);
-		return NULL;
+		return nullptr;
 	}
 	else
 #ifdef DEBUG_MEMORY_NAME
@@ -139,7 +139,7 @@ static void *lua_alloc(void *ud, void *ptr, size_t osize, size_t nsize)
     if ( !nsize )	{
         memory_monitor::monitor_free(ptr);
         s_allocator.free_impl		(ptr);
-        return						NULL;
+        return nullptr;
     }
 
     if ( !ptr ) {
@@ -209,7 +209,7 @@ static int report(lua_State *L, int status)
     if (status && !lua_isnil(L, -1))
     {
         const char *msg = lua_tostring(L, -1);
-        if (msg == NULL) msg = "(error object is not a string)";
+        if (msg == nullptr) msg = "(error object is not a string)";
         l_message(L, msg);
         lua_pop(L, 1);
     }

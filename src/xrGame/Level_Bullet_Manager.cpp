@@ -238,7 +238,7 @@ void CBulletManager::PlayExplodePS(const Fmatrix& xf)
 void CBulletManager::PlayWhineSound(SBullet* bullet, CObject* object, const Fvector& pos)
 {
 	if (m_WhineSounds.empty()) return;
-	if (bullet->m_whine_snd._feedback() != NULL) return;
+	if (bullet->m_whine_snd._feedback() != nullptr) return;
 	if (bullet->hit_type != ALife::eHitTypeFireWound) return;
 
 	bullet->m_whine_snd = m_WhineSounds[Random.randI(0, m_WhineSounds.size())];

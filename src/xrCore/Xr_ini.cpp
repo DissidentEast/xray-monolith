@@ -12,8 +12,8 @@
 #include <sstream>
 #include "mezz_stringbuffer.h"
 
-XRCORE_API CInifile const* pSettings = NULL;
-XRCORE_API CInifile const* pSettingsAuth = NULL;
+XRCORE_API CInifile const* pSettings = nullptr;
+XRCORE_API CInifile const* pSettingsAuth = nullptr;
 
 BOOL print_dltx_warnings = FALSE;
 
@@ -1188,7 +1188,7 @@ CInifile::Items CInifile::EvaluateSection(
 			{
 				// If we have a modification, check if it's valid (has a value)
 				if (mod_it != overrideData.end()) {
-					if (mod_it->second == NULL) {
+					if (mod_it->second == nullptr) {
 						mod_it++; // Skip modification with empty value
 						continue;
 					}
@@ -1237,7 +1237,7 @@ CInifile::Items CInifile::EvaluateSection(
 					// Apply all mods for this key (e.g., <item, then >newitem1, then >newitem3)
 					while (mod_it != overrideData.end() && xr_strcmp((*mod_it->first) + 1, active_key) == 0)
 					{
-						if (exists_in_output && mod_it->second != NULL)
+						if (exists_in_output && mod_it->second != nullptr)
 						{
 							ModifyListType op = static_cast<ModifyListType>((*mod_it->first)[0]);
 

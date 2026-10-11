@@ -38,7 +38,7 @@ namespace Feel
 		SFeelParam* fp = (SFeelParam*)params;
 		float vis = fp->parent->feel_vision_mtl_transp(result.O, result.element);
 		fp->vis *= vis;
-		if (NULL == result.O && fis_zero(vis))
+		if (nullptr == result.O && fis_zero(vis))
 		{
 			CDB::TRI* T = g_pGameLevel->ObjectSpace.GetStaticTris() + result.element;
 			Fvector* V = g_pGameLevel->ObjectSpace.GetStaticVerts();

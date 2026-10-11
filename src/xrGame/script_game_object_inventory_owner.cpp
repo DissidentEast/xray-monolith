@@ -901,12 +901,12 @@ LPCSTR CScriptGameObject::ProfileName()
 	{
 		ai().script_engine().script_log(ScriptStorage::eLuaMessageTypeError,
 		                                "ProfileName available only for InventoryOwner");
-		return NULL;
+		return nullptr;
 	}
 
 	shared_str profile_id = pInventoryOwner->CharacterInfo().Profile();
 	if (!profile_id || !profile_id.size())
-		return NULL;
+		return nullptr;
 	else
 		return *profile_id;
 }
@@ -919,7 +919,7 @@ LPCSTR CScriptGameObject::CharacterName()
 	{
 		ai().script_engine().script_log(ScriptStorage::eLuaMessageTypeError,
 		                                "CharacterName available only for InventoryOwner");
-		return NULL;
+		return nullptr;
 	}
 	return pInventoryOwner->Name();
 }
@@ -932,7 +932,7 @@ LPCSTR CScriptGameObject::CharacterIcon()
 	{
 		ai().script_engine().script_log(ScriptStorage::eLuaMessageTypeError,
 		                                "CharacterIconName available only for InventoryOwner");
-		return NULL;
+		return nullptr;
 	}
 	return pInventoryOwner->IconName();
 }
@@ -1050,7 +1050,7 @@ LPCSTR CScriptGameObject::CharacterCommunity()
 	{
 		ai().script_engine().script_log(ScriptStorage::eLuaMessageTypeError,
 		                                "CharacterCommunity available only for InventoryOwner");
-		return NULL;
+		return nullptr;
 	}
 	return *pInventoryOwner->CharacterInfo().Community().id();
 }
@@ -1085,7 +1085,7 @@ LPCSTR CScriptGameObject::sound_voice_prefix() const
 	{
 		ai().script_engine().script_log(ScriptStorage::eLuaMessageTypeError,
 		                                "sound_voice_prefix available only for InventoryOwner");
-		return NULL;
+		return nullptr;
 	}
 
 	return pInventoryOwner->SpecificCharacter().sound_voice_prefix();
@@ -1098,7 +1098,7 @@ ETaskState CScriptGameObject::GetGameTaskState(LPCSTR task_id)
 	shared_str shared_name = task_id;
 	CGameTask* t = Level().GameTaskManager().HasGameTask(shared_name, true);
 
-	if (NULL == t)
+	if (nullptr == t)
 		return eTaskStateDummy;
 
 	return t->GetTaskState();

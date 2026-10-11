@@ -32,11 +32,11 @@ typedef DWORD (WINAPI *GETMODULEFILENAMEEX)(HANDLE hProcess,
 // used by the InitPSAPI function and nothing else.
 static BOOL g_bInitialized = FALSE;
 // The pointer to EnumProcessModules.
-static ENUMPROCESSMODULES g_pEnumProcessModules = NULL;
+static ENUMPROCESSMODULES g_pEnumProcessModules = nullptr;
 // The pointer to GetModuleBaseName.
-static GETMODULEBASENAME g_pGetModuleBaseName = NULL;
+static GETMODULEBASENAME g_pGetModuleBaseName = nullptr;
 // The pointer to GetModuleFileNameEx.
-static GETMODULEFILENAMEEX g_pGetModuleFileNameEx = NULL;
+static GETMODULEFILENAMEEX g_pGetModuleFileNameEx = nullptr;
 
 /*----------------------------------------------------------------------
 FUNCTION        :   InitPSAPI
@@ -61,8 +61,8 @@ static BOOL InitPSAPI(void)
 
 	// Load up PSAPI.DLL.
 	HINSTANCE hInst = LoadLibraryA("PSAPI.DLL");
-	ASSERT(NULL != hInst) ;
-	if (NULL == hInst)
+	ASSERT(nullptr != hInst) ;
+	if (nullptr == hInst)
 	{
 		TRACE0("Unable to load PSAPI.DLL!\n") ;
 		return (FALSE);
@@ -72,8 +72,8 @@ static BOOL InitPSAPI(void)
 	g_pEnumProcessModules =
 		(ENUMPROCESSMODULES)GetProcAddress(hInst,
 		                                   "EnumProcessModules");
-	ASSERT(NULL != g_pEnumProcessModules) ;
-	if (NULL == g_pEnumProcessModules)
+	ASSERT(nullptr != g_pEnumProcessModules) ;
+	if (nullptr == g_pEnumProcessModules)
 	{
 		TRACE0("GetProcAddress failed on EnumProcessModules!\n") ;
 		return (FALSE);
@@ -82,8 +82,8 @@ static BOOL InitPSAPI(void)
 	g_pGetModuleBaseName =
 		(GETMODULEBASENAME)GetProcAddress(hInst,
 		                                  "GetModuleBaseNameA");
-	ASSERT(NULL != g_pGetModuleBaseName) ;
-	if (NULL == g_pGetModuleBaseName)
+	ASSERT(nullptr != g_pGetModuleBaseName) ;
+	if (nullptr == g_pGetModuleBaseName)
 	{
 		TRACE0("GetProcAddress failed on GetModuleBaseNameA!\n") ;
 		return (FALSE);
@@ -92,8 +92,8 @@ static BOOL InitPSAPI(void)
 	g_pGetModuleFileNameEx =
 		(GETMODULEFILENAMEEX)GetProcAddress(hInst,
 		                                    "GetModuleFileNameExA");
-	ASSERT(NULL != g_pGetModuleFileNameEx) ;
-	if (NULL == g_pGetModuleFileNameEx)
+	ASSERT(nullptr != g_pGetModuleFileNameEx) ;
+	if (nullptr == g_pGetModuleFileNameEx)
 	{
 		TRACE0("GetProcAddress failed on GetModuleFileNameExA\n") ;
 		return (FALSE);
@@ -144,15 +144,15 @@ BOOL __stdcall NT4GetLoadedModules(DWORD dwPID,
 	                           PROCESS_VM_READ,
 	                           FALSE,
 	                           dwPID);
-	ASSERT(NULL != hProc) ;
-	if (NULL == hProc)
+	ASSERT(nullptr != hProc) ;
+	if (nullptr == hProc)
 	{
 		TRACE1("Unable to OpenProcess on %08X\n", dwPID) ;
 		return (FALSE);
 	}
 
 	// Now get the modules for the specified process.
-	ASSERT(NULL != g_pEnumProcessModules) ;
+	ASSERT(nullptr != g_pEnumProcessModules) ;
 	// Because of possible DLL unload order differences, make sure that
 	// PSAPI.DLL is still loaded in case this function is called during
 	// shutdown.

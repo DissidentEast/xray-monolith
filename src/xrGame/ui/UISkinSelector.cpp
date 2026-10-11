@@ -152,7 +152,7 @@ void CUISkinSelectorWnd::Init(const char* strSectionName)
 
 void CUISkinSelectorWnd::SendMessage(CUIWindow* pWnd, s16 msg, void* pData)
 {
-	game_cl_mp* game = NULL;
+	game_cl_mp* game = nullptr;
 	//game_cl_Deathmatch * dm = NULL;
 	switch (msg)
 	{

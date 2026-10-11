@@ -9,11 +9,11 @@
 
 CRT::CRT()
 {
-	pSurface = NULL;
-	pRT = NULL;
-	pZRT = NULL;
+	pSurface = nullptr;
+	pRT = nullptr;
+	pZRT = nullptr;
 #ifdef USE_DX11
-	pUAView = NULL;
+	pUAView = nullptr;
 #endif
 	dwWidth = 0;
 	dwHeight = 0;

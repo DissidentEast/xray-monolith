@@ -36,7 +36,7 @@ CUISubLine::CUISubLine(const CUISubLine& other)
 	m_color = other.m_color;
 	m_last_in_line = other.m_last_in_line;
 	m_text = other.m_text;
-	m_pTempLine = NULL;
+	m_pTempLine = nullptr;
 #ifdef LOG_ALL_LINES
 	ListSubLinesCount++;
 	dbg_list_sublines.push_back(DBGList());

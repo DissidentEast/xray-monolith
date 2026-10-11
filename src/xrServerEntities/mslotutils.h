@@ -175,7 +175,7 @@ inline BOOL CheckMailslotMessage(HANDLE hSlot, CMailSlotMsg& msg)
 	cbMessage = cMessage = cbRead = 0;
 
 	hEvent = CreateEvent(NULL, FALSE, FALSE, "__Slot");
-	if (NULL == hEvent)
+	if (nullptr == hEvent)
 		return FALSE;
 	ov.Offset = 0;
 	ov.OffsetHigh = 0;

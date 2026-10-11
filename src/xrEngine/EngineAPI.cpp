@@ -104,7 +104,7 @@ CEngineAPI::~CEngineAPI()
 	if (vid_quality_token)
 	{
 		xr_free(vid_quality_token);
-		vid_quality_token = NULL;
+		vid_quality_token = nullptr;
 	}
 }
 
@@ -318,11 +318,11 @@ void CEngineAPI::CreateRendererList()
     vid_quality_token[0].name = xr_strdup("renderer_r1");
 
     vid_quality_token[1].id = -1;
-    vid_quality_token[1].name = NULL;
+    vid_quality_token[1].name = nullptr;
 
 #else
 	// TODO: ask renderers if they are supported!
-	if (vid_quality_token != NULL) return;
+	if (vid_quality_token != nullptr) return;
 	bool bSupports_r2 = false;
 	bool bSupports_r2_5 = false;
 	bool bSupports_r3 = false;
@@ -426,7 +426,7 @@ void CEngineAPI::CreateRendererList()
 	vid_quality_token = xr_alloc<xr_token>(_cnt);
 
 	vid_quality_token[_cnt - 1].id = -1;
-	vid_quality_token[_cnt - 1].name = NULL;
+	vid_quality_token[_cnt - 1].name = nullptr;
 
 	//#ifdef DEBUG
 	Msg("Available render modes[%d]:", _tmp.size());

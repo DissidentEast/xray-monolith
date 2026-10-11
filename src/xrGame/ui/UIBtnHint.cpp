@@ -4,8 +4,8 @@
 #include "UIStatic.h"
 #include "UIXmlInit.h"
 
-CUIButtonHint* g_btnHint = NULL;
-CUIButtonHint* g_statHint = NULL;
+CUIButtonHint* g_btnHint = nullptr;
+CUIButtonHint* g_statHint = nullptr;
 
 
 CUIButtonHint::CUIButtonHint()

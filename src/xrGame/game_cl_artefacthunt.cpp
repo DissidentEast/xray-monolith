@@ -38,7 +38,7 @@
 
 game_cl_ArtefactHunt::game_cl_ArtefactHunt()
 {
-	m_game_ui = NULL;
+	m_game_ui = nullptr;
 
 	m_bBuyEnabled = FALSE;
 	//---------------------------------
@@ -299,7 +299,7 @@ void game_cl_ArtefactHunt::SetGameUI(CUIGameCustom* uigame)
 CUIGameCustom* game_cl_ArtefactHunt::createGameUI()
 {
 	if (g_dedicated_server)
-		return NULL;
+		return nullptr;
 
 	CLASS_ID clsid = CLSID_GAME_UI_ARTEFACTHUNT;
 	m_game_ui = smart_cast<CUIGameAHunt*>(NEW_INSTANCE(clsid));
@@ -595,7 +595,7 @@ const char* game_cl_ArtefactHunt::getTeamSection(int Team)
 		NODEFAULT;
 	};
 #ifdef DEBUG
-	return NULL;
+	return nullptr;
 #endif
 };
 

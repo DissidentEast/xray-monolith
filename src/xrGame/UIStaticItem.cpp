@@ -116,7 +116,7 @@ void CUIStaticItem::RenderInternal(const Fvector2& in_pos)
 
 	sPoly2D D;
 	sPoly2D C;
-	sPoly2D* R = NULL;
+	sPoly2D* R = nullptr;
 
 	if (UI().m_currentPointType != IUIRender::pttLIT)
 		R = UI().ActiveClipFrustum().ClipPoly(S, D);

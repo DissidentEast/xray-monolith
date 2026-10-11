@@ -27,7 +27,7 @@ const u32 BIG_FILE_READER_WINDOW_SIZE = 1024 * 1024;
 # include <malloc.h>
 # pragma warning(pop)
 
-CLocatorAPI* xr_FS = NULL;
+CLocatorAPI* xr_FS = nullptr;
 
 #ifdef _EDITOR
 # define FSLTX "fs.ltx"
@@ -89,7 +89,7 @@ struct eq_fname_free
 
 	bool operator ()(_open_file& itm)
 	{
-		return (_val == itm._fn && itm._reader == NULL);
+		return (_val == itm._fn && itm._reader == nullptr);
 	}
 };
 
@@ -100,7 +100,7 @@ struct eq_fname_check
 
 	bool operator ()(_open_file& itm)
 	{
-		return (_val == itm._fn && itm._reader != NULL);
+		return (_val == itm._fn && itm._reader != nullptr);
 	}
 };
 
@@ -162,7 +162,7 @@ void _unregister_open_file(T* _r)
 	xr_vector<_open_file>::iterator it = std::find_if(g_open_files.begin(), g_open_files.end(), eq_pointer<T>(_r));
 	VERIFY(it != g_open_files.end());
 	_open_file& _of = *it;
-	_of._reader = NULL;
+	_of._reader = nullptr;
 	_lock.Leave();
 }
 
@@ -177,7 +177,7 @@ XRCORE_API void _dump_open_files(int mode)
 		for (; it != it_e; ++it)
 		{
 			_open_file& _of = *it;
-			if (_of._reader != NULL)
+			if (_of._reader != nullptr)
 			{
 				if (!bShow)
 					Log("----opened files");
@@ -193,7 +193,7 @@ XRCORE_API void _dump_open_files(int mode)
 		for (it = g_open_files.begin(); it != it_e; ++it)
 		{
 			_open_file& _of = *it;
-			if (_of._reader == NULL)
+			if (_of._reader == nullptr)
 				Msg("[%d] fname:%s", _of._used, _of._fn.c_str());
 		}
 	}
@@ -298,12 +298,12 @@ IReader* open_chunk(void* ptr, u32 ID)
 	{
 		res = ReadFile(ptr, &dwType, 4, &read_byte, 0);
 		if (read_byte == 0)
-			return NULL;
+			return nullptr;
 		//. VERIFY(res&&(read_byte==4));
 
 		res = ReadFile(ptr, &dwSize, 4, &read_byte, 0);
 		if (read_byte == 0)
-			return NULL;
+			return nullptr;
 		//. VERIFY(res&&(read_byte==4));
 
 		if ((dwType & (~CFS_CompressMark)) == ID)
@@ -454,9 +454,9 @@ void CLocatorAPI::archive::open()
 void CLocatorAPI::archive::close()
 {
 	CloseHandle(hSrcMap);
-	hSrcMap = NULL;
+	hSrcMap = nullptr;
 	CloseHandle(hSrcFile);
-	hSrcFile = NULL;
+	hSrcFile = nullptr;
 }
 
 void CLocatorAPI::ProcessArchive(LPCSTR _path)
@@ -525,7 +525,7 @@ bool CLocatorAPI::load_all_unloaded_archives()
 	for (; it != it_e; ++it)
 	{
 		archive& A = *it;
-		if (A.hSrcFile == NULL)
+		if (A.hSrcFile == nullptr)
 		{
 			LoadArchive(A);
 			res = true;

@@ -803,7 +803,7 @@ void CHW::Reset(HWND hwnd)
         SetForegroundWindow(hwnd);
     }
 
-    m_pSwapChain->SetFullscreenState(!bWindowed, bWindowed ? NULL : m_pOutput);
+    m_pSwapChain->SetFullscreenState(!bWindowed, bWindowed ? nullptr : m_pOutput);
 
 #if defined(USE_DX11)
     selectResolution(cd.Width, cd.Height, bWindowed);
@@ -1350,12 +1350,12 @@ void free_vid_mode_list()
         xr_free(vid_mode_token[i].name);
     }
     xr_free(vid_mode_token);
-    vid_mode_token = NULL;
+    vid_mode_token = nullptr;
 }
 
 void fill_vid_mode_list(CHW* _hw)
 {
-	if (vid_mode_token != NULL) return;
+	if (vid_mode_token != nullptr) return;
 	xr_vector<LPCSTR> _tmp;
     xr_vector<DXGI_MODE_DESC> modes;
 
@@ -1398,7 +1398,7 @@ void fill_vid_mode_list(CHW* _hw)
     vid_mode_token = xr_alloc<xr_token>(_cnt);
 
 	vid_mode_token[_cnt - 1].id = -1;
-    vid_mode_token[_cnt - 1].name = NULL;
+    vid_mode_token[_cnt - 1].name = nullptr;
 
 #ifdef DEBUG
 	Msg("Available video modes[%d]:",_tmp.size());
@@ -1478,7 +1478,7 @@ void CHW::UpdateViews()
     //	Create Depth/stencil buffer
     //	HACK: DX10: hard depth buffer format
 	//R_CHK	(pDevice->GetDepthStencilSurface	(&pBaseZB));
-	ID3DTexture2D* pDepthStencil = NULL;
+	ID3DTexture2D* pDepthStencil = nullptr;
 
     D3D_TEXTURE2D_DESC descDepth;
 #if defined(USE_DX11)

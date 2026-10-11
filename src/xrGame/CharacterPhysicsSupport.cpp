@@ -110,7 +110,7 @@ CCharacterPhysicsSupport::CCharacterPhysicsSupport(EType atype, CEntityAlive* ae
 	m_flags.set(fl_death_anim_on,FALSE);
 	m_flags.set(fl_skeleton_in_shell,FALSE);
 	m_flags.set(fl_use_hit_anims,TRUE);
-	m_pPhysicsShell = NULL;
+	m_pPhysicsShell = nullptr;
 	switch (atype)
 	{
 	case etActor:
@@ -1161,7 +1161,7 @@ void CCharacterPhysicsSupport::CreateShell(CObject* who, Fvector& dp, Fvector& v
 	//shell create
 	R_ASSERT2(m_physics_skeleton, "No skeleton created!!");
 	m_pPhysicsShell = m_physics_skeleton;
-	m_physics_skeleton = NULL;
+	m_physics_skeleton = nullptr;
 	m_pPhysicsShell->set_Kinematics(K);
 	m_pPhysicsShell->RunSimulation();
 	m_pPhysicsShell->mXFORM.set(mXFORM);

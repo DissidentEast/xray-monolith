@@ -46,7 +46,7 @@ bool CNightVisionEffector::IsActive()
 	CActor* pActor = smart_cast<CActor*>(Level().CurrentControlEntity());
 	if (!pActor) return false;
 	CEffectorPP* pp = pActor->Cameras().GetPPEffector((EEffectorPPType)effNightvision);
-	return (pp != NULL);
+	return (pp != nullptr);
 }
 
 void CNightVisionEffector::OnDisabled(CActor* pA, bool play_sound)

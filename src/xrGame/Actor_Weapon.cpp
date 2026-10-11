@@ -199,7 +199,7 @@ void CActor::SelectBestWeapon(CObject* O)
 			if (pIItem->BaseSlot() == INV_SLOT_2 || pIItem->BaseSlot() == INV_SLOT_3)
 			{
 				CInventoryItem* pIItemInSlot = inventory().ItemFromSlot(pIItem->BaseSlot());
-				if (pIItemInSlot != NULL && pIItemInSlot != pIItem)
+				if (pIItemInSlot != nullptr && pIItemInSlot != pIItem)
 					NeedToSelectBestWeapon = false;
 			}
 		}

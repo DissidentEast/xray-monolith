@@ -62,8 +62,8 @@ void anim_bone_fix::refix()
 void anim_bone_fix::deinit()
 {
 	release();
-	bone = NULL;
-	parent = NULL;
+	bone = nullptr;
+	parent = nullptr;
 }
 
 void anim_bone_fix::release()

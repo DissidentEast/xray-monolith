@@ -43,11 +43,11 @@ net_updateInvData* CInventoryItem::NetSync()
 
 CInventoryItem::CInventoryItem()
 {
-	m_net_updateData = NULL;
+	m_net_updateData = nullptr;
 	m_flags.set(Fbelt,FALSE);
 	m_flags.set(Fruck,TRUE);
 	m_flags.set(FRuckDefault,TRUE);
-	m_pInventory = NULL;
+	m_pInventory = nullptr;
 
 	SetDropManual(FALSE);
 
@@ -57,7 +57,7 @@ CInventoryItem::CInventoryItem()
 	m_flags.set(FUsingCondition,FALSE);
 	m_fCondition = 1.0f;
 
-	m_name = m_nameShort = NULL;
+	m_name = m_nameShort = nullptr;
 
 	m_ItemCurrPlace.value = 0;
 	m_ItemCurrPlace.type = eItemPlaceUndefined;
@@ -107,7 +107,7 @@ void CInventoryItem::Load(LPCSTR section)
 		m_kind._set(pSettings->r_string(section, "kind"));
 	else
 	{
-		m_kind = NULL;
+		m_kind = nullptr;
 		if (FS.m_Flags.test(FS.flPrintLTX))
 			Log("'kind' for section %s doesn't exist!", section);
 	}
@@ -276,7 +276,7 @@ void CInventoryItem::OnEvent(NET_Packet& P, u16 type)
 		{
 			Fvector p;
 			P.r_vec3(p);
-			CPHSynchronize* pSyncObj = NULL;
+			CPHSynchronize* pSyncObj = nullptr;
 			pSyncObj = object().PHGetSyncItem(0);
 			if (!pSyncObj) return;
 			SPHNetState state;
@@ -646,7 +646,7 @@ void CInventoryItem::net_Export(NET_Packet& P)
 		return;
 	}
 
-	CPHSynchronize* pSyncObj = NULL;
+	CPHSynchronize* pSyncObj = nullptr;
 	SPHNetState State;
 	pSyncObj = object().PHGetSyncItem(0);
 
@@ -1226,7 +1226,7 @@ void CInventoryItem::reload(LPCSTR section)
 
 void CInventoryItem::reinit()
 {
-	m_pInventory = NULL;
+	m_pInventory = nullptr;
 	m_ItemCurrPlace.type = eItemPlaceUndefined;
 }
 

@@ -109,7 +109,7 @@ void CHolderEntityObject::UpdateCL()
 
 void CHolderEntityObject::Hit(SHit* pHDS)
 {
-	if (NULL == Owner())
+	if (nullptr == Owner())
 		inheritedPH::Hit(pHDS);
 }
 

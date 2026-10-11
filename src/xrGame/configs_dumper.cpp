@@ -17,12 +17,12 @@ namespace mp_anticheat
 	configs_dumper::configs_dumper()
 	{
 		m_state = ds_not_active;
-		m_buffer_for_compress = NULL;
+		m_buffer_for_compress = nullptr;
 		m_buffer_for_compress_size = 0;
 		m_buffer_for_compress_capacity = 0;
 
-		m_make_start_event = NULL;
-		m_make_done_event = NULL;
+		m_make_start_event = nullptr;
+		m_make_done_event = nullptr;
 
 		static u8 const sign_random_init[4] = {42, 42, 42, 42};
 		m_dump_signer.sign(sign_random_init, sizeof(sign_random_init));
@@ -159,7 +159,7 @@ namespace mp_anticheat
 	void configs_dumper::sign_configs()
 	{
 		string64 creation_date;
-		LPSTR tmp_player_name = NULL;
+		LPSTR tmp_player_name = nullptr;
 		CInifile tmp_ini(NULL, FALSE, FALSE, FALSE);
 		game_cl_mp* tmp_cl_game = smart_cast<game_cl_mp*>(&Game());
 		R_ASSERT(tmp_cl_game);
@@ -170,7 +170,7 @@ namespace mp_anticheat
 		if (!tmp_cdkey_digest)
 			tmp_cdkey_digest = "null";
 
-		LPCSTR add_str = NULL;
+		LPCSTR add_str = nullptr;
 		STRCONCAT(add_str,
 		          tmp_player_name,
 		          tmp_cdkey_digest,

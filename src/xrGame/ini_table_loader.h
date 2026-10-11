@@ -83,8 +83,8 @@ int CSIni_Table::table_width = -1;
 TEMPLATE_SPECIALIZATION
 CSIni_Table::CIni_Table()
 {
-	m_pTable = NULL;
-	table_sect = NULL;
+	m_pTable = nullptr;
+	table_sect = nullptr;
 	table_width = -1;
 }
 

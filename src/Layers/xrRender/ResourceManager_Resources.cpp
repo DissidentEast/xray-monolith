@@ -166,7 +166,7 @@ SVS* CResourceManager::_CreateVS(LPCSTR _name)
 		m_vs.insert(mk_pair(_vs->set_name(name), _vs));
 		if (0 == stricmp(_name, "null"))
 		{
-			_vs->vs = NULL;
+			_vs->vs = nullptr;
 			return _vs;
 		}
 
@@ -252,7 +252,7 @@ SPS* CResourceManager::_CreatePS(LPCSTR name)
 		m_ps.insert(mk_pair(_ps->set_name(name), _ps));
 		if (0 == stricmp(name, "null"))
 		{
-			_ps->ps = NULL;
+			_ps->ps = nullptr;
 			return _ps;
 		}
 
@@ -335,7 +335,7 @@ void CResourceManager::_DeletePS(const SPS* ps)
 
 R_constant_table* CResourceManager::_CreateConstantTable(R_constant_table& C)
 {
-	if (C.empty()) return NULL;
+	if (C.empty()) return nullptr;
 	xrCriticalSectionGuard guard(creationGuard);
 	for (u32 it = 0; it < v_constant_tables.size(); it++)
 		if (v_constant_tables[it]->equal(C)) return v_constant_tables[it];
@@ -557,7 +557,7 @@ void	CResourceManager::DBG_VerifyTextures	()
 CMatrix* CResourceManager::_CreateMatrix(LPCSTR Name)
 {
 	R_ASSERT(Name && Name[0]);
-	if (0 == stricmp(Name, "$null")) return NULL;
+	if (0 == stricmp(Name, "$null")) return nullptr;
 
 	xrCriticalSectionGuard guard(creationGuard);
 	LPSTR N = LPSTR(Name);
@@ -597,7 +597,7 @@ void CResourceManager::ED_UpdateMatrix(LPCSTR Name, CMatrix* data)
 CConstant* CResourceManager::_CreateConstant(LPCSTR Name)
 {
 	R_ASSERT(Name && Name[0]);
-	if (0 == stricmp(Name, "$null")) return NULL;
+	if (0 == stricmp(Name, "$null")) return nullptr;
 
 	xrCriticalSectionGuard guard(creationGuard);
 	LPSTR N = LPSTR(Name);
@@ -673,7 +673,7 @@ SMatrixList* CResourceManager::_CreateMatrixList(SMatrixList& L)
 			break;
 		}
 	xrCriticalSectionGuard guard(creationGuard);
-	if (bEmpty) return NULL;
+	if (bEmpty) return nullptr;
 
 	for (u32 it = 0; it < lst_matrices.size(); it++)
 	{
@@ -705,7 +705,7 @@ SConstantList* CResourceManager::_CreateConstantList(SConstantList& L)
 			break;
 		}
 	xrCriticalSectionGuard guard(creationGuard);
-	if (bEmpty) return NULL;
+	if (bEmpty) return nullptr;
 
 	for (u32 it = 0; it < lst_constants.size(); it++)
 	{
@@ -778,14 +778,14 @@ SVS*	CResourceManager::_CreateVS		(LPCSTR _name)
 		_vs->dwFlags				|= xr_resource_flagged::RF_REGISTERED;
 		m_vs.insert					(mk_pair(_vs->set_name(name),_vs));
 		if (0==stricmp(_name,"null"))	{
-			_vs->vs				= NULL;
+			_vs->vs				= nullptr;
 			return _vs;
 		}
 
 		includer					Includer;
-		LPD3DXBUFFER				pShaderBuf	= NULL;
-		LPD3DXBUFFER				pErrorBuf	= NULL;
-		LPD3DXSHADER_CONSTANTTABLE	pConstants	= NULL;
+		LPD3DXBUFFER				pShaderBuf	= nullptr;
+		LPD3DXBUFFER				pErrorBuf	= nullptr;
+		LPD3DXSHADER_CONSTANTTABLE	pConstants	= nullptr;
 		HRESULT						_hr			= S_OK;
 		string_path					cname;
 		strconcat					(sizeof(cname),cname,::Render->getShaderPath(),_name,".vs");
@@ -825,7 +825,7 @@ SVS*	CResourceManager::_CreateVS		(LPCSTR _name)
 				_hr = HW.pDevice->CreateVertexShader	((DWORD*)pShaderBuf->GetBufferPointer(), &_vs->vs);
 				if (SUCCEEDED(_hr))	
 				{
-					LPCVOID			data		= NULL;
+					LPCVOID			data		= nullptr;
 					_hr	= D3DXFindShaderComment	((DWORD*)pShaderBuf->GetBufferPointer(),MAKEFOURCC('C','T','A','B'),&data,NULL);
 					if (SUCCEEDED(_hr) && data)
 					{
@@ -863,7 +863,7 @@ SVS*	CResourceManager::_CreateVS		(LPCSTR _name)
 
 		_RELEASE	(pShaderBuf);
 		_RELEASE	(pErrorBuf);
-		pConstants	= NULL;
+		pConstants	= nullptr;
 
 		CHECK_OR_EXIT		(
 			!FAILED(_hr),
@@ -886,7 +886,7 @@ SPS*	CResourceManager::_CreatePS			(LPCSTR name)
 		_ps->dwFlags				|=	xr_resource_flagged::RF_REGISTERED;
 		m_ps.insert					(mk_pair(_ps->set_name(name),_ps));
 		if (0==stricmp(name,"null"))	{
-			_ps->ps				= NULL;
+			_ps->ps				= nullptr;
 			return _ps;
 		}
 
@@ -916,9 +916,9 @@ SPS*	CResourceManager::_CreatePS			(LPCSTR name)
 		if (strstr(data,"main_ps_2_0"))			{ c_target = "ps_2_0"; c_entry = "main_ps_2_0";	}
 
 		// Compile
-		LPD3DXBUFFER				pShaderBuf	= NULL;
-		LPD3DXBUFFER				pErrorBuf	= NULL;
-		LPD3DXSHADER_CONSTANTTABLE	pConstants	= NULL;
+		LPD3DXBUFFER				pShaderBuf	= nullptr;
+		LPD3DXBUFFER				pErrorBuf	= nullptr;
+		LPD3DXSHADER_CONSTANTTABLE	pConstants	= nullptr;
 		HRESULT						_hr			= S_OK;
 		_hr = ::Render->shader_compile	(name,data,size, NULL, &Includer, c_entry, c_target, D3DXSHADER_DEBUG | D3DXSHADER_PACKMATRIX_ROWMAJOR, &pShaderBuf, &pErrorBuf, NULL);
 		//_hr = D3DXCompileShader		(text,text_size, NULL, &Includer, c_entry, c_target, D3DXSHADER_DEBUG | D3DXSHADER_PACKMATRIX_ROWMAJOR, &pShaderBuf, &pErrorBuf, NULL);
@@ -930,7 +930,7 @@ SPS*	CResourceManager::_CreatePS			(LPCSTR name)
 			{
 				_hr = HW.pDevice->CreatePixelShader	((DWORD*)pShaderBuf->GetBufferPointer(), &_ps->ps);
 				if (SUCCEEDED(_hr))	{
-					LPCVOID			data		= NULL;
+					LPCVOID			data		= nullptr;
 					_hr	= D3DXFindShaderComment	((DWORD*)pShaderBuf->GetBufferPointer(),MAKEFOURCC('C','T','A','B'),&data,NULL);
 					if (SUCCEEDED(_hr) && data)
 					{
@@ -968,7 +968,7 @@ SPS*	CResourceManager::_CreatePS			(LPCSTR name)
 
 		_RELEASE		(pShaderBuf);
 		_RELEASE		(pErrorBuf);
-		pConstants		= NULL;
+		pConstants		= nullptr;
 
 		CHECK_OR_EXIT		(
 			!FAILED(_hr),

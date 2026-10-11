@@ -37,7 +37,7 @@ static u32 const tips_scroll_back_color = color_rgba(15, 15, 15, 230);
 static u32 const tips_scroll_pos_color = color_rgba(70, 70, 70, 240);
 
 
-ENGINE_API CConsole* Console = NULL;
+ENGINE_API CConsole* Console = nullptr;
 
 static thread_local string256 s_script_caller;
 
@@ -154,12 +154,12 @@ void CConsole::Initialize()
 {
 	scroll_delta = 0;
 	bVisible = false;
-	pFont = NULL;
-	pFont2 = NULL;
+	pFont = nullptr;
+	pFont2 = nullptr;
 
 	m_mouse_pos.x = 0;
 	m_mouse_pos.y = 0;
-	m_last_cmd = NULL;
+	m_last_cmd = nullptr;
 
 	m_cmd_history.reserve(m_cmd_history_max + 2);
 	m_cmd_history.clear_not_free();
@@ -172,7 +172,7 @@ void CConsole::Initialize()
 
 	m_tips_mode = 0;
 	m_prev_length_str = 0;
-	m_cur_cmd = NULL;
+	m_cur_cmd = nullptr;
 	reset_selected_tip();
 
 	// Commands
@@ -795,7 +795,7 @@ IConsole_Command* CConsole::find_next_cmd(LPCSTR in_str, shared_str& out_str)
 		out_str._set((LPCSTR)new_str);
 		return cc;
 	}
-	return NULL;
+	return nullptr;
 }
 
 bool CConsole::add_next_cmds(LPCSTR in_str, vecTipsEx& out_v)
@@ -916,7 +916,7 @@ void CConsole::update_tips()
 	m_temp_tips.clear_not_free();
 	m_tips.clear_not_free();
 
-	m_cur_cmd = NULL;
+	m_cur_cmd = nullptr;
 	if (!bVisible)
 	{
 		return;

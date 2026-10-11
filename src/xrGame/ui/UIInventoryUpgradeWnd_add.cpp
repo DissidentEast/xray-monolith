@@ -41,11 +41,11 @@ void CUIInventoryUpgradeWnd::LoadCellStates(LPCSTR state_str, LPCSTR texture_nam
 	VERIFY(state_str && xr_strcmp( state_str, "" ));
 	if (texture_name && !xr_strcmp(texture_name, ""))
 	{
-		texture_name = NULL;
+		texture_name = nullptr;
 	}
 	if (texture_name2 && !xr_strcmp(texture_name2, ""))
 	{
-		texture_name2 = NULL;
+		texture_name2 = nullptr;
 	}
 
 	SetCellState(SelectCellState(state_str), texture_name, texture_name2, color);

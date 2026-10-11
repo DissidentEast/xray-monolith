@@ -664,7 +664,7 @@ void save_mini_dump (_EXCEPTION_POINTERS* pExceptionInfo)
     // firstly see if dbghelp.dll is around and has the function we need
 // look next to the EXE first, as the one in System32 might be old
     // (e.g. Windows 2000)
-    HMODULE hDll = NULL;
+    HMODULE hDll = nullptr;
     string_path szDbgHelpPath;
 
     if (GetModuleFileName( NULL, szDbgHelpPath, _MAX_PATH ))
@@ -677,13 +677,13 @@ void save_mini_dump (_EXCEPTION_POINTERS* pExceptionInfo)
         }
     }
 
-    if (hDll==NULL)
+    if (hDll== nullptr)
     {
         // load any version we can
         hDll = ::LoadLibrary( "DBGHELP.DLL" );
     }
 
-    LPCTSTR szResult = NULL;
+    LPCTSTR szResult = nullptr;
 
     if (hDll)
     {
@@ -729,7 +729,7 @@ void save_mini_dump (_EXCEPTION_POINTERS* pExceptionInfo)
 
                 ExInfo.ThreadId = ::GetCurrentThreadId();
                 ExInfo.ExceptionPointers = pExceptionInfo;
-                ExInfo.ClientPointers = NULL;
+                ExInfo.ClientPointers = FALSE;
 
                 // write the dump
                 MINIDUMP_TYPE dump_flags = MINIDUMP_TYPE(MiniDumpNormal | MiniDumpFilterMemory | MiniDumpScanMemory );

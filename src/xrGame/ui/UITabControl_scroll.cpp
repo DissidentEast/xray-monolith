@@ -27,12 +27,12 @@ CUITabButton* CUITabControl::FirstStripTab() const
 	for (u32 i = 0; i < m_TabsArr.size(); ++i)
 		if (!TabParked(m_TabsArr[i]))
 			return m_TabsArr[i];
-	return NULL;
+	return nullptr;
 }
 
 void CUITabControl::RebuildTabOverlaps()
 {
-	CUITabButton* prev = NULL;
+	CUITabButton* prev = nullptr;
 	float overlap = 0.0f;
 	for (u32 i = 0; i < m_TabsArr.size(); ++i)
 	{
@@ -139,7 +139,7 @@ void CUITabControl::RecalcScroll()
 	float content_x = 0.0f;
 	float static_x = 0.0f;
 	float total_slack = 0.0f;
-	CUITabButton* prev = NULL;
+	CUITabButton* prev = nullptr;
 	for (u32 i = 0; i < m_TabsArr.size(); ++i)
 	{
 		if (TabParked(m_TabsArr[i]))

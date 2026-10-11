@@ -58,7 +58,7 @@ game_sv_Deathmatch::game_sv_Deathmatch()
 
 	m_bSpectatorMode = false;
 	m_dwSM_CurViewEntity = 0;
-	m_pSM_CurViewEntity = NULL;
+	m_pSM_CurViewEntity = nullptr;
 	m_dwSM_LastSwitchTime = 0;
 
 	//-------------------------------
@@ -392,7 +392,7 @@ game_PlayerState* game_sv_Deathmatch::GetWinningPlayer()
 
 		winner_searcher()
 		{
-			res = NULL;
+			res = nullptr;
 			MaxFrags = -10000;
 		}
 
@@ -464,7 +464,7 @@ void game_sv_Deathmatch::Update()
 				if (!m_pSM_CurViewEntity || !smart_cast<CActor*>(m_pSM_CurViewEntity) || m_dwSM_LastSwitchTime < Level()
 					.timeServer())
 					SM_SwitchOnNextActivePlayer();
-				CUIGameDM* GameDM = NULL;
+				CUIGameDM* GameDM = nullptr;
 				if (CurrentGameUI())
 					GameDM = smart_cast<CUIGameDM*>(CurrentGameUI());
 
@@ -564,7 +564,7 @@ bool game_sv_Deathmatch::checkForFragLimit()
 			}
 		};
 		frag_limit_searcher tmp_predicate;
-		if (m_server->FindClient(tmp_predicate) != NULL)
+		if (m_server->FindClient(tmp_predicate) != nullptr)
 		{
 			OnFraglimitExceed();
 			return true;
@@ -612,7 +612,7 @@ void game_sv_Deathmatch::SM_SwitchOnNextActivePlayer()
 	m_server->ForEachClientDo(tmp_functor);
 
 
-	CObject* pNewObject = NULL;
+	CObject* pNewObject = nullptr;
 	if (!tmp_functor.PPlayersCount)
 	{
 		xrClientData* C = (xrClientData*)m_server->GetServerClient();
@@ -636,7 +636,7 @@ void game_sv_Deathmatch::SM_SwitchOnNextActivePlayer()
 void game_sv_Deathmatch::net_Relcase(CObject* O)
 {
 	if (m_pSM_CurViewEntity == O)
-		m_pSM_CurViewEntity = NULL;
+		m_pSM_CurViewEntity = nullptr;
 }
 
 void game_sv_Deathmatch::SM_SwitchOnPlayer(CObject* pNewObject)

@@ -219,8 +219,8 @@ ui_core::ui_core()
 	}
 	else
 	{
-		m_pUICursor = NULL;
-		m_pFontManager = NULL;
+		m_pUICursor = nullptr;
+		m_pFontManager = nullptr;
 	}
 	m_bPostprocess = false;
 
@@ -301,7 +301,7 @@ shared_str ui_core::get_xml_name(LPCSTR fn)
 	if (screenmode() == u8(0))
 	{
 		xr_sprintf(str, "%s", fn);
-		if (NULL == strext(fn)) xr_strcat(str, ".xml");
+		if (nullptr == strext(fn)) xr_strcat(str, ".xml");
 	}
 	else
 	{
@@ -315,21 +315,21 @@ shared_str ui_core::get_xml_name(LPCSTR fn)
 		else
 			xr_sprintf(str, screenmode() == u8(1) ? "%s_16" : "%s_21", fn);
 
-		if (NULL == FS.exist(str_, "$game_config$", "ui\\", str))
+		if (nullptr == FS.exist(str_, "$game_config$", "ui\\", str))
 		{
 			if (screenmode() == u8(2))
 			{
 				xr_sprintf(str, "%s_16", fn);
-				if (NULL == strext(fn)) xr_strcat(str, "_16.xml");
+				if (nullptr == strext(fn)) xr_strcat(str, "_16.xml");
 
-				if (NULL != FS.exist(str_, "$game_config$", "ui\\", str))
+				if (nullptr != FS.exist(str_, "$game_config$", "ui\\", str))
 				{
 					return str;
 				}
 					
 			}
 			xr_sprintf(str, "%s", fn);
-			if (NULL == strext(fn)) xr_strcat(str, ".xml");
+			if (nullptr == strext(fn)) xr_strcat(str, ".xml");
 		}
 #ifdef DEBUG
 		Msg("[16-9] get_xml_name for[%s] returns [%s]", fn, str);

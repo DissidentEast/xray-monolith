@@ -11,7 +11,7 @@
 CUICheckButton::CUICheckButton()
 {
 	TextItemControl()->SetTextAlignment(CGameFont::alLeft);
-	m_pDependControl = NULL;
+	m_pDependControl = nullptr;
 }
 
 CUICheckButton::~CUICheckButton()

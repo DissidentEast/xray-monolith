@@ -1137,8 +1137,8 @@ void CAI_Stalker::check_throw_trajectory(const float& throw_time)
 {
 	m_throw_enabled = false;
 
-	xr_vector<trajectory_pick>* trajectory_picks = NULL;
-	xr_vector<Fvector>* collide_tris = NULL;
+	xr_vector<trajectory_pick>* trajectory_picks = nullptr;
+	xr_vector<Fvector>* collide_tris = nullptr;
 #ifdef DEBUG
 	trajectory_picks				=	& m_throw_picks;
 	collide_tris					=	& m_throw_collide_tris;

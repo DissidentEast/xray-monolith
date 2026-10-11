@@ -346,7 +346,7 @@ CUIDragDropListEx* CUIActorMenu::GetListByType(EDDListType t)
 		}
 		break;
 	}
-	return NULL;
+	return nullptr;
 }
 
 CUICellItem* CUIActorMenu::CurrentItem()
@@ -384,7 +384,7 @@ void CUIActorMenu::InfoCurItem(CUICellItem* cell_item)
 	}
 	PIItem current_item = (PIItem)cell_item->m_pData;
 
-	PIItem compare_item = NULL;
+	PIItem compare_item = nullptr;
 	u16 compare_slot = current_item->BaseSlot();
 	if (compare_slot != NO_ACTIVE_SLOT)
 	{

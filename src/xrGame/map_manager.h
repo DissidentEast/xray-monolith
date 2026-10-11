@@ -46,7 +46,7 @@ public:
 	void ReloadSpots();
 	bool GetMapLocationsForObject(u16 id, xr_vector<CMapLocation*>& res);
 	void OnObjectDestroyNotify(u16 id);
-	void ResetStorage() { m_locations = NULL; m_removed_spots.clear_not_free(); };
+	void ResetStorage() { m_locations = nullptr; m_removed_spots.clear_not_free(); };
 #ifdef DEBUG
 	void					Dump						();
 #endif

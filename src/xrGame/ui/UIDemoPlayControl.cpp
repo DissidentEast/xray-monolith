@@ -43,9 +43,9 @@ CUIDemoPlayControl::CUIDemoPlayControl()
 	AttachChild(m_rewind_type);
 	m_rewind_type->SetWindowName("rewind_types_pbox");
 
-	m_players_store = NULL;
-	m_players = NULL;
-	m_demo_play_control = NULL;
+	m_players_store = nullptr;
+	m_players = nullptr;
+	m_demo_play_control = nullptr;
 }
 
 CUIDemoPlayControl::~CUIDemoPlayControl()
@@ -336,7 +336,7 @@ void CUIDemoPlayControl::OnRepeatRewind(CUIWindow* w, void* d)
 
 void CUIDemoPlayControl::Update()
 {
-	LPCSTR demo_play_string = NULL;
+	LPCSTR demo_play_string = nullptr;
 	string32 demo_pos;
 	string32 demo_speed;
 	//st.translate("demo play active : ").c_str() (need to translate ?)

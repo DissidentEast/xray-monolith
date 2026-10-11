@@ -14,7 +14,7 @@
 
 extern int g_nearwall;
 
-player_hud* g_player_hud = NULL;
+player_hud* g_player_hud = nullptr;
 Fvector _ancor_pos;
 Fvector _wpn_root_pos;
 
@@ -28,7 +28,7 @@ player_hud_motion* player_hud_motion_container::find_motion(const shared_str& na
 		if (s == name)
 			return &(*it);
 	}
-	return NULL;
+	return nullptr;
 }
 
 void player_hud_motion_container::load(IKinematicsAnimated* model, const shared_str& sect)
@@ -36,7 +36,7 @@ void player_hud_motion_container::load(IKinematicsAnimated* model, const shared_
 	CInifile::Sect& _sect = pSettings->r_section(sect);
 	CInifile::SectCIt _b = _sect.Data.begin();
 	CInifile::SectCIt _e = _sect.Data.end();
-	player_hud_motion* pm = NULL;
+	player_hud_motion* pm = nullptr;
 
 	string512 buff;
 	MotionID motion_ID;
@@ -1822,10 +1822,10 @@ void player_hud::set_part_cycle_speed(u8 part, float speed)
 
 void player_hud::detach_item_idx(u16 idx)
 {
-	if (NULL == m_attached_items[idx]) return;
+	if (nullptr == m_attached_items[idx]) return;
 
 	m_attached_items[idx]->m_parent_hud_item->on_b_hud_detach();
-	m_attached_items[idx] = NULL;
+	m_attached_items[idx] = nullptr;
 
 	if (idx == 1)
 	{

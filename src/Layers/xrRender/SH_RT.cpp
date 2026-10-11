@@ -7,8 +7,8 @@
 
 CRT::CRT()
 {
-	pSurface = NULL;
-	pRT = NULL;
+	pSurface = nullptr;
+	pRT = nullptr;
 	dwWidth = 0;
 	dwHeight = 0;
 	fmt = D3DFMT_UNKNOWN;

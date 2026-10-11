@@ -347,7 +347,7 @@ struct SearcherClientByName
 	bool operator()(IClient* client)
 	{
 		xrClientData* temp_client = smart_cast<xrClientData*>(client);
-		LPSTR tmp_player = NULL;
+		LPSTR tmp_player = nullptr;
 		if (!temp_client->ps)
 			return false;
 
@@ -493,7 +493,7 @@ static xrClientData* exclude_command_initiator(LPCSTR args)
 		if (g_pGameLevel && Level().Server)
 			return Level().Server->ID_to_client(tmp_id);
 	}
-	return NULL;
+	return nullptr;
 };
 
 static char const* exclude_raid_from_args(LPCSTR args, LPSTR dest, size_t dest_size)
@@ -720,7 +720,7 @@ public:
 
 	virtual void Info(TInfo& I)
 	{
-		LPCSTR info_str = NULL;
+		LPCSTR info_str = nullptr;
 		STRCONCAT(info_str,
 		          "Play demo until specified event (then pause playing). Format: mpdemoplay_pause_on ",
 		          DemoPlayControlArgParser::GetInfoString());
@@ -776,7 +776,7 @@ public:
 
 	virtual void Info(TInfo& I)
 	{
-		LPCSTR info_str = NULL;
+		LPCSTR info_str = nullptr;
 		STRCONCAT(info_str,
 		          "Rewind demo until specified event (then pause playing). Format: mpdemoplay_rewind_until ",
 		          DemoPlayControlArgParser::GetInfoString());
@@ -1269,7 +1269,7 @@ public:
 
 			PlayersEnumerator()
 			{
-				filter_string = NULL;
+				filter_string = nullptr;
 			}
 
 			void operator()(IClient* client)

@@ -32,13 +32,13 @@ CONDITIONAL COMPILATION :
                       File Scope Global Variables
 //////////////////////////////////////////////////////////////////////*/
 // The custom unhandled exception filter (crash handler)
-static PFNCHFILTFN g_pfnCallBack = NULL ;
+static PFNCHFILTFN g_pfnCallBack = nullptr ;
 
 // The original unhandled exception filter
-static LPTOP_LEVEL_EXCEPTION_FILTER g_pfnOrigFilt = NULL ;
+static LPTOP_LEVEL_EXCEPTION_FILTER g_pfnOrigFilt = nullptr ;
 
 // The array of modules to limit crash handler to
-static HMODULE * g_ahMod = NULL ;
+static HMODULE * g_ahMod = nullptr ;
 // The size, in items, of g_ahMod
 static UINT g_uiModCount = 0 ;
 
@@ -101,14 +101,14 @@ public  :
     ~CleanUpCrashHandler ( void )
     {
         // Are there any outstanding memory allocations?
-        if ( NULL != g_ahMod )
+        if ( nullptr != g_ahMod )
         {
             VERIFY ( HeapFree ( GetProcessHeap ( ) ,
                                 0                  ,
                                 g_ahMod             ) ) ;
-            g_ahMod = NULL ;
+            g_ahMod = nullptr ;
         }
-        if ( NULL != g_pfnOrigFilt )
+        if ( nullptr != g_pfnOrigFilt )
         {
             // Restore the original unhandled exception filter.
             SetUnhandledExceptionFilter ( g_pfnOrigFilt ) ;
@@ -126,20 +126,20 @@ static CleanUpCrashHandler g_cBeforeAndAfter ;
 BOOL __stdcall SetCrashHandlerFilter ( PFNCHFILTFN pFn )
 {
     // A NULL parameter unhooks the callback.
-    if ( NULL == pFn )
+    if ( nullptr == pFn )
     {
-        if ( NULL != g_pfnOrigFilt )
+        if ( nullptr != g_pfnOrigFilt )
         {
             // Restore the original unhandled exception filter.
             SetUnhandledExceptionFilter ( g_pfnOrigFilt ) ;
-            g_pfnOrigFilt = NULL ;
-            if ( NULL != g_ahMod )
+            g_pfnOrigFilt = nullptr ;
+            if ( nullptr != g_ahMod )
             {
                 VERIFY ( HeapFree ( GetProcessHeap ( ) , 0 , g_ahMod ) ) ;				
 				//free ( g_ahMod ) ;
-                g_ahMod = NULL ;
+                g_ahMod = nullptr ;
             }
-            g_pfnCallBack = NULL ;
+            g_pfnCallBack = nullptr ;
         }
     }
     else
@@ -154,7 +154,7 @@ BOOL __stdcall SetCrashHandlerFilter ( PFNCHFILTFN pFn )
         // If a custom crash handler isn't already in use, enable
 // CrashHandlerExceptionFilter and save the original unhandled
         // exception filter.
-        if ( NULL == g_pfnOrigFilt )
+        if ( nullptr == g_pfnOrigFilt )
         {
             g_pfnOrigFilt =
                SetUnhandledExceptionFilter(CrashHandlerExceptionFilter);
@@ -166,8 +166,8 @@ BOOL __stdcall SetCrashHandlerFilter ( PFNCHFILTFN pFn )
 BOOL __stdcall AddCrashHandlerLimitModule ( HMODULE hMod )
 {
     // Check the obvious cases.
-    ASSERT ( NULL != hMod ) ;
-    if ( NULL == hMod )
+    ASSERT ( nullptr != hMod ) ;
+    if ( nullptr == hMod )
     {
         return ( FALSE ) ;
     }
@@ -181,15 +181,15 @@ BOOL __stdcall AddCrashHandlerLimitModule ( HMODULE hMod )
                                 HEAP_ZERO_MEMORY |
                                    HEAP_GENERATE_EXCEPTIONS        ,
                                 (sizeof(HMODULE)*(g_uiModCount+1))  ) ;
-    ASSERT ( NULL != phTemp ) ;
-    if ( NULL == phTemp )
+    ASSERT ( nullptr != phTemp ) ;
+    if ( nullptr == phTemp )
     {
         TRACE0 ( "Serious trouble in the house! - "
                  "HeapAlloc failed!!!\n"       );
         return ( FALSE ) ;
     }
 
-    if ( NULL == g_ahMod )
+    if ( nullptr == g_ahMod )
     {
         g_ahMod = phTemp ;
         g_ahMod[ 0 ] = hMod ;
@@ -284,7 +284,7 @@ LONG __stdcall CrashHandlerExceptionFilter (EXCEPTION_POINTERS* pExPtrs)
     __try
     {
 
-        if ( NULL != g_pfnCallBack )
+        if ( nullptr != g_pfnCallBack )
         {
 
             // The symbol engine has to be initialized here so that
@@ -306,7 +306,7 @@ LONG __stdcall CrashHandlerExceptionFilter (EXCEPTION_POINTERS* pExPtrs)
                                        (DWORD)pExPtrs->
                                             ExceptionRecord->
                                                       ExceptionAddress);
-                if ( NULL != hBaseAddr )
+                if ( nullptr != hBaseAddr )
                 {
                     for ( UINT i = 0 ; i < g_uiModCount ; i ++ )
                     {
@@ -393,7 +393,7 @@ LPCTSTR __stdcall GetFaultReason ( EXCEPTION_POINTERS * pExPtrs )
             ConvertSimpleException(pExPtrs->ExceptionRecord->
                                                          ExceptionCode);
 
-        if ( NULL != dwTemp )
+        if ( nullptr != dwTemp )
         {
             iCurr += wsprintf ( g_szBuff + iCurr ,
                                 _T ( "%s" )      ,
@@ -421,9 +421,9 @@ LPCTSTR __stdcall GetFaultReason ( EXCEPTION_POINTERS * pExPtrs )
             SymGetModuleBase ( (HANDLE)GetCurrentProcessId ( ) ,
                                (DWORD)pExPtrs->ExceptionRecord->
                                                     ExceptionAddress ) ;
-        ASSERT ( NULL != dwTemp ) ;
+        ASSERT ( nullptr != dwTemp ) ;
 
-        if ( NULL == dwTemp )
+        if ( nullptr == dwTemp )
         {
             iCurr += wsprintf ( g_szBuff + iCurr , _T ( "<UNKNOWN>" ) );
         }
@@ -558,7 +558,7 @@ LPCTSTR __stdcall GetFaultReason ( EXCEPTION_POINTERS * pExPtrs )
     __except ( EXCEPTION_EXECUTE_HANDLER )
     {
         ASSERT ( !"Crashed in GetFaultReason" ) ;
-        szRet = NULL ;
+        szRet = nullptr ;
     }
     return ( szRet ) ;
 }
@@ -580,10 +580,10 @@ BOOL __stdcall GetFaultReasonVB ( EXCEPTION_POINTERS * pExPtrs ,
 
         szRet = GetFaultReason ( pExPtrs ) ;
 
-        ASSERT ( NULL != szRet ) ;
-        if ( NULL == szRet )
+        ASSERT ( nullptr != szRet ) ;
+        if ( nullptr == szRet )
         {
-            return ( NULL != szRet ) ;
+            return ( nullptr != szRet ) ;
         }
         lstrcpyn ( szBuff   ,
                    szRet    ,
@@ -591,9 +591,9 @@ BOOL __stdcall GetFaultReasonVB ( EXCEPTION_POINTERS * pExPtrs ,
     }
     __except ( EXCEPTION_EXECUTE_HANDLER )
     {
-        szRet = NULL ;
+        szRet = nullptr ;
     }
-    return ( NULL != szRet ) ;
+    return ( nullptr != szRet ) ;
 }
 
 
@@ -702,7 +702,7 @@ LPCTSTR __stdcall
                                   NULL                               ) ;
         if ( ( FALSE == bSWRet ) || ( 0 == g_stFrame.AddrFrame.Offset ))
         {
-            szRet = NULL ;
+            szRet = nullptr ;
             return ( szRet ) ;
         }
 
@@ -715,7 +715,7 @@ LPCTSTR __stdcall
                                         g_stFrame.AddrPC.Offset       );
         if ( 0 == dwModBase )
         {
-            szRet = NULL ;
+            szRet = nullptr ;
             return ( szRet ) ;
         }
 
@@ -873,7 +873,7 @@ LPCTSTR __stdcall
     __except ( EXCEPTION_EXECUTE_HANDLER )
     {
         ASSERT ( !"Crashed in InternalGetStackTraceString" ) ;
-        szRet = NULL ;
+        szRet = nullptr ;
     }
 
     return ( szRet ) ;
@@ -896,9 +896,9 @@ BOOL __stdcall
     __try
     {
         szRet = GetFirstStackTraceString ( dwOpts , pExPtrs ) ;
-        if ( NULL == szRet )
+        if ( nullptr == szRet )
         {
-            return ( NULL != szRet ) ;
+            return ( nullptr != szRet ) ;
         }
         lstrcpyn ( szBuff   ,
                    szRet    ,
@@ -906,9 +906,9 @@ BOOL __stdcall
     }
     __except ( EXCEPTION_EXECUTE_HANDLER )
     {
-        szRet = NULL ;
+        szRet = nullptr ;
     }
-    return ( NULL != szRet ) ;
+    return ( nullptr != szRet ) ;
 }
 
 BOOL __stdcall
@@ -928,9 +928,9 @@ BOOL __stdcall
     __try
     {
         szRet = GetNextStackTraceString ( dwOpts , pExPtrs ) ;
-        if ( NULL == szRet )
+        if ( nullptr == szRet )
         {
-            return ( NULL != szRet ) ;
+            return ( nullptr != szRet ) ;
         }
         lstrcpyn ( szBuff   ,
                    szRet    ,
@@ -938,9 +938,9 @@ BOOL __stdcall
     }
     __except ( EXCEPTION_EXECUTE_HANDLER )
     {
-        szRet = NULL ;
+        szRet = nullptr ;
     }
-    return ( NULL != szRet ) ;
+    return ( nullptr != szRet ) ;
 }
 
 LPCTSTR __stdcall GetRegisterString ( EXCEPTION_POINTERS * pExPtrs )
@@ -1002,9 +1002,9 @@ BOOL __stdcall GetRegisterStringVB ( EXCEPTION_POINTERS * pExPtrs ,
     __try
     {
         szRet = GetRegisterString ( pExPtrs ) ;
-        if ( NULL == szRet )
+        if ( nullptr == szRet )
         {
-            return ( NULL != szRet ) ;
+            return ( nullptr != szRet ) ;
         }
         lstrcpyn ( szBuff   ,
                    szRet    ,
@@ -1012,9 +1012,9 @@ BOOL __stdcall GetRegisterStringVB ( EXCEPTION_POINTERS * pExPtrs ,
     }
     __except ( EXCEPTION_EXECUTE_HANDLER )
     {
-        szRet = NULL ;
+        szRet = nullptr ;
     }
-    return ( NULL != szRet ) ;
+    return ( nullptr != szRet ) ;
 
 }
 

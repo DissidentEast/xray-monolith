@@ -19,8 +19,8 @@ void dxUIRender::DestroyUIGeom()
         it.second.destroy();
     g_UIShadersCache.clear();
 
-	hGeom_TL = NULL;
-	hGeom_LIT = NULL;
+	hGeom_TL = nullptr;
+	hGeom_LIT = nullptr;
 }
 
 void dxUIRender::SetShader(IUIShader& shader)

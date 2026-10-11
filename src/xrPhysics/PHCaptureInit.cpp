@@ -253,20 +253,20 @@ void CPHCapture::Release()
 		m_island.RemoveJoint(m_joint);
 		dJointDestroy(m_joint);
 	}
-	m_joint = NULL;
+	m_joint = nullptr;
 	if (m_ajoint)
 	{
 		m_island.RemoveJoint(m_ajoint);
 		dJointDestroy(m_ajoint);
 	}
-	m_ajoint = NULL;
+	m_ajoint = nullptr;
 
 	if (m_body)
 	{
 		m_island.RemoveBody(m_body);
 		dBodyDestroy(m_body);
 	}
-	m_body = NULL;
+	m_body = nullptr;
 
 	if (e_state == cstPulling && m_taget_element && !m_taget_object->ObjectGetDestroy() && m_taget_object->
 		ObjectPPhysicsShell() && m_taget_object->ObjectPPhysicsShell()->isActive())
@@ -307,7 +307,7 @@ void CPHCapture::Deactivate()
 		m_character->SetObjectContactCallback(0);
 	CPHUpdateObject::Deactivate();
 	e_state = cstFree;
-	m_character = NULL;
-	m_taget_object = NULL;
-	m_taget_element = NULL;
+	m_character = nullptr;
+	m_taget_object = nullptr;
+	m_taget_element = nullptr;
 }

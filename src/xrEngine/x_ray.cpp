@@ -40,7 +40,7 @@ extern "C" void XR_EARLY_INIT();
 
 //---------------------------------------------------------------------
 #define XRAY_MONOLITH_VERSION "X-Ray Monolith v1.5.3"
-ENGINE_API CInifile* pGameIni = NULL;
+ENGINE_API CInifile* pGameIni = nullptr;
 BOOL g_bIntroFinished = FALSE;
 extern void Intro(void* fn);
 extern void Intro_DSHOW(void* fn);
@@ -154,8 +154,8 @@ struct _SoundProcessor : public pureFrame
 
 //////////////////////////////////////////////////////////////////////////
 // global variables
-ENGINE_API CApplication* pApp = NULL;
-static HWND logoWindow = NULL;
+ENGINE_API CApplication* pApp = nullptr;
+static HWND logoWindow = nullptr;
 
 int doLauncher();
 void doBenchmark(LPCSTR name);
@@ -644,7 +644,7 @@ void Startup()
 
 	// Destroy LOGO
 	DestroyWindow(logoWindow);
-	logoWindow = NULL;
+	logoWindow = nullptr;
 
 	//Discord Rich Presence - Rezy
 	Init_Discord();
@@ -675,7 +675,7 @@ void Startup()
 	DEL_INSTANCE(g_pGamePersistent);
 
 	xr_delete(pApp);
-	pApp = NULL;
+	pApp = nullptr;
 
 	Engine.Event.Dump();
 
@@ -1075,8 +1075,8 @@ int APIENTRY WinMain_impl(HINSTANCE hInstance,
 	// AVI
 	g_bIntroFinished = TRUE;
 
-	g_sLaunchOnExit_app[0] = NULL;
-	g_sLaunchOnExit_params[0] = NULL;
+	g_sLaunchOnExit_app[0] = '\0';
+	g_sLaunchOnExit_params[0] = '\0';
 
 	LPCSTR fsgame_ltx_name = "-fsltx ";
 	string_path fsgame = "";
@@ -1353,7 +1353,7 @@ CApplication::CApplication()
 	Level_Scan();
 
 	// Font
-	pFontSystem = NULL;
+	pFontSystem = nullptr;
 
 	// Register us
 	Device.seqFrame.Add(this, REG_PRIORITY_HIGH + 1000);
@@ -1417,7 +1417,7 @@ void CApplication::OnEvent(EVENT E, u64 P1, u64 P2)
 
 #ifdef NO_SINGLE
         Console->Execute("main_menu on");
-        if ((op_server == NULL) ||
+        if ((op_server == nullptr) ||
                 (!xr_strlen(op_server)) ||
                 (
                     (strstr(op_server, "/dm") || strstr(op_server, "/deathmatch") ||
@@ -1733,7 +1733,7 @@ int CApplication::Level_ID(LPCSTR name, LPCSTR ver, bool bSet)
 	for (; it != it_e; ++it)
 	{
 		CLocatorAPI::archive& A = *it;
-		if (A.hSrcFile == NULL)
+		if (A.hSrcFile == nullptr)
 		{
 			LPCSTR ln = A.header->r_string("header", "level_name");
 			LPCSTR lv = A.header->r_string("header", "level_ver");
@@ -1788,7 +1788,7 @@ CInifile* CApplication::GetArchiveHeader(LPCSTR name, LPCSTR ver)
 			return A.header;
 		}
 	}
-	return NULL;
+	return nullptr;
 }
 
 void CApplication::LoadAllArchives()
@@ -1807,8 +1807,8 @@ extern "C" {
 typedef int __cdecl LauncherFunc(int);
 }
 
-HMODULE hLauncher = NULL;
-LauncherFunc* pLauncher = NULL;
+HMODULE hLauncher = nullptr;
+LauncherFunc* pLauncher = nullptr;
 
 void InitLauncher()
 {
@@ -1828,8 +1828,8 @@ void FreeLauncher()
 	if (hLauncher)
 	{
 		FreeLibrary(hLauncher);
-		hLauncher = NULL;
-		pLauncher = NULL;
+		hLauncher = nullptr;
+		pLauncher = nullptr;
 	};
 }
 

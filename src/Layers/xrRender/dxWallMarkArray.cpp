@@ -58,5 +58,5 @@ wm_shader dxWallMarkArray::GenerateWallmark()
 
 ref_shader* dxWallMarkArray::dxGenerateWallmark()
 {
-	return m_CollideMarks.empty() ? NULL : &m_CollideMarks[::Random.randI(0, m_CollideMarks.size())];
+	return m_CollideMarks.empty() ? nullptr : &m_CollideMarks[::Random.randI(0, m_CollideMarks.size())];
 }

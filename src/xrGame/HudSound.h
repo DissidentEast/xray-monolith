@@ -9,8 +9,8 @@ struct HUD_SOUND_ITEM
 	static void LoadSound(LPCSTR section, LPCSTR line,
 	                      ref_sound& hud_snd,
 	                      int type = sg_SourceType,
-	                      float* volume = NULL,
-	                      float* delay = NULL);
+	                      float* volume = nullptr,
+	                      float* delay = nullptr);
 
 	static void LoadSound(LPCSTR section,
 	                      LPCSTR line,
@@ -43,7 +43,7 @@ struct HUD_SOUND_ITEM
 		{
 			if (m_activeSnd->snd._feedback() && !m_activeSnd->snd._feedback()->is_2D())
 				m_activeSnd->snd.set_position(pos);
-			else m_activeSnd = NULL;
+			else m_activeSnd = nullptr;
 		}
 	}
 

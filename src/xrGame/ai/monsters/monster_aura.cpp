@@ -83,31 +83,31 @@ float monster_aura::calculate() const
 void monster_aura::load_from_ini(CInifile const* ini, pcstr const section, bool enable_for_dead_default)
 {
 	using namespace detail;
-	char* pp_effector_name_string = NULL;
+	char* pp_effector_name_string = nullptr;
 	STRCONCAT(pp_effector_name_string, m_name, s_pp_effector_name_string);
 
-	char* pp_highest_at_string = NULL;
+	char* pp_highest_at_string = nullptr;
 	STRCONCAT(pp_highest_at_string, m_name, s_pp_highest_at_string);
 
-	char* linear_factor_string = NULL;
+	char* linear_factor_string = nullptr;
 	STRCONCAT(linear_factor_string, m_name, s_linear_factor_string);
 
-	char* quadratic_factor_string = NULL;
+	char* quadratic_factor_string = nullptr;
 	STRCONCAT(quadratic_factor_string, m_name, s_quadratic_factor_string);
 
-	char* max_power_string = NULL;
+	char* max_power_string = nullptr;
 	STRCONCAT(max_power_string, m_name, s_max_power_string);
 
-	char* max_distance_string = NULL;
+	char* max_distance_string = nullptr;
 	STRCONCAT(max_distance_string, m_name, s_max_distance_string);
 
-	char* sound_string = NULL;
+	char* sound_string = nullptr;
 	STRCONCAT(sound_string, m_name, s_sound_string);
 
-	char* detect_sound_string = NULL;
+	char* detect_sound_string = nullptr;
 	STRCONCAT(detect_sound_string, m_name, s_detect_sound_string);
 
-	char* enable_for_dead_string = NULL;
+	char* enable_for_dead_string = nullptr;
 	STRCONCAT(enable_for_dead_string, m_name, s_enable_for_dead_string);
 
 	m_pp_effector_name = READ_IF_EXISTS(ini, r_string, section, pp_effector_name_string, NULL);

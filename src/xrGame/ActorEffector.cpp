@@ -303,7 +303,7 @@ SndShockEffector::SndShockEffector()
 	m_snd_length = 0.0f;
 	m_cur_length = 0.0f;
 	m_stored_volume = -1.0f;
-	m_actor = NULL;
+	m_actor = nullptr;
 }
 
 SndShockEffector::~SndShockEffector()

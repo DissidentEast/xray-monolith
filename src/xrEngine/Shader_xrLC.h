@@ -63,7 +63,7 @@ public:
 	void Load(LPCSTR name)
 	{
 		IReader* fs = FS.r_open(name);
-		if (NULL == fs)
+		if (nullptr == fs)
 		{
 			string256 inf;
 			extern HWND logWindow;
@@ -112,7 +112,7 @@ public:
 	{
 		for (Shader_xrLCIt it = library.begin(); it != library.end(); it++)
 			if (0 == stricmp(name, it->Name)) return &(*it);
-		return NULL;
+		return nullptr;
 	}
 
 	Shader_xrLC* Get(int id)

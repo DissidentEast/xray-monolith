@@ -226,7 +226,7 @@ bool CUIMpTradeWnd::OnItemDrop(CUICellItem* itm)
 
 	if (_new_owner_type == dd_shop)
 	{
-		SBuyItemInfo* tmp_iinfo = NULL;
+		SBuyItemInfo* tmp_iinfo = nullptr;
 		bool res = TryToSellItem(iinfo, true, tmp_iinfo);
 		VERIFY(res);
 		return true;
@@ -276,7 +276,7 @@ bool CUIMpTradeWnd::OnItemDbClick(CUICellItem* itm)
 		{
 			if (!CanBuyOrSellInList(owner_list))
 			{
-				SBuyItemInfo* tmp_iinfo = NULL;
+				SBuyItemInfo* tmp_iinfo = nullptr;
 				TryToSellItem(iinfo, true, tmp_iinfo);
 			}
 			else
@@ -335,7 +335,7 @@ bool CUIMpTradeWnd::OnItemRButtonClick(CUICellItem* itm)
 	SetCurrentItem(itm);
 
 	SBuyItemInfo* iinfo = FindItem(itm);
-	SBuyItemInfo* tmp_iinfo = NULL;
+	SBuyItemInfo* tmp_iinfo = nullptr;
 
 	if (!CanBuyOrSellInList(owner_list))
 	{
@@ -378,7 +378,7 @@ CUIMpTradeWnd::dd_list_type CUIMpTradeWnd::GetListType(CUIDragDropListEx* l)
 
 CUIDragDropListEx* CUIMpTradeWnd::GetMatchedListForItem(const shared_str& sect_name)
 {
-	CUIDragDropListEx* res = NULL;
+	CUIDragDropListEx* res = nullptr;
 	u8 list_idx = m_item_mngr->GetItemSlotIdx(sect_name);
 	VERIFY(list_idx<e_total_lists && list_idx!=e_shop);
 	res = m_list[list_idx];

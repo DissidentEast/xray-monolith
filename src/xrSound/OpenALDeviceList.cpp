@@ -31,7 +31,7 @@
 #pragma warning(pop)
 
 #ifdef _EDITOR
-	log_fn_ptr_type* pLog = NULL;
+	log_fn_ptr_type* pLog = nullptr;
 
 void __cdecl al_log(char* msg)
 {

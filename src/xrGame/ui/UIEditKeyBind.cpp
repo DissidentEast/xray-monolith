@@ -10,10 +10,10 @@ CUIEditKeyBind::CUIEditKeyBind(bool bPrim)
 {
 	m_bPrimary = bPrim;
 	m_bIsEditMode = false;
-	m_keyboard = NULL;
-	m_opt_backup_value = NULL;
-	m_action = NULL;
-	m_text = NULL;
+	m_keyboard = nullptr;
+	m_opt_backup_value = nullptr;
+	m_action = nullptr;
+	m_text = nullptr;
 }
 
 CUIEditKeyBind::~CUIEditKeyBind()
@@ -245,5 +245,5 @@ void CUIEditKeyBind::OnMessage(LPCSTR message)
 		return;
 
 	SetText("---");
-	m_keyboard = NULL;
+	m_keyboard = nullptr;
 }

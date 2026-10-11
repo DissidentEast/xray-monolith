@@ -69,9 +69,9 @@ CGamePersistent::CGamePersistent(void)
 	ZeroMemory(ambient_sound_next_time, sizeof(ambient_sound_next_time));
 
 
-	m_pUI_core = NULL;
-	m_pMainMenu = NULL;
-	m_intro = NULL;
+	m_pUI_core = nullptr;
+	m_pMainMenu = nullptr;
+	m_intro = nullptr;
 	m_intro_event.bind(this, &CGamePersistent::start_logo_intro);
 #ifdef DEBUG
     m_frame_counter = 0;
@@ -98,8 +98,8 @@ CGamePersistent::CGamePersistent(void)
 	}
 	else
 	{
-		pDemoFile = NULL;
-		eDemoStart = NULL;
+		pDemoFile = nullptr;
+		eDemoStart = nullptr;
 	}
 
 	eQuickLoad = Engine.Event.Handler_Attach("Game:QuickLoad", this);
@@ -551,9 +551,9 @@ void CGamePersistent::start_logo_intro()
 	if (Device.dwPrecacheFrame == 0)
 	{
 		m_intro_event.bind(this, &CGamePersistent::update_logo_intro);
-		if (!g_dedicated_server && 0 == xr_strlen(m_game_params.m_game_or_spawn) && NULL == g_pGameLevel)
+		if (!g_dedicated_server && 0 == xr_strlen(m_game_params.m_game_or_spawn) && nullptr == g_pGameLevel)
 		{
-			VERIFY(NULL == m_intro);
+			VERIFY(nullptr == m_intro);
 			m_intro = xr_new<CUISequencer>();
 			if (allow_logo()) // AVO: skip NVIDIA and other logos at load time
 			{
@@ -595,7 +595,7 @@ void CGamePersistent::game_loaded()
 			load_screen_renderer.b_need_user_input &&
 			m_game_params.m_e_game_type == eGameIDSingle)
 		{
-			VERIFY(NULL == m_intro);
+			VERIFY(nullptr == m_intro);
 			m_intro = xr_new<CUISequencer>();
 			m_intro->Start("game_loaded");
 			Msg("intro_start game_loaded");
@@ -675,7 +675,7 @@ void CGamePersistent::start_game_intro()
 		m_intro_event.bind(this, &CGamePersistent::update_game_intro);
 		if (0 == stricmp(m_game_params.m_new_or_load, "new"))
 		{
-			VERIFY(NULL == m_intro);
+			VERIFY(nullptr == m_intro);
 			m_intro = xr_new<CUISequencer>();
 			m_intro->Start("intro_game");
 			Msg("intro_start intro_game");
@@ -755,7 +755,7 @@ void CGamePersistent::OnFrame()
             }
             else
             {
-                CCameraBase* C = NULL;
+                CCameraBase* C = nullptr;
                 if (g_actor)
                 {
                     if (!Actor()->Holder())
@@ -803,7 +803,7 @@ void CGamePersistent::OnFrame()
 #else // MASTER_GOLD
 		if (g_actor && IsGameTypeSingle())
 		{
-			CCameraBase* C = NULL;
+			CCameraBase* C = nullptr;
 			if (!Actor()->Holder())
 				C = Actor()->cam_Active();
 			else

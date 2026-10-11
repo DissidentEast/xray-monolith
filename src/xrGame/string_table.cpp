@@ -8,7 +8,7 @@
 #include "UIGameCustom.h"
 #include <regex>
 
-STRING_TABLE_DATA* CStringTable::pData = NULL;
+STRING_TABLE_DATA* CStringTable::pData = nullptr;
 BOOL CStringTable::m_bWriteErrorsToLog = FALSE;
 
 CStringTable::CStringTable()
@@ -23,7 +23,7 @@ void CStringTable::Destroy()
 
 void CStringTable::rescan()
 {
-	if (NULL != pData) return;
+	if (nullptr != pData) return;
 	Destroy();
 	Init();
 }
@@ -39,7 +39,7 @@ extern void refresh_npc_names();
 BOOL use_english_text_for_missing_translations = TRUE;
 void CStringTable::Init()
 {
-	if (NULL != pData) return;
+	if (nullptr != pData) return;
 
 	pData = xr_new<STRING_TABLE_DATA>();
 
