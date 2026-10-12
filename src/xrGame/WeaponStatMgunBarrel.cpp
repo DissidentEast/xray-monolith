@@ -296,7 +296,7 @@ SStmBarrel *CWeaponStatMgun::Barrel(LPCSTR name)
 {
     if (name == nullptr)
         return nullptr;
-    for (auto i : m_barrels)
+    for (auto& i : m_barrels)
     {
         if (strcmp(i.Name(), name) == 0)
         {
