@@ -423,7 +423,7 @@ void CActorCondition::AffectDamage_InjuriousMaterialAndMonstersInfluence()
 				SHit HDS = SHit(damage,
 				                //.								0.0f, 
 				                Fvector().set(0, 1, 0),
-				                NULL,
+				                nullptr,
 				                BI_NONE,
 				                Fvector().set(0, 0, 0),
 				                0.0f,

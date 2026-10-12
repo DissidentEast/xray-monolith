@@ -296,7 +296,7 @@ void CBulletManager::AddBullet(const Fvector& position,
 			bullet.weapon_id,
 			bullet.parent_id,
 			65535,
-			NULL,
+			nullptr,
 			bullet.life_time,
 			-1
 		);
@@ -975,7 +975,7 @@ static bool try_update_bullet(SBullet& bullet, Fvector const& gravity, float con
 			bullet.weapon_id,
 			bullet.parent_id,
 			65535,
-			NULL,
+			nullptr,
 			bullet.life_time,
 			-1
 		);
@@ -1294,7 +1294,7 @@ void CBulletManager::CommitEvents() // @ the start of frame
 						bullet->weapon_id,
 						bullet->parent_id,
 						65535,
-						NULL,
+						nullptr,
 						bullet->life_time,
 						-1
 					);

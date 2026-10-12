@@ -367,7 +367,7 @@ bool CHUDManager::DoPick(SPickParam& pp)
 		pp.defs,
 		pick_trace_callback,
 		&pp,
-		NULL,
+		nullptr,
 		Level().CurrentEntity()
 	);
 }

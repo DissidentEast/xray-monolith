@@ -336,7 +336,7 @@ void CGameFont::OutSetI(float x, float y)
 
 u32 CGameFont::smart_strlen(const char* S)
 {
-	return (IsMultibyte() ? mbhMulti2Wide(nullptr, NULL, 0, S) : xr_strlen(S));
+	return (IsMultibyte() ? mbhMulti2Wide(nullptr, nullptr, 0, S) : xr_strlen(S));
 }
 
 void CGameFont::OnRender()

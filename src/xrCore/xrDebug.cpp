@@ -106,7 +106,7 @@ void xrDebug::backend(const char* reason, const char* expression, const char* ar
 	(
 		GetModuleHandle(MODULE_NAME),
 		MAKEINTRESOURCE(IDD_STOP),
-		NULL,
+		0,
 		DialogProc
 	);
 #endif

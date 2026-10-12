@@ -872,8 +872,8 @@ CObject* CWeaponKnife::TryPick(Fvector const& start_pos, Fvector const& dir, flo
 		tmp_rdefs,
 		&CWeaponKnife::RayQueryCallback,
 		static_cast<LPVOID>(this),
-		NULL,
-		NULL
+		nullptr,
+		nullptr
 	);
 	return m_last_picked_obj;
 }

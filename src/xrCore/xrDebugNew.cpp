@@ -280,7 +280,7 @@ void xrDebug::backend(const char* expression, const char* description, const cha
 	ShowCursor(true);
 	ShowWindow(GetActiveWindow(), SW_FORCEMINIMIZE);
 	MessageBox(
-		NULL,
+		nullptr,
 		assertion_info,
 		"Fatal Error",
 		MB_OK | MB_ICONERROR | MB_SYSTEMMODAL
@@ -780,12 +780,12 @@ void format_message(LPSTR buffer, const u32& buffer_size)
 	FormatMessage(
 		FORMAT_MESSAGE_ALLOCATE_BUFFER |
 		FORMAT_MESSAGE_FROM_SYSTEM,
-		NULL,
+		nullptr,
 		error_code,
 		MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
 		(LPSTR)&message,
 		0,
-		NULL
+		nullptr
 	);
 
 	xr_sprintf(buffer, buffer_size, "[error][%8d] : %s", error_code, message);
@@ -932,7 +932,7 @@ LONG WINAPI UnhandledFilter(_EXCEPTION_POINTERS* pExceptionInfo)
         if (Debug.get_on_dialog())
             Debug.get_on_dialog() (true);
         MessageBox(
-            NULL,
+            nullptr,
             "Fatal error occured\n\nPress OK to abort program execution",
             "Fatal Error",
             MB_OK | MB_ICONERROR | MB_SYSTEMMODAL

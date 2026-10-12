@@ -344,7 +344,7 @@ void CBulletManager::DynamicObjectHit(CBulletManager::_event& E)
 
 		SHit Hit = SHit((E.bullet.parent_id == 0 ? hit_param.power * hit_modifier : hit_param.power), //Make sure only damage dealt by actor is modified
 		                original_dir,
-		                NULL,
+		                nullptr,
 		                u16(E.R.element),
 		                position_in_bone_space,
 		                hit_param.impulse,
