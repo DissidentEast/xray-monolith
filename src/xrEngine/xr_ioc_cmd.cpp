@@ -5,6 +5,8 @@
 #include "x_ray.h"
 #include "xr_ioconsole.h"
 #include "xr_ioc_cmd.h"
+#include "../xrCore/profiler.h"
+#include "profiler_capture.h"
 //#include "fbasicvisual.h"
 #include "cameramanager.h"
 #include "environment.h"
@@ -76,6 +78,56 @@ public:
 		Console->Hide();
 		Engine.Event.Defer("KERNEL:disconnect");
 		Engine.Event.Defer("KERNEL:quit");
+	}
+};
+
+class CCC_ProfStart : public IConsole_Command
+{
+public:
+	CCC_ProfStart(LPCSTR N) : IConsole_Command(N) { bEmptyArgsHandled = TRUE; };
+	virtual void Execute(LPCSTR args) { PROF_START_CAPTURE(); }
+};
+
+class CCC_ProfStop : public IConsole_Command
+{
+public:
+	CCC_ProfStop(LPCSTR N) : IConsole_Command(N) { bEmptyArgsHandled = TRUE; };
+	virtual void Execute(LPCSTR args) { PROF_STOP_CAPTURE(); }
+};
+
+class CCC_ProfSave : public IConsole_Command
+{
+public:
+	CCC_ProfSave(LPCSTR N) : IConsole_Command(N) { bEmptyArgsHandled = FALSE; };
+  virtual void Execute(LPCSTR args)
+  {
+    if (args && args[0])
+    {
+      PROF_SAVE_CAPTURE(args);
+    }
+    else
+    {
+      Msg("! prof_save <file>: capture file path required");
+    }
+  }
+};
+
+class CCC_ProfCapture : public IConsole_Command
+{
+public:
+	CCC_ProfCapture(LPCSTR N) : IConsole_Command(N) { bEmptyArgsHandled = FALSE; };
+	virtual void Execute(LPCSTR args)
+	{
+		int frames = 0;
+		char file[256] = {0};
+		if (args && sscanf(args, "%d %255s", &frames, file) == 2 && frames > 0)
+		{
+			g_prof_capture_armed = frames;
+			g_prof_capture_file = file;
+			Msg("* [profiler] armed: %d frames -> %s (counting starts on first loaded, unpaused frame)", frames, file);
+		}
+		else
+			Msg("! prof_capture <frames> <file>");
 	}
 };
 
@@ -1034,6 +1086,10 @@ void CCC_Register()
 	// General
 	CMD1(CCC_Help, "help");
 	CMD1(CCC_Quit, "quit");
+	CMD1(CCC_ProfStart, "prof_start");
+	CMD1(CCC_ProfStop, "prof_stop");
+	CMD1(CCC_ProfSave, "prof_save");
+	CMD1(CCC_ProfCapture, "prof_capture");
 	CMD1(CCC_Start, "start");
 	CMD1(CCC_Disconnect, "disconnect");
 	CMD1(CCC_SaveCFG, "cfg_save");

@@ -624,13 +624,41 @@ void Startup()
 #endif
 
 	// ...command line for auto start
+	// NOTE: client -start is deferred until the device pumps frames (see
+	// profiler_capture_on_frame). Executing it here deadlocks: the server
+	// load needs a running message loop / loading screen.
 	{
 		LPCSTR pStartup = strstr(Core.Params, "-start ");
-		if (pStartup) Console->Execute(pStartup + 1);
+		if (pStartup)
+		{
+#ifdef DEDICATED_SERVER
+			Console->Execute(pStartup + 1);
+#else
+			extern xr_string g_deferred_startup_cmd;
+			g_deferred_startup_cmd = pStartup + 1;
+#endif
+		}
 	}
 	{
 		LPCSTR pStartup = strstr(Core.Params, "-load ");
 		if (pStartup) Console->Execute(pStartup + 1);
+	}
+	// Scripted profiler baseline: "-profcapture <frames> <file>"
+	{
+		LPCSTR pProf = strstr(Core.Params, "-profcapture ");
+		if (pProf)
+		{
+			int frames = 0;
+			char file[256] = {0};
+			if (sscanf(pProf + 13, "%d %255s", &frames, file) == 2 && frames > 0)
+			{
+				extern int g_prof_capture_armed;
+				extern xr_string g_prof_capture_file;
+				g_prof_capture_armed = frames;
+				g_prof_capture_file = file;
+				Msg("* [profiler] armed via command line: %d frames -> %s", frames, file);
+			}
+		}
 	}
 
 	// Initialize APP

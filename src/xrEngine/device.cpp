@@ -3,6 +3,7 @@
 #include "xr_ioconsole.h"
 #include "xr_input.h"
 #include "../xrCore/profiler.h"
+#include "profiler_capture.h"
 
 #pragma warning(disable:4995)
 // mmsystem.h
@@ -398,6 +399,64 @@ void mt_FreezeThread(void *ptr) {
 	}
 }
 
+int g_prof_capture_armed = 0;
+xr_string g_prof_capture_file;
+xr_string g_deferred_startup_cmd;
+static int g_prof_capture_left = 0;
+static std::chrono::steady_clock::time_point g_prof_capture_start;
+
+void profiler_capture_on_frame()
+{
+#ifndef DEDICATED_SERVER
+	if (!g_deferred_startup_cmd.empty() && Device.dwFrame > 120)
+	{
+		Msg("* [startup] executing deferred command line: %s", g_deferred_startup_cmd.c_str());
+		Console->Execute(g_deferred_startup_cmd.c_str());
+		g_deferred_startup_cmd.clear();
+	}
+#endif
+	if (g_prof_capture_armed <= 0)
+		return;
+	if (!g_pGameLevel || Device.Paused())
+		return; // menu/loading/paused frames never count
+	if (g_prof_capture_left == 0)
+	{
+		// Warmup: let streaming/alife settle after load before the timed window.
+		static int warmup = 180;
+		if (warmup-- > 0)
+			return;
+		warmup = 180; // restore for the next arming
+		g_prof_capture_left = g_prof_capture_armed;
+		g_prof_capture_start = std::chrono::steady_clock::now();
+		PROF_START_CAPTURE();
+	}
+	if (--g_prof_capture_left <= 0)
+	{
+		auto elapsed_ms = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - g_prof_capture_start).count();
+		if (elapsed_ms <= 0)
+			elapsed_ms = 1;
+		PROF_STOP_CAPTURE();
+		// Bare filenames land next to the game log (always writable);
+		// absolute paths are used as-is (must be writable).
+		string_path capture_path;
+		if (strchr(g_prof_capture_file.c_str(), ':') == nullptr)
+			FS.update_path(capture_path, "$logs$", g_prof_capture_file.c_str());
+		else
+			xr_strcpy(capture_path, sizeof(capture_path), g_prof_capture_file.c_str());
+#if XRCORE_PROFILER == PROFILER_OPTICK
+		bool saved_ok = ::Optick::SaveCapture(capture_path);
+#else
+		bool saved_ok = false;
+#endif
+		Msg("* [profiler] captured %d frames in %lld ms (avg %.2f ms, %.1f fps) -> %s [%s]", g_prof_capture_armed, (long long)elapsed_ms,
+		    (float)elapsed_ms / (float)g_prof_capture_armed, 1000.f * (float)g_prof_capture_armed / (float)elapsed_ms,
+		    capture_path, saved_ok ? "saved" : "SAVE FAILED");
+		g_prof_capture_armed = 0;
+		FlushLog();
+		Console->Execute("quit"); // scripted run is done; quit so logs flush and the run is deterministic
+	}
+}
+
 void CRenderDevice::on_idle()
 {
 	FreezeTimer.Start();
@@ -410,6 +469,7 @@ void CRenderDevice::on_idle()
 
 	PROF_FRAME("X-RAY Primary thread");
 	PROF_EVENT();
+	profiler_capture_on_frame();
 
 #ifdef DEDICATED_SERVER
     u32 FrameStartTime = TimerGlobal.GetElapsed_ms();
