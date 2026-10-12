@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "dxerr.h"
 #include "NET_Common.h"
 #include "net_server.h"
@@ -99,7 +99,7 @@ xr_string IBannedClient::BannedTimeTo() const
 
 IClient::IClient(CTimer* timer)
 	: stats(timer),
-	  server(NULL)
+	  server(nullptr)
 {
 	dwTime_LastUpdate = 0;
 	flags.bLocal = FALSE;
@@ -315,7 +315,7 @@ IPureServer::EConnect IPureServer::Connect(LPCSTR options, GameDescriptionData& 
 		//	};	
 		//---------------------------
 		// Create the IDirectPlay8Client object.
-		HRESULT CoCreateInstanceRes = CoCreateInstance(XR_GUID(CLSID_DirectPlay8Server), NULL, CLSCTX_INPROC_SERVER,
+		HRESULT CoCreateInstanceRes = CoCreateInstance(XR_GUID(CLSID_DirectPlay8Server), nullptr, CLSCTX_INPROC_SERVER,
 		                                               XR_GUID(IID_IDirectPlay8Server), (LPVOID*)&NET);
 		//---------------------------	
 		if (CoCreateInstanceRes != S_OK)
@@ -351,7 +351,7 @@ IPureServer::EConnect IPureServer::Connect(LPCSTR options, GameDescriptionData& 
 		dpPlayerInfo.dwDataSize = 0;
 		dpPlayerInfo.dwPlayerFlags = 0;
 
-		CHK_DX(NET->SetServerInfo( &dpPlayerInfo, NULL, NULL, DPNSETSERVERINFO_SYNC ));
+		CHK_DX(NET->SetServerInfo( &dpPlayerInfo, nullptr, NULL, DPNSETSERVERINFO_SYNC ));
 
 		// Set server/session description
 		WCHAR SessionNameUNICODE[4096];
@@ -379,7 +379,7 @@ IPureServer::EConnect IPureServer::Connect(LPCSTR options, GameDescriptionData& 
 		// Create our IDirectPlay8Address Device Address, --- Set the SP for our Device Address
 		net_Address_device = nullptr;
 		CHK_DX(
-			CoCreateInstance (XR_GUID(CLSID_DirectPlay8Address),NULL, CLSCTX_INPROC_SERVER, XR_GUID(IID_IDirectPlay8Address),(LPVOID*) &
+			CoCreateInstance (XR_GUID(CLSID_DirectPlay8Address),nullptr, CLSCTX_INPROC_SERVER, XR_GUID(IID_IDirectPlay8Address),(LPVOID*) &
 				net_Address_device ));
 		CHK_DX(net_Address_device->SetSP (bSimulator? &CLSID_NETWORKSIMULATOR_DP8SP_TCPIP : &XR_GUID(CLSID_DP8SP_TCPIP) ));
 
@@ -401,7 +401,7 @@ IPureServer::EConnect IPureServer::Connect(LPCSTR options, GameDescriptionData& 
 			(
 				&dpAppDesc, // AppDesc
 				&net_Address_device, 1, // Device Address
-				NULL, NULL, // Reserved
+				NULL, nullptr, // Reserved
 				NULL, // Player Context
 				0); // dwFlags
 			if (HostSuccess != S_OK)

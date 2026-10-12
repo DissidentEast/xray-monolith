@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "MainMenu.h"
 #include "UI/UIDialogWnd.h"
 #include "ui/UIMessageBoxEx.h"
@@ -527,7 +527,7 @@ void CMainMenu::OnFrame()
 		if (b_is_16_9 != m_activatedScreenRatio)
 		{
 			ReloadUI();
-			m_startDialog->SendMessage(m_startDialog, MAIN_MENU_RELOADED, NULL);
+			m_startDialog->SendMessage(m_startDialog, MAIN_MENU_RELOADED, nullptr);
 		}
 	}
 }
@@ -919,5 +919,5 @@ demo_info const* CMainMenu::GetDemoInfo(LPCSTR file_name)
 void open_originals_link()
 {
 	LPCSTR params = "/C start https://www.stalker-game.com/en/available-on";
-	ShellExecute(0, "open", "cmd.exe", params, NULL, SW_SHOW);
+	ShellExecute(0, "open", "cmd.exe", params, nullptr, SW_SHOW);
 }

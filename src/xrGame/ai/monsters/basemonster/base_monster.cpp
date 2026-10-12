@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "base_monster.h"
 #include "../../../../xrphysics/PhysicsShell.h"
 #include "../../../hit.h"
@@ -79,7 +79,7 @@ CBaseMonster::CBaseMonster() : m_psy_aura(this, "psy"),
 	EnemyMan.init_external(this);
 	CorpseMan.init_external(this);
 
-	// Инициализация параметров анимации	
+	// Ð˜Ð½Ð¸Ñ†Ð¸Ð°Ð»Ð¸Ð·Ð°Ñ†Ð¸Ñ Ð¿Ð°Ñ€Ð°Ð¼ÐµÑ‚Ñ€Ð¾Ð² Ð°Ð½Ð¸Ð¼Ð°Ñ†Ð¸Ð¸	
 
 	StateMan = 0;
 
@@ -428,7 +428,7 @@ void CBaseMonster::Die(CObject* who)
 
 	if (m_grouping_behaviour)
 	{
-		m_grouping_behaviour->set_squad(NULL);
+		m_grouping_behaviour->set_squad(nullptr);
 	}
 
 
@@ -452,7 +452,7 @@ void CBaseMonster::Hit(SHit* pHDS)
 	{
 		float& hit_power = pHDS->power;
 		float ap = pHDS->armor_piercing;
-		// пуля пробила шкуру
+		// Ð¿ÑƒÐ»Ñ Ð¿Ñ€Ð¾Ð±Ð¸Ð»Ð° ÑˆÐºÑƒÑ€Ñƒ
 		if (!fis_zero(m_fSkinArmor, EPS) && ap > m_fSkinArmor)
 		{
 			float d_hit_power = (ap - m_fSkinArmor) / ap;
@@ -462,11 +462,11 @@ void CBaseMonster::Hit(SHit* pHDS)
 			hit_power *= d_hit_power;
 			VERIFY(hit_power>=0.0f);
 		}
-			// пуля НЕ пробила шкуру
+			// Ð¿ÑƒÐ»Ñ ÐÐ• Ð¿Ñ€Ð¾Ð±Ð¸Ð»Ð° ÑˆÐºÑƒÑ€Ñƒ
 		else
 		{
 			hit_power *= m_fHitFracMonster;
-			pHDS->add_wound = false; //раны нет
+			pHDS->add_wound = false; //Ñ€Ð°Ð½Ñ‹ Ð½ÐµÑ‚
 		}
 	}
 
@@ -754,13 +754,13 @@ void CBaseMonster::on_kill_enemy(const CEntity* obj)
 {
 	const CEntityAlive* entity = smart_cast<const CEntityAlive *>(obj);
 
-	// добавить в список трупов	
+	// Ð´Ð¾Ð±Ð°Ð²Ð¸Ñ‚ÑŒ Ð² ÑÐ¿Ð¸ÑÐ¾Ðº Ñ‚Ñ€ÑƒÐ¿Ð¾Ð²	
 	CorpseMemory.add_corpse(entity);
 
-	// удалить всю информацию о хитах
+	// ÑƒÐ´Ð°Ð»Ð¸Ñ‚ÑŒ Ð²ÑÑŽ Ð¸Ð½Ñ„Ð¾Ñ€Ð¼Ð°Ñ†Ð¸ÑŽ Ð¾ Ñ…Ð¸Ñ‚Ð°Ñ…
 	HitMemory.remove_hit_info(entity);
 
-	// удалить всю информацию о звуках
+	// ÑƒÐ´Ð°Ð»Ð¸Ñ‚ÑŒ Ð²ÑÑŽ Ð¸Ð½Ñ„Ð¾Ñ€Ð¼Ð°Ñ†Ð¸ÑŽ Ð¾ Ð·Ð²ÑƒÐºÐ°Ñ…
 	SoundMemory.clear();
 }
 
@@ -837,7 +837,7 @@ CParticlesObject* CBaseMonster::PlayParticles(const shared_str& name, const Fvec
 {
 	CParticlesObject* ps = CParticlesObject::Create(name.c_str(), auto_remove);
 
-	// вычислить позицию и направленность партикла
+	// Ð²Ñ‹Ñ‡Ð¸ÑÐ»Ð¸Ñ‚ÑŒ Ð¿Ð¾Ð·Ð¸Ñ†Ð¸ÑŽ Ð¸ Ð½Ð°Ð¿Ñ€Ð°Ð²Ð»ÐµÐ½Ð½Ð¾ÑÑ‚ÑŒ Ð¿Ð°Ñ€Ñ‚Ð¸ÐºÐ»Ð°
 	Fmatrix matrix;
 
 	matrix.identity();

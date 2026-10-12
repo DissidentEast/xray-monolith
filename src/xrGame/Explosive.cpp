@@ -1,4 +1,4 @@
-// Explosive.cpp: интерфейс для взврывающихся объектов
+﻿// Explosive.cpp: Ð¸Ð½Ñ‚ÐµÑ€Ñ„ÐµÐ¹Ñ Ð´Ð»Ñ Ð²Ð·Ð²Ñ€Ñ‹Ð²Ð°ÑŽÑ‰Ð¸Ñ…ÑÑ Ð¾Ð±ÑŠÐµÐºÑ‚Ð¾Ð²
 //
 //////////////////////////////////////////////////////////////////////
 
@@ -11,7 +11,7 @@
 //#include "PSObject.h"
 #include "ParticlesObject.h"
 
-//для вызова статических функций поражения осколками
+//Ð´Ð»Ñ Ð²Ñ‹Ð·Ð¾Ð²Ð° ÑÑ‚Ð°Ñ‚Ð¸Ñ‡ÐµÑÐºÐ¸Ñ… Ñ„ÑƒÐ½ÐºÑ†Ð¸Ð¹ Ð¿Ð¾Ñ€Ð°Ð¶ÐµÐ½Ð¸Ñ Ð¾ÑÐºÐ¾Ð»ÐºÐ°Ð¼Ð¸
 #include "Weapon.h"
 
 #include "actor.h"
@@ -133,7 +133,7 @@ void CExplosive::Load(CInifile const* ini, LPCSTR section)
 	m_fLightRange = ini->r_float(section, "light_range");
 	m_fLightTime = ini->r_float(section, "light_time");
 
-	//трассы для разлета осколков
+	//Ñ‚Ñ€Ð°ÑÑÑ‹ Ð´Ð»Ñ Ñ€Ð°Ð·Ð»ÐµÑ‚Ð° Ð¾ÑÐºÐ¾Ð»ÐºÐ¾Ð²
 	m_fFragmentSpeed = ini->r_float(section, "fragment_speed");
 
 	m_layered_sounds.LoadSound(ini, section, "snd_explode", "sndExplode", false, m_eSoundExplode);
@@ -203,7 +203,7 @@ struct SExpQParams
 	float shoot_factor;
 };
 
-//проверка на попадание "осколком" по объекту
+//Ð¿Ñ€Ð¾Ð²ÐµÑ€ÐºÐ° Ð½Ð° Ð¿Ð¾Ð¿Ð°Ð´Ð°Ð½Ð¸Ðµ "Ð¾ÑÐºÐ¾Ð»ÐºÐ¾Ð¼" Ð¿Ð¾ Ð¾Ð±ÑŠÐµÐºÑ‚Ñƒ
 ICF static BOOL grenade_hit_callback(collide::rq_result& result, LPVOID params)
 {
 	SExpQParams& ep = *(SExpQParams*)params;
@@ -219,7 +219,7 @@ ICF static BOOL grenade_hit_callback(collide::rq_result& result, LPVOID params)
 	}
 	else
 	{
-		//получить треугольник и узнать его материал
+		//Ð¿Ð¾Ð»ÑƒÑ‡Ð¸Ñ‚ÑŒ Ñ‚Ñ€ÐµÑƒÐ³Ð¾Ð»ÑŒÐ½Ð¸Ðº Ð¸ ÑƒÐ·Ð½Ð°Ñ‚ÑŒ ÐµÐ³Ð¾ Ð¼Ð°Ñ‚ÐµÑ€Ð¸Ð°Ð»
 		CDB::TRI* T = Level().ObjectSpace.GetStaticTris() + result.element;
 		mtl_idx = T->material;
 	}
@@ -341,7 +341,7 @@ float CExplosive::TestPassEffect(const Fvector& source_p, const Fvector& dir, fl
 #else
 		SExpQParams ep;
 #endif
-		g_pGameLevel->ObjectSpace.RayQuery(storage, RD, grenade_hit_callback, &ep,NULL, blasted_obj);
+		g_pGameLevel->ObjectSpace.RayQuery(storage, RD, grenade_hit_callback, &ep,nullptr, blasted_obj);
 		shoot_factor = ep.shoot_factor;
 	}
 	else return dist_factor;
@@ -373,11 +373,11 @@ void CExplosive::Explode()
 	
 	//	Msg("---------CExplosive Explode [%d] frame[%d]",cast_game_object()->ID(), Device.dwFrame);
 	OnBeforeExplosion();
-	//играем звук взрыва
+	//Ð¸Ð³Ñ€Ð°ÐµÐ¼ Ð·Ð²ÑƒÐº Ð²Ð·Ñ€Ñ‹Ð²Ð°
 
 	m_layered_sounds.PlaySound("sndExplode", pos, smart_cast<CObject*>(this), false, false, (u8)-1);
 
-	//показываем эффекты
+	//Ð¿Ð¾ÐºÐ°Ð·Ñ‹Ð²Ð°ÐµÐ¼ ÑÑ„Ñ„ÐµÐºÑ‚Ñ‹
 
 	m_wallmark_manager.PlaceWallmarks(pos);
 
@@ -396,14 +396,14 @@ void CExplosive::Explode()
 	pStaticPG->UpdateParent(explode_matrix, vel);
 	pStaticPG->Play(false);
 
-	//включаем подсветку от взрыва
+	//Ð²ÐºÐ»ÑŽÑ‡Ð°ÐµÐ¼ Ð¿Ð¾Ð´ÑÐ²ÐµÑ‚ÐºÑƒ Ð¾Ñ‚ Ð²Ð·Ñ€Ñ‹Ð²Ð°
 	StartLight();
 
 	//trace frags
 	Fvector frag_dir;
 
 	//////////////////////////////
-	//осколки
+	//Ð¾ÑÐºÐ¾Ð»ÐºÐ¸
 	//////////////////////////////
 	//-------------------------------------
 	bool SendHits = false;
@@ -440,7 +440,7 @@ void CExplosive::Explode()
 	if (cast_game_object()->Remote()) return;
 
 	/////////////////////////////////
-	//взрывная волна
+	//Ð²Ð·Ñ€Ñ‹Ð²Ð½Ð°Ñ Ð²Ð¾Ð»Ð½Ð°
 	////////////////////////////////
 	//---------------------------------------------------------------------
 	xr_vector<ISpatial*> ISpatialResult;
@@ -527,7 +527,7 @@ void CExplosive::UpdateCL()
 		OnAfterExplosion();
 		return;
 	}
-	//время вышло, убираем объект взрывчатки
+	//Ð²Ñ€ÐµÐ¼Ñ Ð²Ñ‹ÑˆÐ»Ð¾, ÑƒÐ±Ð¸Ñ€Ð°ÐµÐ¼ Ð¾Ð±ÑŠÐµÐºÑ‚ Ð²Ð·Ñ€Ñ‹Ð²Ñ‡Ð°Ñ‚ÐºÐ¸
 	if (m_fExplodeDuration < 0.f && m_blasted_objects.empty())
 	{
 		m_explosion_flags.set(flExploded,TRUE);
@@ -551,7 +551,7 @@ void CExplosive::UpdateCL()
 		UpdateExplosionPos();
 		UpdateExplosionParticles();
 		ExplodeWaveProcess();
-		//обновить подсветку взрыва
+		//Ð¾Ð±Ð½Ð¾Ð²Ð¸Ñ‚ÑŒ Ð¿Ð¾Ð´ÑÐ²ÐµÑ‚ÐºÑƒ Ð²Ð·Ñ€Ñ‹Ð²Ð°
 		if (m_pLight && m_pLight->get_active() && m_fLightTime > 0)
 		{
 			if (m_fExplodeDuration > (m_fExplodeDurationMax - m_fLightTime))
@@ -574,7 +574,7 @@ void CExplosive::OnAfterExplosion()
 		CParticlesObject::Destroy(m_pExpParticle);
 		m_pExpParticle = nullptr;
 	}
-	//ликвидировать сам объект 
+	//Ð»Ð¸ÐºÐ²Ð¸Ð´Ð¸Ñ€Ð¾Ð²Ð°Ñ‚ÑŒ ÑÐ°Ð¼ Ð¾Ð±ÑŠÐµÐºÑ‚ 
 	if (cast_game_object()->Local()) cast_game_object()->DestroyObject();
 
 	//	NET_Packet			P;
@@ -678,12 +678,12 @@ void CExplosive::FindNormal(Fvector& normal)
 	cast_game_object()->Center(pos);
 
 	BOOL result = Level().ObjectSpace.RayPick(pos, dir, cast_game_object()->Radius(),
-	                                          collide::rqtBoth, RQ, NULL);
+	                                          collide::rqtBoth, RQ, nullptr);
 	if (!result || RQ.O)
 	{
 		normal.set(0, 1, 0);
-		//если лежим на статике
-		//найти треугольник и вычислить нормаль по нему
+		//ÐµÑÐ»Ð¸ Ð»ÐµÐ¶Ð¸Ð¼ Ð½Ð° ÑÑ‚Ð°Ñ‚Ð¸ÐºÐµ
+		//Ð½Ð°Ð¹Ñ‚Ð¸ Ñ‚Ñ€ÐµÑƒÐ³Ð¾Ð»ÑŒÐ½Ð¸Ðº Ð¸ Ð²Ñ‹Ñ‡Ð¸ÑÐ»Ð¸Ñ‚ÑŒ Ð½Ð¾Ñ€Ð¼Ð°Ð»ÑŒ Ð¿Ð¾ Ð½ÐµÐ¼Ñƒ
 	}
 	else
 	{
@@ -738,7 +738,7 @@ void CExplosive::ExplodeWaveProcessObject(collide::rq_results& storage, CPhysics
 {
 	Fvector l_goPos;
 	if (l_pGO->Visual()) l_pGO->Center(l_goPos);
-	else return; //мне непонятно зачем наносить хит от взрыва по объектам не имеющим вижуал - поэтому игнорируем
+	else return; //Ð¼Ð½Ðµ Ð½ÐµÐ¿Ð¾Ð½ÑÑ‚Ð½Ð¾ Ð·Ð°Ñ‡ÐµÐ¼ Ð½Ð°Ð½Ð¾ÑÐ¸Ñ‚ÑŒ Ñ…Ð¸Ñ‚ Ð¾Ñ‚ Ð²Ð·Ñ€Ñ‹Ð²Ð° Ð¿Ð¾ Ð¾Ð±ÑŠÐµÐºÑ‚Ð°Ð¼ Ð½Ðµ Ð¸Ð¼ÐµÑŽÑ‰Ð¸Ð¼ Ð²Ð¸Ð¶ÑƒÐ°Ð» - Ð¿Ð¾ÑÑ‚Ð¾Ð¼Ñƒ Ð¸Ð³Ð½Ð¾Ñ€Ð¸Ñ€ÑƒÐµÐ¼
 
 #ifdef DEBUG
 	if(ph_dbg_draw_mask.test(phDbgDrawExplosions))
@@ -759,8 +759,8 @@ void CExplosive::ExplodeWaveProcessObject(collide::rq_results& storage, CPhysics
 
 		float rmag = _sqrt(m_fUpThrowFactor * m_fUpThrowFactor + 1.f + 2.f * m_fUpThrowFactor * l_dir.y);
 		l_dir.y += m_fUpThrowFactor;
-		//rmag -модуль l_dir после l_dir.y += m_fUpThrowFactor, модуль=_sqrt(l_dir^2+y^2+2.*(l_dir,y)),y=(0,m_fUpThrowFactor,0) (до этого модуль l_dir =1)
-		l_dir.mul(1.f / rmag); //перенормировка
+		//rmag -Ð¼Ð¾Ð´ÑƒÐ»ÑŒ l_dir Ð¿Ð¾ÑÐ»Ðµ l_dir.y += m_fUpThrowFactor, Ð¼Ð¾Ð´ÑƒÐ»ÑŒ=_sqrt(l_dir^2+y^2+2.*(l_dir,y)),y=(0,m_fUpThrowFactor,0) (Ð´Ð¾ ÑÑ‚Ð¾Ð³Ð¾ Ð¼Ð¾Ð´ÑƒÐ»ÑŒ l_dir =1)
+		l_dir.mul(1.f / rmag); //Ð¿ÐµÑ€ÐµÐ½Ð¾Ñ€Ð¼Ð¸Ñ€Ð¾Ð²ÐºÐ°
 		NET_Packet P;
 		SHit HS;
 		HS.GenHeader(GE_HIT, l_pGO->ID()); //		cast_game_object()->u_EventGen		(P,GE_HIT,l_pGO->ID());

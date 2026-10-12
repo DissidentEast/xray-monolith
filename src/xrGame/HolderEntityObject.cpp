@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "HolderEntityObject.h"
 #include "../Include/xrRender/Kinematics.h"
 #include "../xrphysics/PhysicsShell.h"
@@ -51,7 +51,7 @@ void CHolderEntityObject::Load(LPCSTR section)
 	m_exit_position = READ_IF_EXISTS(pSettings, r_fvector3, section, "exit_pos", Fvector().set(0.0f, 0.0f, 0.0f));
 	m_camera_position = READ_IF_EXISTS(pSettings, r_fvector3, section, "camera_pos", Fvector().set(0.0f, 0.0f, 0.0f));
 	m_camera_angle = READ_IF_EXISTS(pSettings, r_fvector3, section, "camera_angle", Fvector().set(0.0f, 0.0f, 0.0f));
-	m_sUseAction = READ_IF_EXISTS(pSettings, r_string, section, "use_action_hint", NULL);
+	m_sUseAction = READ_IF_EXISTS(pSettings, r_string, section, "use_action_hint", nullptr);
 }
 
 BOOL CHolderEntityObject::net_Spawn(CSE_Abstract* DC)
@@ -92,7 +92,7 @@ void CHolderEntityObject::attach_actor_script(bool bForce)
 
 void CHolderEntityObject::detach_actor_script(bool bForce)
 {
-	Actor()->use_HolderEx(NULL, bForce);
+	Actor()->use_HolderEx(nullptr, bForce);
 }
 
 void CHolderEntityObject::UpdateCL()

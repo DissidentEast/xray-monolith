@@ -1,4 +1,4 @@
-/*----------------------------------------------------------------------
+﻿/*----------------------------------------------------------------------
 "Debugging Applications" (Microsoft Press)
 Copyright (c) 1997-2000 John Robbins -- All rights reserved.
 
@@ -364,7 +364,7 @@ LPCTSTR __stdcall GetFaultReason ( EXCEPTION_POINTERS * pExPtrs )
                                 sizeof ( EXCEPTION_POINTERS ) ) )
     {
         TRACE0 ( "Bad parameter to GetFaultReasonA\n" ) ;
-        return ( NULL ) ;
+        return ( nullptr ) ;
     }
 
     // The variable that holds the return value
@@ -450,7 +450,7 @@ LPCTSTR __stdcall GetFaultReason ( EXCEPTION_POINTERS * pExPtrs )
 
         // Start looking up the exception address.
         PIMAGEHLP_SYMBOL pSym = (PIMAGEHLP_SYMBOL)&g_stSymbol ;
-        FillMemory ( pSym , NULL , SYM_BUFF_SIZE ) ;
+        FillMemory ( pSym , nullptr , SYM_BUFF_SIZE ) ;
         pSym->SizeOfStruct = sizeof ( IMAGEHLP_SYMBOL ) ;
         pSym->MaxNameLength = SYM_BUFF_SIZE - sizeof ( IMAGEHLP_SYMBOL);
 
@@ -666,7 +666,7 @@ LPCTSTR __stdcall
                                 sizeof ( EXCEPTION_POINTERS ) ) )
     {
         TRACE0 ( "GetStackTraceString - invalid pExPtrs!\n" ) ;
-        return ( NULL ) ;
+        return ( nullptr ) ;
     }
 
     // The value that is returned
@@ -952,7 +952,7 @@ LPCTSTR __stdcall GetRegisterString ( EXCEPTION_POINTERS * pExPtrs )
                                 sizeof ( EXCEPTION_POINTERS ) ) )
     {
         TRACE0 ( "GetRegisterString - invalid pExPtrs!\n" ) ;
-        return ( NULL ) ;
+        return ( nullptr ) ;
     }
 
 #ifdef _WIN64
@@ -1111,7 +1111,7 @@ LPCTSTR ConvertSimpleException ( DWORD dwExcept )
         break ;
 
         default :
-            return ( NULL ) ;
+            return ( nullptr ) ;
         break ;
     }
 }

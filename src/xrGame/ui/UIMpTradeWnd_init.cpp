@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "UIMpTradeWnd.h"
 
 #include "UIXmlInit.h"
@@ -220,5 +220,5 @@ void CUIMpTradeWnd::Init(const shared_str& sectionName, const shared_str& sectio
 #endif // #ifndef MASTER_GOLD
 	SetRank(0);
 	UpdateShop();
-	SetCurrentItem(NULL);
+	SetCurrentItem(nullptr);
 }

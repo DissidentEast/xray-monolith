@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 
 #include "../../xrEngine/render.h"
 #include "../../xrEngine/irenderable.h"
@@ -607,7 +607,7 @@ void R_dsgraph_structure::r_dsgraph_render_hud(bool NoPS)
 			mapScopeHUD.traverseLR(sorted_L1);
 
 			if (!RImplementation.o.ssfx_motionvectors)
-				RCache.set_RT(NULL, 3);
+				RCache.set_RT(nullptr, 3);
 			else
 				RCache.set_RT(RImplementation.Target->rt_ssfx_motion_vectors->pRT, 3);
 		}

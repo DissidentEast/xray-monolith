@@ -1,4 +1,4 @@
-// LocatorAPI.h: interface for the CLocatorAPI class.
+﻿// LocatorAPI.h: interface for the CLocatorAPI class.
 //
 //////////////////////////////////////////////////////////////////////
 
@@ -38,7 +38,7 @@ public:
 		CInifile* header;
 		u32 vfs_idx;
 
-		archive() : hSrcFile(NULL), hSrcMap(NULL), header(NULL), size(0), vfs_idx(u32(-1))
+		archive() : hSrcFile(nullptr), hSrcMap(nullptr), header(nullptr), size(0), vfs_idx(u32(-1))
 		{
 		}
 

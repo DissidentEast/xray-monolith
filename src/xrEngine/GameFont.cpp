@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #pragma hdrstop
 
 #include "GameFont.h"
@@ -199,7 +199,7 @@ void CGameFont::Initialize(LPCSTR cShader, LPCSTR cTextureName)
 	resolve_font_texture(cTextureName, cTexture);
 
 	uFlags &= ~fsValid;
-	vTS.set(1.f, 1.f); // обязательно !!!
+	vTS.set(1.f, 1.f); // Ð¾Ð±ÑÐ·Ð°Ñ‚ÐµÐ»ÑŒÐ½Ð¾ !!!
 
 	eCurrentAlignment = alLeft;
 	vInterval.set(1.f, 1.f);
@@ -336,7 +336,7 @@ void CGameFont::OutSetI(float x, float y)
 
 u32 CGameFont::smart_strlen(const char* S)
 {
-	return (IsMultibyte() ? mbhMulti2Wide(NULL, NULL, 0, S) : xr_strlen(S));
+	return (IsMultibyte() ? mbhMulti2Wide(nullptr, NULL, 0, S) : xr_strlen(S));
 }
 
 void CGameFont::OnRender()
@@ -481,7 +481,7 @@ float CGameFont::SizeOf_(LPCSTR s)
 	{
 		wide_char wsStr[MAX_MB_CHARS];
 
-		mbhMulti2Wide(wsStr, NULL, MAX_MB_CHARS, s);
+		mbhMulti2Wide(wsStr, nullptr, MAX_MB_CHARS, s);
 
 		return SizeOf_(wsStr);
 	}

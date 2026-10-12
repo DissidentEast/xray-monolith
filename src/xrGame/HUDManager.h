@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "../xrEngine/CustomHUD.h"
 #include "HitMarker.h"
@@ -20,7 +20,7 @@ struct SPickParam
 
 	SPickParam(int cull) :
 		defs(collide::ray_defs(Fvector(), Fvector(), 0.f, cull, collide::rqtBoth)),
-		result(collide::rq_result().set(NULL, 0.f, 0)),
+		result(collide::rq_result().set(nullptr, 0.f, 0)),
 		barrel_dist(0.f),
 		barrel_blocked(false),
 		barrel_matrix(Fmatrix().identity()),
@@ -91,7 +91,7 @@ public:
 	SPickParam& GetPick() { return PP; }
 	collide::rq_result& GetRQ() { return GetPick().result; }
 
-	//устанвка внешнего вида прицела в зависимости от текущей дисперсии
+	//ÑƒÑÑ‚Ð°Ð½Ð²ÐºÐ° Ð²Ð½ÐµÑˆÐ½ÐµÐ³Ð¾ Ð²Ð¸Ð´Ð° Ð¿Ñ€Ð¸Ñ†ÐµÐ»Ð° Ð² Ð·Ð°Ð²Ð¸ÑÐ¸Ð¼Ð¾ÑÑ‚Ð¸ Ð¾Ñ‚ Ñ‚ÐµÐºÑƒÑ‰ÐµÐ¹ Ð´Ð¸ÑÐ¿ÐµÑ€ÑÐ¸Ð¸
 	void SetCrosshairDisp(float dispf, float disps = 0.f);
 #ifdef DEBUG
     void					SetFirstBulletCrosshairDisp(float fbdispf);

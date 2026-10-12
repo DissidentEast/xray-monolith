@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "string_table.h"
 
 #include "ui/xrUIXmlParser.h"
@@ -43,7 +43,7 @@ void CStringTable::Init()
 
 	pData = xr_new<STRING_TABLE_DATA>();
 
-	//имя языка, если не задано (NULL), то первый <text> в <string> в XML
+	//Ð¸Ð¼Ñ ÑÐ·Ñ‹ÐºÐ°, ÐµÑÐ»Ð¸ Ð½Ðµ Ð·Ð°Ð´Ð°Ð½Ð¾ (NULL), Ñ‚Ð¾ Ð¿ÐµÑ€Ð²Ñ‹Ð¹ <text> Ð² <string> Ð² XML
 	pData->m_sLanguage = READ_IF_EXISTS(pSettings, r_string, "string_table", "language", "eng");
 
 	// demonized: parse english files first, then they will be replaced by current locale
@@ -111,17 +111,17 @@ void CStringTable::Load(LPCSTR xml_file_full, LPCSTR lang_in)
 
 	uiXml.Load(CONFIG_PATH, _s, xml_file_full);
 
-	//общий список всех записей таблицы в файле
+	//Ð¾Ð±Ñ‰Ð¸Ð¹ ÑÐ¿Ð¸ÑÐ¾Ðº Ð²ÑÐµÑ… Ð·Ð°Ð¿Ð¸ÑÐµÐ¹ Ñ‚Ð°Ð±Ð»Ð¸Ñ†Ñ‹ Ð² Ñ„Ð°Ð¹Ð»Ðµ
 	int string_num = uiXml.GetNodesNum(uiXml.GetRoot(), "string");
 
 	for (int i = 0; i < string_num; ++i)
 	{
-		LPCSTR string_name = uiXml.ReadAttrib(uiXml.GetRoot(), "string", i, "id", NULL);
+		LPCSTR string_name = uiXml.ReadAttrib(uiXml.GetRoot(), "string", i, "id", nullptr);
 
 		VERIFY3(pData->m_StringTable.find(string_name) == pData->m_StringTable.end(), "duplicate string table id",
 		        string_name);
 
-		LPCSTR string_text = uiXml.Read(uiXml.GetRoot(), "string:text", i, NULL);
+		LPCSTR string_text = uiXml.Read(uiXml.GetRoot(), "string:text", i, nullptr);
 
 		if (m_bWriteErrorsToLog && string_text)
 			Msg("[string table] '%s' no translation in '%s'", string_name, lang);

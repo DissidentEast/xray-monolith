@@ -1,4 +1,4 @@
-////////////////////////////////////////////////////////////////////////////
+﻿////////////////////////////////////////////////////////////////////////////
 //	Modified by Axel DominatoR
 //	Last updated: 13/08/2015
 ////////////////////////////////////////////////////////////////////////////
@@ -341,7 +341,7 @@ bool CInventory::DropItem(CGameObject* pObj, bool just_before_destroy, bool dont
 	return true;
 }
 
-//положить вещь в слот
+//Ð¿Ð¾Ð»Ð¾Ð¶Ð¸Ñ‚ÑŒ Ð²ÐµÑ‰ÑŒ Ð² ÑÐ»Ð¾Ñ‚
 bool CInventory::Slot(u16 slot_id, PIItem pIItem, bool bNotActivate, bool strict_placement)
 {
 	VERIFY(pIItem);
@@ -382,7 +382,7 @@ bool CInventory::Slot(u16 slot_id, PIItem pIItem, bool bNotActivate, bool strict
 
 	m_slots[slot_id].m_pIItem = pIItem;
 
-	//удалить из рюкзака или пояса
+	//ÑƒÐ´Ð°Ð»Ð¸Ñ‚ÑŒ Ð¸Ð· Ñ€ÑŽÐºÐ·Ð°ÐºÐ° Ð¸Ð»Ð¸ Ð¿Ð¾ÑÑÐ°
 	TIItemContainer::iterator it_ruck = std::find(m_ruck.begin(), m_ruck.end(), pIItem);
 	TIItemContainer::iterator it_belt = std::find(m_belt.begin(), m_belt.end(), pIItem);
 	if (!IsGameTypeSingle())
@@ -449,7 +449,7 @@ bool CInventory::Belt(PIItem pIItem, bool strict_placement)
 {
 	if (!strict_placement && !CanPutInBelt(pIItem)) return false;
 
-	//вещь была в слоте
+	//Ð²ÐµÑ‰ÑŒ Ð±Ñ‹Ð»Ð° Ð² ÑÐ»Ð¾Ñ‚Ðµ
 	bool in_slot = InSlot(pIItem);
 	if (in_slot)
 	{
@@ -500,7 +500,7 @@ bool CInventory::Ruck(PIItem pIItem, bool strict_placement)
 	}
 
 	bool in_slot = InSlot(pIItem);
-	//вещь была в слоте
+	//Ð²ÐµÑ‰ÑŒ Ð±Ñ‹Ð»Ð° Ð² ÑÐ»Ð¾Ñ‚Ðµ
 	if (in_slot)
 	{
 		if (GetActiveSlot() == pIItem->CurrSlot())
@@ -510,7 +510,7 @@ bool CInventory::Ruck(PIItem pIItem, bool strict_placement)
 	}
 	else
 	{
-		//вещь была на поясе или вообще только поднята с земли
+		//Ð²ÐµÑ‰ÑŒ Ð±Ñ‹Ð»Ð° Ð½Ð° Ð¿Ð¾ÑÑÐµ Ð¸Ð»Ð¸ Ð²Ð¾Ð¾Ð±Ñ‰Ðµ Ñ‚Ð¾Ð»ÑŒÐºÐ¾ Ð¿Ð¾Ð´Ð½ÑÑ‚Ð° Ñ Ð·ÐµÐ¼Ð»Ð¸
 		TIItemContainer::iterator it = std::find(m_belt.begin(), m_belt.end(), pIItem);
 		if (m_belt.end() != it)
 			m_belt.erase(it);
@@ -596,7 +596,7 @@ void CInventory::Activate(u16 slot, bool bForce)
 	//	Msg("--- Activating slot [%d], inventory owner: [%s], Frame[%d]", slot, m_pOwner->Name(), Device.dwFrame);
 #endif // #ifdef DEBUG
 
-	//активный слот не выбран
+	//Ð°ÐºÑ‚Ð¸Ð²Ð½Ñ‹Ð¹ ÑÐ»Ð¾Ñ‚ Ð½Ðµ Ð²Ñ‹Ð±Ñ€Ð°Ð½
 	if (GetActiveSlot() == NO_ACTIVE_SLOT)
 	{
 		if (tmp_item)
@@ -613,13 +613,13 @@ void CInventory::Activate(u16 slot, bool bForce)
 		{
 			if (slot == GRENADE_SLOT) //fake for grenade
 			{
-				PIItem gr = SameSlot(GRENADE_SLOT, NULL, true);
+				PIItem gr = SameSlot(GRENADE_SLOT, nullptr, true);
 				if (gr)
 					Slot(GRENADE_SLOT, gr);
 			}
 		}
 	}
-		//активный слот задействован
+		//Ð°ÐºÑ‚Ð¸Ð²Ð½Ñ‹Ð¹ ÑÐ»Ð¾Ñ‚ Ð·Ð°Ð´ÐµÐ¹ÑÑ‚Ð²Ð¾Ð²Ð°Ð½
 	else if (slot == NO_ACTIVE_SLOT || tmp_item)
 	{
 		PIItem active_item = ActiveItem();
@@ -885,7 +885,7 @@ void CInventory::Update()
 
 void CInventory::UpdateDropTasks()
 {
-	//проверить слоты
+	//Ð¿Ñ€Ð¾Ð²ÐµÑ€Ð¸Ñ‚ÑŒ ÑÐ»Ð¾Ñ‚Ñ‹
 	for (u16 i = FirstSlot(); i <= LastSlot(); ++i)
 	{
 		PIItem itm = ItemFromSlot(i);
@@ -929,7 +929,7 @@ void CInventory::UpdateDropItem(PIItem pIItem)
 	} // dropManual
 }
 
-//ищем на поясе гранату такоже типа
+//Ð¸Ñ‰ÐµÐ¼ Ð½Ð° Ð¿Ð¾ÑÑÐµ Ð³Ñ€Ð°Ð½Ð°Ñ‚Ñƒ Ñ‚Ð°ÐºÐ¾Ð¶Ðµ Ñ‚Ð¸Ð¿Ð°
 PIItem CInventory::Same(const PIItem pIItem, bool bSearchRuck) const
 {
 	const TIItemContainer& list = bSearchRuck ? m_ruck : m_belt;
@@ -946,7 +946,7 @@ PIItem CInventory::Same(const PIItem pIItem, bool bSearchRuck) const
 	return nullptr;
 }
 
-//ищем на поясе вещь для слота 
+//Ð¸Ñ‰ÐµÐ¼ Ð½Ð° Ð¿Ð¾ÑÑÐµ Ð²ÐµÑ‰ÑŒ Ð´Ð»Ñ ÑÐ»Ð¾Ñ‚Ð° 
 
 PIItem CInventory::SameSlot(const u16 slot, PIItem pIItem, bool bSearchRuck) const
 {
@@ -963,7 +963,7 @@ PIItem CInventory::SameSlot(const u16 slot, PIItem pIItem, bool bSearchRuck) con
 	return nullptr;
 }
 
-//найти в инвенторе вещь с указанным именем
+//Ð½Ð°Ð¹Ñ‚Ð¸ Ð² Ð¸Ð½Ð²ÐµÐ½Ñ‚Ð¾Ñ€Ðµ Ð²ÐµÑ‰ÑŒ Ñ ÑƒÐºÐ°Ð·Ð°Ð½Ð½Ñ‹Ð¼ Ð¸Ð¼ÐµÐ½ÐµÐ¼
 PIItem CInventory::Get(LPCSTR name, bool bSearchRuck) const
 {
 	const TIItemContainer& list = bSearchRuck ? m_ruck : m_belt;
@@ -1098,14 +1098,14 @@ CInventoryItem* CInventory::get_object_by_id(ALife::_OBJECT_ID tObjectID)
 	return (0);
 }
 
-//скушать предмет 
+//ÑÐºÑƒÑˆÐ°Ñ‚ÑŒ Ð¿Ñ€ÐµÐ´Ð¼ÐµÑ‚ 
 #include "game_object_space.h"
 #include "script_callback_ex.h"
 #include "script_game_object.h"
 
 bool CInventory::Eat(PIItem pIItem)
 {
-	//устанаовить съедобна ли вещь
+	//ÑƒÑÑ‚Ð°Ð½Ð°Ð¾Ð²Ð¸Ñ‚ÑŒ ÑÑŠÐµÐ´Ð¾Ð±Ð½Ð° Ð»Ð¸ Ð²ÐµÑ‰ÑŒ
 	CEatableItem* pItemToEat = smart_cast<CEatableItem*>(pIItem);
 	if (!pItemToEat) return false;
 
@@ -1142,7 +1142,7 @@ bool CInventory::Eat(PIItem pIItem)
 		if (pItemToEat->IsUsingCondition() && pItemToEat->GetRemainingUses() < 1 && pItemToEat->CanDelete())
 			CurrentGameUI()->GetActorMenu().RefreshCurrentItemCell();
 
-		CurrentGameUI()->GetActorMenu().SetCurrentItem(NULL);
+		CurrentGameUI()->GetActorMenu().SetCurrentItem(nullptr);
 	}
 
 	if (pItemToEat->Empty())
@@ -1229,8 +1229,8 @@ bool CInventory::CanPutInSlot(PIItem pIItem, u16 slot_id) const
 	return false;
 }
 
-//проверяет можем ли поместить вещь на пояс,
-//при этом реально ничего не меняется
+//Ð¿Ñ€Ð¾Ð²ÐµÑ€ÑÐµÑ‚ Ð¼Ð¾Ð¶ÐµÐ¼ Ð»Ð¸ Ð¿Ð¾Ð¼ÐµÑÑ‚Ð¸Ñ‚ÑŒ Ð²ÐµÑ‰ÑŒ Ð½Ð° Ð¿Ð¾ÑÑ,
+//Ð¿Ñ€Ð¸ ÑÑ‚Ð¾Ð¼ Ñ€ÐµÐ°Ð»ÑŒÐ½Ð¾ Ð½Ð¸Ñ‡ÐµÐ³Ð¾ Ð½Ðµ Ð¼ÐµÐ½ÑÐµÑ‚ÑÑ
 bool CInventory::CanPutInBelt(PIItem pIItem)
 {
 	if (InBelt(pIItem)) return false;
@@ -1243,8 +1243,8 @@ bool CInventory::CanPutInBelt(PIItem pIItem)
 	//return FreeRoom_inBelt(m_belt, pIItem, BeltWidth(), 1);
 }
 
-//проверяет можем ли поместить вещь в рюкзак,
-//при этом реально ничего не меняется
+//Ð¿Ñ€Ð¾Ð²ÐµÑ€ÑÐµÑ‚ Ð¼Ð¾Ð¶ÐµÐ¼ Ð»Ð¸ Ð¿Ð¾Ð¼ÐµÑÑ‚Ð¸Ñ‚ÑŒ Ð²ÐµÑ‰ÑŒ Ð² Ñ€ÑŽÐºÐ·Ð°Ðº,
+//Ð¿Ñ€Ð¸ ÑÑ‚Ð¾Ð¼ Ñ€ÐµÐ°Ð»ÑŒÐ½Ð¾ Ð½Ð¸Ñ‡ÐµÐ³Ð¾ Ð½Ðµ Ð¼ÐµÐ½ÑÐµÑ‚ÑÑ
 bool CInventory::CanPutInRuck(PIItem pIItem) const
 {
 	if (InRuck(pIItem)) return false;
@@ -1316,7 +1316,7 @@ bool CInventory::CanTakeItem(CInventoryItem* inventory_item) const
 	VERIFY3(it == m_all.end(), "item already exists in inventory", *inventory_item->object().cName());
 
 	CActor* pActor = smart_cast<CActor*>(m_pOwner);
-	//актер всегда может взять вещь
+	//Ð°ÐºÑ‚ÐµÑ€ Ð²ÑÐµÐ³Ð´Ð° Ð¼Ð¾Ð¶ÐµÑ‚ Ð²Ð·ÑÑ‚ÑŒ Ð²ÐµÑ‰ÑŒ
 	if (!pActor && (TotalWeight() + inventory_item->Weight() > m_pOwner->MaxCarryWeight()))
 		return false;
 

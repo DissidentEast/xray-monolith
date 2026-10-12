@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "game_cl_teamdeathmatch.h"
 #include "xrMessages.h"
 #include "level.h"
@@ -425,7 +425,7 @@ void game_cl_TeamDeathmatch::shedule_Update(u32 dt)
 	//---------------------------------------------------------
 
 	if (m_game_ui)
-		m_game_ui->SetBuyMsgCaption(NULL);
+		m_game_ui->SetBuyMsgCaption(nullptr);
 
 	switch (m_phase)
 	{

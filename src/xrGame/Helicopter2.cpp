@@ -1,4 +1,4 @@
-#include "pch_script.h"
+﻿#include "pch_script.h"
 #include "helicopter.h"
 //#include "level.h"
 #include "script_game_object.h"
@@ -23,7 +23,7 @@ bool CHelicopter::isObjectVisible(CObject* O)
 	dir_to_object.sub(to_point, from_point).normalize_safe();
 	float ray_length = from_point.distance_to(to_point);
 
-	BOOL res = Level().ObjectSpace.RayTest(from_point, dir_to_object, ray_length, collide::rqtStatic, NULL, NULL);
+	BOOL res = Level().ObjectSpace.RayTest(from_point, dir_to_object, ray_length, collide::rqtStatic, nullptr, NULL);
 
 	return !res;
 }
@@ -89,7 +89,7 @@ void CHelicopter::UpdateHeliParticles()
 		if (m_lanim)
 		{
 			int frame;
-			u32 clr = m_lanim->CalculateBGR(Device.fTimeGlobal, frame); // тючтЁр•рхЄ т ЇюЁьрЄх BGR
+			u32 clr = m_lanim->CalculateBGR(Device.fTimeGlobal, frame); // Ñ‚ÑŽÑ‡Ñ‚ÐÑ€â€¢Ñ€Ñ…Ð„ Ñ‚ Ð‡ÑŽÐÑŒÑ€Ð„Ñ… BGR
 			Fcolor fclr;
 			fclr.set((float)color_get_B(clr), (float)color_get_G(clr), (float)color_get_R(clr), 1.f);
 			fclr.mul_rgb(m_light_brightness / 255.f);
@@ -166,8 +166,8 @@ float CHelicopter::GetMaxVelocity()
 //////////////////////Start By JoHnY///////////////////////
 void CHelicopter::SetLinearAcc(float LAcc_fw, float LAcc_bw)
 {
-	m_movement.LinearAcc_fw = LAcc_fw; //ускорение разгона
-	m_movement.LinearAcc_bk = LAcc_bw; //ускорение торможения
+	m_movement.LinearAcc_fw = LAcc_fw; //ÑƒÑÐºÐ¾Ñ€ÐµÐ½Ð¸Ðµ Ñ€Ð°Ð·Ð³Ð¾Ð½Ð°
+	m_movement.LinearAcc_bk = LAcc_bw; //ÑƒÑÐºÐ¾Ñ€ÐµÐ½Ð¸Ðµ Ñ‚Ð¾Ñ€Ð¼Ð¾Ð¶ÐµÐ½Ð¸Ñ
 }
 
 //////////////////////End By JoHnY/////////////////////////
@@ -207,7 +207,7 @@ float CHelicopter::GetRealAltitude()
 	down_dir.set(0.0f, -1.0f, 0.0f);
 
 
-	Level().ObjectSpace.RayPick(XFORM().c, down_dir, 1000.0f, collide::rqtStatic, cR, NULL);
+	Level().ObjectSpace.RayPick(XFORM().c, down_dir, 1000.0f, collide::rqtStatic, cR, nullptr);
 
 	return cR.range;
 }
@@ -287,7 +287,7 @@ void CHelicopter::DieHelicopter()
 {
 	if (state() == CHelicopter::eDead)
 		return;
-	CEntity::Die(NULL);
+	CEntity::Die(nullptr);
 
 	m_engineSound.stop();
 

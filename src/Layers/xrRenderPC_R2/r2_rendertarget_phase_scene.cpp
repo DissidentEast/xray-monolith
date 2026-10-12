@@ -1,12 +1,12 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 
 // startup
 void CRenderTarget::phase_scene_prepare()
 {
 	// Clear depth & stencil
 
-	u_setrt(Device.dwWidth, Device.dwHeight, rt_Position->pRT,NULL,NULL, HW.pBaseZB);
-	CHK_DX(HW.pDevice->Clear ( 0L, NULL, D3DCLEAR_TARGET|D3DCLEAR_ZBUFFER|D3DCLEAR_STENCIL, 0x0, 1.0f, 0L));
+	u_setrt(Device.dwWidth, Device.dwHeight, rt_Position->pRT,nullptr,NULL, HW.pBaseZB);
+	CHK_DX(HW.pDevice->Clear ( 0L, nullptr, D3DCLEAR_TARGET|D3DCLEAR_ZBUFFER|D3DCLEAR_STENCIL, 0x0, 1.0f, 0L));
 
 	//	Igor: for volumetric lights
 	m_bHasActiveVolumetric = false;

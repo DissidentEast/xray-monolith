@@ -1,4 +1,4 @@
-#ifndef SCREENSHOT_WRITER_INCLUDED
+﻿#ifndef SCREENSHOT_WRITER_INCLUDED
 #define SCREENSHOT_WRITER_INCLUDED
 
 #include "xr_dsa_signer.h"
@@ -35,7 +35,7 @@ namespace screenshots
 
 		u32 const write_info(sha_process_yielder* yielder = nullptr);
 	private:
-		writer() : m_info_data(NULL, FALSE, FALSE, FALSE)
+		writer() : m_info_data(nullptr, FALSE, FALSE, FALSE)
 		{
 		};
 

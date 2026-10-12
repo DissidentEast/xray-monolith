@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "climableobject.h "
 #include "../xrphysics/IPHStaticGeomShell.h"
 #include "xrServer_Objects_ALife.h"
@@ -49,7 +49,7 @@ IC void OrientToNorm(const Fvector& normal, Fmatrix& form, Fobb& box)
 }
 
 
-CClimableObject::CClimableObject(): m_pStaticShell(NULL), m_material(u16(-1)), m_radius(0.0f)
+CClimableObject::CClimableObject(): m_pStaticShell(nullptr), m_material(u16(-1)), m_radius(0.0f)
 {
 }
 

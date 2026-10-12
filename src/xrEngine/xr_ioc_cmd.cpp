@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "igame_level.h"
 
 //#include "xr_effgamma.h"
@@ -485,7 +485,7 @@ class CCC_VidMode : public CCC_Token
 {
 	u32 _dummy;
 public:
-	CCC_VidMode(LPCSTR N) : CCC_Token(N, &_dummy, NULL) { bEmptyArgsHandled = FALSE; };
+	CCC_VidMode(LPCSTR N) : CCC_Token(N, &_dummy, nullptr) { bEmptyArgsHandled = FALSE; };
 
 	virtual void Execute(LPCSTR args)
 	{
@@ -714,7 +714,7 @@ class CCC_r2 : public CCC_Token
 {
 	typedef CCC_Token inherited;
 public:
-	CCC_r2(LPCSTR N) : inherited(N, &renderer_value, NULL) { renderer_value = 0; };
+	CCC_r2(LPCSTR N) : inherited(N, &renderer_value, nullptr) { renderer_value = 0; };
 
 	virtual ~CCC_r2()
 	{
@@ -793,7 +793,7 @@ class CCC_soundDevice : public CCC_Token
 	typedef CCC_Token inherited;
 	u32 _dummy;
 public:
-	CCC_soundDevice(LPCSTR N) : inherited(N, &_dummy, NULL)
+	CCC_soundDevice(LPCSTR N) : inherited(N, &_dummy, nullptr)
 	{
 		bLowerCaseArgs = FALSE;
 	};
@@ -844,7 +844,7 @@ class CCC_VidMonitor : public CCC_Token
 	typedef CCC_Token inherited;
 	u32 _dummy;
 public:
-	CCC_VidMonitor(LPCSTR N) : inherited(N, &_dummy, NULL)
+	CCC_VidMonitor(LPCSTR N) : inherited(N, &_dummy, nullptr)
 	{
 		bLowerCaseArgs = FALSE;
 	}

@@ -1,4 +1,4 @@
-#include "pch_script.h"
+﻿#include "pch_script.h"
 #include "Actor_Flags.h"
 #include "hudmanager.h"
 #ifdef DEBUG
@@ -102,7 +102,7 @@ static float IReceived = 0;
 static float ICoincidenced = 0;
 extern float cammera_into_collision_shift;
 
-string32 ACTOR_DEFS::g_quick_use_slots[4] = {NULL, NULL, NULL, NULL};
+string32 ACTOR_DEFS::g_quick_use_slots[4] = {};
 //skeleton
 
 
@@ -154,7 +154,7 @@ CActor::CActor() : CEntityAlive(), current_ik_cam_shift(0)
 	fCurAVelocity = 0.0f;
 	fFPCamYawMagnitude = 0.0f; //--#SM+#--
 	fFPCamPitchMagnitude = 0.0f; //--#SM+#--
-	// ýôôåêòîðû
+	// Ã½Ã´Ã´Ã¥ÃªÃ²Ã®Ã°Ã»
 	pCamBobbing = 0;
 
 	cam_freelook = eflDisabled;
@@ -192,7 +192,7 @@ CActor::CActor() : CEntityAlive(), current_ik_cam_shift(0)
     Device.seqRender.Add	(this,REG_PRIORITY_LOW);
 #endif
 
-	//ðàçðåøèòü èñïîëüçîâàíèå ïîÿñà â inventory
+	//Ã°Ã Ã§Ã°Ã¥Ã¸Ã¨Ã²Ã¼ Ã¨Ã±Ã¯Ã®Ã«Ã¼Ã§Ã®Ã¢Ã Ã­Ã¨Ã¥ Ã¯Ã®Ã¿Ã±Ã  Ã¢ inventory
 	inventory().SetBeltUseful(true);
 
 	m_pPersonWeLookingAt = nullptr;
@@ -496,7 +496,7 @@ void CActor::Load(LPCSTR section)
 	// sheduler
 	shedule.t_min = shedule.t_max = 1;
 
-	// íàñòðîéêè äèñïåðñèè ñòðåëüáû
+	// Ã­Ã Ã±Ã²Ã°Ã®Ã©ÃªÃ¨ Ã¤Ã¨Ã±Ã¯Ã¥Ã°Ã±Ã¨Ã¨ Ã±Ã²Ã°Ã¥Ã«Ã¼Ã¡Ã»
 	m_fDispBase = pSettings->r_float(section, "disp_base");
 	m_fDispBase = deg2rad(m_fDispBase);
 
@@ -585,12 +585,12 @@ void CActor::Hit(SHit* pHDS)
 			if (Device.dwFrame != last_hit_frame &&
 				HDS.bone() != BI_NONE)
 			{
-				// âû÷èñëèòü ïîçèöèþ è íàïðàâëåííîñòü ïàðòèêëà
+				// Ã¢Ã»Ã·Ã¨Ã±Ã«Ã¨Ã²Ã¼ Ã¯Ã®Ã§Ã¨Ã¶Ã¨Ã¾ Ã¨ Ã­Ã Ã¯Ã°Ã Ã¢Ã«Ã¥Ã­Ã­Ã®Ã±Ã²Ã¼ Ã¯Ã Ã°Ã²Ã¨ÃªÃ«Ã 
 				Fmatrix pos;
 
 				CParticlesPlayer::MakeXFORM(this, HDS.bone(), HDS.dir, HDS.p_in_bone_space, pos);
 
-				// óñòàíîâèòü particles
+				// Ã³Ã±Ã²Ã Ã­Ã®Ã¢Ã¨Ã²Ã¼ particles
 				CParticlesObject* ps = nullptr;
 
 				if (eacFirstEye == cam_active && this == Level().CurrentEntity())
@@ -867,7 +867,7 @@ extern BOOL firstPersonDeath;
 void CActor::Die(CObject* who)
 {
 #ifdef HOLDERCUSTOM_NEW
-	use_HolderEx(NULL, true);
+	use_HolderEx(nullptr, true);
 #endif
 
 #ifdef DEBUG
@@ -917,7 +917,7 @@ void CActor::Die(CObject* who)
 		};
 
 
-		///!!! ÷èñòêà ïîÿñà
+		///!!! Ã·Ã¨Ã±Ã²ÃªÃ  Ã¯Ã®Ã¿Ã±Ã 
 		TIItemContainer& l_blist = inventory().m_belt;
 		while (!l_blist.empty())
 			inventory().Ruck(l_blist.front());
@@ -1069,7 +1069,7 @@ void CActor::g_Physics(Fvector& _accel, float jump, float dt)
             CObject* initiator = mctrl->gcontact_Initiator ? mctrl->gcontact_Initiator : di->DamageInitiator();
 			Fvector hdir;
 			di->HitDir(hdir);
-			SetHitInfo(initiator, NULL, 0, Fvector().set(0, 0, 0), hdir);
+			SetHitInfo(initiator, nullptr, 0, Fvector().set(0, 0, 0), hdir);
 			//				Hit	(m_PhysicMovementControl->gcontact_HealthLost,hdir,di->DamageInitiator(),m_PhysicMovementControl->ContactBone(),di->HitPos(),0.f,ALife::eHitTypeStrike);//s16(6 + 2*::Random.randI(0,2))
 			if (Level().CurrentControlEntity() == this)
 			{
@@ -1928,7 +1928,7 @@ void CActor::shedule_Update(u32 DT)
 
 	inherited::shedule_Update(DT);
 
-	//ýôôåêòîð âêëþ÷àåìûé ïðè õîäüáå
+	//Ã½Ã´Ã´Ã¥ÃªÃ²Ã®Ã° Ã¢ÃªÃ«Ã¾Ã·Ã Ã¥Ã¬Ã»Ã© Ã¯Ã°Ã¨ ÃµÃ®Ã¤Ã¼Ã¡Ã¥
 	if (!pCamBobbing)
 	{
 		pCamBobbing = xr_new<CEffectorBobbing>();
@@ -1936,7 +1936,7 @@ void CActor::shedule_Update(u32 DT)
 	}
 	pCamBobbing->SetState(mstate_real, conditions().IsLimping(), IsZoomAimingMode());
 
-	//çâóê òÿæåëîãî äûõàíèÿ ïðè óòàëîñòè è õðîìàíèè
+	//Ã§Ã¢Ã³Ãª Ã²Ã¿Ã¦Ã¥Ã«Ã®Ã£Ã® Ã¤Ã»ÃµÃ Ã­Ã¨Ã¿ Ã¯Ã°Ã¨ Ã³Ã²Ã Ã«Ã®Ã±Ã²Ã¨ Ã¨ ÃµÃ°Ã®Ã¬Ã Ã­Ã¨Ã¨
 	if (this == Level().CurrentControlEntity() && !g_dedicated_server)
 	{
 		if (conditions().IsLimping() && g_Alive() && !psActorFlags.test(AF_GODMODE_RT))
@@ -2004,11 +2004,11 @@ void CActor::shedule_Update(u32 DT)
 			m_DangerSnd.stop();
 	}
 
-	//åñëè â ðåæèìå HUD, òî ñàìà ìîäåëü àêòåðà íå ðèñóåòñÿ
+	//Ã¥Ã±Ã«Ã¨ Ã¢ Ã°Ã¥Ã¦Ã¨Ã¬Ã¥ HUD, Ã²Ã® Ã±Ã Ã¬Ã  Ã¬Ã®Ã¤Ã¥Ã«Ã¼ Ã ÃªÃ²Ã¥Ã°Ã  Ã­Ã¥ Ã°Ã¨Ã±Ã³Ã¥Ã²Ã±Ã¿
 	if (!character_physics_support()->IsRemoved())
 		setVisible(TRUE);
 
-	//÷òî àêòåð âèäèò ïåðåä ñîáîé
+	//Ã·Ã²Ã® Ã ÃªÃ²Ã¥Ã° Ã¢Ã¨Ã¤Ã¨Ã² Ã¯Ã¥Ã°Ã¥Ã¤ Ã±Ã®Ã¡Ã®Ã©
 	collide::rq_result& RQ = HUD().GetRQ();
 
 
@@ -2085,7 +2085,7 @@ void CActor::shedule_Update(u32 DT)
 
 	//	UpdateSleep									();
 
-	//äëÿ ñâîéñò àðòåôàêòîâ, íàõîäÿùèõñÿ íà ïîÿñå
+	//Ã¤Ã«Ã¿ Ã±Ã¢Ã®Ã©Ã±Ã² Ã Ã°Ã²Ã¥Ã´Ã ÃªÃ²Ã®Ã¢, Ã­Ã ÃµÃ®Ã¤Ã¿Ã¹Ã¨ÃµÃ±Ã¿ Ã­Ã  Ã¯Ã®Ã¿Ã±Ã¥
 	UpdateArtefactsOnBeltAndOutfit();
 	m_pPhysics_support->in_shedule_Update(DT);
 	Check_for_AutoPickUp();
@@ -2860,12 +2860,12 @@ bool CActor::can_attach(const CInventoryItem* inventory_item) const
 	if (!item || /*!item->enabled() ||*/ !item->can_be_attached())
 		return (false);
 
-	//ìîæíî ëè ïðèñîåäèíÿòü îáúåêòû òàêîãî òèïà
+	//Ã¬Ã®Ã¦Ã­Ã® Ã«Ã¨ Ã¯Ã°Ã¨Ã±Ã®Ã¥Ã¤Ã¨Ã­Ã¿Ã²Ã¼ Ã®Ã¡ÃºÃ¥ÃªÃ²Ã» Ã²Ã ÃªÃ®Ã£Ã® Ã²Ã¨Ã¯Ã 
 	if (m_attach_item_sections.end() == std::find(m_attach_item_sections.begin(), m_attach_item_sections.end(),
 	                                              inventory_item->object().cNameSect()))
 		return false;
 
-	//åñëè óæå åñòü ïðèñîåäèííåíûé îáúåò òàêîãî òèïà
+	//Ã¥Ã±Ã«Ã¨ Ã³Ã¦Ã¥ Ã¥Ã±Ã²Ã¼ Ã¯Ã°Ã¨Ã±Ã®Ã¥Ã¤Ã¨Ã­Ã­Ã¥Ã­Ã»Ã© Ã®Ã¡ÃºÃ¥Ã² Ã²Ã ÃªÃ®Ã£Ã® Ã²Ã¨Ã¯Ã 
 	if (attached(inventory_item->object().cNameSect()))
 		return false;
 

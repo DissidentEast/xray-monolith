@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 
 #include "Actor.h"
 #include "level.h"
@@ -66,22 +66,22 @@ void CNightVisionEffector::PlaySounds(EPlaySounds which)
 	{
 	case eStartSound:
 		{
-			m_sounds.PlaySound("NightVisionOnSnd", pActor->Position(), NULL, bPlaySoundFirstPerson);
+			m_sounds.PlaySound("NightVisionOnSnd", pActor->Position(), nullptr, bPlaySoundFirstPerson);
 		}
 		break;
 	case eStopSound:
 		{
-			m_sounds.PlaySound("NightVisionOffSnd", pActor->Position(), NULL, bPlaySoundFirstPerson);
+			m_sounds.PlaySound("NightVisionOffSnd", pActor->Position(), nullptr, bPlaySoundFirstPerson);
 		}
 		break;
 	case eIdleSound:
 		{
-			m_sounds.PlaySound("NightVisionIdleSnd", pActor->Position(), NULL, bPlaySoundFirstPerson, true);
+			m_sounds.PlaySound("NightVisionIdleSnd", pActor->Position(), nullptr, bPlaySoundFirstPerson, true);
 		}
 		break;
 	case eBrokeSound:
 		{
-			m_sounds.PlaySound("NightVisionBrokenSnd", pActor->Position(), NULL, bPlaySoundFirstPerson);
+			m_sounds.PlaySound("NightVisionBrokenSnd", pActor->Position(), nullptr, bPlaySoundFirstPerson);
 		}
 		break;
 	default: NODEFAULT;

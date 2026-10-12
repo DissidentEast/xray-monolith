@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "game_cl_deathmatch.h"
 #include "xrMessages.h"
 #include "UIGameDM.h"
@@ -454,13 +454,13 @@ void game_cl_Deathmatch::shedule_Update(u32 dt)
 	//fake	
 	if (m_game_ui)
 	{
-		m_game_ui->SetTimeMsgCaption(NULL);
-		m_game_ui->SetRoundResultCaption(NULL);
-		m_game_ui->SetSpectatorMsgCaption(NULL);
-		m_game_ui->SetPressJumpMsgCaption(NULL);
-		m_game_ui->SetPressBuyMsgCaption(NULL);
-		m_game_ui->SetForceRespawnTimeCaption(NULL);
-		m_game_ui->SetWarmUpCaption(NULL);
+		m_game_ui->SetTimeMsgCaption(nullptr);
+		m_game_ui->SetRoundResultCaption(nullptr);
+		m_game_ui->SetSpectatorMsgCaption(nullptr);
+		m_game_ui->SetPressJumpMsgCaption(nullptr);
+		m_game_ui->SetPressBuyMsgCaption(nullptr);
+		m_game_ui->SetForceRespawnTimeCaption(nullptr);
+		m_game_ui->SetWarmUpCaption(nullptr);
 	};
 	//	if (CurrentGameUI() && CurrentGameUI()->UIMainIngameWnd)
 	//		CurrentGameUI()->UIMainIngameWnd->ZoneCounter().SetText("");
@@ -513,8 +513,8 @@ void game_cl_Deathmatch::shedule_Update(u32 dt)
 					m_game_ui->ChangeTotalMoneyIndicator(MoneyStr);
 				}
 
-				m_game_ui->SetPressJumpMsgCaption(NULL);
-				m_game_ui->SetPressBuyMsgCaption(NULL);
+				m_game_ui->SetPressJumpMsgCaption(nullptr);
+				m_game_ui->SetPressBuyMsgCaption(nullptr);
 
 				if (m_cl_dwWarmUp_Time > Level().timeServer())
 				{
@@ -901,8 +901,8 @@ void game_cl_Deathmatch::OnVoteStop(NET_Packet& P)
 	inherited::OnVoteStop(P);
 	if (m_game_ui)
 	{
-		m_game_ui->SetVoteMessage(NULL);
-		m_game_ui->SetVoteTimeResultMsg(NULL);
+		m_game_ui->SetVoteMessage(nullptr);
+		m_game_ui->SetVoteTimeResultMsg(nullptr);
 	}
 };
 
@@ -911,8 +911,8 @@ void game_cl_Deathmatch::OnVoteEnd(NET_Packet& P)
 	inherited::OnVoteEnd(P);
 	if (m_game_ui)
 	{
-		m_game_ui->SetVoteMessage(NULL);
-		m_game_ui->SetVoteTimeResultMsg(NULL);
+		m_game_ui->SetVoteMessage(nullptr);
+		m_game_ui->SetVoteTimeResultMsg(nullptr);
 	}
 };
 
@@ -991,13 +991,13 @@ IC bool DM_Compare_Players(game_PlayerState* p1, game_PlayerState* p2)
 void game_cl_Deathmatch::PlayParticleEffect(LPCSTR EffName, Fvector& pos)
 {
 	if (!EffName) return;
-	// вычислить позицию и направленность партикла
+	// Ð²Ñ‹Ñ‡Ð¸ÑÐ»Ð¸Ñ‚ÑŒ Ð¿Ð¾Ð·Ð¸Ñ†Ð¸ÑŽ Ð¸ Ð½Ð°Ð¿Ñ€Ð°Ð²Ð»ÐµÐ½Ð½Ð¾ÑÑ‚ÑŒ Ð¿Ð°Ñ€Ñ‚Ð¸ÐºÐ»Ð°
 	Fmatrix M;
 	M.translate(pos);
 
 	//	CParticlesPlayer::MakeXFORM(pObj,0,Fvector().set(0.f,1.f,0.f),Fvector().set(0.f,0.f,0.f),pos);
 
-	// установить particles
+	// ÑƒÑÑ‚Ð°Ð½Ð¾Ð²Ð¸Ñ‚ÑŒ particles
 	CParticlesObject* ps = nullptr;
 
 	ps = CParticlesObject::Create(EffName,TRUE);

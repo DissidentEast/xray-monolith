@@ -1,4 +1,4 @@
-#ifndef SH_TEXTURE_H
+﻿#ifndef SH_TEXTURE_H
 #define SH_TEXTURE_H
 #pragma once
 
@@ -129,7 +129,7 @@ private:
 struct resptrcode_texture : public resptr_base<CTexture>
 {
 	void create(LPCSTR _name);
-	void destroy() { _set(NULL); }
+	void destroy() { _set(nullptr); }
 	shared_str bump_get() { return _get()->m_bumpmap; }
 	bool bump_exist() { return 0 != bump_get().size(); }
 };

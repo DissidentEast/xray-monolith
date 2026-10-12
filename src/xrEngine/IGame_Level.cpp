@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "igame_level.h"
 #include "igame_persistent.h"
 
@@ -49,8 +49,8 @@ IGame_Level::~IGame_Level()
 	Device.seqFrame.Remove(this);
 	CCameraManager::ResetPP();
 	///////////////////////////////////////////
-	Sound->set_geometry_occ(NULL);
-	Sound->set_handler(NULL);
+	Sound->set_geometry_occ(nullptr);
+	Sound->set_handler(nullptr);
 	Device.DumpResourcesMemoryUsage();
 
 	u32 m_base = 0, c_base = 0, m_lmaps = 0, c_lmaps = 0;

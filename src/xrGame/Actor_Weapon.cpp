@@ -1,4 +1,4 @@
-// Actor_Weapon.cpp:	 для работы с оружием
+﻿// Actor_Weapon.cpp:	 Ð´Ð»Ñ Ñ€Ð°Ð±Ð¾Ñ‚Ñ‹ Ñ Ð¾Ñ€ÑƒÐ¶Ð¸ÐµÐ¼
 //////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
@@ -29,7 +29,7 @@ static const float VEL_A_MAX = 10.f;
 BOOL g_fix_avelocity_spread = 0;
 BOOL g_apply_pdm_to_ads = 0;
 BOOL g_smooth_ads_transition = 0;
-//возвращает текуший разброс стрельбы (в радианах)с учетом движения
+//Ð²Ð¾Ð·Ð²Ñ€Ð°Ñ‰Ð°ÐµÑ‚ Ñ‚ÐµÐºÑƒÑˆÐ¸Ð¹ Ñ€Ð°Ð·Ð±Ñ€Ð¾Ñ ÑÑ‚Ñ€ÐµÐ»ÑŒÐ±Ñ‹ (Ð² Ñ€Ð°Ð´Ð¸Ð°Ð½Ð°Ñ…)Ñ ÑƒÑ‡ÐµÑ‚Ð¾Ð¼ Ð´Ð²Ð¸Ð¶ÐµÐ½Ð¸Ñ
 float CActor::GetWeaponAccuracy() const
 {
 	CWeapon* W = smart_cast<CWeapon*>(inventory().ActiveItem());
@@ -355,7 +355,7 @@ void CActor::SpawnAmmoForWeapon(CInventoryItem* pIItem)
 
 	///	CWeaponAmmo* pAmmo = smart_cast<CWeaponAmmo*>(inventory().GetAny( (pWM->m_ammoTypes[0].c_str()) ));
 	//	if (!pAmmo) 
-	pWM->SpawnAmmo(0xffffffff, NULL, ID());
+	pWM->SpawnAmmo(0xffffffff, nullptr, ID());
 };
 
 void CActor::RemoveAmmoForWeapon(CInventoryItem* pIItem)
@@ -368,9 +368,9 @@ void CActor::RemoveAmmoForWeapon(CInventoryItem* pIItem)
 
 	CWeaponAmmo* pAmmo = smart_cast<CWeaponAmmo*>(inventory().GetAny(pWM->m_ammoTypes[0].c_str()));
 	if (!pAmmo) return;
-	//--- мы нашли патроны к текущему оружию	
+	//--- Ð¼Ñ‹ Ð½Ð°ÑˆÐ»Ð¸ Ð¿Ð°Ñ‚Ñ€Ð¾Ð½Ñ‹ Ðº Ñ‚ÐµÐºÑƒÑ‰ÐµÐ¼Ñƒ Ð¾Ñ€ÑƒÐ¶Ð¸ÑŽ	
 	/*
-	//--- проверяем не подходят ли они к чему-то еще
+	//--- Ð¿Ñ€Ð¾Ð²ÐµÑ€ÑÐµÐ¼ Ð½Ðµ Ð¿Ð¾Ð´Ñ…Ð¾Ð´ÑÑ‚ Ð»Ð¸ Ð¾Ð½Ð¸ Ðº Ñ‡ÐµÐ¼Ñƒ-Ñ‚Ð¾ ÐµÑ‰Ðµ
 	bool CanRemove = true;
 	TIItemContainer::const_iterator I = inventory().m_all.begin();//, B = I;
 	TIItemContainer::const_iterator E = inventory().m_all.end();

@@ -1,4 +1,4 @@
-//---------------------------------------------------------------------------
+﻿//---------------------------------------------------------------------------
 #include 	"stdafx.h"
 #pragma hdrstop
 
@@ -255,7 +255,7 @@ void CKinematicsAnimated::LL_FadeCycle(u16 part, float falloff, u8 mask_channel 
 		B.set_falloff_state();
 		B.blendFalloff = falloff;
 		//B.blendAccrue		= B.timeCurrent;
-		if (B.stop_at_end) B.stop_at_end_callback = FALSE; // callback не должен приходить!
+		if (B.stop_at_end) B.stop_at_end_callback = FALSE; // callback Ð½Ðµ Ð´Ð¾Ð»Ð¶ÐµÐ½ Ð¿Ñ€Ð¸Ñ…Ð¾Ð´Ð¸Ñ‚ÑŒ!
 	}
 }
 
@@ -668,8 +668,8 @@ CKinematicsAnimated::~CKinematicsAnimated()
 CKinematicsAnimated::CKinematicsAnimated():
 	CKinematics(),
 	IKinematicsAnimated(),
-	blend_instances(NULL),
-	m_Partition(NULL),
+	blend_instances(nullptr),
+	m_Partition(nullptr),
 	m_blend_destroy_callback(0),
 	m_update_tracks_callback(0),
 	Update_LastTime(0)
@@ -797,7 +797,7 @@ void CKinematicsAnimated::Load(const char* N, IReader* data, u32 dwFlags)
 			FS.r_close(MS);
 		}
 		if (create_res)
-			m_Motions.back().motions.create(_path, NULL, bones);
+			m_Motions.back().motions.create(_path, nullptr, bones);
 		else
 		{
 			m_Motions.pop_back();

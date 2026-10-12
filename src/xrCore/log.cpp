@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #pragma hdrstop
 
 #include <time.h>
@@ -293,7 +293,7 @@ void CreateLog(BOOL nl)
 		IWriter* f = FS.w_open(logFName);
 		if (f == nullptr)
 		{
-			MessageBox(NULL, "Can't create log file.", "Error", MB_ICONERROR);
+			MessageBox(nullptr, "Can't create log file.", "Error", MB_ICONERROR);
 			abort();
 		}
 		FS.w_close(f);

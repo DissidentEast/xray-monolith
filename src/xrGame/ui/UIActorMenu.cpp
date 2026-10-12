@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "UIActorMenu.h"
 #include "UIActorStateInfo.h"
 #include "../actor.h"
@@ -71,7 +71,7 @@ void CUIActorMenu::SetPartner(CInventoryOwner* io)
 		else
 			m_PartnerCharacterInfo->InitCharacter(m_pPartnerInvOwner->object_id());
 
-		SetInvBox(NULL);
+		SetInvBox(nullptr);
 	}
 	else
 		m_PartnerCharacterInfo->ClearInfo();
@@ -84,14 +84,14 @@ void CUIActorMenu::SetInvBox(CInventoryBox* box)
 	if (box)
 	{
 		m_pInvBox->set_in_use(true);
-		SetPartner(NULL);
+		SetPartner(nullptr);
 	}
 }
 
 void CUIActorMenu::SetMenuMode(EMenuMode mode)
 {
-	SetCurrentItem(NULL);
-	m_hint_wnd->set_text(NULL);
+	SetCurrentItem(nullptr);
+	m_hint_wnd->set_text(nullptr);
 
 	if (mode != m_currMenuMode)
 	{
@@ -170,7 +170,7 @@ void CUIActorMenu::SetMenuMode(EMenuMode mode)
 void CUIActorMenu::PlaySnd(eActorMenuSndAction a)
 {
 	if (sounds[a]._handle())
-		sounds[a].play(NULL, sm_2D);
+		sounds[a].play(nullptr, sm_2D);
 }
 
 void CUIActorMenu::SendMessage(CUIWindow* pWnd, s16 msg, void* pData)
@@ -251,7 +251,7 @@ void CUIActorMenu::Update()
 	m_hint_wnd->Update();
 }
 
-bool CUIActorMenu::StopAnyMove() // true = актёр не идёт при открытом меню
+bool CUIActorMenu::StopAnyMove() // true = Ð°ÐºÑ‚Ñ‘Ñ€ Ð½Ðµ Ð¸Ð´Ñ‘Ñ‚ Ð¿Ñ€Ð¸ Ð¾Ñ‚ÐºÑ€Ñ‹Ñ‚Ð¾Ð¼ Ð¼ÐµÐ½ÑŽ
 {
 	switch (m_currMenuMode)
 	{
@@ -365,7 +365,7 @@ void CUIActorMenu::SetCurrentItem(CUICellItem* itm)
 	m_pCurrentCellItem = itm;
 	if (!itm)
 	{
-		InfoCurItem(NULL);
+		InfoCurItem(nullptr);
 	}
 	TryHidePropertiesBox();
 
@@ -379,7 +379,7 @@ void CUIActorMenu::InfoCurItem(CUICellItem* cell_item)
 {
 	if (!cell_item || !cell_item->m_pData)
 	{
-		m_ItemInfo->InitItem(NULL);
+		m_ItemInfo->InitItem(nullptr);
 		return;
 	}
 	PIItem current_item = (PIItem)cell_item->m_pData;
@@ -852,7 +852,7 @@ void CUIActorMenu::ResetMode()
 {
 	ClearAllLists();
 	m_UIPropertiesBox->Hide();
-	SetCurrentItem(NULL);
+	SetCurrentItem(nullptr);
 }
 
 void CUIActorMenu::UpdateActorMP()

@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "UITalkDialogWnd.h"
 
 #include "xrUIXmlParser.h"
@@ -18,7 +18,7 @@
 #define				TALK_XML				"talk.xml"
 
 CUITalkDialogWnd::CUITalkDialogWnd()
-	: m_pNameTextFont(NULL)
+	: m_pNameTextFont(nullptr)
 {
 	m_ClickedQuestionID = "";
 	mechanic_mode = false;
@@ -50,16 +50,16 @@ void CUITalkDialogWnd::InitTalkDialogWnd()
 	//	AttachChild					(&UIOurIcon);
 	//	AttachChild					(&UIOthersIcon);
 
-	// Фрейм с нащими фразами
+	// Ð¤Ñ€ÐµÐ¹Ð¼ Ñ Ð½Ð°Ñ‰Ð¸Ð¼Ð¸ Ñ„Ñ€Ð°Ð·Ð°Ð¼Ð¸
 	//	AttachChild					(&UIDialogFrameBottom);
 	//	CUIXmlInit::InitStatic		(*m_uiXml, "frame_bottom", 0, &UIDialogFrameBottom);
 
-	//основной фрейм диалога
+	//Ð¾ÑÐ½Ð¾Ð²Ð½Ð¾Ð¹ Ñ„Ñ€ÐµÐ¹Ð¼ Ð´Ð¸Ð°Ð»Ð¾Ð³Ð°
 	//	AttachChild					(&UIDialogFrameTop);
 	//	CUIXmlInit::InitStatic		(*m_uiXml, "frame_top", 0, &UIDialogFrameTop);
 
 
-	//Ответы
+	//ÐžÑ‚Ð²ÐµÑ‚Ñ‹
 	UIAnswersList = xr_new<CUIScrollView>();
 	UIAnswersList->SetAutoDelete(true);
 	//	UIDialogFrameTop.AttachChild(UIAnswersList);
@@ -67,7 +67,7 @@ void CUITalkDialogWnd::InitTalkDialogWnd()
 	CUIXmlInit::InitScrollView(*m_uiXml, "answers_list", 0, UIAnswersList);
 	UIAnswersList->SetWindowName("---UIAnswersList");
 
-	//Вопросы
+	//Ð’Ð¾Ð¿Ñ€Ð¾ÑÑ‹
 	UIQuestionsList = xr_new<CUIScrollView>();
 	UIQuestionsList->SetAutoDelete(true);
 	//	UIDialogFrameBottom.AttachChild(UIQuestionsList);
@@ -76,7 +76,7 @@ void CUITalkDialogWnd::InitTalkDialogWnd()
 	UIQuestionsList->SetWindowName("---UIQuestionsList");
 
 
-	//кнопка перехода в режим торговли
+	//ÐºÐ½Ð¾Ð¿ÐºÐ° Ð¿ÐµÑ€ÐµÑ…Ð¾Ð´Ð° Ð² Ñ€ÐµÐ¶Ð¸Ð¼ Ñ‚Ð¾Ñ€Ð³Ð¾Ð²Ð»Ð¸
 	AttachChild(&UIToTradeButton);
 	CUIXmlInit::Init3tButton(*m_uiXml, "button", 0, &UIToTradeButton);
 
@@ -87,7 +87,7 @@ void CUITalkDialogWnd::InitTalkDialogWnd()
 	//m_btn_pos[1]				= UIToExitButton.GetWndPos();
 	//m_btn_pos[2].x				= (m_btn_pos[0].x+m_btn_pos[1].x)/2.0f;
 	//m_btn_pos[2].y				= m_btn_pos[0].y;
-	// шрифт для индикации имени персонажа в окне разговора
+	// ÑˆÑ€Ð¸Ñ„Ñ‚ Ð´Ð»Ñ Ð¸Ð½Ð´Ð¸ÐºÐ°Ñ†Ð¸Ð¸ Ð¸Ð¼ÐµÐ½Ð¸ Ð¿ÐµÑ€ÑÐ¾Ð½Ð°Ð¶Ð° Ð² Ð¾ÐºÐ½Ðµ Ñ€Ð°Ð·Ð³Ð¾Ð²Ð¾Ñ€Ð°
 	CUIXmlInit::InitFont(*m_uiXml, "font", 0, m_iNameTextColor, m_pNameTextFont);
 
 	CGameFont* pFont = nullptr;
@@ -157,8 +157,8 @@ void CUITalkDialogWnd::SetTradeMode()
 	OnTradeClicked(&UIToTradeButton, 0);
 }
 
-//пересылаем сообщение родительскому окну для обработки
-//и фильтруем если оно пришло от нашего дочернего окна
+//Ð¿ÐµÑ€ÐµÑÑ‹Ð»Ð°ÐµÐ¼ ÑÐ¾Ð¾Ð±Ñ‰ÐµÐ½Ð¸Ðµ Ñ€Ð¾Ð´Ð¸Ñ‚ÐµÐ»ÑŒÑÐºÐ¾Ð¼Ñƒ Ð¾ÐºÐ½Ñƒ Ð´Ð»Ñ Ð¾Ð±Ñ€Ð°Ð±Ð¾Ñ‚ÐºÐ¸
+//Ð¸ Ñ„Ð¸Ð»ÑŒÑ‚Ñ€ÑƒÐµÐ¼ ÐµÑÐ»Ð¸ Ð¾Ð½Ð¾ Ð¿Ñ€Ð¸ÑˆÐ»Ð¾ Ð¾Ñ‚ Ð½Ð°ÑˆÐµÐ³Ð¾ Ð´Ð¾Ñ‡ÐµÑ€Ð½ÐµÐ³Ð¾ Ð¾ÐºÐ½Ð°
 void CUITalkDialogWnd::SendMessage(CUIWindow* pWnd, s16 msg, void* pData)
 {
 	CUIWndCallback::OnEvent(pWnd, msg, pData);

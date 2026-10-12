@@ -1,4 +1,4 @@
-#include "pch_script.h"
+﻿#include "pch_script.h"
 #include "actor.h"
 #include "hudmanager.h"
 #include "Actor_Flags.h"
@@ -757,7 +757,7 @@ void CActor::net_Destroy()
 	m_holder = nullptr;
 	m_holderID = u16(-1);
 
-	SetDefaultVisualOutfit(NULL);
+	SetDefaultVisualOutfit(nullptr);
 
 
 	if (g_actor == this) g_actor = nullptr;

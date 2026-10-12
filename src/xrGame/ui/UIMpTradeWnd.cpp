@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "UIMpTradeWnd.h"
 
 #include "UIMpItemsStoreWnd.h"
@@ -169,7 +169,7 @@ void CUIMpTradeWnd::UpdateShop()
 #ifdef DEBUG
 	Msg									("current level=[%s]",m_store_hierarchy->CurrentLevel().m_name.c_str());
 #endif // #ifdef DEBUG
-	SetCurrentItem(NULL);
+	SetCurrentItem(nullptr);
 	if (m_store_hierarchy->CurrentIsRoot()) return;
 
 	if (m_store_hierarchy->CurrentLevel().HasSubLevels())

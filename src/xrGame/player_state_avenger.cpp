@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "player_state_avenger.h"
 #include "kills_store.h"
 #include "game_cl_base.h"
@@ -73,7 +73,7 @@ namespace award_system
 		tmp_predicate.m_killer_spawn_time = tmp_spawn_time->second;
 		feel_my_team_players(tmp_local_player, tmp_predicate.m_my_team_players);
 
-		buffer_vector<kills_store::kill> tmp_fake_buffer(NULL, 0);
+		buffer_vector<kills_store::kill> tmp_fake_buffer(nullptr, 0);
 		if (m_owner->get_kills_store().fetch_kills(tmp_predicate, tmp_fake_buffer) > 0)
 		{
 			++m_aveng_count;

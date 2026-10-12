@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "configs_dumper.h"
 #include "configs_common.h"
 #include "../xrCore/ppmd_compressor.h"
@@ -136,7 +136,7 @@ namespace mp_anticheat
 			{
 			};
 		}
-		CInifile active_params_dumper(NULL, FALSE, FALSE, FALSE);
+		CInifile active_params_dumper(nullptr, FALSE, FALSE, FALSE);
 		active_objects_t active_objects(
 			_alloca(sizeof(active_objects_t::value_type) * max_active_objects),
 			max_active_objects);
@@ -160,7 +160,7 @@ namespace mp_anticheat
 	{
 		string64 creation_date;
 		LPSTR tmp_player_name = nullptr;
-		CInifile tmp_ini(NULL, FALSE, FALSE, FALSE);
+		CInifile tmp_ini(nullptr, FALSE, FALSE, FALSE);
 		game_cl_mp* tmp_cl_game = smart_cast<game_cl_mp*>(&Game());
 		R_ASSERT(tmp_cl_game);
 		STRCONCAT(tmp_player_name, "\"",
@@ -239,8 +239,8 @@ namespace mp_anticheat
 			Engine.Sheduler.Register(this, TRUE);
 			return;
 		}
-		m_make_start_event = CreateEvent(NULL, FALSE, TRUE, NULL);
-		m_make_done_event = CreateEvent(NULL, FALSE, FALSE, NULL);
+		m_make_start_event = CreateEvent(nullptr, FALSE, TRUE, nullptr);
+		m_make_done_event = CreateEvent(nullptr, FALSE, FALSE, nullptr);
 		thread_spawn(&configs_dumper::dumper_thread, "configs_dumper", 0, this);
 		Engine.Sheduler.Register(this, TRUE);
 	}

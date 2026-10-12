@@ -118,7 +118,7 @@ _action actions[] = {
 	{"freelook", kFREELOOK, _both},
 	{"cam_autoaim", kCAM_AUTOAIM, _sp},
 	{"editor", kEDITOR, _both},
-	{NULL, kLASTACTION, _both}
+	{nullptr, kLASTACTION, _both}
 };
 
 _keyboard keyboards[] = {
@@ -290,7 +290,7 @@ _keyboard keyboards[] = {
 	{"kCUSTOM97", 1097},
 	{"kCUSTOM98", 1098},
 	{"kCUSTOM99", 1099},
-	{NULL, 0}
+	{nullptr, 0}
 };
 
 void initialize_bindings()

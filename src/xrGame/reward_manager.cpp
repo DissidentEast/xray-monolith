@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "reward_manager.h"
 #include "game_cl_mp.h"
 #include "UIGameMP.h"
@@ -132,7 +132,7 @@ namespace award_system
 		                             tmp_iter->second->m_width,
 		                             tmp_iter->second->m_height);
 
-		tmp_iter->second->m_play_sound.play(NULL, sm_2D);
+		tmp_iter->second->m_play_sound.play(nullptr, sm_2D);
 		m_reward_process_time = tmp_iter->second->m_process_time;
 		m_last_reward_time = Device.dwTimeGlobal;
 	}

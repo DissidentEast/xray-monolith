@@ -1,4 +1,4 @@
-//#include "stdafx.h"
+﻿//#include "stdafx.h"
 #include "pch_script.h"
 #include "UIActorMenu.h"
 #include "UI3tButton.h"
@@ -242,7 +242,7 @@ void CUIActorMenu::DeInitTradeMode()
 
 	if (!CurrentGameUI())
 		return;
-	//только если находимся в режиме single
+	//Ñ‚Ð¾Ð»ÑŒÐºÐ¾ ÐµÑÐ»Ð¸ Ð½Ð°Ñ…Ð¾Ð´Ð¸Ð¼ÑÑ Ð² Ñ€ÐµÐ¶Ð¸Ð¼Ðµ single
 	CUIGameSP* pGameSP = smart_cast<CUIGameSP*>(CurrentGameUI());
 	if (!pGameSP) return;
 
@@ -581,7 +581,7 @@ void CUIActorMenu::OnBtnPerformTradeBuy(CUIWindow* w, void* d)
 			CallMessageBoxOK("trade_dont_make");
 		}
 	}
-	SetCurrentItem(NULL);
+	SetCurrentItem(nullptr);
 
 	if (xr_strcmp(m_sort_kinds[current_sort_mode()], "s_all"))
 	{
@@ -644,7 +644,7 @@ void CUIActorMenu::OnBtnPerformTradeSell(CUIWindow* w, void* d)
 			CallMessageBoxOK("trade_dont_make");
 		}
 	}
-	SetCurrentItem(NULL);
+	SetCurrentItem(nullptr);
 
 	if (xr_strcmp(m_sort_kinds[current_sort_mode()], "s_all"))
 	{
@@ -723,7 +723,7 @@ void CUIActorMenu::DonateCurrentItem(CUICellItem* cell_item)
 
 	m_pTradePartnerList->SetItem(itm);
 
-	SetCurrentItem(NULL);
+	SetCurrentItem(nullptr);
 	UpdateItemsPlace();
 }
 

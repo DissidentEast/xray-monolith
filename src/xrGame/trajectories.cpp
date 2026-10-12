@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "trajectories.h"
 #include "Level.h"
 #include "../xrPhysics/IPHWorld.h"
@@ -135,7 +135,7 @@ bool trajectory_check_collision(float low,
 	bool box_result = false;
 
 	if (box_size.magnitude() <= epsilon)
-		Level().ObjectSpace.RayQuery(temp_rq_results, ray_defs, trajectory_query_callback, &range,NULL, self_object);
+		Level().ObjectSpace.RayQuery(temp_rq_results, ray_defs, trajectory_query_callback, &range,nullptr, self_object);
 	else
 	{
 		Fvector box_center;

@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "mp_config_sections.h"
 #include "weapon.h"
 
@@ -32,7 +32,7 @@ namespace mp_anticheat
 	};
 
 	mp_config_sections::mp_config_sections() :
-		m_tmp_dumper(NULL, FALSE, FALSE, FALSE)
+		m_tmp_dumper(nullptr, FALSE, FALSE, FALSE)
 	{
 		u32 gcount = pSettings->line_count("mp_item_groups");
 		LPCSTR line;

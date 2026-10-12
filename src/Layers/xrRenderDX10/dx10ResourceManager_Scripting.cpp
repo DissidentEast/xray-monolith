@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #pragma hdrstop
 
 #include	"../../xrEngine/Render.h"
@@ -332,7 +332,7 @@ extern int luaopen_lua_extensions(lua_State* L, bool IsDebug = false);
 void CResourceManager::LS_Load()
 {
 #ifdef USE_GSC_MEM_ALLOC
-	LSVM = lua_newstate(lua_alloc, NULL);
+	LSVM = lua_newstate(lua_alloc, nullptr);
 #else
 	LSVM = luaL_newstate();
 #endif //-USE_GSC_MEM_ALLOC

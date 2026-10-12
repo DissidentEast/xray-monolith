@@ -51,7 +51,7 @@ CCharacterInfo::~CCharacterInfo()
 void CCharacterInfo::Load(shared_str id)
 {
 	m_ProfileId = id;
-	inherited_shared::load_shared(m_ProfileId, NULL);
+	inherited_shared::load_shared(m_ProfileId, nullptr);
 }
 
 #ifdef XRGAME_EXPORTS
@@ -100,12 +100,12 @@ void CCharacterInfo::load_shared(LPCSTR)
 	pXML->SetLocalRoot(item_node);
 
 
-	LPCSTR spec_char = pXML->Read("specific_character", 0, NULL);
+	LPCSTR spec_char = pXML->Read("specific_character", 0, nullptr);
 	if (!spec_char)
 	{
 		data()->m_CharacterId = nullptr;
 
-		LPCSTR char_class = pXML->Read("class", 0, NULL);
+		LPCSTR char_class = pXML->Read("class", 0, nullptr);
 
 		if (char_class)
 		{

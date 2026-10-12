@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 
 #include "PHWorld.h"
 #include "tri-colliderknoopc/dTriList.h"
@@ -280,7 +280,7 @@ void CPHWorld::SetGravity(float g)
 void CPHWorld::OnFrame()
 {
 	// Msg									("------------- physics: %d / %d",u32(Device.dwFrame),u32(m_steps_num));
-	//просчитать полет пуль
+	//Ð¿Ñ€Ð¾ÑÑ‡Ð¸Ñ‚Ð°Ñ‚ÑŒ Ð¿Ð¾Ð»ÐµÑ‚ Ð¿ÑƒÐ»ÑŒ
 	/*
 	Device.Statistic->TEST0.Begin		();
 	Level().BulletManager().Update		();
@@ -705,5 +705,5 @@ void CPHWorld::GetState(V_PH_WORLD_STATE& state)
 
 void CPHWorld::StepNumIterations(int num_it)
 {
-	dWorldSetQuickStepNumIterations(NULL, num_it);
+	dWorldSetQuickStepNumIterations(nullptr, num_it);
 }

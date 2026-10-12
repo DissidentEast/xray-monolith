@@ -1,4 +1,4 @@
-#include "pch_script.h"
+﻿#include "pch_script.h"
 #include "game_cl_base.h"
 #include "level.h"
 #include "GamePersistent.h"
@@ -18,7 +18,7 @@ LPCSTR GameTypeToString(EGameIDs gt, bool bShort);
 
 game_cl_GameState::game_cl_GameState()
 {
-	local_player = createPlayerState(NULL); //initializing account info
+	local_player = createPlayerState(nullptr); //initializing account info
 	m_WeaponUsageStatistic = nullptr;
 
 	m_game_type_name = 0;

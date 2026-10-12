@@ -1,4 +1,4 @@
-//#include "stdafx.h"
+﻿//#include "stdafx.h"
 #include "pch_script.h"
 #include "UIActorMenu.h"
 #include "UIInventoryUpgradeWnd.h"
@@ -37,7 +37,7 @@ void CUIActorMenu::DeInitUpgradeMode()
 {
 	m_PartnerCharacterInfo->Show(false);
 	m_pUpgradeWnd->Show(false);
-	m_pUpgradeWnd->set_info_cur_upgrade(NULL);
+	m_pUpgradeWnd->set_info_cur_upgrade(nullptr);
 	m_pUpgradeWnd->m_btn_repair->Enable(false);
 
 	if (m_upgrade_selected)
@@ -52,7 +52,7 @@ void CUIActorMenu::DeInitUpgradeMode()
 
 	if (!CurrentGameUI())
 		return;
-	//только если находимся в режиме single
+	//Ñ‚Ð¾Ð»ÑŒÐºÐ¾ ÐµÑÐ»Ð¸ Ð½Ð°Ñ…Ð¾Ð´Ð¸Ð¼ÑÑ Ð² Ñ€ÐµÐ¶Ð¸Ð¼Ðµ single
 	CUIGameSP* pGameSP = smart_cast<CUIGameSP*>(CurrentGameUI());
 	if (!pGameSP) return;
 

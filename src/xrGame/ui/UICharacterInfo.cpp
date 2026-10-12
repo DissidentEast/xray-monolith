@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 
 #include "UIInventoryUtilities.h"
 
@@ -38,7 +38,7 @@ CSE_ALifeTraderAbstract* ch_info_get_from_id(u16 id)
 
 CUICharacterInfo::CUICharacterInfo()
 	: m_ownerID(u16(-1)),
-	  pUIBio(NULL)
+	  pUIBio(nullptr)
 {
 	ZeroMemory(m_icons, sizeof(m_icons));
 	m_bForceUpdate = false;
@@ -356,8 +356,8 @@ void CUICharacterInfo::ClearInfo()
 bool CUICharacterInfo::get_actor_community(shared_str* our, shared_str* enemy)
 {
 	VERIFY(our && enemy);
-	our->_set(NULL);
-	enemy->_set(NULL);
+	our->_set(nullptr);
+	enemy->_set(nullptr);
 	shared_str const& actor_team = Actor()->CharacterInfo().Community().id();
 
 	LPCSTR vs_teams = pSettings->r_string("actor_communities", actor_team.c_str());

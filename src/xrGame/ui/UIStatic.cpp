@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "uistatic.h"
 #include "UIXmlInit.h"
 #include "UITextureMaster.h"
@@ -33,7 +33,7 @@ CUIStatic::CUIStatic()
 	  m_bHeading(false),
 	  m_bConstHeading(false),
 	  m_fHeading(0.0f),
-	  m_pTextControl(NULL)
+	  m_pTextControl(nullptr)
 {
 	m_TextureOffset.set(0.0f, 0.0f);
 	m_lanim_xform.set_defaults();

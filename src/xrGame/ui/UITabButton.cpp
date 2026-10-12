@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+﻿#include "StdAfx.h"
 #include "UITabButton.h"
 #include "UIStatic.h"
 #include "UITextureMaster.h"
@@ -20,7 +20,7 @@ bool CUITabButton::OnMouseDown(int mouse_btn)
 {
 	if (mouse_btn == MOUSE_1)
 	{
-		GetMessageTarget()->SendMessage(this, TAB_CHANGED, NULL);
+		GetMessageTarget()->SendMessage(this, TAB_CHANGED, nullptr);
 		return true;
 	}
 	else

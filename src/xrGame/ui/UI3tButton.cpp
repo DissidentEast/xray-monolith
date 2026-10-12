@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+﻿#include "StdAfx.h"
 #include "UI3tButton.h"
 #include "UIXmlInit.h"
 #include "UIHint.h"
@@ -60,13 +60,13 @@ void CUI3tButton::InitSoundT(LPCSTR sound_file)
 void CUI3tButton::PlaySoundT()
 {
 	if (m_sound_t._handle())
-		m_sound_t.play(NULL, sm_2D);
+		m_sound_t.play(nullptr, sm_2D);
 }
 
 void CUI3tButton::PlaySoundH()
 {
 	if (m_sound_h._handle())
-		m_sound_h.play(NULL, sm_2D);
+		m_sound_h.play(nullptr, sm_2D);
 }
 
 void CUI3tButton::InitButton(Fvector2 pos, Fvector2 size)

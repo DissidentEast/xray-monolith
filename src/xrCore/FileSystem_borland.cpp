@@ -1,4 +1,4 @@
-//----------------------------------------------------
+﻿//----------------------------------------------------
 // file: FileSystem.cpp
 //----------------------------------------------------
 
@@ -32,7 +32,7 @@ bool EFS_Utils::GetOpenName(LPCSTR initial, xr_string& buffer, bool bMulti, LPCS
 	/*
 	char* g_SHBF_Folder =("C:\\Program Files");
 	TCHAR path[_MAX_PATH];
-	BROWSEINFO info={NULL,NULL,path,"title",BIF_USENEWUI,BrowseCallbackProc, (LPARAM)g_SHBF_Folder };
+	BROWSEINFO info={NULL,nullptr,path,"title",BIF_USENEWUI,BrowseCallbackProc, (LPARAM)g_SHBF_Folder };
 	SHBrowseForFolder (&info);
 	*/
 	/*

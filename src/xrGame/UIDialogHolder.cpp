@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "UIDialogHolder.h"
 #include "ui/UIDialogWnd.h"
 #include "UIGameCustom.h"
@@ -103,13 +103,13 @@ void CDialogHolder::StopMenu(CUIDialogWnd* pDialog)
 			CurrentGameUI()->ShowGameIndicators(b);
 		}
 
-		SetMainInputReceiver(NULL, false);
+		SetMainInputReceiver(nullptr, false);
 	}
 	else
 		SetMainInputReceiver(pDialog, true);
 
 	RemoveDialogToRender(pDialog);
-	pDialog->SetHolder(NULL);
+	pDialog->SetHolder(nullptr);
 
 	if (!TopInputReceiver() || !TopInputReceiver()->NeedCursor())
 		GetUICursor().Hide();
@@ -138,7 +138,7 @@ void CDialogHolder::AddDialogToRender(CUIWindow* pDialog)
 void CDialogHolder::RemoveDialogToRender(CUIWindow* pDialog)
 {
 	if (TopInputReceiver() == pDialog)
-		SetMainInputReceiver(NULL, false);
+		SetMainInputReceiver(nullptr, false);
 
 	dlgItem itm(pDialog);
 	itm.enabled = true;

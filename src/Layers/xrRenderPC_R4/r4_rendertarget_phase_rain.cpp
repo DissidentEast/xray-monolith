@@ -1,11 +1,11 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 
 void CRenderTarget::phase_rain()
 {
 	if (!RImplementation.o.dx10_msaa)
-		u_setrt(rt_Color,NULL,NULL, HW.pBaseZB);
+		u_setrt(rt_Color,nullptr,NULL, HW.pBaseZB);
 	else
-		u_setrt(rt_Color,NULL,NULL, rt_MSAADepth->pZRT);
+		u_setrt(rt_Color,nullptr,NULL, rt_MSAADepth->pZRT);
 	//u_setrt	(rt_Normal,NULL,NULL,HW.pBaseZB);
 	RImplementation.rmNormal();
 }
@@ -21,7 +21,7 @@ void CRenderTarget::phase_ssfx_rain()
 
 	set_viewport_size(HW.pContext, w / 8.0f, h / 8.0f);
 
-	u_setrt(rt_ssfx_rain, 0, 0, NULL);
+	u_setrt(rt_ssfx_rain, 0, 0, nullptr);
 	RCache.set_CullMode(CULL_NONE);
 	RCache.set_Stencil(FALSE);
 

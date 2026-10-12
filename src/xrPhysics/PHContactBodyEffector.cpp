@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "PHContactBodyEffector.h"
 #include "ExtendedGeom.h"
 #include "tri-colliderknoopc/dTriList.h"
@@ -60,5 +60,5 @@ void CPHContactBodyEffector::Apply()
 			force[2]
 		);
 	}
-	dBodySetData(m_body,NULL);
+	dBodySetData(m_body,nullptr);
 }

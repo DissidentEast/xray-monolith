@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "Text_Console.h"
 #include "line_editor.h"
 
@@ -88,7 +88,7 @@ void CTextConsole::CreateLogWnd()
 	WNDCLASS wndClass = {
 		0, TextConsole_LogWndProc, 0, 0, hInstance,
 		NULL,
-		LoadCursor(NULL, IDC_ARROW),
+		LoadCursor(nullptr, IDC_ARROW),
 		GetStockBrush(BLACK_BRUSH),
 		NULL, wndclass
 	};
@@ -195,7 +195,7 @@ void CTextConsole::Destroy()
 
 void CTextConsole::OnRender()
 {
-} //disable СConsole::OnRender()
+} //disable Ð¡Console::OnRender()
 
 void CTextConsole::OnPaint()
 {
@@ -346,7 +346,7 @@ void CTextConsole::OnFrame()
 	 return;
 	 }
 	 */
-	InvalidateRect(m_hConsoleWnd, NULL, FALSE);
-	SetCursor(LoadCursor(NULL, IDC_ARROW));
+	InvalidateRect(m_hConsoleWnd, nullptr, FALSE);
+	SetCursor(LoadCursor(nullptr, IDC_ARROW));
 	// m_bNeedUpdate = true;
 }

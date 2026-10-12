@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+﻿#include "StdAfx.h"
 #include "UITabScrollArrows.h"
 #include "UIStatic.h"
 #include "UILines.h"
@@ -95,7 +95,7 @@ void CUIScrollArrowButton::Update()
 }
 
 CUITabScrollArrows::CUITabScrollArrows()
-	: m_parent(NULL), m_msg_target(NULL)
+	: m_parent(nullptr), m_msg_target(nullptr)
 {
 	m_arrow[0] = m_arrow[1] = nullptr;
 	m_pin[0].set(0.0f, 0.0f);

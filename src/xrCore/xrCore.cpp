@@ -1,4 +1,4 @@
-// xrCore.cpp : Defines the entry point for the DLL application.
+﻿// xrCore.cpp : Defines the entry point for the DLL application.
 //
 #include "stdafx.h"
 #pragma hdrstop
@@ -56,7 +56,7 @@ void xrCore::_initialize(LPCSTR _ApplicationName, LogCallback cb, BOOL init_fs, 
 		Params = xr_strdup(GetCommandLine());
 		xr_strlwr(Params);
 		if (!strstr(Params, "-editor"))
-			CoInitializeEx(NULL, COINIT_MULTITHREADED);
+			CoInitializeEx(nullptr, COINIT_MULTITHREADED);
 
 		string_path fn, dr, di;
 
@@ -102,7 +102,7 @@ void xrCore::_initialize(LPCSTR _ApplicationName, LogCallback cb, BOOL init_fs, 
 
 		rtc_initialize();
 
-		time_t _time = time(NULL);
+		time_t _time = time(nullptr);
 		tm* time = localtime(&_time);
 		april1 = time ? (time->tm_mday == 1 && time->tm_mon == 3) : false;
 
@@ -228,7 +228,7 @@ BOOL DllMainXrCore(HANDLE hinstDLL, DWORD ul_reason_for_call, LPVOID lpvReserved
 		break;
 	case DLL_THREAD_ATTACH:
 		if (!strstr(GetCommandLine(), "-editor"))
-			CoInitializeEx(NULL, COINIT_MULTITHREADED);
+			CoInitializeEx(nullptr, COINIT_MULTITHREADED);
 		timeBeginPeriod(1);
 		break;
 	case DLL_THREAD_DETACH:

@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "UICellCustomItems.h"
 #include "UIInventoryUtilities.h"
 #include "../Weapon.h"
@@ -75,7 +75,7 @@ CUIInventoryCellItem::CUIInventoryCellItem(CInventoryItem* itm)
 	}
 	//-Alundaio
 
-	LPCSTR condbar = READ_IF_EXISTS(pSettings, r_string, itm->m_section_id, "condition_bar", NULL);
+	LPCSTR condbar = READ_IF_EXISTS(pSettings, r_string, itm->m_section_id, "condition_bar", nullptr);
 	if (condbar)
 	{
 		CUIXml uiXml;

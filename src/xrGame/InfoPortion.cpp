@@ -1,4 +1,4 @@
-#include "pch_script.h"
+﻿#include "pch_script.h"
 #include "xml_str_id_loader.h"
 #include "object_broker.h"
 
@@ -45,7 +45,7 @@ CInfoPortion::~CInfoPortion ()
 void CInfoPortion::Load	(shared_str info_id)
 {
 	m_InfoId = info_id;
-	inherited_shared::load_shared(m_InfoId, NULL);
+	inherited_shared::load_shared(m_InfoId, nullptr);
 }
 
 
@@ -66,7 +66,7 @@ void CInfoPortion::load_shared	(LPCSTR)
 	XML_NODE* pNode			= pXML->NavigateToNode(id_to_index::tag_name, item_data->pos_in_file);
 	THROW3					(pNode, "info_portion id=", *item_data->id);
 
-	//список названий диалогов
+	//ÑÐ¿Ð¸ÑÐ¾Ðº Ð½Ð°Ð·Ð²Ð°Ð½Ð¸Ð¹ Ð´Ð¸Ð°Ð»Ð¾Ð³Ð¾Ð²
 	int dialogs_num			= pXML->GetNodesNum(pNode, "dialog");
 	info_data()->m_DialogNames.clear();
 	for(int i=0; i<dialogs_num; ++i)
@@ -76,8 +76,8 @@ void CInfoPortion::load_shared	(LPCSTR)
 	}
 
 	
-	//список названий порций информации, которые деактивируются,
-	//после получения этой порции
+	//ÑÐ¿Ð¸ÑÐ¾Ðº Ð½Ð°Ð·Ð²Ð°Ð½Ð¸Ð¹ Ð¿Ð¾Ñ€Ñ†Ð¸Ð¹ Ð¸Ð½Ñ„Ð¾Ñ€Ð¼Ð°Ñ†Ð¸Ð¸, ÐºÐ¾Ñ‚Ð¾Ñ€Ñ‹Ðµ Ð´ÐµÐ°ÐºÑ‚Ð¸Ð²Ð¸Ñ€ÑƒÑŽÑ‚ÑÑ,
+	//Ð¿Ð¾ÑÐ»Ðµ Ð¿Ð¾Ð»ÑƒÑ‡ÐµÐ½Ð¸Ñ ÑÑ‚Ð¾Ð¹ Ð¿Ð¾Ñ€Ñ†Ð¸Ð¸
 	int disable_num = pXML->GetNodesNum(pNode, "disable");
 	info_data()->m_DisableInfo.clear();
 	for(i=0; i<disable_num; ++i)
@@ -86,16 +86,16 @@ void CInfoPortion::load_shared	(LPCSTR)
 		info_data()->m_DisableInfo.push_back(info_id);
 	}
 
-	//имена скриптовых функций
+	//Ð¸Ð¼ÐµÐ½Ð° ÑÐºÑ€Ð¸Ð¿Ñ‚Ð¾Ð²Ñ‹Ñ… Ñ„ÑƒÐ½ÐºÑ†Ð¸Ð¹
 	info_data()->m_InfoScriptHelper.Load(pXML, pNode);
 
 
-	//индексы статей
+	//Ð¸Ð½Ð´ÐµÐºÑÑ‹ ÑÑ‚Ð°Ñ‚ÐµÐ¹
 	info_data()->m_Articles.clear();
 	int articles_num	= pXML->GetNodesNum(pNode, "article");
 	for(i=0; i<articles_num; ++i)
 	{
-		LPCSTR article_str_id = pXML->Read(pNode, "article", i, NULL);
+		LPCSTR article_str_id = pXML->Read(pNode, "article", i, nullptr);
 		THROW(article_str_id);
 		info_data()->m_Articles.push_back(article_str_id);
 	}
@@ -104,7 +104,7 @@ void CInfoPortion::load_shared	(LPCSTR)
 	articles_num = pXML->GetNodesNum(pNode, "article_disable");
 	for(i=0; i<articles_num; ++i)
 	{
-		LPCSTR article_str_id = pXML->Read(pNode, "article_disable", i, NULL);
+		LPCSTR article_str_id = pXML->Read(pNode, "article_disable", i, nullptr);
 		THROW(article_str_id);
 		info_data()->m_ArticlesDisable.push_back(article_str_id);
 	}

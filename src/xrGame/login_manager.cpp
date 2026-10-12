@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "login_manager.h"
 #include "account_manager.h"
 #include "MainMenu.h"
@@ -57,7 +57,7 @@ namespace gamespy_gp
 		if (m_current_profile)
 		{
 			Msg("! WARNING: first you need to log out...");
-			m_login_operation_cb(NULL, "mp_first_need_to_logout");
+			m_login_operation_cb(nullptr, "mp_first_need_to_logout");
 			m_login_operation_cb.clear();
 			return;
 		}
@@ -115,7 +115,7 @@ namespace gamespy_gp
 		if (m_current_profile)
 		{
 			Msg("! WARNING: first you need to log out...");
-			m_login_operation_cb(NULL, "mp_first_need_to_logout");
+			m_login_operation_cb(nullptr, "mp_first_need_to_logout");
 			m_login_operation_cb.clear();
 			return;
 		}
@@ -140,7 +140,7 @@ namespace gamespy_gp
 		if (!has_non_white_chars)
 		{
 			Msg("! ERROR: nick name is empty");
-			m_login_operation_cb(NULL, "mp_nick_name_not_valid");
+			m_login_operation_cb(nullptr, "mp_nick_name_not_valid");
 			m_login_operation_cb.clear();
 			return;
 		}
@@ -177,14 +177,14 @@ namespace gamespy_gp
 		if (!m_current_profile)
 		{
 			Msg("! WARNING: first you need to log in...");
-			logincb(NULL, "mp_first_need_to_login");
+			logincb(nullptr, "mp_first_need_to_login");
 			return;
 		}
 
 		if (!new_unick.m_t1.size())
 		{
 			Msg("! ERROR: nick name is empty");
-			logincb(NULL, "mp_unique_nick_not_valid");
+			logincb(nullptr, "mp_unique_nick_not_valid");
 			return;
 		}
 

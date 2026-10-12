@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "torch.h"
 #include "entity.h"
 #include "actor.h"
@@ -140,12 +140,12 @@ void CTorch::Switch(bool light_on)
 		if (light_on && !m_switched_on)
 		{
 			if (m_sounds.FindSoundItem("SndTurnOn", false))
-				m_sounds.PlaySound("SndTurnOn", pActor->Position(), NULL, !!pActor->HUDview());
+				m_sounds.PlaySound("SndTurnOn", pActor->Position(), nullptr, !!pActor->HUDview());
 		}
 		else if (!light_on && m_switched_on)
 		{
 			if (m_sounds.FindSoundItem("SndTurnOff", false))
-				m_sounds.PlaySound("SndTurnOff", pActor->Position(), NULL, !!pActor->HUDview());
+				m_sounds.PlaySound("SndTurnOff", pActor->Position(), nullptr, !!pActor->HUDview());
 		}
 	}
 
@@ -438,7 +438,7 @@ void CTorch::UpdateCL()
 	if (!lanim) return;
 
 	int frame;
-	// возвращает в формате BGR
+	// Ð²Ð¾Ð·Ð²Ñ€Ð°Ñ‰Ð°ÐµÑ‚ Ð² Ñ„Ð¾Ñ€Ð¼Ð°Ñ‚Ðµ BGR
 	u32 clr = lanim->CalculateBGR(Device.fTimeGlobal, frame);
 
 	Fcolor fclr;

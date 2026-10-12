@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 
 #include "CharacterPhysicsSupport.h"
 #include "alife_space.h"
@@ -94,17 +94,17 @@ CCharacterPhysicsSupport::CCharacterPhysicsSupport(EType atype, CEntityAlive* ae
 	  m_PhysicMovementControl(xr_new<CPHMovementControl>(aentity)),
 	  m_eType(atype),
 	  m_eState(esAlive),
-	  m_physics_skeleton(NULL),
-	  m_ik_controller(NULL),
+	  m_physics_skeleton(nullptr),
+	  m_ik_controller(nullptr),
 	  m_BonceDamageFactor(1.f),
-	  m_collision_hit_callback(NULL),
-	  m_interactive_animation(NULL),
-	  m_physics_shell_animated(NULL),
+	  m_collision_hit_callback(nullptr),
+	  m_interactive_animation(nullptr),
+	  m_physics_shell_animated(nullptr),
 	  m_physics_shell_animated_time_destroy(u32(-1)),
 	  m_weapon_attach_bone(0),
 	  m_active_item_obj(0),
 	  m_hit_valide_time(u32(-1)),
-	  m_collision_activating_delay(NULL)
+	  m_collision_activating_delay(nullptr)
 {
 	m_flags.assign(0);
 	m_flags.set(fl_death_anim_on,FALSE);
@@ -215,9 +215,9 @@ void CCharacterPhysicsSupport::in_NetSpawn(CSE_Abstract* e)
 			ka->PlayCycle("death_init");
 	}
 	else if (!m_EntityAlife.animation_movement_controlled())
-		ka->PlayCycle("death_init"); ///непонятно зачем это вообще надо запускать
-									  ///этот хак нужен, потому что некоторым монстрам 
-									  ///анимация после спона, может быть вообще не назначена
+		ka->PlayCycle("death_init"); ///Ð½ÐµÐ¿Ð¾Ð½ÑÑ‚Ð½Ð¾ Ð·Ð°Ñ‡ÐµÐ¼ ÑÑ‚Ð¾ Ð²Ð¾Ð¾Ð±Ñ‰Ðµ Ð½Ð°Ð´Ð¾ Ð·Ð°Ð¿ÑƒÑÐºÐ°Ñ‚ÑŒ
+									  ///ÑÑ‚Ð¾Ñ‚ Ñ…Ð°Ðº Ð½ÑƒÐ¶ÐµÐ½, Ð¿Ð¾Ñ‚Ð¾Ð¼Ñƒ Ñ‡Ñ‚Ð¾ Ð½ÐµÐºÐ¾Ñ‚Ð¾Ñ€Ñ‹Ð¼ Ð¼Ð¾Ð½ÑÑ‚Ñ€Ð°Ð¼ 
+									  ///Ð°Ð½Ð¸Ð¼Ð°Ñ†Ð¸Ñ Ð¿Ð¾ÑÐ»Ðµ ÑÐ¿Ð¾Ð½Ð°, Ð¼Ð¾Ð¶ÐµÑ‚ Ð±Ñ‹Ñ‚ÑŒ Ð²Ð¾Ð¾Ð±Ñ‰Ðµ Ð½Ðµ Ð½Ð°Ð·Ð½Ð°Ñ‡ÐµÐ½Ð°
 	pK->CalculateBones_Invalidate();
 	pK->CalculateBones(TRUE);
 
@@ -300,7 +300,7 @@ void CCharacterPhysicsSupport::SpawnInitPhysics(CSE_Abstract* e)
 	}
 	else
 	{
-		ActivateShell(NULL);
+		ActivateShell(nullptr);
 	}
 
 	CSE_PHSkeleton* po = smart_cast<CSE_PHSkeleton*>(e);
@@ -631,7 +631,7 @@ void CCharacterPhysicsSupport::in_UpdateCL()
 	if (m_pPhysicsShell)
 	{
 		VERIFY(m_pPhysicsShell->isFullActive( ));
-		m_pPhysicsShell->SetRagDoll(); //Теперь шела относиться к классу объектов cbClassRagDoll
+		m_pPhysicsShell->SetRagDoll(); //Ð¢ÐµÐ¿ÐµÑ€ÑŒ ÑˆÐµÐ»Ð° Ð¾Ñ‚Ð½Ð¾ÑÐ¸Ñ‚ÑŒÑÑ Ðº ÐºÐ»Ð°ÑÑÑƒ Ð¾Ð±ÑŠÐµÐºÑ‚Ð¾Ð² cbClassRagDoll
 
 		if (!is_imotion(m_interactive_motion)) //!m_flags.test(fl_use_death_motion)
 			m_pPhysicsShell->InterpolateGlobalTransform(&mXFORM);
@@ -1312,7 +1312,7 @@ void CCharacterPhysicsSupport::in_ChangeVisual()
 			m_pPhysicsShell->Deactivate();
 		xr_delete(m_pPhysicsShell);
 		if (m_EntityAlife.Visual())
-			ActivateShell(NULL);
+			ActivateShell(nullptr);
 	}
 }
 
@@ -1452,7 +1452,7 @@ void CCharacterPhysicsSupport::in_Die(bool hit)
 	{
 		if (m_EntityAlife.use_simplified_visual())
 			return;
-		ActivateShell(NULL);
+		ActivateShell(nullptr);
 		m_PhysicMovementControl->DestroyCharacter();
 		return;
 	}

@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+﻿#include "StdAfx.h"
 #include "UIStatsPlayerList.h"
 #include "../game_cl_base.h"
 #include "../game_cl_artefacthunt.h"
@@ -342,7 +342,7 @@ void CUIStatsPlayerList::RecalcSize()
 	if (GetHeight() < m_pad->GetHeight())
 	{
 		SetHeight(m_pad->GetHeight());
-		GetMessageTarget()->SendMessage(this, CHILD_CHANGED_SIZE, NULL);
+		GetMessageTarget()->SendMessage(this, CHILD_CHANGED_SIZE, nullptr);
 	}
 }
 

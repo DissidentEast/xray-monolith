@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+﻿#include "StdAfx.h"
 #include "UITabControl.h"
 #include "UITabButton.h"
 #include "UITabScrollArrows.h"
@@ -16,7 +16,7 @@ CUITabControl::CUITabControl()
 	  m_view_left(0.0f),
 	  m_view_right(0.0f),
 	  m_origin_x(0.0f),
-	  m_arrows(NULL)
+	  m_arrows(nullptr)
 {
 	m_icon_pos.set(0.0f, 0.0f);
 	m_icon_box.set(0.0f, 0.0f);
@@ -69,7 +69,7 @@ bool CUITabControl::IsChangedOptValue() const
 	return GetActiveId() != m_opt_backup_value;
 }
 
-// добавление кнопки-закладки в список закладок контрола
+// Ð´Ð¾Ð±Ð°Ð²Ð»ÐµÐ½Ð¸Ðµ ÐºÐ½Ð¾Ð¿ÐºÐ¸-Ð·Ð°ÐºÐ»Ð°Ð´ÐºÐ¸ Ð² ÑÐ¿Ð¸ÑÐ¾Ðº Ð·Ð°ÐºÐ»Ð°Ð´Ð¾Ðº ÐºÐ¾Ð½Ñ‚Ñ€Ð¾Ð»Ð°
 bool CUITabControl::AddItem(LPCSTR pItemName, LPCSTR pTexName, Fvector2 pos, Fvector2 size)
 {
 	CUITabButton* pNewButton = xr_new<CUITabButton>();
@@ -221,12 +221,12 @@ void CUITabControl::OnTabChange(const shared_str& sCur, const shared_str& sPrev)
 	CUITabButton* tb_cur = GetButtonById(sCur);
 	CUITabButton* tb_prev = GetButtonById(sPrev);
 	if (tb_prev)
-		tb_prev->SendMessage(tb_cur, TAB_CHANGED, NULL);
+		tb_prev->SendMessage(tb_cur, TAB_CHANGED, nullptr);
 
-	tb_cur->SendMessage(tb_cur, TAB_CHANGED, NULL);
+	tb_cur->SendMessage(tb_cur, TAB_CHANGED, nullptr);
 
 	if (GetAcceleratorsMode())
-		GetMessageTarget()->SendMessage(this, TAB_CHANGED, NULL);
+		GetMessageTarget()->SendMessage(this, TAB_CHANGED, nullptr);
 }
 
 void CUITabControl::SetActiveTab(const shared_str& sNewTab)

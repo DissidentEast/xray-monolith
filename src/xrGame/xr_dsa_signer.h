@@ -1,4 +1,4 @@
-#ifndef XR_DSA_SIGNER_INCLUDED
+﻿#ifndef XR_DSA_SIGNER_INCLUDED
 #define XR_DSA_SIGNER_INCLUDED
 
 #include "../3rd party/crypto/crypto.h"
@@ -21,7 +21,7 @@ public:
 protected:
 	crypto::xr_dsa::private_key_t m_private_key;
 private:
-	xr_dsa_signer() : m_dsa(NULL, NULL, NULL)
+	xr_dsa_signer() : m_dsa(nullptr, NULL, nullptr)
 	{
 	};
 

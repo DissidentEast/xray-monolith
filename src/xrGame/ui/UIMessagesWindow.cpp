@@ -1,4 +1,4 @@
-// File:		UIMessagesWindow.h
+﻿// File:		UIMessagesWindow.h
 // Description:	Window with MP chat and Game Log ( with PDA messages in single and Kill Messages in MP)
 // Created:		22.04.2005
 // Author:		Serge Vynnychenko
@@ -20,7 +20,7 @@ bool IsGameTypeSingle();
 #include "../../xrServerEntities/script_engine.h"
 
 CUIMessagesWindow::CUIMessagesWindow()
-	: m_pChatLog(NULL), m_pChatWnd(NULL), m_pGameLog(NULL)
+	: m_pChatLog(nullptr), m_pChatWnd(nullptr), m_pGameLog(nullptr)
 {
 	Init(0, 0, UI_BASE_WIDTH, UI_BASE_HEIGHT);
 }

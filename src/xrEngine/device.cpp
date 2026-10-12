@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "../xrCDB/frustum.h"
 #include "xr_ioconsole.h"
 #include "xr_input.h"
@@ -359,7 +359,7 @@ float GetMonitorRefresh()
 	lpDevMode.dmSize = sizeof(DEVMODE);
 	lpDevMode.dmDriverExtra = 0;
 
-	if (EnumDisplaySettings(NULL, ENUM_CURRENT_SETTINGS, &lpDevMode) == 0)
+	if (EnumDisplaySettings(nullptr, ENUM_CURRENT_SETTINGS, &lpDevMode) == 0)
 	{
 		return 1.f / 60.f;
 	}
@@ -611,10 +611,10 @@ void CRenderDevice::message_loop()
     }
 #endif
 	MSG msg;
-	PeekMessage(&msg, NULL, 0U, 0U, PM_NOREMOVE);
+	PeekMessage(&msg, nullptr, 0U, 0U, PM_NOREMOVE);
 	while (msg.message != WM_QUIT)
 	{
-		if (PeekMessage(&msg, NULL, 0U, 0U, PM_REMOVE))
+		if (PeekMessage(&msg, nullptr, 0U, 0U, PM_REMOVE))
 		{
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
@@ -858,7 +858,7 @@ void CRenderDevice::OnWM_Activate(WPARAM wParam, LPARAM lParam)
 			else
 			{
 				ShowCursor(TRUE);
-				ClipCursor(NULL);
+				ClipCursor(nullptr);
 				pInput->OnAppDeactivate();
 			}
 		}
@@ -894,7 +894,7 @@ void CRenderDevice::OnWM_Activate(WPARAM wParam, LPARAM lParam)
 			app_inactive_time_start = TimerMM.GetElapsed_ms();
 			Device.seqAppDeactivate.Process(rp_AppDeactivate);
 			ShowCursor(TRUE);
-			ClipCursor(NULL);
+			ClipCursor(nullptr);
 		}
 	}
 }

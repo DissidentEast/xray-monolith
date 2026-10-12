@@ -1,6 +1,6 @@
-//////////////////////////////////////////////////////////////////////
-// CustomRocket.cpp:	ракета, которой стреляет RocketLauncher 
-//						(умеет лететь, светиться и отыгрывать партиклы)
+﻿//////////////////////////////////////////////////////////////////////
+// CustomRocket.cpp:	Ñ€Ð°ÐºÐµÑ‚Ð°, ÐºÐ¾Ñ‚Ð¾Ñ€Ð¾Ð¹ ÑÑ‚Ñ€ÐµÐ»ÑÐµÑ‚ RocketLauncher 
+//						(ÑƒÐ¼ÐµÐµÑ‚ Ð»ÐµÑ‚ÐµÑ‚ÑŒ, ÑÐ²ÐµÑ‚Ð¸Ñ‚ÑŒÑÑ Ð¸ Ð¾Ñ‚Ñ‹Ð³Ñ€Ñ‹Ð²Ð°Ñ‚ÑŒ Ð¿Ð°Ñ€Ñ‚Ð¸ÐºÐ»Ñ‹)
 //////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
@@ -135,7 +135,7 @@ void CCustomRocket::activate_physic_shell()
 	Position().set(m_pPhysicsShell->mXFORM.c);
 	m_pPhysicsShell->set_PhysicsRefObject(this);
 	m_pPhysicsShell->set_ObjectContactCallback(ObjectContactCallback);
-	m_pPhysicsShell->set_ContactCallback(NULL);
+	m_pPhysicsShell->set_ContactCallback(nullptr);
 	m_pPhysicsShell->SetAirResistance(0.f, 0.f);
 	m_pPhysicsShell->set_DynamicScales(1.f, 1.f);
 	m_pPhysicsShell->SetAllGeomTraced();
@@ -359,12 +359,12 @@ void CCustomRocket::PlayContact()
 
 	m_eState = eCollide;
 
-	//дективировать физическую оболочку,чтоб ракета не летела дальше
+	//Ð´ÐµÐºÑ‚Ð¸Ð²Ð¸Ñ€Ð¾Ð²Ð°Ñ‚ÑŒ Ñ„Ð¸Ð·Ð¸Ñ‡ÐµÑÐºÑƒÑŽ Ð¾Ð±Ð¾Ð»Ð¾Ñ‡ÐºÑƒ,Ñ‡Ñ‚Ð¾Ð± Ñ€Ð°ÐºÐµÑ‚Ð° Ð½Ðµ Ð»ÐµÑ‚ÐµÐ»Ð° Ð´Ð°Ð»ÑŒÑˆÐµ
 	if (m_pPhysicsShell)
 	{
 		m_pPhysicsShell->set_LinearVel(zero_vel);
 		m_pPhysicsShell->set_AngularVel(zero_vel);
-		m_pPhysicsShell->set_ObjectContactCallback(NULL);
+		m_pPhysicsShell->set_ObjectContactCallback(nullptr);
 		m_pPhysicsShell->Disable();
 	}
 	//	if (OnClient()) return;
@@ -419,9 +419,9 @@ void CCustomRocket::UpdateCL()
 	{
 	case eInactive:
 		break;
-		//состояния eEngine и eFlying отличаются, тем
-		//что вызывается UpdateEngine у eEngine, остальные
-		//функции общие
+		//ÑÐ¾ÑÑ‚Ð¾ÑÐ½Ð¸Ñ eEngine Ð¸ eFlying Ð¾Ñ‚Ð»Ð¸Ñ‡Ð°ÑŽÑ‚ÑÑ, Ñ‚ÐµÐ¼
+		//Ñ‡Ñ‚Ð¾ Ð²Ñ‹Ð·Ñ‹Ð²Ð°ÐµÑ‚ÑÑ UpdateEngine Ñƒ eEngine, Ð¾ÑÑ‚Ð°Ð»ÑŒÐ½Ñ‹Ðµ
+		//Ñ„ÑƒÐ½ÐºÑ†Ð¸Ð¸ Ð¾Ð±Ñ‰Ð¸Ðµ
 	case eEngine:
 		UpdateEngine();
 	case eFlying:
@@ -527,7 +527,7 @@ void CCustomRocket::StartLights()
 {
 	if (!m_bLightsEnabled) return;
 
-	//включить световую подсветку от двигателя
+	//Ð²ÐºÐ»ÑŽÑ‡Ð¸Ñ‚ÑŒ ÑÐ²ÐµÑ‚Ð¾Ð²ÑƒÑŽ Ð¿Ð¾Ð´ÑÐ²ÐµÑ‚ÐºÑƒ Ð¾Ñ‚ Ð´Ð²Ð¸Ð³Ð°Ñ‚ÐµÐ»Ñ
 	m_pTrailLight->set_color(m_TrailLightColor.r,
 	                         m_TrailLightColor.g,
 	                         m_TrailLightColor.b);

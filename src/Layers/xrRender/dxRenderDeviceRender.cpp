@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "dxRenderDeviceRender.h"
 
 #include "ResourceManager.h"
@@ -482,7 +482,7 @@ void dxRenderDeviceRender::End()
 	CHK_DX(HW.pDevice->EndScene());
 
 	if (!Device.m_SecondViewport.IsSVPFrame() && !Device.m_SecondViewport.isCamReady)
-		HW.pDevice->Present(NULL, NULL, NULL, NULL);
+		HW.pDevice->Present(nullptr, NULL, nullptr, NULL);
 #endif //-USE_DX10
 	//HRESULT _hr		= HW.pDevice->Present( NULL, NULL, NULL, NULL );
 	//if				(D3DERR_DEVICELOST==_hr)	return;			// we will handle this later
@@ -608,7 +608,7 @@ bool dxRenderDeviceRender::SwitchOutputMonitor(HMONITOR hTargetMon, HWND hWnd,
     SetStartupMonitor(hTargetMon);
 
     if (g_screenmode_ == 2)
-        HW.m_pSwapChain->SetFullscreenState(FALSE, NULL); // best-effort
+        HW.m_pSwapChain->SetFullscreenState(FALSE, nullptr); // best-effort
 
     _RELEASE(HW.m_pOutput);
     HW.m_pOutput = new_output;

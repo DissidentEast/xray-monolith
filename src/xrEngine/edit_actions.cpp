@@ -1,4 +1,4 @@
-////////////////////////////////////////////////////////////////////////////
+﻿////////////////////////////////////////////////////////////////////////////
 // Module : edit_actions.cpp
 // Created : 04.03.2008
 // Author : Evgeniy Sokolov
@@ -14,7 +14,7 @@
 
 namespace text_editor
 {
-    base::base() : m_previous_action(NULL)
+    base::base() : m_previous_action(nullptr)
     {
     }
 

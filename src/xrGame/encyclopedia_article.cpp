@@ -1,6 +1,6 @@
-///////////////////////////////////////////////////////////////
+﻿///////////////////////////////////////////////////////////////
 // encyclopedia_article.cpp
-// структура, хранящая и загружающая статьи в энциклопедию
+// ÑÑ‚Ñ€ÑƒÐºÑ‚ÑƒÑ€Ð°, Ñ…Ñ€Ð°Ð½ÑÑ‰Ð°Ñ Ð¸ Ð·Ð°Ð³Ñ€ÑƒÐ¶Ð°ÑŽÑ‰Ð°Ñ ÑÑ‚Ð°Ñ‚ÑŒÐ¸ Ð² ÑÐ½Ñ†Ð¸ÐºÐ»Ð¾Ð¿ÐµÐ´Ð¸ÑŽ
 ///////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
@@ -48,7 +48,7 @@ void CEncyclopediaArticle::Load	(ARTICLE_STR_ID str_id)
 void CEncyclopediaArticle::Load(shared_str id)
 {
 	m_ArticleId = id;
-	inherited_shared::load_shared(m_ArticleId, NULL);
+	inherited_shared::load_shared(m_ArticleId, nullptr);
 }
 
 
@@ -63,14 +63,14 @@ void CEncyclopediaArticle::load_shared(LPCSTR)
 	XML_NODE* pNode = pXML->NavigateToNode(id_to_index::tag_name, item_data.pos_in_file);
 	THROW3(pNode, "encyclopedia article id=", *item_data.id);
 
-	//текст
+	//Ñ‚ÐµÐºÑÑ‚
 	data()->text = pXML->Read(pNode, "text", 0, "");
-	//имя
+	//Ð¸Ð¼Ñ
 	data()->name = pXML->ReadAttrib(pNode, "name", "");
-	//группа
+	//Ð³Ñ€ÑƒÐ¿Ð¿Ð°
 	data()->group = pXML->ReadAttrib(pNode, "group", "");
-	//секция ltx, откуда читать данные
-	LPCSTR ltx = pXML->Read(pNode, "ltx", 0, NULL);
+	//ÑÐµÐºÑ†Ð¸Ñ ltx, Ð¾Ñ‚ÐºÑƒÐ´Ð° Ñ‡Ð¸Ñ‚Ð°Ñ‚ÑŒ Ð´Ð°Ð½Ð½Ñ‹Ðµ
+	LPCSTR ltx = pXML->Read(pNode, "ltx", 0, nullptr);
 
 
 	if (ltx)
@@ -108,7 +108,7 @@ void CEncyclopediaArticle::load_shared(LPCSTR)
 
 		const int minSize = 65;
 
-		// Сначала устанавливаем если надо минимально допустимые размеры иконки
+		// Ð¡Ð½Ð°Ñ‡Ð°Ð»Ð° ÑƒÑÑ‚Ð°Ð½Ð°Ð²Ð»Ð¸Ð²Ð°ÐµÐ¼ ÐµÑÐ»Ð¸ Ð½Ð°Ð´Ð¾ Ð¼Ð¸Ð½Ð¸Ð¼Ð°Ð»ÑŒÐ½Ð¾ Ð´Ð¾Ð¿ÑƒÑÑ‚Ð¸Ð¼Ñ‹Ðµ Ñ€Ð°Ð·Ð¼ÐµÑ€Ñ‹ Ð¸ÐºÐ¾Ð½ÐºÐ¸
 		if (r.width() < minSize)
 		{
 			float dx = minSize - r.width();
@@ -126,7 +126,7 @@ void CEncyclopediaArticle::load_shared(LPCSTR)
 		data()->image.SetWndRect(Frect().set(0, 0, r.width(), r.height()));
 	};
 
-	// Тип статьи
+	// Ð¢Ð¸Ð¿ ÑÑ‚Ð°Ñ‚ÑŒÐ¸
 	xr_string atricle_type = pXML->ReadAttrib(pNode, "article_type", "encyclopedia");
 	if (0 == stricmp(atricle_type.c_str(), "encyclopedia"))
 	{

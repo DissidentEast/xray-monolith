@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "grenade.h"
 #include "../xrphysics/PhysicsShell.h"
 //.#include "WeaponHUD.h"
@@ -41,7 +41,7 @@ void CGrenade::Load(LPCSTR section)
 	CExplosive::Load(section);
 
 	//////////////////////////////////////
-	//время убирания оружия с уровня
+	//Ð²Ñ€ÐµÐ¼Ñ ÑƒÐ±Ð¸Ñ€Ð°Ð½Ð¸Ñ Ð¾Ñ€ÑƒÐ¶Ð¸Ñ Ñ ÑƒÑ€Ð¾Ð²Ð½Ñ
 	if (pSettings->line_exist(section, "grenade_remove_time"))
 		m_dwGrenadeRemoveTime = pSettings->r_u32(section, "grenade_remove_time");
 	else
@@ -85,7 +85,7 @@ void CGrenade::net_Destroy()
 	if (m_destroy_callback)
 	{
 		m_destroy_callback(this);
-		m_destroy_callback = destroy_callback(NULL);
+		m_destroy_callback = destroy_callback(nullptr);
 	}
 
 	inherited::net_Destroy();
@@ -194,7 +194,7 @@ void CGrenade::Throw()
 	if (pGrenade)
 	{
 		pGrenade->set_destroy_time(m_dwDestroyTimeMax);
-		//установить ID того кто кинул гранату
+		//ÑƒÑÑ‚Ð°Ð½Ð¾Ð²Ð¸Ñ‚ÑŒ ID Ñ‚Ð¾Ð³Ð¾ ÐºÑ‚Ð¾ ÐºÐ¸Ð½ÑƒÐ» Ð³Ñ€Ð°Ð½Ð°Ñ‚Ñƒ
 		pGrenade->SetInitiator(H_Parent()->ID());
 	}
 	inherited::Throw();
@@ -211,7 +211,7 @@ void CGrenade::Destroy()
 	if (m_destroy_callback)
 	{
 		m_destroy_callback(this);
-		m_destroy_callback = destroy_callback(NULL);
+		m_destroy_callback = destroy_callback(nullptr);
 	}
 
 	FindNormal(normal);
@@ -238,7 +238,7 @@ void CGrenade::PutNextToSlot()
 	if (OnClient()) return;
 
 	VERIFY(!getDestroy());
-	//выкинуть гранату из инвентаря
+	//Ð²Ñ‹ÐºÐ¸Ð½ÑƒÑ‚ÑŒ Ð³Ñ€Ð°Ð½Ð°Ñ‚Ñƒ Ð¸Ð· Ð¸Ð½Ð²ÐµÐ½Ñ‚Ð°Ñ€Ñ
 	NET_Packet P;
 	if (m_pInventory)
 	{
@@ -314,7 +314,7 @@ bool CGrenade::Action(u16 cmd, u32 flags)
 
 	switch (cmd)
 	{
-		//переключение типа гранаты
+		//Ð¿ÐµÑ€ÐµÐºÐ»ÑŽÑ‡ÐµÐ½Ð¸Ðµ Ñ‚Ð¸Ð¿Ð° Ð³Ñ€Ð°Ð½Ð°Ñ‚Ñ‹
 	case kWPN_NEXT:
 		{
 			if (flags & CMD_START)

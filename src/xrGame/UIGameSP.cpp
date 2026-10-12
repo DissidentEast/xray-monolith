@@ -1,4 +1,4 @@
-#include "pch_script.h"
+﻿#include "pch_script.h"
 #include "uigamesp.h"
 #include "actor.h"
 #include "level.h"
@@ -25,7 +25,7 @@
 
 
 CUIGameSP::CUIGameSP()
-	: m_game(NULL), m_game_objective(NULL)
+	: m_game(nullptr), m_game_objective(nullptr)
 {
 	TalkMenu = xr_new<CUITalkWnd>();
 	UIChangeLevelWnd = xr_new<CChangeLevelWnd>();

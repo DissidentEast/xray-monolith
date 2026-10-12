@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 
 // startup
 void CRenderTarget::phase_scene_prepare()
@@ -7,9 +7,9 @@ void CRenderTarget::phase_scene_prepare()
 
 		//	TODO: DX10: Check if we need to set RT here.
 		if (!RImplementation.o.dx10_msaa)
-			u_setrt(Device.dwWidth, Device.dwHeight, rt_Position->pRT,NULL,NULL, HW.pBaseZB);
+			u_setrt(Device.dwWidth, Device.dwHeight, rt_Position->pRT,nullptr,NULL, HW.pBaseZB);
 		else
-			u_setrt(Device.dwWidth, Device.dwHeight, rt_Position->pRT,NULL,NULL, rt_MSAADepth->pZRT);
+			u_setrt(Device.dwWidth, Device.dwHeight, rt_Position->pRT,nullptr,NULL, rt_MSAADepth->pZRT);
 
 		FLOAT ColorRGBA[4] = {0.0f, 0.0f, 0.0f, 0.0f};
 		HW.pContext->ClearRenderTargetView(rt_Position->pRT, ColorRGBA);
@@ -72,7 +72,7 @@ void CRenderTarget::phase_scene_end()
 {
 	disable_aniso();
 
-	RCache.set_RT(NULL, 3); // Always reset the 4th RT ( Motion Vectors )
+	RCache.set_RT(nullptr, 3); // Always reset the 4th RT ( Motion Vectors )
 
 	if (!RImplementation.o.albedo_wo) return;
 

@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "burer.h"
 #include "../../../../xrphysics/PhysicsShell.h"
 #include "../../../characterphysicssupport.h"
@@ -327,7 +327,7 @@ void CBurer::UpdateGraviObject()
 	float trace_dist = float(m_gravi.step);
 
 	collide::rq_result l_rq;
-	if (Level().ObjectSpace.RayPick(new_pos, dir, trace_dist, collide::rqtBoth, l_rq, NULL))
+	if (Level().ObjectSpace.RayPick(new_pos, dir, trace_dist, collide::rqtBoth, l_rq, nullptr))
 	{
 		const CObject* enemy = smart_cast<const CObject *>(m_gravi_object.enemy);
 		if ((l_rq.O == enemy) && (l_rq.range < trace_dist))
@@ -369,12 +369,12 @@ void CBurer::UpdateGraviObject()
 	// draw particle
 	CParticlesObject* ps = CParticlesObject::Create(particle_gravi_wave,TRUE);
 
-	// вычислить позицию и направленность партикла
+	// Ð²Ñ‹Ñ‡Ð¸ÑÐ»Ð¸Ñ‚ÑŒ Ð¿Ð¾Ð·Ð¸Ñ†Ð¸ÑŽ Ð¸ Ð½Ð°Ð¿Ñ€Ð°Ð²Ð»ÐµÐ½Ð½Ð¾ÑÑ‚ÑŒ Ð¿Ð°Ñ€Ñ‚Ð¸ÐºÐ»Ð°
 	Fmatrix pos;
 	pos.identity();
 	pos.k.set(dir);
 	Fvector::generate_orthonormal_basis_normalized(pos.k, pos.j, pos.i);
-	// установить позицию
+	// ÑƒÑÑ‚Ð°Ð½Ð¾Ð²Ð¸Ñ‚ÑŒ Ð¿Ð¾Ð·Ð¸Ñ†Ð¸ÑŽ
 	pos.translate_over(m_gravi_object.cur_pos);
 
 	ps->UpdateParent(pos, zero_vel);
@@ -382,7 +382,7 @@ void CBurer::UpdateGraviObject()
 
 	// hit objects
 	m_nearest.clear_not_free();
-	Level().ObjectSpace.GetNearest(m_nearest, m_gravi_object.cur_pos, m_gravi.radius, NULL);
+	Level().ObjectSpace.GetNearest(m_nearest, m_gravi_object.cur_pos, m_gravi.radius, nullptr);
 	//xr_vector<CObject*> &m_nearest = Level().ObjectSpace.q_nearest;
 
 	for (u32 i = 0; i < m_nearest.size(); i++)
@@ -399,7 +399,7 @@ void CBurer::UpdateGraviObject()
 		obj->m_pPhysicsShell->applyImpulse(dir, m_gravi.impulse_to_objects * obj->m_pPhysicsShell->getMass());
 	}
 
-	// играть звук
+	// Ð¸Ð³Ñ€Ð°Ñ‚ÑŒ Ð·Ð²ÑƒÐº
 	Fvector snd_pos = m_gravi_object.cur_pos;
 	snd_pos.y += 0.5f;
 	if (sound_gravi_wave._feedback())
@@ -460,12 +460,12 @@ void CBurer::Hit(SHit* pHDS)
 		pHDS->hit_type == ALife::eHitTypeFireWound &&
 		Device.dwFrame != last_hit_frame)
 	{
-		// вычислить позицию и направленность партикла
+		// Ð²Ñ‹Ñ‡Ð¸ÑÐ»Ð¸Ñ‚ÑŒ Ð¿Ð¾Ð·Ð¸Ñ†Ð¸ÑŽ Ð¸ Ð½Ð°Ð¿Ñ€Ð°Ð²Ð»ÐµÐ½Ð½Ð¾ÑÑ‚ÑŒ Ð¿Ð°Ñ€Ñ‚Ð¸ÐºÐ»Ð°
 		Fmatrix pos;
 		//CParticlesPlayer::MakeXFORM(this,element,Fvector().set(0.f,0.f,1.f),p_in_object_space,pos);
 		CParticlesPlayer::MakeXFORM(this, pHDS->bone(), pHDS->dir, pHDS->p_in_bone_space, pos);
 
-		// установить particles
+		// ÑƒÑÑ‚Ð°Ð½Ð¾Ð²Ð¸Ñ‚ÑŒ particles
 		CParticlesObject* ps = CParticlesObject::Create(particle_fire_shield,TRUE);
 
 		ps->UpdateParent(pos, Fvector().set(0.f, 0.f, 0.f));

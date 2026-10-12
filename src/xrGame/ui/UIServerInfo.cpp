@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "UIServerInfo.h"
 
 #include "UIStatic.h"
@@ -175,7 +175,7 @@ bool CUIServerInfo::OnKeyboardAction(int dik, EUIMessages keyboard_action)
 	case DIK_SPACE:
 	case DIK_RETURN:
 		{
-			OnNextBtnClick(NULL, 0);
+			OnNextBtnClick(nullptr, 0);
 			return true;
 		}
 		break;

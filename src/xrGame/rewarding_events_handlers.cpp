@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "rewarding_events_handlers.h"
 #include "reward_event_handler.h"
 #include "../xrServerEntities/object_broker.h"
@@ -9,7 +9,7 @@ namespace award_system
 	                                                   event_action_delegate_t ea_delegate) :
 		m_player_state_accum(pstate_accum),
 		m_reward_action(ea_delegate),
-		m_null_hanlder(NULL)
+		m_null_hanlder(nullptr)
 	{
 	}
 

@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "xr_level_controller.h"
 #include "map_manager.h"
 #include "map_location.h"
@@ -1445,8 +1445,8 @@ void game_cl_CaptureTheArtefact::OnVoteStop(NET_Packet& P)
 #endif
 	if (m_game_ui)
 	{
-		m_game_ui->SetVoteMessage(NULL);
-		m_game_ui->SetVoteTimeResultMsg(NULL);
+		m_game_ui->SetVoteMessage(nullptr);
+		m_game_ui->SetVoteTimeResultMsg(nullptr);
 	}
 }
 
@@ -1455,8 +1455,8 @@ void game_cl_CaptureTheArtefact::OnVoteEnd(NET_Packet& P)
 	inherited::OnVoteEnd(P);
 	if (m_game_ui)
 	{
-		m_game_ui->SetVoteMessage(NULL);
-		m_game_ui->SetVoteTimeResultMsg(NULL);
+		m_game_ui->SetVoteMessage(nullptr);
+		m_game_ui->SetVoteTimeResultMsg(nullptr);
 	}
 }
 

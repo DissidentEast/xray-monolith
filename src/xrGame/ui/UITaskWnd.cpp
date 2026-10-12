@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "UITaskWnd.h"
 #include "UIMapWnd.h"
 #include "object_broker.h"
@@ -341,7 +341,7 @@ void CUITaskWnd::OnShowQuestNpcs(CUIWindow* ui, void* d)
 
 // --------------------------------------------------------------------------------------------------
 CUITaskItem::CUITaskItem() :
-	m_owner(NULL),
+	m_owner(nullptr),
 	m_hint_wt(500),
 	show_hint(false),
 	show_hint_can(false)

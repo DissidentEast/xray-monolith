@@ -1,4 +1,4 @@
-////////////////////////////////////////////////////////////////////////////
+﻿////////////////////////////////////////////////////////////////////////////
 //	Module 		: UILogsWnd.cpp
 //	Created 	: 25.04.2008
 //	Author		: Evgeniy Sokolov
@@ -163,7 +163,7 @@ void CUILogsWnd::Init()
 void itemToCache(CUIWindow* w)
 {
 	w->SetAutoDelete(false);
-	w->SetParent(NULL);
+	w->SetParent(nullptr);
 }
 
 extern CActor* g_actor;

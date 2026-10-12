@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "UIBtnHint.h"
 #include "UIFrameWindow.h"
 #include "UIStatic.h"
@@ -9,7 +9,7 @@ CUIButtonHint* g_statHint = nullptr;
 
 
 CUIButtonHint::CUIButtonHint()
-	: m_ownerWnd(NULL), m_enabledOnFrame(false)
+	: m_ownerWnd(nullptr), m_enabledOnFrame(false)
 {
 	//	Device.seqRender.Add		(this, REG_PRIORITY_LOW-1000);
 

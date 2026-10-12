@@ -1,4 +1,4 @@
-#ifndef _TextureDescrManager_included_
+﻿#ifndef _TextureDescrManager_included_
 #define _TextureDescrManager_included_
 
 #pragma once
@@ -14,7 +14,7 @@ class CTextureDescrMngr
 		//R_constant_setup*	cs;
 		u8 usage;
 
-		texture_assoc() : /*cs(NULL),*/ usage(0)
+		texture_assoc() : /*cs(nullptr),*/ usage(0)
 		{
 		}
 
@@ -37,7 +37,7 @@ public:
 		texture_assoc* m_assoc;
 		texture_spec* m_spec;
 
-		texture_desc(): m_assoc(NULL), m_spec(NULL)
+		texture_desc(): m_assoc(nullptr), m_spec(nullptr)
 		{
 		}
 	};

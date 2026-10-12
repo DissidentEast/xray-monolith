@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "xrServer_info.h"
 #include "level.h"
 #include "xrserver.h"
@@ -90,9 +90,9 @@ void xrServer::LoadServerInfo()
 
 server_info_uploader::server_info_uploader(file_transfer::server_site* file_transfers) :
 	m_state(eUploadNotActive),
-	m_logo_data(NULL),
+	m_logo_data(nullptr),
 	m_logo_size(0),
-	m_rules_data(NULL),
+	m_rules_data(nullptr),
 	m_rules_size(0),
 	m_file_transfers(file_transfers)
 {

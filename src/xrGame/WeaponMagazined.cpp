@@ -1,4 +1,4 @@
-#include "pch_script.h"
+﻿#include "pch_script.h"
 
 #include "WeaponMagazined.h"
 #include "actor.h"
@@ -150,7 +150,7 @@ void CWeaponMagazined::Load(LPCSTR section)
 
 	m_sSndShotCurrent = IsSilencerAttached() ? "sndSilencerShot" : "sndShot";
 
-	//звуки и партиклы глушителя, еслит такой есть
+	//Ð·Ð²ÑƒÐºÐ¸ Ð¸ Ð¿Ð°Ñ€Ñ‚Ð¸ÐºÐ»Ñ‹ Ð³Ð»ÑƒÑˆÐ¸Ñ‚ÐµÐ»Ñ, ÐµÑÐ»Ð¸Ñ‚ Ñ‚Ð°ÐºÐ¾Ð¹ ÐµÑÑ‚ÑŒ
 	if (m_eSilencerStatus == ALife::eAddonAttachable || m_eSilencerStatus == ALife::eAddonPermanent)
 	{
 		if (pSettings->line_exist(section, "silencer_flame_particles"))
@@ -402,7 +402,7 @@ int CWeaponMagazined::CheckAmmoBeforeReload(u8& v_ammoType)
 	{
 		for (u8 i = 0; i < u8(m_ammoTypes.size()); ++i)
 		{
-			//проверить патроны всех подходящих типов
+			//Ð¿Ñ€Ð¾Ð²ÐµÑ€Ð¸Ñ‚ÑŒ Ð¿Ð°Ñ‚Ñ€Ð¾Ð½Ñ‹ Ð²ÑÐµÑ… Ð¿Ð¾Ð´Ñ…Ð¾Ð´ÑÑ‰Ð¸Ñ… Ñ‚Ð¸Ð¿Ð¾Ð²
 			ammo = smart_cast<CWeaponAmmo*>(m_pInventory->GetAny(m_ammoTypes[i].c_str()));
 			if (ammo)
 			{
@@ -478,7 +478,7 @@ void CWeaponMagazined::ReloadMagazine()
 	m_needReload = false;
 	m_BriefInfo_CalcFrame = 0;
 
-	//устранить осечку при перезарядке
+	//ÑƒÑÑ‚Ñ€Ð°Ð½Ð¸Ñ‚ÑŒ Ð¾ÑÐµÑ‡ÐºÑƒ Ð¿Ñ€Ð¸ Ð¿ÐµÑ€ÐµÐ·Ð°Ñ€ÑÐ´ÐºÐµ
 	if (IsMisfire())
 	{
 		bMisfire = false;
@@ -527,14 +527,14 @@ void CWeaponMagazined::ReloadMagazine()
 		if (!tmp_sect_name)
 			return;
 
-		//попытаться найти в инвентаре патроны текущего типа
+		//Ð¿Ð¾Ð¿Ñ‹Ñ‚Ð°Ñ‚ÑŒÑÑ Ð½Ð°Ð¹Ñ‚Ð¸ Ð² Ð¸Ð½Ð²ÐµÐ½Ñ‚Ð°Ñ€Ðµ Ð¿Ð°Ñ‚Ñ€Ð¾Ð½Ñ‹ Ñ‚ÐµÐºÑƒÑ‰ÐµÐ³Ð¾ Ñ‚Ð¸Ð¿Ð°
 		m_pCurrentAmmo = smart_cast<CWeaponAmmo*>(m_pInventory->GetAny(tmp_sect_name));
 
 		if (!m_pCurrentAmmo && !m_bLockType && iAmmoElapsed == 0)
 		{
 			for (u8 i = 0; i < u8(m_ammoTypes.size()); ++i)
 			{
-				//проверить патроны всех подходящих типов
+				//Ð¿Ñ€Ð¾Ð²ÐµÑ€Ð¸Ñ‚ÑŒ Ð¿Ð°Ñ‚Ñ€Ð¾Ð½Ñ‹ Ð²ÑÐµÑ… Ð¿Ð¾Ð´Ñ…Ð¾Ð´ÑÑ‰Ð¸Ñ… Ñ‚Ð¸Ð¿Ð¾Ð²
 				m_pCurrentAmmo = smart_cast<CWeaponAmmo*>(m_pInventory->GetAny(m_ammoTypes[i].c_str()));
 				if (m_pCurrentAmmo)
 				{
@@ -545,10 +545,10 @@ void CWeaponMagazined::ReloadMagazine()
 		}
 	}
 
-	//нет патронов для перезарядки
+	//Ð½ÐµÑ‚ Ð¿Ð°Ñ‚Ñ€Ð¾Ð½Ð¾Ð² Ð´Ð»Ñ Ð¿ÐµÑ€ÐµÐ·Ð°Ñ€ÑÐ´ÐºÐ¸
 	if (!m_pCurrentAmmo && !unlimited_ammo()) return;
 
-	//разрядить магазин, если загружаем патронами другого типа
+	//Ñ€Ð°Ð·Ñ€ÑÐ´Ð¸Ñ‚ÑŒ Ð¼Ð°Ð³Ð°Ð·Ð¸Ð½, ÐµÑÐ»Ð¸ Ð·Ð°Ð³Ñ€ÑƒÐ¶Ð°ÐµÐ¼ Ð¿Ð°Ñ‚Ñ€Ð¾Ð½Ð°Ð¼Ð¸ Ð´Ñ€ÑƒÐ³Ð¾Ð³Ð¾ Ñ‚Ð¸Ð¿Ð°
 	if (!m_bLockType && !m_magazine.empty() &&
 		(!m_pCurrentAmmo || xr_strcmp(m_pCurrentAmmo->cNameSect(),
 		                              *m_magazine.back().m_ammoSect)))
@@ -572,7 +572,7 @@ void CWeaponMagazined::ReloadMagazine()
 
 	VERIFY((u32) iAmmoElapsed == m_magazine.size());
 
-	//выкинуть коробку патронов, если она пустая
+	//Ð²Ñ‹ÐºÐ¸Ð½ÑƒÑ‚ÑŒ ÐºÐ¾Ñ€Ð¾Ð±ÐºÑƒ Ð¿Ð°Ñ‚Ñ€Ð¾Ð½Ð¾Ð², ÐµÑÐ»Ð¸ Ð¾Ð½Ð° Ð¿ÑƒÑÑ‚Ð°Ñ
 	if (m_pCurrentAmmo && !m_pCurrentAmmo->m_boxCurr && OnServer())
 		m_pCurrentAmmo->SetDropManual(TRUE);
 
@@ -661,8 +661,8 @@ void CWeaponMagazined::UpdateCL()
 	inherited::UpdateCL();
 	float dt = Device.fTimeDelta;
 
-	//когда происходит апдейт состояния оружия
-	//ничего другого не делать
+	//ÐºÐ¾Ð³Ð´Ð° Ð¿Ñ€Ð¾Ð¸ÑÑ…Ð¾Ð´Ð¸Ñ‚ Ð°Ð¿Ð´ÐµÐ¹Ñ‚ ÑÐ¾ÑÑ‚Ð¾ÑÐ½Ð¸Ñ Ð¾Ñ€ÑƒÐ¶Ð¸Ñ
+	//Ð½Ð¸Ñ‡ÐµÐ³Ð¾ Ð´Ñ€ÑƒÐ³Ð¾Ð³Ð¾ Ð½Ðµ Ð´ÐµÐ»Ð°Ñ‚ÑŒ
 	if (GetNextState() == GetState())
 	{
 		switch (GetState())
@@ -909,10 +909,10 @@ void CWeaponMagazined::OnShot()
 	PHGetLinearVell(vel);
 	OnShellDrop(get_LastSP(), vel);
 
-	// Огонь из ствола
+	// ÐžÐ³Ð¾Ð½ÑŒ Ð¸Ð· ÑÑ‚Ð²Ð¾Ð»Ð°
 	StartFlameParticles();
 
-	//дым из ствола
+	//Ð´Ñ‹Ð¼ Ð¸Ð· ÑÑ‚Ð²Ð¾Ð»Ð°
 	ForceUpdateFireParticles();
 
 	StartSmokeParticles(get_LastFP(), vel);
@@ -923,7 +923,7 @@ void CWeaponMagazined::OnShot()
 		object->callback(GameObject::eOnWeaponFired)(object->lua_game_object(), this->lua_game_object(), iAmmoElapsed);
 #endif
 
-	// Эффект сдвига (отдача)
+	// Ð­Ñ„Ñ„ÐµÐºÑ‚ ÑÐ´Ð²Ð¸Ð³Ð° (Ð¾Ñ‚Ð´Ð°Ñ‡Ð°)
 	AddHUDShootingEffect();
 }
 
@@ -1179,7 +1179,7 @@ bool CWeaponMagazined::Action(u16 cmd, u32 flags)
 {
 	if (inherited::Action(cmd, flags)) return true;
 
-	//если оружие чем-то занято, то ничего не делать
+	//ÐµÑÐ»Ð¸ Ð¾Ñ€ÑƒÐ¶Ð¸Ðµ Ñ‡ÐµÐ¼-Ñ‚Ð¾ Ð·Ð°Ð½ÑÑ‚Ð¾, Ñ‚Ð¾ Ð½Ð¸Ñ‡ÐµÐ³Ð¾ Ð½Ðµ Ð´ÐµÐ»Ð°Ñ‚ÑŒ
 	if (IsPending()) return false;
 
 	switch (cmd)
@@ -1254,7 +1254,7 @@ bool CWeaponMagazined::TryPlayAnimBore()
 void CWeaponMagazined::PlayAnimIdleSprint()
 {
 	if (iAmmoElapsed == 0 && HudAnimationExist("anm_idle_sprint_empty"))
-		PlayHUDMotion("anm_idle_sprint_empty", TRUE, NULL, GetState());
+		PlayHUDMotion("anm_idle_sprint_empty", TRUE, nullptr, GetState());
 	else
 		inherited::PlayAnimIdleSprint();
 }
@@ -1264,7 +1264,7 @@ void CWeaponMagazined::PlayAnimIdleMoving()
 	bool bAccelerated = isActorAccelerated(Actor()->MovingState(), IsZoomed());
 
 	if (iAmmoElapsed == 0 && HudAnimationExist("anm_idle_moving_empty"))
-		PlayHUDMotion("anm_idle_moving_empty", TRUE, NULL, GetState(), bAccelerated ? 1.f : .75f);
+		PlayHUDMotion("anm_idle_moving_empty", TRUE, nullptr, GetState(), bAccelerated ? 1.f : .75f);
 	else
 		inherited::PlayAnimIdleMoving();
 }
@@ -1274,8 +1274,8 @@ bool CWeaponMagazined::PlayAnimCrouchIdleMoving()
 	if (iAmmoElapsed == 0)
 	{
 		HudAnimationExist("anm_idle_moving_crouch_empty")
-			? PlayHUDMotion("anm_idle_moving_crouch_empty", TRUE, NULL, GetState())
-			: HudAnimationExist("anm_idle_moving_empty") ? PlayHUDMotion("anm_idle_moving_empty", TRUE, NULL, GetState(), .7f) : inherited::PlayAnimCrouchIdleMoving();
+			? PlayHUDMotion("anm_idle_moving_crouch_empty", TRUE, nullptr, GetState())
+			: HudAnimationExist("anm_idle_moving_empty") ? PlayHUDMotion("anm_idle_moving_empty", TRUE, nullptr, GetState(), .7f) : inherited::PlayAnimCrouchIdleMoving();
 
 		return true;
 	}
@@ -1415,7 +1415,7 @@ bool CWeaponMagazined::Attach(PIItem pIItem, bool b_send_event)
 	{
 		if (b_send_event && OnServer())
 		{
-			//уничтожить подсоединенную вещь из инвентаря
+			//ÑƒÐ½Ð¸Ñ‡Ñ‚Ð¾Ð¶Ð¸Ñ‚ÑŒ Ð¿Ð¾Ð´ÑÐ¾ÐµÐ´Ð¸Ð½ÐµÐ½Ð½ÑƒÑŽ Ð²ÐµÑ‰ÑŒ Ð¸Ð· Ð¸Ð½Ð²ÐµÐ½Ñ‚Ð°Ñ€Ñ
 			//.			pIItem->Drop					();
 			pIItem->object().DestroyObject();
 		};
@@ -1519,7 +1519,7 @@ void CWeaponMagazined::InitAddons()
 		shared_str scope_tex_name;
 		if (m_eScopeStatus == ALife::eAddonAttachable)
 		{
-			scope_tex_name = READ_IF_EXISTS(pSettings, r_string, GetScopeName(), "scope_texture", NULL);
+			scope_tex_name = READ_IF_EXISTS(pSettings, r_string, GetScopeName(), "scope_texture", nullptr);
 			m_zoom_params.m_fScopeZoomFactor = pSettings->r_float(GetScopeName(), "scope_zoom_factor");
 			m_zoom_params.m_sUseZoomPostprocess = READ_IF_EXISTS(pSettings, r_string, GetScopeName(), "scope_nightvision", 0);
 			m_zoom_params.m_bUseDynamicZoom = READ_IF_EXISTS(pSettings, r_bool, GetScopeName(), "scope_dynamic_zoom", FALSE);
@@ -1711,8 +1711,8 @@ void CWeaponMagazined::PlayAnimReload()
 void CWeaponMagazined::PlayAnimAim()
 {
 	iAmmoElapsed == 0 && HudAnimationExist("anm_idle_aim_empty")
-		? PlayHUDMotion("anm_idle_aim_empty", TRUE, NULL, GetState())
-		: PlayHUDMotion("anm_idle_aim", TRUE, NULL, GetState());
+		? PlayHUDMotion("anm_idle_aim_empty", TRUE, nullptr, GetState())
+		: PlayHUDMotion("anm_idle_aim", TRUE, nullptr, GetState());
 }
 
 void CWeaponMagazined::PlayAnimIdle()
@@ -1730,8 +1730,8 @@ void CWeaponMagazined::PlayAnimIdle()
 	if (TryPlayAnimIdle()) return;
 
 	iAmmoElapsed == 0 && HudAnimationExist("anm_idle_empty")
-		? PlayHUDMotion("anm_idle_empty", TRUE, NULL, GetState())
-		: PlayHUDMotion("anm_idle", TRUE, NULL, GetState());
+		? PlayHUDMotion("anm_idle_empty", TRUE, nullptr, GetState())
+		: PlayHUDMotion("anm_idle", TRUE, nullptr, GetState());
 }
 
 void CWeaponMagazined::PlayAnimShoot()
@@ -2262,7 +2262,7 @@ bool CWeaponMagazined::install_upgrade_impl(LPCSTR section, bool test)
 	return result;
 }
 
-//текущая дисперсия (в радианах) оружия с учетом используемого патрона и недисперсионных пуль
+//Ñ‚ÐµÐºÑƒÑ‰Ð°Ñ Ð´Ð¸ÑÐ¿ÐµÑ€ÑÐ¸Ñ (Ð² Ñ€Ð°Ð´Ð¸Ð°Ð½Ð°Ñ…) Ð¾Ñ€ÑƒÐ¶Ð¸Ñ Ñ ÑƒÑ‡ÐµÑ‚Ð¾Ð¼ Ð¸ÑÐ¿Ð¾Ð»ÑŒÐ·ÑƒÐµÐ¼Ð¾Ð³Ð¾ Ð¿Ð°Ñ‚Ñ€Ð¾Ð½Ð° Ð¸ Ð½ÐµÐ´Ð¸ÑÐ¿ÐµÑ€ÑÐ¸Ð¾Ð½Ð½Ñ‹Ñ… Ð¿ÑƒÐ»ÑŒ
 float CWeaponMagazined::GetFireDispersion(float cartridge_k, bool for_crosshair)
 {
 	float fire_disp = GetBaseDispersion(cartridge_k);

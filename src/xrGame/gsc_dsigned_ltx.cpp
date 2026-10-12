@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "gsc_dsigned_ltx.h"
 #include "../xrCore/xr_ini.h"
 
@@ -7,7 +7,7 @@ gsc_dsigned_ltx_writer::gsc_dsigned_ltx_writer(u8 const p_number[crypto::xr_dsa:
                                                u8 const g_number[crypto::xr_dsa::public_key_length],
                                                priv_key_filler_function_t pkf_func) :
 	xr_dsa_signer(p_number, q_number, g_number),
-	m_ltx(NULL, FALSE, FALSE, FALSE)
+	m_ltx(nullptr, FALSE, FALSE, FALSE)
 {
 	pkf_func(m_private_key);
 }
@@ -70,7 +70,7 @@ gsc_dsigned_ltx_reader::gsc_dsigned_ltx_reader(u8 const p_number[crypto::xr_dsa:
                                                u8 const g_number[crypto::xr_dsa::public_key_length],
                                                u8 const public_key[crypto::xr_dsa::public_key_length]) :
 	xr_dsa_verifyer(p_number, q_number, g_number, public_key),
-	m_ltx(NULL)
+	m_ltx(nullptr)
 {
 }
 

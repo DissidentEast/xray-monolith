@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "UIMpTradeWnd.h"
 #include "UIDragDropListEx.h"
 #include "UICellItem.h"
@@ -27,7 +27,7 @@ void CUIMpTradeWnd::OnBtnPistolAmmoClicked(CUIWindow* w, void* d)
 		return;
 
 	SBuyItemInfo* pitem = CreateItem(ammo_name, SBuyItemInfo::e_undefined, false);
-	bool b_res = TryToBuyItem(pitem, bf_normal, NULL);
+	bool b_res = TryToBuyItem(pitem, bf_normal, nullptr);
 	if (!b_res)
 		DestroyItem(pitem);
 }
@@ -83,7 +83,7 @@ void CUIMpTradeWnd::OnBtnRifleAmmoClicked(CUIWindow* w, void* d)
 		return;
 
 	SBuyItemInfo* pitem = CreateItem(ammo_name, SBuyItemInfo::e_undefined, false);
-	bool b_res = TryToBuyItem(pitem, bf_normal, NULL);
+	bool b_res = TryToBuyItem(pitem, bf_normal, nullptr);
 	if (!b_res)
 		DestroyItem(pitem);
 }
@@ -199,7 +199,7 @@ void CUIMpTradeWnd::OnBtnRifleAmmo2Clicked(CUIWindow* w, void* d)
 		return;
 
 	SBuyItemInfo* pitem = CreateItem(ammo_name, SBuyItemInfo::e_undefined, false);
-	bool b_res = TryToBuyItem(pitem, bf_normal, NULL);
+	bool b_res = TryToBuyItem(pitem, bf_normal, nullptr);
 	if (!b_res)
 		DestroyItem(pitem);
 }

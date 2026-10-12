@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "UIMpItemsStoreWnd.h"
 #include "UIXmlInit.h"
 #include "UITabButtonMP.h"
@@ -28,8 +28,8 @@ void CStoreHierarchy::LoadLevel(CUIXml& xml, int index, item* _item, int depth_l
 	XML_NODE* stored_root = xml.GetLocalRoot();
 
 	XML_NODE* node = xml.NavigateToNode("level", index);
-	_item->m_name = xml.ReadAttrib("level", index, "name", NULL);
-	_item->m_btn_xml_name = xml.ReadAttrib("level", index, "btn_ref", NULL);
+	_item->m_name = xml.ReadAttrib("level", index, "name", nullptr);
+	_item->m_btn_xml_name = xml.ReadAttrib("level", index, "btn_ref", nullptr);
 
 	if (depth_level > 0 && _item->m_btn_xml_name.size())
 	{

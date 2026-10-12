@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #pragma hdrstop
 
 #include "xrdebug.h"
@@ -239,7 +239,7 @@ void xrDebug::gather_info(const char* expression, const char* description, const
 void xrDebug::do_exit(const std::string& message)
 {
 	FlushLog();
-	MessageBox(NULL, message.c_str(), "Error", MB_OK | MB_ICONERROR | MB_SYSTEMMODAL);
+	MessageBox(nullptr, message.c_str(), "Error", MB_OK | MB_ICONERROR | MB_SYSTEMMODAL);
 	TerminateProcess(GetCurrentProcess(), 1);
 }
 
@@ -327,14 +327,14 @@ void xrDebug::backend(const char* expression, const char* description, const cha
     FlushLog();
 
 #ifdef XRCORE_STATIC
-    MessageBox (NULL,assertion_info,"X-Ray error",MB_OK|MB_ICONERROR|MB_SYSTEMMODAL);
+    MessageBox (nullptr,assertion_info,"X-Ray error",MB_OK|MB_ICONERROR|MB_SYSTEMMODAL);
 #else
 # ifdef USE_OWN_ERROR_MESSAGE_WINDOW
     ShowCursor(true);
     ShowWindow(GetActiveWindow(), SW_FORCEMINIMIZE);
     int result =
         MessageBox(
-        GetTopWindow(NULL),
+        GetTopWindow(nullptr),
         assertion_info,
         "Fatal Error",
         /*MB_CANCELTRYCONTINUE*/MB_OK | MB_ICONERROR | /*MB_SYSTEMMODAL |*/ MB_DEFBUTTON1 | MB_SETFOREGROUND
@@ -667,7 +667,7 @@ void save_mini_dump (_EXCEPTION_POINTERS* pExceptionInfo)
     HMODULE hDll = nullptr;
     string_path szDbgHelpPath;
 
-    if (GetModuleFileName( NULL, szDbgHelpPath, _MAX_PATH ))
+    if (GetModuleFileName( nullptr, szDbgHelpPath, _MAX_PATH ))
     {
         char* pSlash = strchr( szDbgHelpPath, '\\' );
         if (pSlash)
@@ -716,12 +716,12 @@ void save_mini_dump (_EXCEPTION_POINTERS* pExceptionInfo)
             }
 
             // create the file
-            HANDLE hFile = ::CreateFile( szDumpPath, GENERIC_WRITE, FILE_SHARE_WRITE, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL );
+            HANDLE hFile = ::CreateFile( szDumpPath, GENERIC_WRITE, FILE_SHARE_WRITE, nullptr, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr );
             if (INVALID_HANDLE_VALUE==hFile)
             {
                 // try to place into current directory
                 MoveMemory (szDumpPath,szDumpPath+5,strlen(szDumpPath));
-                hFile = ::CreateFile( szDumpPath, GENERIC_WRITE, FILE_SHARE_WRITE, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL );
+                hFile = ::CreateFile( szDumpPath, GENERIC_WRITE, FILE_SHARE_WRITE, nullptr, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr );
             }
             if (hFile!=INVALID_HANDLE_VALUE)
             {
@@ -734,7 +734,7 @@ void save_mini_dump (_EXCEPTION_POINTERS* pExceptionInfo)
                 // write the dump
                 MINIDUMP_TYPE dump_flags = MINIDUMP_TYPE(MiniDumpNormal | MiniDumpFilterMemory | MiniDumpScanMemory );
 
-                BOOL bOK = pDump( GetCurrentProcess(), GetCurrentProcessId(), hFile, dump_flags, &ExInfo, NULL, NULL );
+                BOOL bOK = pDump( GetCurrentProcess(), GetCurrentProcessId(), hFile, dump_flags, &ExInfo, nullptr, nullptr );
                 if (bOK)
                 {
                     xr_sprintf( szScratch, "Saved dump file to '%s'", szDumpPath );
@@ -863,7 +863,7 @@ LONG WINAPI UnhandledFilter(_EXCEPTION_POINTERS* pExceptionInfo)
 	ShowCursor(true);
 	ShowWindow(GetActiveWindow(), SW_FORCEMINIMIZE);
 	MessageBox(
-		GetTopWindow(NULL),
+		GetTopWindow(nullptr),
 		"Unhandled exception occured. See log for details",
 		"Fatal Error",
 		MB_OK | MB_ICONERROR | MB_SYSTEMMODAL
@@ -1023,7 +1023,7 @@ void _terminate()
     buffer += xr_sprintf(buffer, sizeof(buffer), "Press OK to abort execution%s",endline);
 
     MessageBox (
-        GetTopWindow(NULL),
+        GetTopWindow(nullptr),
         assertion_info,
         "Fatal Error",
         MB_OK|MB_ICONERROR|MB_SYSTEMMODAL

@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #pragma hdrstop
 
 #pragma warning(push)
@@ -168,7 +168,7 @@ void CBackend::set_ClipPlanes(u32 _enable, Fplane* _planes /*=NULL */, u32 count
 	if (count > HW.Caps.geometry.dwClipPlanes) count = HW.Caps.geometry.dwClipPlanes;
 
 	D3DXMATRIX worldToClipMatrixIT;
-	D3DXMatrixInverse(&worldToClipMatrixIT,NULL, (D3DXMATRIX*)&RDEVICE.mFullTransform);
+	D3DXMatrixInverse(&worldToClipMatrixIT,nullptr, (D3DXMATRIX*)&RDEVICE.mFullTransform);
 	D3DXMatrixTranspose(&worldToClipMatrixIT, &worldToClipMatrixIT);
 	for (u32 it = 0; it < count; it++)
 	{
@@ -385,7 +385,7 @@ void CBackend::set_Textures(STextureList* _T)
 		//HW.pDevice->PSSetShaderResources(_last_ps, 1, &pRes);
 		SRVSManager.SetPSResource(_last_ps, pRes);
 #else	//	USE_DX10
-		CHK_DX(HW.pDevice->SetTexture(_last_ps,NULL));
+		CHK_DX(HW.pDevice->SetTexture(_last_ps,nullptr));
 #endif	//	USE_DX10
 	}
 	// clear remaining stages (VS)
@@ -401,7 +401,7 @@ void CBackend::set_Textures(STextureList* _T)
 		//HW.pDevice->VSSetShaderResources(_last_vs, 1, &pRes);
 		SRVSManager.SetVSResource(_last_vs, pRes);
 #else	//	USE_DX10
-		CHK_DX(HW.pDevice->SetTexture(_last_vs+CTexture::rstVertex,NULL));
+		CHK_DX(HW.pDevice->SetTexture(_last_vs+CTexture::rstVertex,nullptr));
 #endif	//	USE_DX10
 	}
 

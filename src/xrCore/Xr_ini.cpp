@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #pragma hdrstop
 
 #include "fs_internal.h"
@@ -33,7 +33,7 @@ bool sect_pred(const CInifile::Sect& x, LPCSTR val) noexcept
 };
 
 //------------------------------------------------------------------------------
-//Тело функций Inifile
+//Ð¢ÐµÐ»Ð¾ Ñ„ÑƒÐ½ÐºÑ†Ð¸Ð¹ Inifile
 //------------------------------------------------------------------------------
 XRCORE_API BOOL _parse(LPSTR dest, LPCSTR src)
 {
@@ -550,7 +550,7 @@ void CInifile::LTXLoad (
 			MezzStringBuffer split_dir;
 			MezzStringBuffer split_name;
 
-			_splitpath_s(m_file_name, split_drive, split_drive.GetSize(), split_dir, split_dir.GetSize(), split_name, split_name.GetSize(), NULL, 0);
+			_splitpath_s(m_file_name, split_drive, split_drive.GetSize(), split_dir, split_dir.GetSize(), split_name, split_name.GetSize(), nullptr, 0);
 
 			xr_string FilePath = xr_string(split_drive.GetBuffer()) + xr_string(split_dir.GetBuffer());
 			xr_string FileName = split_name.GetBuffer();
@@ -1674,7 +1674,7 @@ u64 CInifile::r_u64(LPCSTR S, LPCSTR L) const
 {
 	LPCSTR C = r_string(S, L);
 #ifndef _EDITOR
-	return _strtoui64(C, NULL, 10);
+	return _strtoui64(C, nullptr, 10);
 #else
     return (u64)_atoi64(C);
 #endif

@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "game_cl_mp.h"
 #include "xr_level_controller.h"
 #include "xrMessages.h"
@@ -1798,21 +1798,21 @@ void __stdcall game_cl_mp::fr_callback_binder::receiving_serverinfo_callback(
 		break;
 	case file_transfer::receiving_aborted_by_peer:
 		{
-			m_owner->extract_server_info(NULL, 0);
+			m_owner->extract_server_info(nullptr, 0);
 			Msg("* serverinfo: server logo transfer aborted ...");
 			m_active = false;
 		}
 		break;
 	case file_transfer::receiving_aborted_by_user:
 		{
-			m_owner->extract_server_info(NULL, 0);
+			m_owner->extract_server_info(nullptr, 0);
 			Msg("* serverinfo: receiving aborted by user...");
 			m_active = false;
 		}
 		break;
 	case file_transfer::receiving_timeout:
 		{
-			m_owner->extract_server_info(NULL, 0);
+			m_owner->extract_server_info(nullptr, 0);
 			Msg("* serverinfo: receiving timeout...");
 			m_active = false;
 		}
@@ -1989,7 +1989,7 @@ void game_cl_mp::extract_server_info(u8* data_ptr, u32 data_size)
 	UIGameMP* tmp_ui_mp_game = smart_cast<UIGameMP*>(m_game_ui_custom);
 	if (!data_ptr)
 	{
-		tmp_ui_mp_game->SetServerLogo(NULL, 0);
+		tmp_ui_mp_game->SetServerLogo(nullptr, 0);
 		return;
 	}
 	using namespace file_transfer;

@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "game_sv_mp.h"
 #include "xrServer.h"
 #include "xrMessages.h"
@@ -259,7 +259,7 @@ void game_sv_mp::KillPlayer(ClientID id_who, u16 GameID)
 	if (xrCData)
 	{
 		//-------------------------------------------------------
-		OnPlayerKillPlayer(xrCData->ps, xrCData->ps, KT_HIT, SKT_NONE, NULL);
+		OnPlayerKillPlayer(xrCData->ps, xrCData->ps, KT_HIT, SKT_NONE, nullptr);
 		if (xrCData->ps)
 			xrCData->ps->m_bClearRun = false;
 	};
@@ -677,13 +677,13 @@ void game_sv_mp::SetSkin(CSE_Abstract* E, u16 Team, u16 ID)
 	//-------------------------------------------
 	string256 SkinName;
 	xr_strcpy(SkinName, pSettings->r_string("mp_skins_path", "skin_path"));
-	//загружены ли скины для этой комманды
+	//Ð·Ð°Ð³Ñ€ÑƒÐ¶ÐµÐ½Ñ‹ Ð»Ð¸ ÑÐºÐ¸Ð½Ñ‹ Ð´Ð»Ñ ÑÑ‚Ð¾Ð¹ ÐºÐ¾Ð¼Ð¼Ð°Ð½Ð´Ñ‹
 
 	if (!TeamList.empty() &&
 		TeamList.size() > Team &&
 		!TeamList[Team].aSkins.empty())
 	{
-		//загружено ли достаточно скинов для этой комманды
+		//Ð·Ð°Ð³Ñ€ÑƒÐ¶ÐµÐ½Ð¾ Ð»Ð¸ Ð´Ð¾ÑÑ‚Ð°Ñ‚Ð¾Ñ‡Ð½Ð¾ ÑÐºÐ¸Ð½Ð¾Ð² Ð´Ð»Ñ ÑÑ‚Ð¾Ð¹ ÐºÐ¾Ð¼Ð¼Ð°Ð½Ð´Ñ‹
 		if (TeamList[Team].aSkins.size() > ID)
 		{
 			xr_strcat(SkinName, TeamList[Team].aSkins[ID].c_str());
@@ -992,7 +992,7 @@ _votecommands votecommands[] = {
 	{"changemap", "sv_changelevel", flVoteMap},
 	{"changeweather", "sv_setenvtime", flVoteWeather},
 	{"changegametype", "sv_changegametype", flVoteGameType},
-	{NULL, NULL}
+	{nullptr, nullptr}
 };
 
 s32 game_sv_mp::ExcludeBanTimeFromVoteStr(char const* vote_string, char* new_vote_str, u32 new_vote_str_size)

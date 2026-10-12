@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "../../xrEngine/igame_persistent.h"
 #include "../../xrEngine/environment.h"
 
@@ -537,7 +537,7 @@ void CRenderTarget::accum_direct_blend()
 	// blend-copy
 	if (!RImplementation.o.fp16_blend)
 	{
-		u_setrt(rt_Accumulator,NULL,NULL, HW.pBaseZB);
+		u_setrt(rt_Accumulator,nullptr,NULL, HW.pBaseZB);
 
 		// Common calc for quad-rendering
 		u32 Offset;
@@ -578,7 +578,7 @@ void CRenderTarget::accum_direct_f(u32 sub_phase)
 		return;
 	}
 	phase_accumulator();
-	u_setrt(rt_Generic_0,NULL,NULL, HW.pBaseZB);
+	u_setrt(rt_Generic_0,nullptr,NULL, HW.pBaseZB);
 
 	// *** assume accumulator setted up ***
 	light* fuckingsun = (light*)RImplementation.Lights.sun_adapted._get();
@@ -606,7 +606,7 @@ void CRenderTarget::accum_direct_f(u32 sub_phase)
 	if (SE_SUN_NEAR == sub_phase) //.
 	{
 		// For sun-filter - clear to zero
-		CHK_DX(HW.pDevice->Clear ( 0L, NULL, D3DCLEAR_TARGET, 0, 1.0f, 0L));
+		CHK_DX(HW.pDevice->Clear ( 0L, nullptr, D3DCLEAR_TARGET, 0, 1.0f, 0L));
 
 		// Fill vertex buffer
 		FVF::TL* pv = (FVF::TL*)RCache.Vertex.Lock(4, g_combine->vb_stride, Offset);
@@ -646,7 +646,7 @@ void CRenderTarget::accum_direct_f(u32 sub_phase)
 
 	// Perform lighting
 	{
-		u_setrt(rt_Generic_0,NULL,NULL, HW.pBaseZB); // enshure RT setup
+		u_setrt(rt_Generic_0,nullptr,NULL, HW.pBaseZB); // enshure RT setup
 		RCache.set_CullMode(CULL_NONE);
 		RCache.set_ColorWriteEnable();
 

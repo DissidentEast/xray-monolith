@@ -1,4 +1,4 @@
-////////////////////////////////////////////////////////////////////////////
+﻿////////////////////////////////////////////////////////////////////////////
 //	Module 		: script_game_object_script3.cpp
 //	Created 	: 17.11.2004
 //  Modified 	: 17.11.2004
@@ -2336,14 +2336,14 @@ void CScriptGameObject::DetachVehicle(bool bForce)
 	CActor* actor = smart_cast<CActor*>(&object());
 	if (actor)
 	{
-		actor->use_HolderEx(NULL, bForce);
+		actor->use_HolderEx(nullptr, bForce);
 	}
 
 #ifdef HOLDERCUSTOM_NEW
 	CAI_Stalker *stalker = smart_cast<CAI_Stalker *>(&object());
 	if (stalker)
 	{
-		stalker->use_HolderEx(NULL);
+		stalker->use_HolderEx(nullptr);
 	}
 #endif
 }

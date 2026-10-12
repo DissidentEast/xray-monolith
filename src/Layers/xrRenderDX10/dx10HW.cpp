@@ -1,4 +1,4 @@
-// dx10HW.cpp: implementation of the DX10 specialisation of CHW.
+﻿// dx10HW.cpp: implementation of the DX10 specialisation of CHW.
 //////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
@@ -48,7 +48,7 @@ CHW::CHW() :
 	//pD3D(NULL),
 	m_pAdapter(0),
 	m_pOutput(nullptr),
-	pDevice(NULL),
+	pDevice(nullptr),
 #if defined(USE_DX11)
 	m_move_window(true),
 	pAnnotation(nullptr)
@@ -437,7 +437,7 @@ void CHW::CreateDevice(HWND hwnd, bool move_window)
     if ((D3DFMT_UNKNOWN==fTarget) || (D3DFMT_UNKNOWN==fTarget))	{
 		Msg					("Failed to initialize graphics hardware.\nPlease try to restart the game.");
 		FlushLog			();
-		MessageBox			(NULL,"Failed to initialize graphics hardware.\nPlease try to restart the game.","Error!",MB_OK|MB_ICONERROR);
+		MessageBox			(nullptr,"Failed to initialize graphics hardware.\nPlease try to restart the game.","Error!",MB_OK|MB_ICONERROR);
 		TerminateProcess	(GetCurrentProcess(),0);
     }
 
@@ -583,7 +583,7 @@ void CHW::CreateDevice(HWND hwnd, bool move_window)
     _RELEASE(context);
 
     // create swapchain
-    R_CHK(m_pFactory->CreateSwapChainForHwnd(pDevice, m_hWnd, &sd, &sd_fullscreen, NULL, &m_pSwapChain));
+    R_CHK(m_pFactory->CreateSwapChainForHwnd(pDevice, m_hWnd, &sd, &sd_fullscreen, nullptr, &m_pSwapChain));
 
     // setup colorspace
     // HDR10 (U10 output) -> DXGI_COLOR_SPACE_RGB_FULL_G2084_NONE_P2020
@@ -650,7 +650,7 @@ void CHW::CreateDevice(HWND hwnd, bool move_window)
 		    "CreateDevice returned 0x%08x", R
 		);
         FlushLog();
-		MessageBox(NULL, "Failed to initialize graphics hardware.\nPlease try to restart the game.", "Error!",
+		MessageBox(nullptr, "Failed to initialize graphics hardware.\nPlease try to restart the game.", "Error!",
             MB_OK | MB_ICONERROR);
         TerminateProcess(GetCurrentProcess(), 0);
     };
@@ -737,7 +737,7 @@ void CHW::DestroyDevice()
 #endif
 
     if (!is_windowed) {
-        m_pSwapChain->SetFullscreenState(FALSE, NULL);
+        m_pSwapChain->SetFullscreenState(FALSE, nullptr);
 
         if (strstr(Core.Params, dxgiOld)) {
 #ifdef USE_DX11
@@ -1137,7 +1137,7 @@ void CHW::OnAppDeactivate()
 		if (use_reshade)
             unregister_reshade();
 		
-        m_pSwapChain->SetFullscreenState(FALSE, NULL);
+        m_pSwapChain->SetFullscreenState(FALSE, nullptr);
 
 #ifdef USE_DX11
         if (!strstr(Core.Params, dxgiOld)) {
@@ -1312,7 +1312,7 @@ default:	;
 
 if (bBreakLoop) break;
 
-_tmp.push_back				(NULL);
+_tmp.push_back				(nullptr);
 LPCSTR val					= NULL;
 switch (i)
 {
@@ -1385,7 +1385,7 @@ void fill_vid_mode_list(CHW* _hw)
         if (_tmp.end() != std::find_if(_tmp.begin(), _tmp.end(), _uniq_mode(str)))
             continue;
 
-        _tmp.push_back(NULL);
+        _tmp.push_back(nullptr);
         _tmp.back() = xr_strdup(str);
     }
 
@@ -1431,7 +1431,7 @@ void fill_vid_mode_list(CHW* _hw)
         if(_tmp.end() != std::find_if(_tmp.begin(), _tmp.end(), _uniq_mode(str)))
             continue;
 
-        _tmp.push_back				(NULL);
+        _tmp.push_back				(nullptr);
         _tmp.back()					= xr_strdup(str);
     }
 
@@ -1471,7 +1471,7 @@ void CHW::UpdateViews()
 	R = m_pSwapChain->GetBuffer(0, __uuidof( ID3DTexture2D), (LPVOID*)&pBuffer);
     R_CHK(R);
 
-    R = pDevice->CreateRenderTargetView(pBuffer, NULL, &pBaseRT);
+    R = pDevice->CreateRenderTargetView(pBuffer, nullptr, &pBaseRT);
     pBuffer->Release();
     R_CHK(R);
 
@@ -1506,7 +1506,7 @@ void CHW::UpdateViews()
     R_CHK(R);
 
     //	Create Depth/stencil view
-    R = pDevice->CreateDepthStencilView(pDepthStencil, NULL, &pBaseZB);
+    R = pDevice->CreateDepthStencilView(pDepthStencil, nullptr, &pBaseZB);
     R_CHK(R);
 
     pDepthStencil->Release();

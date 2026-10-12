@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "../../../level.h"
 
@@ -34,7 +34,7 @@ void CStateBurerAttackTele<Object>::initialize()
 	m_initial_health = this->object->conditions().GetHealth();
 	m_end_tick = current_time() + this->object->m_tele_max_time;
 
-	// запретить взятие скриптом
+	// Ð·Ð°Ð¿Ñ€ÐµÑ‚Ð¸Ñ‚ÑŒ Ð²Ð·ÑÑ‚Ð¸Ðµ ÑÐºÑ€Ð¸Ð¿Ñ‚Ð¾Ð¼
 	this->object->set_script_capture(false);
 }
 
@@ -118,7 +118,7 @@ void CStateBurerAttackTele<Object>::deactivate()
 			}
 			if (CGrenade* grenade = smart_cast<CGrenade*>(cur_object))
 			{
-				grenade->set_destroy_callback(NULL);
+				grenade->set_destroy_callback(nullptr);
 			}
 		}
 	}
@@ -197,7 +197,7 @@ bool CStateBurerAttackTele<Object>::check_completion()
 template <typename Object>
 void CStateBurerAttackTele<Object>::FindFreeObjects(xr_vector<CObject*>& tpObjects, const Fvector& pos)
 {
-	Level().ObjectSpace.GetNearest(tpObjects, pos, this->object->m_tele_find_radius, NULL);
+	Level().ObjectSpace.GetNearest(tpObjects, pos, this->object->m_tele_find_radius, nullptr);
 
 	for (u32 i = 0; i < tpObjects.size(); i++)
 	{
@@ -230,15 +230,15 @@ void CStateBurerAttackTele<Object>::FindObjects()
 	u32 res_size = tele_objects.size();
 	tele_objects.clear_and_reserve();
 
-	// получить список объектов вокруг врага
+	// Ð¿Ð¾Ð»ÑƒÑ‡Ð¸Ñ‚ÑŒ ÑÐ¿Ð¸ÑÐ¾Ðº Ð¾Ð±ÑŠÐµÐºÑ‚Ð¾Ð² Ð²Ð¾ÐºÑ€ÑƒÐ³ Ð²Ñ€Ð°Ð³Ð°
 	m_nearest.clear_not_free();
 	m_nearest.reserve(res_size);
 	FindFreeObjects(m_nearest, this->object->EnemyMan.get_enemy()->Position());
 
-	// получить список объектов вокруг монстра
+	// Ð¿Ð¾Ð»ÑƒÑ‡Ð¸Ñ‚ÑŒ ÑÐ¿Ð¸ÑÐ¾Ðº Ð¾Ð±ÑŠÐµÐºÑ‚Ð¾Ð² Ð²Ð¾ÐºÑ€ÑƒÐ³ Ð¼Ð¾Ð½ÑÑ‚Ñ€Ð°
 	FindFreeObjects(m_nearest, this->object->Position());
 
-	// получить список объектов между монстром и врагом
+	// Ð¿Ð¾Ð»ÑƒÑ‡Ð¸Ñ‚ÑŒ ÑÐ¿Ð¸ÑÐ¾Ðº Ð¾Ð±ÑŠÐµÐºÑ‚Ð¾Ð² Ð¼ÐµÐ¶Ð´Ñƒ Ð¼Ð¾Ð½ÑÑ‚Ñ€Ð¾Ð¼ Ð¸ Ð²Ñ€Ð°Ð³Ð¾Ð¼
 	float dist = this->object->EnemyMan.get_enemy()->Position().distance_to(this->object->Position());
 	Fvector dir;
 	dir.sub(this->object->EnemyMan.get_enemy()->Position(), this->object->Position());
@@ -249,7 +249,7 @@ void CStateBurerAttackTele<Object>::FindObjects()
 	FindFreeObjects(m_nearest, pos);
 
 
-	// оставить уникальные объекты
+	// Ð¾ÑÑ‚Ð°Ð²Ð¸Ñ‚ÑŒ ÑƒÐ½Ð¸ÐºÐ°Ð»ÑŒÐ½Ñ‹Ðµ Ð¾Ð±ÑŠÐµÐºÑ‚Ñ‹
 	tele_objects.erase(
 		std::unique(
 			tele_objects.begin(),
@@ -313,7 +313,7 @@ void CStateBurerAttackTele<Object>::ExecuteTeleContinue()
 
 	if (!this->object->EnemyMan.see_enemy_now()) return;
 
-	// найти объект для атаки
+	// Ð½Ð°Ð¹Ñ‚Ð¸ Ð¾Ð±ÑŠÐµÐºÑ‚ Ð´Ð»Ñ Ð°Ñ‚Ð°ÐºÐ¸
 	bool object_found = false;
 	CTelekineticObject tele_object;
 
@@ -373,26 +373,26 @@ bool CStateBurerAttackTele<Object>::IsActiveObjects()
 template <typename Object>
 bool CStateBurerAttackTele<Object>::CheckTeleStart()
 {
-	// проверка на текущую активность 
+	// Ð¿Ñ€Ð¾Ð²ÐµÑ€ÐºÐ° Ð½Ð° Ñ‚ÐµÐºÑƒÑ‰ÑƒÑŽ Ð°ÐºÑ‚Ð¸Ð²Ð½Ð¾ÑÑ‚ÑŒ 
 	if (IsActiveObjects()) return false;
 
-	// проверить дистанцию до врага
+	// Ð¿Ñ€Ð¾Ð²ÐµÑ€Ð¸Ñ‚ÑŒ Ð´Ð¸ÑÑ‚Ð°Ð½Ñ†Ð¸ÑŽ Ð´Ð¾ Ð²Ñ€Ð°Ð³Ð°
 	float dist = this->object->Position().distance_to(this->object->EnemyMan.get_enemy()->Position());
 	if (dist < this->object->m_tele_min_distance) return false;
 	if (dist > this->object->m_tele_max_distance) return false;
 
-	// найти телекинетические объекты
+	// Ð½Ð°Ð¹Ñ‚Ð¸ Ñ‚ÐµÐ»ÐµÐºÐ¸Ð½ÐµÑ‚Ð¸Ñ‡ÐµÑÐºÐ¸Ðµ Ð¾Ð±ÑŠÐµÐºÑ‚Ñ‹
 	FindObjects();
 
-	// если нет объектов
+	// ÐµÑÐ»Ð¸ Ð½ÐµÑ‚ Ð¾Ð±ÑŠÐµÐºÑ‚Ð¾Ð²
 	if (tele_objects.empty()) return false;
 
-	// всё ок можно начинать телекинез
+	// Ð²ÑÑ‘ Ð¾Ðº Ð¼Ð¾Ð¶Ð½Ð¾ Ð½Ð°Ñ‡Ð¸Ð½Ð°Ñ‚ÑŒ Ñ‚ÐµÐ»ÐµÐºÐ¸Ð½ÐµÐ·
 	return true;
 }
 
 //////////////////////////////////////////////////////////////////////////
-// Выбор подходящих объектов для телекинеза
+// Ð’Ñ‹Ð±Ð¾Ñ€ Ð¿Ð¾Ð´Ñ…Ð¾Ð´ÑÑ‰Ð¸Ñ… Ð¾Ð±ÑŠÐµÐºÑ‚Ð¾Ð² Ð´Ð»Ñ Ñ‚ÐµÐ»ÐµÐºÐ¸Ð½ÐµÐ·Ð°
 //////////////////////////////////////////////////////////////////////////
 class best_object_predicate
 {
@@ -442,12 +442,12 @@ void CStateBurerAttackTele<Object>::SelectObjects()
 	std::sort(tele_objects.begin(), tele_objects.end(),
 	          best_object_predicate2(this->object->Position(), this->object->EnemyMan.get_enemy()->Position()));
 
-	// выбрать объект
+	// Ð²Ñ‹Ð±Ñ€Ð°Ñ‚ÑŒ Ð¾Ð±ÑŠÐµÐºÑ‚
 	for (u32 i = 0; i < tele_objects.size(); ++i)
 	{
 		CPhysicsShellHolder* obj = tele_objects[i];
 
-		// применить телекинез на объект
+		// Ð¿Ñ€Ð¸Ð¼ÐµÐ½Ð¸Ñ‚ÑŒ Ñ‚ÐµÐ»ÐµÐºÐ¸Ð½ÐµÐ· Ð½Ð° Ð¾Ð±ÑŠÐµÐºÑ‚
 
 		float height = this->object->m_tele_object_height;
 
@@ -468,7 +468,7 @@ void CStateBurerAttackTele<Object>::SelectObjects()
 
 		this->object->StartTeleObjectParticle(obj);
 
-		// удалить из списка
+		// ÑƒÐ´Ð°Ð»Ð¸Ñ‚ÑŒ Ð¸Ð· ÑÐ¿Ð¸ÑÐºÐ°
 		tele_objects[i] = tele_objects[tele_objects.size() - 1];
 		tele_objects.pop_back();
 
@@ -494,7 +494,7 @@ void CStateBurerAttackTele<Object>::HandleGrenades()
 	}
 
 	m_nearest.clear_not_free();
-	Level().ObjectSpace.GetNearest(m_nearest, this->object->Position(), this->object->m_tele_find_radius, NULL);
+	Level().ObjectSpace.GetNearest(m_nearest, this->object->Position(), this->object->m_tele_find_radius, nullptr);
 
 	for (u32 i = 0; i < m_nearest.size(); ++i)
 	{

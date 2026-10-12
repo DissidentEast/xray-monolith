@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #ifdef CAR_NEW
 #include "Car.h"
 #include "CarDrone.h"
@@ -122,7 +122,7 @@ void CCarDrone::Load(LPCSTR section)
     }
     {
         m_drive_bones.clear();
-        LPCSTR str = READ_IF_EXISTS(ini, r_string, cfg, "drive_bones", NULL);
+        LPCSTR str = READ_IF_EXISTS(ini, r_string, cfg, "drive_bones", nullptr);
         int n = _GetItemCount(str);
         string64 bone_name;
         for (int k = 0; k < n; ++k)

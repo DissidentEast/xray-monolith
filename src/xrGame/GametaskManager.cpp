@@ -1,4 +1,4 @@
-#include "pch_script.h"
+﻿#include "pch_script.h"
 #include "GameTaskManager.h"
 #include "alife_registry_wrappers.h"
 #include "ui/xrUIXmlParser.h"
@@ -122,7 +122,7 @@ CGameTask* CGameTaskManager::GiveGameTaskToActor(CGameTask* t, u32 timeToComplet
 
 	SetActiveTask(t);
 
-	//установить флажок необходимости прочтения тасков в PDA
+	//ÑƒÑÑ‚Ð°Ð½Ð¾Ð²Ð¸Ñ‚ÑŒ Ñ„Ð»Ð°Ð¶Ð¾Ðº Ð½ÐµÐ¾Ð±Ñ…Ð¾Ð´Ð¸Ð¼Ð¾ÑÑ‚Ð¸ Ð¿Ñ€Ð¾Ñ‡Ñ‚ÐµÐ½Ð¸Ñ Ñ‚Ð°ÑÐºÐ¾Ð² Ð² PDA
 	if (CurrentGameUI())
 		CurrentGameUI()->UpdatePda();
 
@@ -212,7 +212,7 @@ void CGameTaskManager::UpdateActiveTask()
 	CGameTask* t = ActiveTask();
 	if (!t)
 	{
-		CGameTask* front = IterateGet(NULL, eTaskStateInProgress, true);
+		CGameTask* front = IterateGet(nullptr, eTaskStateInProgress, true);
 		if (front)
 		{
 			SetActiveTask(front);

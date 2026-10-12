@@ -1,4 +1,4 @@
-#include "pch_script.h"
+﻿#include "pch_script.h"
 #include "actorcondition.h"
 #include "actor.h"
 #include "actorEffector.h"
@@ -98,7 +98,7 @@ void CActorCondition::LoadCondition(LPCSTR entity_section)
 	m_fAccelK = pSettings->r_float(section, "accel_k");
 	m_fSprintK = pSettings->r_float(section, "sprint_k");
 
-	//порог силы и здоровья меньше которого актер начинает хромать
+	//Ð¿Ð¾Ñ€Ð¾Ð³ ÑÐ¸Ð»Ñ‹ Ð¸ Ð·Ð´Ð¾Ñ€Ð¾Ð²ÑŒÑ Ð¼ÐµÐ½ÑŒÑˆÐµ ÐºÐ¾Ñ‚Ð¾Ñ€Ð¾Ð³Ð¾ Ð°ÐºÑ‚ÐµÑ€ Ð½Ð°Ñ‡Ð¸Ð½Ð°ÐµÑ‚ Ñ…Ñ€Ð¾Ð¼Ð°Ñ‚ÑŒ
 	m_fLimpingHealthBegin = pSettings->r_float(section, "limping_health_begin");
 	m_fLimpingHealthEnd = pSettings->r_float(section, "limping_health_end");
 	R_ASSERT(m_fLimpingHealthBegin<=m_fLimpingHealthEnd);
@@ -528,7 +528,7 @@ void CActorCondition::PowerHit(float power, bool apply_outfit)
 	clamp(m_fPower, 0.f, 1.f);
 }
 
-//weight - "удельный" вес от 0..1
+//weight - "ÑƒÐ´ÐµÐ»ÑŒÐ½Ñ‹Ð¹" Ð²ÐµÑ Ð¾Ñ‚ 0..1
 void CActorCondition::ConditionJump(float weight)
 {
 	if (GodMode())
@@ -1021,7 +1021,7 @@ bool CActorCondition::ApplyInfluence(const SMedicineInfluenceValues& V, const sh
 
 			shared_str snd_name = pSettings->r_string(sect, "use_sound");
 			m_use_sound.create(snd_name.c_str(), st_Effect, sg_SourceType);
-			m_use_sound.play(NULL, sm_2D);
+			m_use_sound.play(nullptr, sm_2D);
 		}
 	}
 
@@ -1046,7 +1046,7 @@ bool CActorCondition::ApplyBooster(const SBooster& B, const shared_str& sect)
 
 				shared_str snd_name = pSettings->r_string(sect, "use_sound");
 				m_use_sound.create(snd_name.c_str(), st_Effect, sg_SourceType);
-				m_use_sound.play(NULL, sm_2D);
+				m_use_sound.play(nullptr, sm_2D);
 			}
 		}
 

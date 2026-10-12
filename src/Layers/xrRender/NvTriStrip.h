@@ -1,4 +1,4 @@
-#ifndef NVTRISTRIP_H
+﻿#ifndef NVTRISTRIP_H
 #define NVTRISTRIP_H
 
 #ifndef NULL
@@ -30,7 +30,7 @@ struct PrimitiveGroup
 
 	////////////////////////////////////////////////////////////////////////////////////////
 
-	PrimitiveGroup() : type(PT_STRIP), numIndices(0), indices(NULL)
+	PrimitiveGroup() : type(PT_STRIP), numIndices(0), indices(nullptr)
 	{
 	}
 

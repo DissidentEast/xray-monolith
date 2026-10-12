@@ -1,4 +1,4 @@
-// LocatorAPI.cpp: implementation of the CLocatorAPI class.
+﻿// LocatorAPI.cpp: implementation of the CLocatorAPI class.
 //
 //////////////////////////////////////////////////////////////////////
 
@@ -584,8 +584,8 @@ bool ignore_name(const char* _name)
 
 bool ignore_path(const char* _path)
 {
-	HANDLE h = CreateFile(_path, 0, 0, NULL, OPEN_EXISTING,
-	                      FILE_ATTRIBUTE_READONLY | FILE_FLAG_NO_BUFFERING, NULL);
+	HANDLE h = CreateFile(_path, 0, 0, nullptr, OPEN_EXISTING,
+	                      FILE_ATTRIBUTE_READONLY | FILE_FLAG_NO_BUFFERING, nullptr);
 
 	if (h != INVALID_HANDLE_VALUE)
 	{
@@ -936,7 +936,7 @@ xr_vector<char*>* CLocatorAPI::file_list_open(const char* _path, u32 flags)
 {
 	R_ASSERT(_path);
 	VERIFY(flags);
-	// проверить нужно ли пересканировать пути
+	// Ð¿Ñ€Ð¾Ð²ÐµÑ€Ð¸Ñ‚ÑŒ Ð½ÑƒÐ¶Ð½Ð¾ Ð»Ð¸ Ð¿ÐµÑ€ÐµÑÐºÐ°Ð½Ð¸Ñ€Ð¾Ð²Ð°Ñ‚ÑŒ Ð¿ÑƒÑ‚Ð¸
 	check_pathes();
 
 	string_path N;
@@ -998,7 +998,7 @@ int CLocatorAPI::file_list(FS_FileSet& dest, LPCSTR path, u32 flags, LPCSTR mask
 {
 	R_ASSERT(path);
 	VERIFY(flags);
-	// проверить нужно ли пересканировать пути
+	// Ð¿Ñ€Ð¾Ð²ÐµÑ€Ð¸Ñ‚ÑŒ Ð½ÑƒÐ¶Ð½Ð¾ Ð»Ð¸ Ð¿ÐµÑ€ÐµÑÐºÐ°Ð½Ð¸Ñ€Ð¾Ð²Ð°Ñ‚ÑŒ Ð¿ÑƒÑ‚Ð¸
 	check_pathes();
 
 	string_path N;
@@ -1317,7 +1317,7 @@ void CLocatorAPI::copy_file_to_build(T*& r, LPCSTR source_name)
 
 bool CLocatorAPI::check_for_file(LPCSTR path, LPCSTR _fname, string_path& fname, const file*& desc)
 {
-	// проверить нужно ли пересканировать пути
+	// Ð¿Ñ€Ð¾Ð²ÐµÑ€Ð¸Ñ‚ÑŒ Ð½ÑƒÐ¶Ð½Ð¾ Ð»Ð¸ Ð¿ÐµÑ€ÐµÑÐºÐ°Ð½Ð¸Ñ€Ð¾Ð²Ð°Ñ‚ÑŒ Ð¿ÑƒÑ‚Ð¸
 	check_pathes();
 
 	// correct path
@@ -1446,7 +1446,7 @@ void CLocatorAPI::w_close(IWriter*& S)
 
 CLocatorAPI::files_it CLocatorAPI::file_find_it(LPCSTR fname)
 {
-	// проверить нужно ли пересканировать пути
+	// Ð¿Ñ€Ð¾Ð²ÐµÑ€Ð¸Ñ‚ÑŒ Ð½ÑƒÐ¶Ð½Ð¾ Ð»Ð¸ Ð¿ÐµÑ€ÐµÑÐºÐ°Ð½Ð¸Ñ€Ð¾Ð²Ð°Ñ‚ÑŒ Ð¿ÑƒÑ‚Ð¸
 	check_pathes();
 
 	file desc_f;
@@ -1616,7 +1616,7 @@ return get_path(initial)->_update(dest,src);
 
 u32 CLocatorAPI::get_file_age(LPCSTR nm)
 {
-	// проверить нужно ли пересканировать пути
+	// Ð¿Ñ€Ð¾Ð²ÐµÑ€Ð¸Ñ‚ÑŒ Ð½ÑƒÐ¶Ð½Ð¾ Ð»Ð¸ Ð¿ÐµÑ€ÐµÑÐºÐ°Ð½Ð¸Ñ€Ð¾Ð²Ð°Ñ‚ÑŒ Ð¿ÑƒÑ‚Ð¸
 	check_pathes();
 
 	files_it I = file_find_it(nm);
@@ -1625,7 +1625,7 @@ u32 CLocatorAPI::get_file_age(LPCSTR nm)
 
 void CLocatorAPI::set_file_age(LPCSTR nm, u32 age)
 {
-	// проверить нужно ли пересканировать пути
+	// Ð¿Ñ€Ð¾Ð²ÐµÑ€Ð¸Ñ‚ÑŒ Ð½ÑƒÐ¶Ð½Ð¾ Ð»Ð¸ Ð¿ÐµÑ€ÐµÑÐºÐ°Ð½Ð¸Ñ€Ð¾Ð²Ð°Ñ‚ÑŒ Ð¿ÑƒÑ‚Ð¸
 	check_pathes();
 
 	// set file

@@ -1,5 +1,5 @@
-// UICheckButton.cpp: класс кнопки, имеющей 2 состояния:
-// с галочкой и без
+﻿// UICheckButton.cpp: ÐºÐ»Ð°ÑÑ ÐºÐ½Ð¾Ð¿ÐºÐ¸, Ð¸Ð¼ÐµÑŽÑ‰ÐµÐ¹ 2 ÑÐ¾ÑÑ‚Ð¾ÑÐ½Ð¸Ñ:
+// Ñ Ð³Ð°Ð»Ð¾Ñ‡ÐºÐ¾Ð¹ Ð¸ Ð±ÐµÐ·
 //////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
@@ -104,7 +104,7 @@ bool CUICheckButton::OnMouseDown(int mouse_btn)
 		else
 			SetButtonState(BUTTON_NORMAL);
 	}
-	GetMessageTarget()->SendMessage(this, BUTTON_CLICKED, NULL);
+	GetMessageTarget()->SendMessage(this, BUTTON_CLICKED, nullptr);
 	return true;
 }
 

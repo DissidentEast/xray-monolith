@@ -1,4 +1,4 @@
-#ifndef _INCDEF_NETUTILS_H_
+﻿#ifndef _INCDEF_NETUTILS_H_
 #define _INCDEF_NETUTILS_H_
 #pragma once
 
@@ -78,7 +78,7 @@ public:
 	u32 timeReceive;
 	bool w_allow;
 public:
-	NET_Packet() : inistream(NULL), w_allow(true)
+	NET_Packet() : inistream(nullptr), w_allow(true)
 	{
 	}
 

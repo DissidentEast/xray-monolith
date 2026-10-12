@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+﻿#include "StdAfx.h"
 #include "UIComboBox.h"
 #include "UITextureMaster.h"
 #include "UIScrollBar.h"
@@ -98,7 +98,7 @@ void CUIComboBox::OnListItemSelect()
 	ShowList(false);
 
 	if (bk_itoken_id != m_itoken_id)
-		GetMessageTarget()->SendMessage(this, LIST_ITEM_SELECT, NULL);
+		GetMessageTarget()->SendMessage(this, LIST_ITEM_SELECT, nullptr);
 }
 
 void CUIComboBox::SetText(LPCSTR text)

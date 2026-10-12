@@ -772,7 +772,7 @@ void CMissile::net_Relcase(CObject* O)
 		if (O == smart_cast<CObject*>((CPhysicsShellHolder*)PPhysicsShell()->get_CallbackData()))
 		{
 			PPhysicsShell()->remove_ObjectContactCallback(ExitContactCallback);
-			PPhysicsShell()->set_CallbackData(NULL);
+			PPhysicsShell()->set_CallbackData(nullptr);
 		}
 	}
 }

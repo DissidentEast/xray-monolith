@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "UIButton.h"
 #include "UIBtnHint.h"
 #include "UICursor.h"
@@ -51,7 +51,7 @@ bool CUIButton::OnMouseAction(float x, float y, EUIMessages mouse_action)
 			if (mouse_action == WINDOW_LBUTTON_DOWN || mouse_action == WINDOW_LBUTTON_DB_CLICK)
 			{
 				SetButtonState(BUTTON_PUSHED);
-				GetMessageTarget()->SendMessage(this, BUTTON_DOWN, NULL);
+				GetMessageTarget()->SendMessage(this, BUTTON_DOWN, nullptr);
 				return true;
 			}
 		}

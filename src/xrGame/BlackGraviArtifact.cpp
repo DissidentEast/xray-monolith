@@ -1,7 +1,7 @@
-///////////////////////////////////////////////////////////////
+﻿///////////////////////////////////////////////////////////////
 // BlackGraviArtifact.cpp
-// BlackGraviArtefact - гравитационный артефакт, 
-// такой же как и обычный, но при получении хита
+// BlackGraviArtefact - Ð³Ñ€Ð°Ð²Ð¸Ñ‚Ð°Ñ†Ð¸Ð¾Ð½Ð½Ñ‹Ð¹ Ð°Ñ€Ñ‚ÐµÑ„Ð°ÐºÑ‚, 
+// Ñ‚Ð°ÐºÐ¾Ð¹ Ð¶Ðµ ÐºÐ°Ðº Ð¸ Ð¾Ð±Ñ‹Ñ‡Ð½Ñ‹Ð¹, Ð½Ð¾ Ð¿Ñ€Ð¸ Ð¿Ð¾Ð»ÑƒÑ‡ÐµÐ½Ð¸Ð¸ Ñ…Ð¸Ñ‚Ð°
 ///////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
@@ -132,7 +132,7 @@ void CBlackGraviArtefact::Hit(SHit* pHDS)
 	if (HDS.impulse > m_fImpulseThreshold)
 	{
 		m_bStrike = true;
-		//чтоб выстрел не повлиял на траекторию полета артефакта
+		//Ñ‡Ñ‚Ð¾Ð± Ð²Ñ‹ÑÑ‚Ñ€ÐµÐ» Ð½Ðµ Ð¿Ð¾Ð²Ð»Ð¸ÑÐ» Ð½Ð° Ñ‚Ñ€Ð°ÐµÐºÑ‚Ð¾Ñ€Ð¸ÑŽ Ð¿Ð¾Ð»ÐµÑ‚Ð° Ð°Ñ€Ñ‚ÐµÑ„Ð°ÐºÑ‚Ð°
 		HDS.impulse = 0;
 	}
 
@@ -205,7 +205,7 @@ void CBlackGraviArtefact::GraviStrike()
 		{
 			//?			BOOL		enabled = getEnabled();
 			//?			setEnabled	(FALSE);
-			impulse *= CExplosive::ExplosionEffect(rq_storage,NULL, pGameObject, Position(), m_fRadius);
+			impulse *= CExplosive::ExplosionEffect(rq_storage,nullptr, pGameObject, Position(), m_fRadius);
 			//?			setEnabled	(enabled);
 		}
 

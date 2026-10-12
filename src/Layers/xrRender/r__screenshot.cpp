@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 //#include "../../xrEngine/xr_effgamma.h"
 #include "xr_effgamma.h"
 #include "dxRenderDeviceRender.h"
@@ -75,7 +75,7 @@ void CRender::ScreenshotImpl(ScreenshotMode mode, LPCSTR name, CMemoryWriter* me
 			desc.SampleDesc.Count = 1;
 			desc.Usage = D3D_USAGE_DEFAULT;
 			desc.BindFlags = D3D10_BIND_SHADER_RESOURCE;
-			CHK_DX(HW.pDevice->CreateTexture2D( &desc, NULL, &pSrcSmallTexture ));
+			CHK_DX(HW.pDevice->CreateTexture2D( &desc, nullptr, &pSrcSmallTexture ));
 
 			//	D3DX10_TEXTURE_LOAD_INFO *pLoadInfo
 
@@ -124,7 +124,7 @@ void CRender::ScreenshotImpl(ScreenshotMode mode, LPCSTR name, CMemoryWriter* me
 			desc.SampleDesc.Count = 1;
 			desc.Usage = D3D_USAGE_DEFAULT;
 			desc.BindFlags = D3D_BIND_SHADER_RESOURCE;
-			CHK_DX(HW.pDevice->CreateTexture2D( &desc, NULL, &pSrcSmallTexture ));
+			CHK_DX(HW.pDevice->CreateTexture2D( &desc, nullptr, &pSrcSmallTexture ));
 
 			//	D3DX10_TEXTURE_LOAD_INFO *pLoadInfo
 
@@ -415,7 +415,7 @@ _end_:
 
 void CRender::Screenshot(ScreenshotMode mode, LPCSTR name)
 {
-	ScreenshotImpl(mode, name, NULL);
+	ScreenshotImpl(mode, name, nullptr);
 }
 
 void CRender::Screenshot(ScreenshotMode mode, CMemoryWriter& memory_writer)
@@ -425,7 +425,7 @@ void CRender::Screenshot(ScreenshotMode mode, CMemoryWriter& memory_writer)
 		Log("~ Not implemented screenshot mode...");
 		return;
 	}
-	ScreenshotImpl(mode, NULL, &memory_writer);
+	ScreenshotImpl(mode, nullptr, &memory_writer);
 }
 
 void CRender::ScreenshotAsyncBegin()
@@ -637,7 +637,7 @@ void CRender::TakeScreenshot(LPCSTR path, Fvector2 dimensions, DxEncoding encodi
 	desc.SampleDesc.Count = 1;
 	desc.Usage = D3D_USAGE_DEFAULT;
 	desc.BindFlags = D3D10_BIND_SHADER_RESOURCE;
-	CHK_DX(HW.pDevice->CreateTexture2D(&desc, NULL, &pSrcSmallTexture));
+	CHK_DX(HW.pDevice->CreateTexture2D(&desc, nullptr, &pSrcSmallTexture));
 
 	//	D3DX10_TEXTURE_LOAD_INFO *pLoadInfo
 

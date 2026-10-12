@@ -1,4 +1,4 @@
-////////////////////////////////////////////////////////////////////////////////
+﻿////////////////////////////////////////////////////////////////////////////////
 //	Module		:	artefact_activation.cpp
 //	Created		:	19.12.2007
 //	Modified	:	19.12.2007
@@ -120,7 +120,7 @@ void SArtefactActivation::PhDataUpdate(float step)
 	if (m_cur_activation_state == eFlying)
 	{
 		Fvector dir = {0, -1.f, 0};
-		if (Level().ObjectSpace.RayTest(m_af->Position(), dir, 1.0f, collide::rqtBoth,NULL, m_af))
+		if (Level().ObjectSpace.RayTest(m_af->Position(), dir, 1.0f, collide::rqtBoth,nullptr, m_af))
 		{
 			dir.y = physics_world()->Gravity() * 1.1f;
 			m_af->m_pPhysicsShell->applyGravityAccel(dir);

@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "monster_aura.h"
 #include "basemonster/base_monster.h"
 #include "../../Actor.h"
@@ -20,7 +20,7 @@ namespace detail
 } // namespace detail
 
 monster_aura::monster_aura(CBaseMonster* const object, pcstr const name)
-	: m_object(object), m_pp_effector_name(NULL), m_pp_index(0)
+	: m_object(object), m_pp_effector_name(nullptr), m_pp_index(0)
 {
 	m_linear_factor = 0.0f;
 	m_quadratic_factor = 0.0f;
@@ -110,15 +110,15 @@ void monster_aura::load_from_ini(CInifile const* ini, pcstr const section, bool 
 	char* enable_for_dead_string = nullptr;
 	STRCONCAT(enable_for_dead_string, m_name, s_enable_for_dead_string);
 
-	m_pp_effector_name = READ_IF_EXISTS(ini, r_string, section, pp_effector_name_string, NULL);
+	m_pp_effector_name = READ_IF_EXISTS(ini, r_string, section, pp_effector_name_string, nullptr);
 	m_pp_highest_at = READ_IF_EXISTS(ini, r_float, section, pp_highest_at_string, 1.f);
 	m_linear_factor = READ_IF_EXISTS(ini, r_float, section, linear_factor_string, 0.f);
 	m_quadratic_factor = READ_IF_EXISTS(ini, r_float, section, quadratic_factor_string, 0.f);
 	m_max_power = READ_IF_EXISTS(ini, r_float, section, max_power_string, 0.f);
 	m_max_distance = READ_IF_EXISTS(ini, r_float, section, max_distance_string, 0.f);
 	m_enable_for_dead = !!READ_IF_EXISTS(ini, r_bool, section, enable_for_dead_string, enable_for_dead_default);
-	pcstr const sound_name = READ_IF_EXISTS(ini, r_string, section, sound_string, NULL);
-	pcstr const detect_sound_name = READ_IF_EXISTS(ini, r_string, section, detect_sound_string, NULL);
+	pcstr const sound_name = READ_IF_EXISTS(ini, r_string, section, sound_string, nullptr);
+	pcstr const detect_sound_name = READ_IF_EXISTS(ini, r_string, section, detect_sound_string, nullptr);
 
 	if (sound_name)
 		m_sound.create(sound_name, st_Effect, sg_SourceType);

@@ -1,4 +1,4 @@
-/*----------------------------------------------------------------------
+﻿/*----------------------------------------------------------------------
 "Debugging Applications" (Microsoft Press)
 Copyright (c) 1997-2000 John Robbins -- All rights reserved.
 ----------------------------------------------------------------------*/
@@ -45,7 +45,7 @@ GetLoadedModules(DWORD dwPID,
 	// Figure out which OS we are on.
 	OSVERSIONINFO stOSVI;
 
-	FillMemory(&stOSVI, sizeof ( OSVERSIONINFO ), NULL);
+	FillMemory(&stOSVI, sizeof ( OSVERSIONINFO ), 0);
 	stOSVI.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
 
 	BOOL bRet = GetVersionEx(&stOSVI);

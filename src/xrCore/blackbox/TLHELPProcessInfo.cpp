@@ -1,4 +1,4 @@
-/*----------------------------------------------------------------------
+﻿/*----------------------------------------------------------------------
 "Debugging Applications" (Microsoft Press)
 Copyright (c) 1997-2000 John Robbins -- All rights reserved.
 ----------------------------------------------------------------------*/
@@ -184,7 +184,7 @@ BOOL __stdcall TLHELPGetLoadedModules(DWORD dwPID,
 		return (FALSE);
 	}
 
-	FillMemory(&stME32, sizeof ( MODULEENTRY32 ), NULL);
+	FillMemory(&stME32, sizeof ( MODULEENTRY32 ), 0);
 	stME32.dwSize = sizeof(MODULEENTRY32);
 
 	// Start getting the module values.
@@ -269,7 +269,7 @@ DWORD __stdcall TLHELPGetModuleFileNameEx(DWORD dwPID,
 		return (0);
 	}
 
-	FillMemory(&stME32, sizeof ( MODULEENTRY32 ), NULL);
+	FillMemory(&stME32, sizeof ( MODULEENTRY32 ), 0);
 	stME32.dwSize = sizeof(MODULEENTRY32);
 
 	DWORD dwRet = 0;

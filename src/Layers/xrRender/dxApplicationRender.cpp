@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 
 #include "dxApplicationRender.h"
 #include "../../xrEngine/GameFont.h"
@@ -16,7 +16,7 @@ void dxApplicationRender::LoadBegin()
 	sh_progress.create("hud\\default", "ui\\ui_actor_loadgame_screen");
 	hLevelLogo_Add.create("hud\\default", "ui\\ui_actor_widescreen_sidepanels.dds");
 
-	ll_hGeom2.create(FVF::F_TL, RCache.Vertex.Buffer(),NULL);
+	ll_hGeom2.create(FVF::F_TL, RCache.Vertex.Buffer(),nullptr);
 
 	//Discord
 	discord_gameinfo.loadscreen = true;

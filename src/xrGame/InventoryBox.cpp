@@ -1,4 +1,4 @@
-#include "pch_script.h"
+﻿#include "pch_script.h"
 #include "InventoryBox.h"
 #include "level.h"
 #include "actor.h"
@@ -67,7 +67,7 @@ void CInventoryBox::OnEvent(NET_Packet& P, u16 type)
 			bool just_before_destroy = !P.r_eof() && P.r_u8();
 			bool dont_create_shell = (type == GE_TRADE_SELL) || just_before_destroy;
 
-			itm->H_SetParent(NULL, dont_create_shell);
+			itm->H_SetParent(nullptr, dont_create_shell);
 
 			if (m_in_use)
 			{

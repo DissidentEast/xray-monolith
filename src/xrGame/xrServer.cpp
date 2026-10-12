@@ -1,4 +1,4 @@
-// xrServer.cpp: implementation of the xrServer class.
+﻿// xrServer.cpp: implementation of the xrServer class.
 //
 //////////////////////////////////////////////////////////////////////
 
@@ -422,7 +422,7 @@ u32 xrServer::OnDelayedMessage(NET_Packet& P, ClientID sender) // Non-Zero means
 				xr_sprintf(tmp_number_str, " raid:%u", CL->ID.value());
 				STRCONCAT(result_command, buff, tmp_number_str);
 				Console->Execute(result_command);
-				SetLogCB(NULL);
+				SetLogCB(nullptr);
 
 				NET_Packet P_answ;
 				for (u32 i = 0; i < _tmp_log.size(); ++i)

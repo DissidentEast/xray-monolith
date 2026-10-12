@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "poltergeist.h"
 #include "../../../../xrphysics/PhysicsShell.h"
 #include "../../../level.h"
@@ -84,7 +84,7 @@ void CPolterSpecialAbility::on_hit(SHit* pHDS)
 	{
 		if (BI_NONE != pHDS->bone())
 		{
-			//вычислить координаты попадания
+			//Ð²Ñ‹Ñ‡Ð¸ÑÐ»Ð¸Ñ‚ÑŒ ÐºÐ¾Ð¾Ñ€Ð´Ð¸Ð½Ð°Ñ‚Ñ‹ Ð¿Ð¾Ð¿Ð°Ð´Ð°Ð½Ð¸Ñ
 			IKinematics* V = smart_cast<IKinematics*>(m_object->Visual());
 
 			Fvector start_pos = pHDS->bone_space_position();
@@ -113,7 +113,7 @@ void CPolterSpecialAbility::on_hit(SHit* pHDS)
 void CPoltergeist::PhysicalImpulse(const Fvector& position)
 {
 	m_nearest.clear_not_free();
-	Level().ObjectSpace.GetNearest(m_nearest, position, IMPULSE_RADIUS, NULL);
+	Level().ObjectSpace.GetNearest(m_nearest, position, IMPULSE_RADIUS, nullptr);
 	//xr_vector<CObject*> &m_nearest = Level().ObjectSpace.q_nearest;
 	if (m_nearest.empty()) return;
 
@@ -144,16 +144,16 @@ void CPoltergeist::StrangeSounds(const Fvector& position)
 		dir.random_dir();
 
 		collide::rq_result l_rq;
-		if (Level().ObjectSpace.RayPick(position, dir, TRACE_DISTANCE, collide::rqtStatic, l_rq, NULL))
+		if (Level().ObjectSpace.RayPick(position, dir, TRACE_DISTANCE, collide::rqtStatic, l_rq, nullptr))
 		{
 			if (l_rq.range < TRACE_DISTANCE)
 			{
-				// Получить пару материалов
+				// ÐŸÐ¾Ð»ÑƒÑ‡Ð¸Ñ‚ÑŒ Ð¿Ð°Ñ€Ñƒ Ð¼Ð°Ñ‚ÐµÑ€Ð¸Ð°Ð»Ð¾Ð²
 				CDB::TRI* pTri = Level().ObjectSpace.GetStaticTris() + l_rq.element;
 				SGameMtlPair* mtl_pair = GMLib.GetMaterialPair(material().self_material_idx(), pTri->material);
 				if (!mtl_pair) continue;
 
-				// Играть звук
+				// Ð˜Ð³Ñ€Ð°Ñ‚ÑŒ Ð·Ð²ÑƒÐº
 				if (!mtl_pair->CollideSounds.empty())
 				{
 #ifdef DEBUG

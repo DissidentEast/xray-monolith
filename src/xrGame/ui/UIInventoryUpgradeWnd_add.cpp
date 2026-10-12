@@ -1,4 +1,4 @@
-////////////////////////////////////////////////////////////////////////////
+﻿////////////////////////////////////////////////////////////////////////////
 //	Module 		: UIInventoryUpgradeWnd_add.cpp
 //	Created 	: 08.11.2007
 //  Modified 	: 13.03.2009
@@ -26,8 +26,8 @@ void CUIInventoryUpgradeWnd::LoadCellsBacks(CUIXml& uiXml)
 		uiXml.SetLocalRoot(uiXml.NavigateToNode("state", i_st));
 
 		LPCSTR type = uiXml.Read("type", 0, "");
-		LPCSTR txr = uiXml.Read("back_texture", 0, NULL);
-		LPCSTR txr2 = uiXml.Read("point_texture", 0, NULL);
+		LPCSTR txr = uiXml.Read("back_texture", 0, nullptr);
+		LPCSTR txr2 = uiXml.Read("point_texture", 0, nullptr);
 		u32 color = CUIXmlInit::GetColor(uiXml, "item_color", 0, 0);
 		LoadCellStates(type, txr, txr2, color);
 

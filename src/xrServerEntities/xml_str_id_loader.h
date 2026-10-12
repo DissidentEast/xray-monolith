@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #ifdef XRGAME_EXPORTS
 #	include "ui/xrUIXmlParser.h"
@@ -8,13 +8,13 @@
 #endif // XRGAME_EXPORTS
 
 
-//T_ID    - уникальный текстовый идентификатор (аттрибут id в XML файле)
-//T_INDEX - уникальный числовой индекс 
-//T_INIT -  класс где определена статическая InitXmlIdToIndex
-//          функция инициализации file_str и tag_name
+//T_ID    - ÑƒÐ½Ð¸ÐºÐ°Ð»ÑŒÐ½Ñ‹Ð¹ Ñ‚ÐµÐºÑÑ‚Ð¾Ð²Ñ‹Ð¹ Ð¸Ð´ÐµÐ½Ñ‚Ð¸Ñ„Ð¸ÐºÐ°Ñ‚Ð¾Ñ€ (Ð°Ñ‚Ñ‚Ñ€Ð¸Ð±ÑƒÑ‚ id Ð² XML Ñ„Ð°Ð¹Ð»Ðµ)
+//T_INDEX - ÑƒÐ½Ð¸ÐºÐ°Ð»ÑŒÐ½Ñ‹Ð¹ Ñ‡Ð¸ÑÐ»Ð¾Ð²Ð¾Ð¹ Ð¸Ð½Ð´ÐµÐºÑ 
+//T_INIT -  ÐºÐ»Ð°ÑÑ Ð³Ð´Ðµ Ð¾Ð¿Ñ€ÐµÐ´ÐµÐ»ÐµÐ½Ð° ÑÑ‚Ð°Ñ‚Ð¸Ñ‡ÐµÑÐºÐ°Ñ InitXmlIdToIndex
+//          Ñ„ÑƒÐ½ÐºÑ†Ð¸Ñ Ð¸Ð½Ð¸Ñ†Ð¸Ð°Ð»Ð¸Ð·Ð°Ñ†Ð¸Ð¸ file_str Ð¸ tag_name
 
-//структура хранит строковый id элемента 
-//файл и позицию, где этот элемент находится
+//ÑÑ‚Ñ€ÑƒÐºÑ‚ÑƒÑ€Ð° Ñ…Ñ€Ð°Ð½Ð¸Ñ‚ ÑÑ‚Ñ€Ð¾ÐºÐ¾Ð²Ñ‹Ð¹ id ÑÐ»ÐµÐ¼ÐµÐ½Ñ‚Ð° 
+//Ñ„Ð°Ð¹Ð» Ð¸ Ð¿Ð¾Ð·Ð¸Ñ†Ð¸ÑŽ, Ð³Ð´Ðµ ÑÑ‚Ð¾Ñ‚ ÑÐ»ÐµÐ¼ÐµÐ½Ñ‚ Ð½Ð°Ñ…Ð¾Ð´Ð¸Ñ‚ÑÑ
 struct ITEM_DATA
 {
 	shared_str id;
@@ -39,10 +39,10 @@ private:
 	static T_VECTOR* m_pItemDataVector;
 
 protected:
-	//имена xml файлов (разделенных запятой) из которых 
-	//производить загрузку элементов
+	//Ð¸Ð¼ÐµÐ½Ð° xml Ñ„Ð°Ð¹Ð»Ð¾Ð² (Ñ€Ð°Ð·Ð´ÐµÐ»ÐµÐ½Ð½Ñ‹Ñ… Ð·Ð°Ð¿ÑÑ‚Ð¾Ð¹) Ð¸Ð· ÐºÐ¾Ñ‚Ð¾Ñ€Ñ‹Ñ… 
+	//Ð¿Ñ€Ð¾Ð¸Ð·Ð²Ð¾Ð´Ð¸Ñ‚ÑŒ Ð·Ð°Ð³Ñ€ÑƒÐ·ÐºÑƒ ÑÐ»ÐµÐ¼ÐµÐ½Ñ‚Ð¾Ð²
 	static LPCSTR file_str;
-	//имена тегов
+	//Ð¸Ð¼ÐµÐ½Ð° Ñ‚ÐµÐ³Ð¾Ð²
 	static LPCSTR tag_name;
 public:
 	CXML_IdToIndex();
@@ -67,7 +67,7 @@ public:
 
 	static const int GetMaxIndex() { return m_pItemDataVector->size() - 1; }
 
-	//удаление статичекого массива
+	//ÑƒÐ´Ð°Ð»ÐµÐ½Ð¸Ðµ ÑÑ‚Ð°Ñ‚Ð¸Ñ‡ÐµÐºÐ¾Ð³Ð¾ Ð¼Ð°ÑÑÐ¸Ð²Ð°
 	static void DeleteIdToIndexData();
 };
 
@@ -163,19 +163,19 @@ typename void CSXML_IdToIndex::InitInternal()
 		xml_file_full += ".xml";
 		uiXml->Load(CONFIG_PATH, "gameplay", xml_file_full.c_str());
 
-		//общий список
+		//Ð¾Ð±Ñ‰Ð¸Ð¹ ÑÐ¿Ð¸ÑÐ¾Ðº
 		int items_num = uiXml->GetNodesNum(uiXml->GetRoot(), tag_name);
 
 		for (int i = 0; i < items_num; ++i)
 		{
-			LPCSTR item_name = uiXml->ReadAttrib(uiXml->GetRoot(), tag_name, i, "id", NULL);
+			LPCSTR item_name = uiXml->ReadAttrib(uiXml->GetRoot(), tag_name, i, "id", nullptr);
 
 			string256 buf;
 			xr_sprintf(buf, "id for item don't set, number %d in %s", i, xml_file);
 			R_ASSERT2(item_name, buf);
 
 
-			//проверетить ID на уникальность
+			//Ð¿Ñ€Ð¾Ð²ÐµÑ€ÐµÑ‚Ð¸Ñ‚ÑŒ ID Ð½Ð° ÑƒÐ½Ð¸ÐºÐ°Ð»ÑŒÐ½Ð¾ÑÑ‚ÑŒ
 			T_VECTOR::iterator t_it = m_pItemDataVector->begin();
 			for (; m_pItemDataVector->end() != t_it; ++t_it)
 			{

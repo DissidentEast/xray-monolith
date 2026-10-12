@@ -1,4 +1,4 @@
-////////////////////////////////////////////////////////////////////////////
+﻿////////////////////////////////////////////////////////////////////////////
 //	Module 		: inventory_item.cpp
 //	Created 	: 24.03.2003
 //  Modified 	: 29.01.2004
@@ -138,7 +138,7 @@ void CInventoryItem::Load(LPCSTR section)
 		m_flags.set(FAllowSprint, pSettings->r_bool(section, "sprint_allowed"));
 		m_fControlInertionFactor = pSettings->r_float(section, "control_inertion_factor");
 	}
-	m_icon_name = READ_IF_EXISTS(pSettings, r_string, section, "icon_name", NULL);
+	m_icon_name = READ_IF_EXISTS(pSettings, r_string, section, "icon_name", nullptr);
 
 	m_fLowestBatteryCharge = READ_IF_EXISTS(pSettings, r_float, section, "power_critical", .03f);
 }
@@ -289,9 +289,9 @@ void CInventoryItem::OnEvent(NET_Packet& P, u16 type)
 	}
 }
 
-//процесс отсоединения вещи заключается в спауне новой вещи 
-//в инвентаре и установке соответствующих флагов в родительском
-//объекте, поэтому функция должна быть переопределена
+//Ð¿Ñ€Ð¾Ñ†ÐµÑÑ Ð¾Ñ‚ÑÐ¾ÐµÐ´Ð¸Ð½ÐµÐ½Ð¸Ñ Ð²ÐµÑ‰Ð¸ Ð·Ð°ÐºÐ»ÑŽÑ‡Ð°ÐµÑ‚ÑÑ Ð² ÑÐ¿Ð°ÑƒÐ½Ðµ Ð½Ð¾Ð²Ð¾Ð¹ Ð²ÐµÑ‰Ð¸ 
+//Ð² Ð¸Ð½Ð²ÐµÐ½Ñ‚Ð°Ñ€Ðµ Ð¸ ÑƒÑÑ‚Ð°Ð½Ð¾Ð²ÐºÐµ ÑÐ¾Ð¾Ñ‚Ð²ÐµÑ‚ÑÑ‚Ð²ÑƒÑŽÑ‰Ð¸Ñ… Ñ„Ð»Ð°Ð³Ð¾Ð² Ð² Ñ€Ð¾Ð´Ð¸Ñ‚ÐµÐ»ÑŒÑÐºÐ¾Ð¼
+//Ð¾Ð±ÑŠÐµÐºÑ‚Ðµ, Ð¿Ð¾ÑÑ‚Ð¾Ð¼Ñƒ Ñ„ÑƒÐ½ÐºÑ†Ð¸Ñ Ð´Ð¾Ð»Ð¶Ð½Ð° Ð±Ñ‹Ñ‚ÑŒ Ð¿ÐµÑ€ÐµÐ¾Ð¿Ñ€ÐµÐ´ÐµÐ»ÐµÐ½Ð°
 bool CInventoryItem::Detach(const char* item_section_name, bool b_spawn_item)
 {
 	if (OnClient()) return true;
@@ -383,7 +383,7 @@ void CInventoryItem::net_Destroy()
 		VERIFY(std::find(m_pInventory->m_all.begin(), m_pInventory->m_all.end(), this)==m_pInventory->m_all.end());
 	}
 
-	//инвентарь которому мы принадлежали
+	//Ð¸Ð½Ð²ÐµÐ½Ñ‚Ð°Ñ€ÑŒ ÐºÐ¾Ñ‚Ð¾Ñ€Ð¾Ð¼Ñƒ Ð¼Ñ‹ Ð¿Ñ€Ð¸Ð½Ð°Ð´Ð»ÐµÐ¶Ð°Ð»Ð¸
 	//.	m_pInventory = NULL;
 }
 
@@ -985,7 +985,7 @@ void CInventoryItem::CalculateInterpolationParams()
 		for (u32 k=0; k<3; k++)
 		{
 			P0[k] = c*(c*(c*p->SCoeff[k][0]+p->SCoeff[k][1])+p->SCoeff[k][2])+p->SCoeff[k][3];
-			P1[k] = (c*c*p->SCoeff[k][0]*3+c*p->SCoeff[k][1]*2+p->SCoeff[k][2])/3; // сокрость из формулы в 3 раза превышает скорость при расчете коэффициентов !!!!
+			P1[k] = (c*c*p->SCoeff[k][0]*3+c*p->SCoeff[k][1]*2+p->SCoeff[k][2])/3; // ÑÐ¾ÐºÑ€Ð¾ÑÑ‚ÑŒ Ð¸Ð· Ñ„Ð¾Ñ€Ð¼ÑƒÐ»Ñ‹ Ð² 3 Ñ€Ð°Ð·Ð° Ð¿Ñ€ÐµÐ²Ñ‹ÑˆÐ°ÐµÑ‚ ÑÐºÐ¾Ñ€Ð¾ÑÑ‚ÑŒ Ð¿Ñ€Ð¸ Ñ€Ð°ÑÑ‡ÐµÑ‚Ðµ ÐºÐ¾ÑÑ„Ñ„Ð¸Ñ†Ð¸ÐµÐ½Ñ‚Ð¾Ð² !!!!
 		};
 		P0.set(p->IStartPos);
 		P1.add(p->IStartPos);

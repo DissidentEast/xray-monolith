@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "player_state_cherub.h"
 #include "kills_store.h"
 #include "game_cl_base.h"
@@ -97,7 +97,7 @@ namespace award_system
 		tmp_fetcher.m_hitter_name = tmp_victim_player->getName();
 		tmp_fetcher.m_art_take_time = m_art_take_time;
 
-		buffer_vector<hits_store::bullet_hit> tmp_fake_buffer(NULL, 0);
+		buffer_vector<hits_store::bullet_hit> tmp_fake_buffer(nullptr, 0);
 
 		if (m_owner->get_hits_store().fetch_hits(tmp_fetcher, tmp_fake_buffer) > 0)
 		{

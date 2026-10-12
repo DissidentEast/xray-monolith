@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 
 void CRenderTarget::accum_point(light* L)
 {
@@ -111,7 +111,7 @@ void CRenderTarget::accum_point(light* L)
 	// blend-copy
 	if (!RImplementation.o.fp16_blend)
 	{
-		u_setrt(rt_Accumulator,NULL,NULL, HW.pBaseZB);
+		u_setrt(rt_Accumulator,nullptr,NULL, HW.pBaseZB);
 		RCache.set_Element(s_accum_mask->E[SE_MASK_ACCUM_VOL]);
 		RCache.set_c("m_texgen", m_Texgen);
 		draw_volume(L);

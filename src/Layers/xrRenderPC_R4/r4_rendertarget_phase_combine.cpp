@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "../../xrEngine/igame_persistent.h"
 #include "../../xrEngine/environment.h"
 
@@ -595,12 +595,12 @@ void CRenderTarget::phase_combine()
 	if (RImplementation.o.dx10_msaa)
 	{
 		if (PP_Complex) u_setrt(rt_Generic, 0, 0, HW.pBaseZB); // LDR RT
-		else u_setrt(Device.dwWidth, Device.dwHeight, HW.pBaseRT,NULL,NULL, HW.pBaseZB);
+		else u_setrt(Device.dwWidth, Device.dwHeight, HW.pBaseRT,nullptr,NULL, HW.pBaseZB);
 	}
 	else
 	{
 		if (PP_Complex) u_setrt(rt_Color, 0, 0, HW.pBaseZB); // LDR RT
-		else u_setrt(Device.dwWidth, Device.dwHeight, HW.pBaseRT,NULL,NULL, HW.pBaseZB);
+		else u_setrt(Device.dwWidth, Device.dwHeight, HW.pBaseRT,nullptr,NULL, HW.pBaseZB);
 	}
 	//. u_setrt				( Device.dwWidth,Device.dwHeight,HW.pBaseRT,NULL,NULL,HW.pBaseZB);
 	RCache.set_CullMode(CULL_NONE);
@@ -744,8 +744,8 @@ void CRenderTarget::phase_combine()
 	//*** exposure-pipeline-clear
 	{
 		std::swap(rt_LUM_pool[gpu_id * 2 + 0], rt_LUM_pool[gpu_id * 2 + 1]);
-		t_LUM_src->surface_set(NULL);
-		t_LUM_dest->surface_set(NULL);
+		t_LUM_src->surface_set(nullptr);
+		t_LUM_dest->surface_set(nullptr);
 	}
 
 #ifdef DEBUG
@@ -856,12 +856,12 @@ void CRenderTarget::phase_combine()
 void CRenderTarget::phase_wallmarks()
 {
 	// Targets
-	RCache.set_RT(NULL, 2);
-	RCache.set_RT(NULL, 1);
+	RCache.set_RT(nullptr, 2);
+	RCache.set_RT(nullptr, 1);
 	if (!RImplementation.o.dx10_msaa)
-		u_setrt(rt_Color,NULL,NULL, HW.pBaseZB);
+		u_setrt(rt_Color,nullptr,NULL, HW.pBaseZB);
 	else
-		u_setrt(rt_Color,NULL,NULL, rt_MSAADepth->pZRT);
+		u_setrt(rt_Color,nullptr,NULL, rt_MSAADepth->pZRT);
 	// Stencil	- draw only where stencil >= 0x1
 	RCache.set_Stencil(TRUE, D3DCMP_LESSEQUAL, 0x01, 0xff, 0x00);
 	RCache.set_CullMode(CULL_CCW);

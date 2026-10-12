@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #pragma warning( disable : 4786 )
 #pragma warning( disable : 4018 )
 
@@ -971,7 +971,7 @@ void NvStripifier::SplitUpStripsAndOptimize(NvStripInfoVec& allStrips, NvStripIn
 	for (i = 0; i < allStrips.size(); i++)
 	{
 		NvStripInfo* currentStrip;
-		NvStripStartInfo startInfo(NULL, NULL, false);
+		NvStripStartInfo startInfo(nullptr, NULL, false);
 
 		if (allStrips[i]->m_faces.size() > threshold)
 		{
@@ -1334,7 +1334,7 @@ void NvStripifier::FindAllStrips(NvStripInfoVec& allStrips,
 			int experimentId = experiments[i][0]->m_experimentId;
 
 			NvStripInfo* stripIter = experiments[i][0];
-			NvStripStartInfo startInfo(NULL, NULL, false);
+			NvStripStartInfo startInfo(nullptr, NULL, false);
 			while (FindTraversal(allFaceInfos, allEdgeInfos, stripIter, startInfo))
 			{
 				// create the _new strip info

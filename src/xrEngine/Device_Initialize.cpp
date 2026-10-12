@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "resource.h"
 #include "dedicated_server_only.h"
 
@@ -55,7 +55,7 @@ PROTECT_API void CRenderDevice::Initialize()
 		WNDCLASS wndClass = {
 			0, WndProc, 0, 0, hInstance,
 			LoadIcon(hInstance, MAKEINTRESOURCE(IDI_ICON1)),
-			LoadCursor(NULL, IDC_ARROW),
+			LoadCursor(nullptr, IDC_ARROW),
 			(HBRUSH)GetStockObject(BLACK_BRUSH),
 			NULL, wndclass
 		};

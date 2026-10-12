@@ -1,4 +1,4 @@
-// XR_IOConsole.cpp: implementation of the CConsole class.
+﻿// XR_IOConsole.cpp: implementation of the CConsole class.
 // modify 15.05.2008 sea
 
 #include "stdafx.h"
@@ -141,7 +141,7 @@ bool CConsole::is_mark(Console_mark type)
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 CConsole::CConsole()
-	: m_hShader_back(NULL)
+	: m_hShader_back(nullptr)
 {
 	m_editor = xr_new<text_editor::line_editor>((u32)CONSOLE_BUF_SIZE);
 	m_cmd_history_max = cmd_history_max;
@@ -234,7 +234,7 @@ void CConsole::OutFont(LPCSTR text, float& pos_y)
 		int ln = 0;
 		PSTR one_line = (PSTR)_alloca((CONSOLE_BUF_SIZE + 1) * sizeof(char));
 
-		while (text[sz] && (ln + sz < CONSOLE_BUF_SIZE - 5)) // перенос строк
+		while (text[sz] && (ln + sz < CONSOLE_BUF_SIZE - 5)) // Ð¿ÐµÑ€ÐµÐ½Ð¾Ñ ÑÑ‚Ñ€Ð¾Ðº
 		{
 			one_line[ln + sz] = text[sz];
 			one_line[ln + sz + 1] = 0;

@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "UIActorMenu.h"
 #include "../inventory.h"
 #include "../inventoryOwner.h"
@@ -148,14 +148,14 @@ void CUIActorMenu::DropAllCurrentItem()
 		u32 const cnt = CurrentItem()->ChildsCount();
 		for (u32 i = 0; i < cnt; ++i)
 		{
-			CUICellItem* itm = CurrentItem()->PopChild(NULL);
+			CUICellItem* itm = CurrentItem()->PopChild(nullptr);
 			PIItem iitm = (PIItem)itm->m_pData;
 			SendEvent_Item_Drop(iitm, m_pActorInvOwner->object_id());
 		}
 
 		SendEvent_Item_Drop(CurrentIItem(), m_pActorInvOwner->object_id());
 	}
-	SetCurrentItem(NULL);
+	SetCurrentItem(nullptr);
 }
 
 bool CUIActorMenu::DropAllItemsFromRuck(bool quest_force)
@@ -181,14 +181,14 @@ bool CUIActorMenu::DropAllItemsFromRuck(bool quest_force)
 		u32 const cnt = ci->ChildsCount();
 		for (u32 j = 0; j < cnt; ++j)
 		{
-			CUICellItem* child_ci = ci->PopChild(NULL);
+			CUICellItem* child_ci = ci->PopChild(nullptr);
 			PIItem child_item = (PIItem)child_ci->m_pData;
 			SendEvent_Item_Drop(child_item, m_pActorInvOwner->object_id());
 		}
 		SendEvent_Item_Drop(item, m_pActorInvOwner->object_id());
 	}
 
-	SetCurrentItem(NULL);
+	SetCurrentItem(nullptr);
 	return true;
 }
 
@@ -408,7 +408,7 @@ void CUIActorMenu::AttachAddon(PIItem item_to_upgrade)
 
 	item_to_upgrade->Attach(CurrentIItem(), true);
 
-	SetCurrentItem(NULL);
+	SetCurrentItem(nullptr);
 }
 
 void CUIActorMenu::DetachAddon(LPCSTR addon_name, PIItem itm)
@@ -452,7 +452,7 @@ void CUIActorMenu::InitInventoryContents(CUIDragDropListEx* pBagList)
 {
 	ClearAllLists();
 	m_UIPropertiesBox->Hide();
-	SetCurrentItem(NULL);
+	SetCurrentItem(nullptr);
 
 	CUIDragDropListEx* curr_list = nullptr;
 	//Slots
@@ -721,7 +721,7 @@ bool CUIActorMenu::ToSlot(CUICellItem* itm, bool force_place, u16 slot_id)
 
 		while (i->ChildsCount())
 		{
-			CUICellItem* child = i->PopChild(NULL);
+			CUICellItem* child = i->PopChild(nullptr);
 			old_owner->SetItem(child);
 		}
 
@@ -1160,7 +1160,7 @@ void CUIActorMenu::PropertiesBoxForSlots(PIItem item, bool& b_show)
 	CBackpack* pBackpack = smart_cast<CBackpack*>(item);
 	CInventory& inv = m_pActorInvOwner->inventory();
 
-	// Флаг-признак для невлючения пункта контекстного меню: Dreess Outfit, если костюм уже надет
+	// Ð¤Ð»Ð°Ð³-Ð¿Ñ€Ð¸Ð·Ð½Ð°Ðº Ð´Ð»Ñ Ð½ÐµÐ²Ð»ÑŽÑ‡ÐµÐ½Ð¸Ñ Ð¿ÑƒÐ½ÐºÑ‚Ð° ÐºÐ¾Ð½Ñ‚ÐµÐºÑÑ‚Ð½Ð¾Ð³Ð¾ Ð¼ÐµÐ½ÑŽ: Dreess Outfit, ÐµÑÐ»Ð¸ ÐºÐ¾ÑÑ‚ÑŽÐ¼ ÑƒÐ¶Ðµ Ð½Ð°Ð´ÐµÑ‚
 	bool bAlreadyDressed = false;
 	u16 cur_slot = item->BaseSlot();
 
@@ -1169,13 +1169,13 @@ void CUIActorMenu::PropertiesBoxForSlots(PIItem item, bool& b_show)
 		!inv.SlotIsPersistent(cur_slot) && m_pActorInvOwner->inventory().ItemFromSlot(cur_slot) != item
 			/*&& inv.CanPutInSlot(item, cur_slot)*/)
 	{
-		m_UIPropertiesBox->AddItem("st_move_to_slot", NULL, INVENTORY_TO_SLOT_ACTION);
+		m_UIPropertiesBox->AddItem("st_move_to_slot", nullptr, INVENTORY_TO_SLOT_ACTION);
 		b_show = true;
 	}
 	if (item->Belt() &&
 		inv.CanPutInBelt(item))
 	{
-		m_UIPropertiesBox->AddItem("st_move_on_belt", NULL, INVENTORY_TO_BELT_ACTION);
+		m_UIPropertiesBox->AddItem("st_move_on_belt", nullptr, INVENTORY_TO_BELT_ACTION);
 		b_show = true;
 	}
 
@@ -1188,45 +1188,45 @@ void CUIActorMenu::PropertiesBoxForSlots(PIItem item, bool& b_show)
 				if (!pBackpack)
 				{
 					if (m_currMenuMode == mmDeadBodySearch)
-						m_UIPropertiesBox->AddItem("st_move_to_bag", NULL, INVENTORY_TO_BAG_ACTION);
+						m_UIPropertiesBox->AddItem("st_move_to_bag", nullptr, INVENTORY_TO_BAG_ACTION);
 					else
-						m_UIPropertiesBox->AddItem("st_unequip", NULL, INVENTORY_TO_BAG_ACTION);
+						m_UIPropertiesBox->AddItem("st_unequip", nullptr, INVENTORY_TO_BAG_ACTION);
 				}
 				else
-					m_UIPropertiesBox->AddItem("st_unequip_backpack", NULL, INVENTORY_TO_BAG_ACTION);
+					m_UIPropertiesBox->AddItem("st_unequip_backpack", nullptr, INVENTORY_TO_BAG_ACTION);
 			}
 			else
-				m_UIPropertiesBox->AddItem("st_undress_helmet", NULL, INVENTORY_TO_BAG_ACTION);
+				m_UIPropertiesBox->AddItem("st_undress_helmet", nullptr, INVENTORY_TO_BAG_ACTION);
 		}
 		else
-			m_UIPropertiesBox->AddItem("st_undress_outfit", NULL, INVENTORY_TO_BAG_ACTION);
+			m_UIPropertiesBox->AddItem("st_undress_outfit", nullptr, INVENTORY_TO_BAG_ACTION);
 
 		bAlreadyDressed = true;
 		b_show = true;
 	}
 	if (pOutfit && !bAlreadyDressed)
 	{
-		m_UIPropertiesBox->AddItem("st_dress_outfit", NULL, INVENTORY_TO_SLOT_ACTION);
+		m_UIPropertiesBox->AddItem("st_dress_outfit", nullptr, INVENTORY_TO_SLOT_ACTION);
 		b_show = true;
 	}
 
 	CCustomOutfit* outfit_in_slot = m_pActorInvOwner->GetOutfit();
 	if (pHelmet && !bAlreadyDressed && (!outfit_in_slot || outfit_in_slot->bIsHelmetAvaliable))
 	{
-		m_UIPropertiesBox->AddItem("st_dress_helmet", NULL, INVENTORY_TO_SLOT_ACTION);
+		m_UIPropertiesBox->AddItem("st_dress_helmet", nullptr, INVENTORY_TO_SLOT_ACTION);
 		b_show = true;
 	}
 
 	if (pBackpack && !bAlreadyDressed && (!outfit_in_slot || outfit_in_slot->bIsBackpackAvaliable))
 	{
-		m_UIPropertiesBox->AddItem("st_equip_backpack", NULL, INVENTORY_TO_SLOT_ACTION);
+		m_UIPropertiesBox->AddItem("st_equip_backpack", nullptr, INVENTORY_TO_SLOT_ACTION);
 		b_show = true;
 	}
 }
 
 void CUIActorMenu::PropertiesBoxForWeapon(CUICellItem* cell_item, PIItem item, bool& b_show)
 {
-	//отсоединение аддонов от вещи
+	//Ð¾Ñ‚ÑÐ¾ÐµÐ´Ð¸Ð½ÐµÐ½Ð¸Ðµ Ð°Ð´Ð´Ð¾Ð½Ð¾Ð² Ð¾Ñ‚ Ð²ÐµÑ‰Ð¸
 	CWeapon* pWeapon = smart_cast<CWeapon*>(item);
 	if (!pWeapon)
 	{
@@ -1237,7 +1237,7 @@ void CUIActorMenu::PropertiesBoxForWeapon(CUICellItem* cell_item, PIItem item, b
 	{
 		if (pWeapon->IsGrenadeLauncherAttached())
 		{
-			m_UIPropertiesBox->AddItem("st_detach_gl", NULL, INVENTORY_DETACH_GRENADE_LAUNCHER_ADDON);
+			m_UIPropertiesBox->AddItem("st_detach_gl", nullptr, INVENTORY_DETACH_GRENADE_LAUNCHER_ADDON);
 			b_show = true;
 		}
 		else
@@ -1248,7 +1248,7 @@ void CUIActorMenu::PropertiesBoxForWeapon(CUICellItem* cell_item, PIItem item, b
 	{
 		if (pWeapon->IsScopeAttached())
 		{
-			m_UIPropertiesBox->AddItem("st_detach_scope", NULL, INVENTORY_DETACH_SCOPE_ADDON);
+			m_UIPropertiesBox->AddItem("st_detach_scope", nullptr, INVENTORY_DETACH_SCOPE_ADDON);
 			b_show = true;
 		}
 		else
@@ -1259,7 +1259,7 @@ void CUIActorMenu::PropertiesBoxForWeapon(CUICellItem* cell_item, PIItem item, b
 	{
 		if (pWeapon->IsSilencerAttached())
 		{
-			m_UIPropertiesBox->AddItem("st_detach_silencer", NULL, INVENTORY_DETACH_SILENCER_ADDON);
+			m_UIPropertiesBox->AddItem("st_detach_silencer", nullptr, INVENTORY_DETACH_SILENCER_ADDON);
 			b_show = true;
 		}
 		else
@@ -1283,7 +1283,7 @@ void CUIActorMenu::PropertiesBoxForWeapon(CUICellItem* cell_item, PIItem item, b
 		}
 		if (b)
 		{
-			m_UIPropertiesBox->AddItem("st_unload_magazine", NULL, INVENTORY_UNLOAD_MAGAZINE);
+			m_UIPropertiesBox->AddItem("st_unload_magazine", nullptr, INVENTORY_UNLOAD_MAGAZINE);
 			b_show = true;
 		}
 	}
@@ -1293,7 +1293,7 @@ void CUIActorMenu::PropertiesBoxForWeapon(CUICellItem* cell_item, PIItem item, b
 
 void CUIActorMenu::PropertiesBoxForAddon(PIItem item, bool& b_show)
 {
-	//присоединение аддонов к активному слоту (2 или 3)
+	//Ð¿Ñ€Ð¸ÑÐ¾ÐµÐ´Ð¸Ð½ÐµÐ½Ð¸Ðµ Ð°Ð´Ð´Ð¾Ð½Ð¾Ð² Ðº Ð°ÐºÑ‚Ð¸Ð²Ð½Ð¾Ð¼Ñƒ ÑÐ»Ð¾Ñ‚Ñƒ (2 Ð¸Ð»Ð¸ 3)
 
 	CScope* pScope = smart_cast<CScope*>(item);
 	CSilencer* pSilencer = smart_cast<CSilencer*>(item);
@@ -1378,7 +1378,7 @@ void CUIActorMenu::PropertiesBoxForUsing(PIItem item, bool& b_show)
 	act_str = READ_IF_EXISTS(pSettings, r_string, section_name, "default_use_text", 0);
 	if (act_str)
 	{
-		m_UIPropertiesBox->AddItem(act_str, NULL, INVENTORY_EAT_ACTION);
+		m_UIPropertiesBox->AddItem(act_str, nullptr, INVENTORY_EAT_ACTION);
 		b_show = true;
 	}
 	else
@@ -1414,7 +1414,7 @@ void CUIActorMenu::PropertiesBoxForUsing(PIItem item, bool& b_show)
 		}
 		if (act_str)
 		{
-			m_UIPropertiesBox->AddItem(act_str, NULL, INVENTORY_EAT_ACTION);
+			m_UIPropertiesBox->AddItem(act_str, nullptr, INVENTORY_EAT_ACTION);
 			b_show = true;
 		}
 	}
@@ -1429,7 +1429,7 @@ void CUIActorMenu::PropertiesBoxForUsing(PIItem item, bool& b_show)
 			act_str = funct1(GO->lua_game_object());
 			if (act_str)
 			{
-				m_UIPropertiesBox->AddItem(act_str, NULL, INVENTORY_EAT2_ACTION);
+				m_UIPropertiesBox->AddItem(act_str, nullptr, INVENTORY_EAT2_ACTION);
 				b_show = true;
 			}
 		}
@@ -1445,7 +1445,7 @@ void CUIActorMenu::PropertiesBoxForUsing(PIItem item, bool& b_show)
 			act_str = funct1(GO->lua_game_object());
 			if (act_str)
 			{
-				m_UIPropertiesBox->AddItem(act_str, NULL, INVENTORY_EAT3_ACTION);
+				m_UIPropertiesBox->AddItem(act_str, nullptr, INVENTORY_EAT3_ACTION);
 				b_show = true;
 			}
 		}
@@ -1461,7 +1461,7 @@ void CUIActorMenu::PropertiesBoxForUsing(PIItem item, bool& b_show)
 			act_str = funct1(GO->lua_game_object());
 			if (act_str)
 			{
-				m_UIPropertiesBox->AddItem(act_str, NULL, INVENTORY_EAT4_ACTION);
+				m_UIPropertiesBox->AddItem(act_str, nullptr, INVENTORY_EAT4_ACTION);
 				b_show = true;
 			}
 		}
@@ -1477,7 +1477,7 @@ void CUIActorMenu::PropertiesBoxForUsing(PIItem item, bool& b_show)
 			act_str = funct1(GO->lua_game_object());
 			if (act_str)
 			{
-				m_UIPropertiesBox->AddItem(act_str, NULL, INVENTORY_EAT5_ACTION);
+				m_UIPropertiesBox->AddItem(act_str, nullptr, INVENTORY_EAT5_ACTION);
 				b_show = true;
 			}
 		}
@@ -1493,7 +1493,7 @@ void CUIActorMenu::PropertiesBoxForUsing(PIItem item, bool& b_show)
 			act_str = funct1(GO->lua_game_object());
 			if (act_str)
 			{
-				m_UIPropertiesBox->AddItem(act_str, NULL, INVENTORY_EAT6_ACTION);
+				m_UIPropertiesBox->AddItem(act_str, nullptr, INVENTORY_EAT6_ACTION);
 				b_show = true;
 			}
 		}
@@ -1509,7 +1509,7 @@ void CUIActorMenu::PropertiesBoxForUsing(PIItem item, bool& b_show)
 			act_str = funct1(GO->lua_game_object());
 			if (act_str)
 			{
-				m_UIPropertiesBox->AddItem(act_str, NULL, INVENTORY_EAT7_ACTION);
+				m_UIPropertiesBox->AddItem(act_str, nullptr, INVENTORY_EAT7_ACTION);
 				b_show = true;
 			}
 		}
@@ -1525,7 +1525,7 @@ void CUIActorMenu::PropertiesBoxForUsing(PIItem item, bool& b_show)
 			act_str = funct1(GO->lua_game_object());
 			if (act_str)
 			{
-				m_UIPropertiesBox->AddItem(act_str, NULL, INVENTORY_EAT8_ACTION);
+				m_UIPropertiesBox->AddItem(act_str, nullptr, INVENTORY_EAT8_ACTION);
 				b_show = true;
 			}
 		}
@@ -1541,7 +1541,7 @@ void CUIActorMenu::PropertiesBoxForUsing(PIItem item, bool& b_show)
 			act_str = funct1(GO->lua_game_object());
 			if (act_str)
 			{
-				m_UIPropertiesBox->AddItem(act_str, NULL, INVENTORY_EAT9_ACTION);
+				m_UIPropertiesBox->AddItem(act_str, nullptr, INVENTORY_EAT9_ACTION);
 				b_show = true;
 			}
 		}
@@ -1557,7 +1557,7 @@ void CUIActorMenu::PropertiesBoxForUsing(PIItem item, bool& b_show)
 			act_str = funct1(GO->lua_game_object());
 			if (act_str)
 			{
-				m_UIPropertiesBox->AddItem(act_str, NULL, INVENTORY_EAT10_ACTION);
+				m_UIPropertiesBox->AddItem(act_str, nullptr, INVENTORY_EAT10_ACTION);
 				b_show = true;
 			}
 		}
@@ -1573,7 +1573,7 @@ void CUIActorMenu::PropertiesBoxForUsing(PIItem item, bool& b_show)
 			act_str = funct1(GO->lua_game_object());
 			if (act_str)
 			{
-				m_UIPropertiesBox->AddItem(act_str, NULL, INVENTORY_EAT11_ACTION);
+				m_UIPropertiesBox->AddItem(act_str, nullptr, INVENTORY_EAT11_ACTION);
 				b_show = true;
 			}
 		}
@@ -1587,7 +1587,7 @@ void CUIActorMenu::PropertiesBoxForPlaying(PIItem item, bool& b_show)
 		return;
 
 	LPCSTR act_str = "st_play";
-	m_UIPropertiesBox->AddItem(act_str, NULL, INVENTORY_PLAY_ACTION);
+	m_UIPropertiesBox->AddItem(act_str, nullptr, INVENTORY_PLAY_ACTION);
 	b_show = true;
 }
 
@@ -1595,7 +1595,7 @@ void CUIActorMenu::PropertiesBoxForDrop(CUICellItem* cell_item, PIItem item, boo
 {
 	if (!item->IsQuestItem())
 	{
-		m_UIPropertiesBox->AddItem("st_drop", NULL, INVENTORY_DROP_ACTION);
+		m_UIPropertiesBox->AddItem("st_drop", nullptr, INVENTORY_DROP_ACTION);
 		b_show = true;
 
 		if (cell_item->ChildsCount())
@@ -1613,7 +1613,7 @@ void CUIActorMenu::PropertiesBoxForRepair(PIItem item, bool& b_show)
 
 	if ((pOutfit || pWeapon || pHelmet) && item->GetCondition() < 0.99f)
 	{
-		m_UIPropertiesBox->AddItem("ui_inv_repair", NULL, INVENTORY_REPAIR);
+		m_UIPropertiesBox->AddItem("ui_inv_repair", nullptr, INVENTORY_REPAIR);
 		b_show = true;
 	}
 }
@@ -1623,7 +1623,7 @@ void CUIActorMenu::PropertiesBoxForDonate(PIItem item, bool& b_show)
 {
 	if (!item->IsQuestItem())
 	{
-		m_UIPropertiesBox->AddItem("st_donate", NULL, INVENTORY_DONATE_ACTION);
+		m_UIPropertiesBox->AddItem("st_donate", nullptr, INVENTORY_DONATE_ACTION);
 		b_show = true;
 	}
 }
@@ -1989,7 +1989,7 @@ void CUIActorMenu::RefreshCurrentItemCell()
 
 			while (parent->ChildsCount())
 			{
-				CUICellItem* child = parent->PopChild(NULL);
+				CUICellItem* child = parent->PopChild(nullptr);
 				invlist->SetItem(child);
 			}
 

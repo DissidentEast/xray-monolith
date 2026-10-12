@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "ai_monster_squad.h"
 #include "../../entity.h"
 #include "../../entity_alive.h"
@@ -18,39 +18,39 @@ CMonsterSquad::~CMonsterSquad()
 
 void CMonsterSquad::RegisterMember(CEntity* pE)
 {
-	// Добавить цель
+	// Ð”Ð¾Ð±Ð°Ð²Ð¸Ñ‚ÑŒ Ñ†ÐµÐ»ÑŒ
 	SMemberGoal G;
 	m_goals.insert(mk_pair(pE, G));
 
-	// Добавить команду
+	// Ð”Ð¾Ð±Ð°Ð²Ð¸Ñ‚ÑŒ ÐºÐ¾Ð¼Ð°Ð½Ð´Ñƒ
 	SSquadCommand C;
 	C.type = SC_NONE;
 	m_commands.insert(mk_pair(pE, C));
 
-	// установить лидера
+	// ÑƒÑÑ‚Ð°Ð½Ð¾Ð²Ð¸Ñ‚ÑŒ Ð»Ð¸Ð´ÐµÑ€Ð°
 	if (!leader) leader = pE;
 }
 
 void CMonsterSquad::RemoveMember(CEntity* pE)
 {
-	// удалить из целей
+	// ÑƒÐ´Ð°Ð»Ð¸Ñ‚ÑŒ Ð¸Ð· Ñ†ÐµÐ»ÐµÐ¹
 	MEMBER_GOAL_MAP_IT it_goal = m_goals.find(pE);
 	if (it_goal == m_goals.end()) return;
 	m_goals.erase(it_goal);
 
-	// удалить из команд
+	// ÑƒÐ´Ð°Ð»Ð¸Ñ‚ÑŒ Ð¸Ð· ÐºÐ¾Ð¼Ð°Ð½Ð´
 	MEMBER_COMMAND_MAP_IT it_command = m_commands.find(pE);
 	if (it_command == m_commands.end()) return;
 	m_commands.erase(it_command);
 
-	// если удаляемый елемент является лидером - переназначить лидера
+	// ÐµÑÐ»Ð¸ ÑƒÐ´Ð°Ð»ÑÐµÐ¼Ñ‹Ð¹ ÐµÐ»ÐµÐ¼ÐµÐ½Ñ‚ ÑÐ²Ð»ÑÐµÑ‚ÑÑ Ð»Ð¸Ð´ÐµÑ€Ð¾Ð¼ - Ð¿ÐµÑ€ÐµÐ½Ð°Ð·Ð½Ð°Ñ‡Ð¸Ñ‚ÑŒ Ð»Ð¸Ð´ÐµÑ€Ð°
 	if (leader == pE)
 	{
 		if (m_goals.empty()) leader = 0;
 		else leader = m_goals.begin()->first;
 	}
 
-	// усли последний элемент, очистить залоченные каверы
+	// ÑƒÑÐ»Ð¸ Ð¿Ð¾ÑÐ»ÐµÐ´Ð½Ð¸Ð¹ ÑÐ»ÐµÐ¼ÐµÐ½Ñ‚, Ð¾Ñ‡Ð¸ÑÑ‚Ð¸Ñ‚ÑŒ Ð·Ð°Ð»Ð¾Ñ‡ÐµÐ½Ð½Ñ‹Ðµ ÐºÐ°Ð²ÐµÑ€Ñ‹
 	if (m_goals.empty())
 	{
 		m_locked_covers.clear();
@@ -62,7 +62,7 @@ bool CMonsterSquad::SquadActive()
 {
 	if (!leader) return false;
 
-	// проверить количество живых объектов в группе
+	// Ð¿Ñ€Ð¾Ð²ÐµÑ€Ð¸Ñ‚ÑŒ ÐºÐ¾Ð»Ð¸Ñ‡ÐµÑÑ‚Ð²Ð¾ Ð¶Ð¸Ð²Ñ‹Ñ… Ð¾Ð±ÑŠÐµÐºÑ‚Ð¾Ð² Ð² Ð³Ñ€ÑƒÐ¿Ð¿Ðµ
 	u32 alive_num = 0;
 	for (MEMBER_GOAL_MAP_IT it = m_goals.begin(); it != m_goals.end(); it++)
 		if (it->first->g_Alive()) alive_num++;
@@ -76,7 +76,7 @@ u8 CMonsterSquad::squad_alife_count()
 {
 	if (!leader) return u8(0);
 
-	// проверить количество живых объектов в группе
+	// Ð¿Ñ€Ð¾Ð²ÐµÑ€Ð¸Ñ‚ÑŒ ÐºÐ¾Ð»Ð¸Ñ‡ÐµÑÑ‚Ð²Ð¾ Ð¶Ð¸Ð²Ñ‹Ñ… Ð¾Ð±ÑŠÐµÐºÑ‚Ð¾Ð² Ð² Ð³Ñ€ÑƒÐ¿Ð¿Ðµ
 	u8 alive_num = 0;
 	for (MEMBER_GOAL_MAP_IT it = m_goals.begin(); it != m_goals.end(); it++)
 		if (it->first->g_Alive()) alive_num++;
@@ -145,13 +145,13 @@ void CMonsterSquad::GetCommand(CEntity* pE, SSquadCommand& com)
 
 void CMonsterSquad::UpdateSquadCommands()
 {
-	// Отменить все команды в группе
+	// ÐžÑ‚Ð¼ÐµÐ½Ð¸Ñ‚ÑŒ Ð²ÑÐµ ÐºÐ¾Ð¼Ð°Ð½Ð´Ñ‹ Ð² Ð³Ñ€ÑƒÐ¿Ð¿Ðµ
 	for (MEMBER_COMMAND_MAP_IT it = m_commands.begin(); it != m_commands.end(); it++)
 	{
 		it->second.type = SC_NONE;
 	}
 
-	// Удалить все цели, объекты которых невалидны или ушли в оффлайн
+	// Ð£Ð´Ð°Ð»Ð¸Ñ‚ÑŒ Ð²ÑÐµ Ñ†ÐµÐ»Ð¸, Ð¾Ð±ÑŠÐµÐºÑ‚Ñ‹ ÐºÐ¾Ñ‚Ð¾Ñ€Ñ‹Ñ… Ð½ÐµÐ²Ð°Ð»Ð¸Ð´Ð½Ñ‹ Ð¸Ð»Ð¸ ÑƒÑˆÐ»Ð¸ Ð² Ð¾Ñ„Ñ„Ð»Ð°Ð¹Ð½
 	for (MEMBER_GOAL_MAP_IT it_goal = m_goals.begin(); it_goal != m_goals.end(); ++it_goal)
 	{
 		SMemberGoal goal = it_goal->second;
@@ -167,7 +167,7 @@ void CMonsterSquad::UpdateSquadCommands()
 
 void CMonsterSquad::remove_links(CObject* O)
 {
-	// Удалить все цели, объекты которых невалидны или ушли в оффлайн
+	// Ð£Ð´Ð°Ð»Ð¸Ñ‚ÑŒ Ð²ÑÐµ Ñ†ÐµÐ»Ð¸, Ð¾Ð±ÑŠÐµÐºÑ‚Ñ‹ ÐºÐ¾Ñ‚Ð¾Ñ€Ñ‹Ñ… Ð½ÐµÐ²Ð°Ð»Ð¸Ð´Ð½Ñ‹ Ð¸Ð»Ð¸ ÑƒÑˆÐ»Ð¸ Ð² Ð¾Ñ„Ñ„Ð»Ð°Ð¹Ð½
 	for (MEMBER_GOAL_MAP_IT it_goal = m_goals.begin(); it_goal != m_goals.end(); ++it_goal)
 	{
 		SMemberGoal goal = it_goal->second;
@@ -178,7 +178,7 @@ void CMonsterSquad::remove_links(CObject* O)
 		}
 	}
 
-	// Удалить все цели, объекты которых невалидны или ушли в оффлайн
+	// Ð£Ð´Ð°Ð»Ð¸Ñ‚ÑŒ Ð²ÑÐµ Ñ†ÐµÐ»Ð¸, Ð¾Ð±ÑŠÐµÐºÑ‚Ñ‹ ÐºÐ¾Ñ‚Ð¾Ñ€Ñ‹Ñ… Ð½ÐµÐ²Ð°Ð»Ð¸Ð´Ð½Ñ‹ Ð¸Ð»Ð¸ ÑƒÑˆÐ»Ð¸ Ð² Ð¾Ñ„Ñ„Ð»Ð°Ð¹Ð½
 	for (MEMBER_COMMAND_MAP_IT it = m_commands.begin(); it != m_commands.end(); it++)
 	{
 		SSquadCommand com = it->second;
@@ -271,7 +271,7 @@ squad_grouping_behaviour::squad_grouping_behaviour(CEntity* self,
                                                    Fvector cohesion_factor,
                                                    Fvector separate_factor,
                                                    float max_separate_range) :
-	self(self), squad(NULL),
+	self(self), squad(nullptr),
 	steering_behaviour::grouping::params
 	(cohesion_factor, separate_factor, max_separate_range)
 {

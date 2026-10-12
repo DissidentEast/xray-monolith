@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "actor.h"
 #include "customdetector.h"
 #include "weapon.h"
@@ -334,7 +334,7 @@ void CActor::OnEvent(NET_Packet& P, u16 type)
 			u16 id = P.r_u16();
 			CGameObject* GO = smart_cast<CGameObject*>(m_holder);
 			VERIFY(id==GO->ID());
-			use_Holder(NULL);
+			use_Holder(nullptr);
 		}
 		break;
 	case GEG_PLAYER_PLAY_HEADSHOT_PARTICLE:

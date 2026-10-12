@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "NET_Common.h"
 #include "net_client.h"
 #include "net_server.h"
@@ -456,7 +456,7 @@ BOOL IPureClient::Connect(LPCSTR options)
 		//	};	
 		//---------------------------
 		// Create the IDirectPlay8Client object.
-		HRESULT CoCreateInstanceRes = CoCreateInstance(XR_GUID(CLSID_DirectPlay8Client), NULL, CLSCTX_INPROC_SERVER,
+		HRESULT CoCreateInstanceRes = CoCreateInstance(XR_GUID(CLSID_DirectPlay8Client), nullptr, CLSCTX_INPROC_SERVER,
 		                                               XR_GUID(IID_IDirectPlay8Client), (LPVOID*)&NET);
 		//---------------------------	
 		if (CoCreateInstanceRes != S_OK)
@@ -477,7 +477,7 @@ BOOL IPureClient::Connect(LPCSTR options)
 
 		// Create our IDirectPlay8Address Device Address, --- Set the SP for our Device Address
 		net_Address_device = nullptr;
-		R_CHK(CoCreateInstance (XR_GUID(CLSID_DirectPlay8Address),NULL, CLSCTX_INPROC_SERVER, XR_GUID(IID_IDirectPlay8Address),(LPVOID*) &
+		R_CHK(CoCreateInstance (XR_GUID(CLSID_DirectPlay8Address),nullptr, CLSCTX_INPROC_SERVER, XR_GUID(IID_IDirectPlay8Address),(LPVOID*) &
 			net_Address_device ));
 		R_CHK(net_Address_device->SetSP(bSimulator? &CLSID_NETWORKSIMULATOR_DP8SP_TCPIP : &XR_GUID(CLSID_DP8SP_TCPIP) ));
 
@@ -486,7 +486,7 @@ BOOL IPureClient::Connect(LPCSTR options)
 		R_CHK(MultiByteToWideChar(CP_ACP, 0, server_name, -1, ServerNameUNICODE, 256 ));
 
 		net_Address_server = nullptr;
-		R_CHK(CoCreateInstance (XR_GUID(CLSID_DirectPlay8Address),NULL, CLSCTX_INPROC_SERVER, XR_GUID(IID_IDirectPlay8Address),(LPVOID*) &
+		R_CHK(CoCreateInstance (XR_GUID(CLSID_DirectPlay8Address),nullptr, CLSCTX_INPROC_SERVER, XR_GUID(IID_IDirectPlay8Address),(LPVOID*) &
 			net_Address_server ));
 		R_CHK(net_Address_server->SetSP (bSimulator? &CLSID_NETWORKSIMULATOR_DP8SP_TCPIP : &XR_GUID(CLSID_DP8SP_TCPIP) ));
 		R_CHK(net_Address_server->AddComponent (DPNA_KEY_HOSTNAME, ServerNameUNICODE, 2*u32(wcslen(ServerNameUNICODE) +

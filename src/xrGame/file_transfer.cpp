@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "xrMessages.h"
 #include "file_transfer.h"
 #include "Level.h"
@@ -394,7 +394,7 @@ namespace file_transfer
 
 
 	client_site::client_site() :
-		m_transfering(NULL)
+		m_transfering(nullptr)
 	{
 #ifdef DEBUG
 	m_stat_graph = nullptr;

@@ -1,4 +1,4 @@
-// HUDCrosshair.cpp:  крестик прицела, отображающий текущую дисперсию
+﻿// HUDCrosshair.cpp:  ÐºÑ€ÐµÑÑ‚Ð¸Ðº Ð¿Ñ€Ð¸Ñ†ÐµÐ»Ð°, Ð¾Ñ‚Ð¾Ð±Ñ€Ð°Ð¶Ð°ÑŽÑ‰Ð¸Ð¹ Ñ‚ÐµÐºÑƒÑ‰ÑƒÑŽ Ð´Ð¸ÑÐ¿ÐµÑ€ÑÐ¸ÑŽ
 // 
 //////////////////////////////////////////////////////////////////////
 
@@ -201,7 +201,7 @@ void CHUDCrosshair::RenderWireCrosshair()
 
 	// Project vertices for accurate scaling
 	UIRender->StartPrimitive(8, IUIRender::ptLineList, UI().m_currentPointType);
-	PushVerts(verts, NULL, 8, mat, pos);
+	PushVerts(verts, nullptr, 8, mat, pos);
 
 	// Render a 1px wide line  for the center dot
 	UIRender->PushPoint(pos.x - 0.5f, pos.y, 0, crossColor, 0, 0);

@@ -1,4 +1,4 @@
-////////////////////////////////////////////////////////////////////////////
+﻿////////////////////////////////////////////////////////////////////////////
 //	Module 		: UISecondTaskWnd.cpp
 //	Created 	: 30.05.2008
 //	Author		: Evgeniy Sokolov
@@ -90,7 +90,7 @@ void UITaskListWnd::OnMouseScroll(float iDirection)
 void UITaskListWnd::Show(bool status)
 {
 	inherited::Show(status);
-	GetMessageTarget()->SendMessage(this, PDA_TASK_HIDE_HINT, NULL);
+	GetMessageTarget()->SendMessage(this, PDA_TASK_HIDE_HINT, nullptr);
 	if (status)
 		UpdateList();
 }
@@ -98,13 +98,13 @@ void UITaskListWnd::Show(bool status)
 void UITaskListWnd::OnFocusReceive()
 {
 	inherited::OnFocusReceive();
-	GetMessageTarget()->SendMessage(this, PDA_TASK_HIDE_HINT, NULL);
+	GetMessageTarget()->SendMessage(this, PDA_TASK_HIDE_HINT, nullptr);
 }
 
 void UITaskListWnd::OnFocusLost()
 {
 	inherited::OnFocusLost();
-	GetMessageTarget()->SendMessage(this, PDA_TASK_HIDE_HINT, NULL);
+	GetMessageTarget()->SendMessage(this, PDA_TASK_HIDE_HINT, nullptr);
 }
 
 void UITaskListWnd::Update()
@@ -227,7 +227,7 @@ void UITaskListWndItem::hide_hint()
 {
 	show_hint_can = false;
 	show_hint = false;
-	GetMessageTarget()->SendMessage(this, PDA_TASK_HIDE_HINT, NULL);
+	GetMessageTarget()->SendMessage(this, PDA_TASK_HIDE_HINT, nullptr);
 }
 
 void UITaskListWndItem::Update()

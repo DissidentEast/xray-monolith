@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "game_cl_artefacthunt.h"
 #include "xrMessages.h"
 #include "level.h"
@@ -369,8 +369,8 @@ void game_cl_ArtefactHunt::shedule_Update(u32 dt)
 		return;
 
 	//out game information
-	m_game_ui->SetBuyMsgCaption(NULL);
-	m_game_ui->SetPressBuyMsgCaption(NULL);
+	m_game_ui->SetBuyMsgCaption(nullptr);
+	m_game_ui->SetPressBuyMsgCaption(nullptr);
 
 	switch (m_phase)
 	{
@@ -409,12 +409,12 @@ void game_cl_ArtefactHunt::shedule_Update(u32 dt)
 						if (local_player->testFlag(GAME_PLAYER_FLAG_VERY_VERY_DEAD))
 							m_game_ui->SetPressJumpMsgCaption("mp_press_fire2spectator");
 						else
-							m_game_ui->SetPressJumpMsgCaption(NULL);
+							m_game_ui->SetPressJumpMsgCaption(nullptr);
 					};
 				}
 				else
 				{
-					if (m_game_ui) m_game_ui->SetBuyMsgCaption(NULL);
+					if (m_game_ui) m_game_ui->SetBuyMsgCaption(nullptr);
 					if (m_bTeamSelected && m_bSkinSelected)
 					{
 						if (iReinforcementTime != 0)
@@ -426,7 +426,7 @@ void game_cl_ArtefactHunt::shedule_Update(u32 dt)
 							}
 							else
 							{
-								if (m_game_ui) m_game_ui->SetPressJumpMsgCaption(NULL);
+								if (m_game_ui) m_game_ui->SetPressJumpMsgCaption(nullptr);
 							}
 						}
 						else

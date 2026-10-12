@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "UIGameCTA.h"
 
 #include <dinput.h>
@@ -46,15 +46,15 @@
 
 
 CUIGameCTA::CUIGameCTA()
-	: teamPanels(NULL),
-	  m_pFragLimitIndicator(NULL),
-	  m_team1_score(NULL),
-	  m_team2_score(NULL),
-	  m_pCurBuyMenu(NULL),
-	  m_pCurSkinMenu(NULL),
-	  m_pBuySpawnMsgBox(NULL),
-	  m_game(NULL),
-	  m_voteStatusWnd(NULL),
+	: teamPanels(nullptr),
+	  m_pFragLimitIndicator(nullptr),
+	  m_team1_score(nullptr),
+	  m_team2_score(nullptr),
+	  m_pCurBuyMenu(nullptr),
+	  m_pCurSkinMenu(nullptr),
+	  m_pBuySpawnMsgBox(nullptr),
+	  m_game(nullptr),
+	  m_voteStatusWnd(nullptr),
 	  m_team_panels_shown(false)
 {
 	m_pUITeamSelectWnd = xr_new<CUISpawnWnd>();
@@ -798,12 +798,12 @@ void CUIGameCTA::SetDemoPlayCaption(LPCSTR str)
 void CUIGameCTA::ResetCaptions()
 {
 	//bad ...
-	SetRoundResultCaption(NULL);
-	SetPressBuyMsgCaption(NULL);
-	SetPressJumpMsgCaption(NULL);
-	SetSpectatorMsgCaption(NULL);
-	SetWarmUpCaption(NULL);
-	SetTimeMsgCaption(NULL);
+	SetRoundResultCaption(nullptr);
+	SetPressBuyMsgCaption(nullptr);
+	SetPressJumpMsgCaption(nullptr);
+	SetSpectatorMsgCaption(nullptr);
+	SetWarmUpCaption(nullptr);
+	SetTimeMsgCaption(nullptr);
 }
 
 bool CUIGameCTA::IsBuySpawnShown()
@@ -950,10 +950,10 @@ void CUIGameCTA::LoadTeamDefaultPresetItems(const shared_str& caSection)
 
 	string256 ItemName;
 	string4096 DefItems;
-	// Читаем данные этого поля
+	// Ð§Ð¸Ñ‚Ð°ÐµÐ¼ Ð´Ð°Ð½Ð½Ñ‹Ðµ ÑÑ‚Ð¾Ð³Ð¾ Ð¿Ð¾Ð»Ñ
 	xr_strcpy(DefItems, pSettings->r_string(caSection, "default_items"));
 	u32 count = _GetItemCount(DefItems);
-	// теперь для каждое имя оружия, разделенные запятыми, заносим в массив
+	// Ñ‚ÐµÐ¿ÐµÑ€ÑŒ Ð´Ð»Ñ ÐºÐ°Ð¶Ð´Ð¾Ðµ Ð¸Ð¼Ñ Ð¾Ñ€ÑƒÐ¶Ð¸Ñ, Ñ€Ð°Ð·Ð´ÐµÐ»ÐµÐ½Ð½Ñ‹Ðµ Ð·Ð°Ð¿ÑÑ‚Ñ‹Ð¼Ð¸, Ð·Ð°Ð½Ð¾ÑÐ¸Ð¼ Ð² Ð¼Ð°ÑÑÐ¸Ð²
 	for (u32 i = 0; i < count; ++i)
 	{
 		_GetItem(DefItems, i, ItemName);

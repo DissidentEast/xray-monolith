@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 #include "uiframewindow.h"
@@ -24,7 +24,7 @@ public:
 
 	bool AddItem(LPCSTR str, void* pData = nullptr, u32 tag_value = 0);
 	bool AddItem_script(LPCSTR str) { return AddItem(str); };
-	bool AddItem_script_tag(LPCSTR str, u32 tag_value) { return AddItem(str, NULL, tag_value); };
+	bool AddItem_script_tag(LPCSTR str, u32 tag_value) { return AddItem(str, nullptr, tag_value); };
 	void AddHeader_script(LPCSTR str) { AddHeader(str); };
 	u32 GetItemsCount() { return m_UIListWnd.GetSize(); };
 	CUIListBoxItem* GetItemByIDX(int idx) { return m_UIListWnd.GetItemByIDX(idx); }

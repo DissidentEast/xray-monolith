@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "../../xrEngine/igame_persistent.h"
 #include "../../xrEngine/environment.h"
 
@@ -51,12 +51,12 @@ void CRenderTarget::phase_combine()
 	if (Device.m_SecondViewport.IsSVPActive()) //--#SM+#-- +SecondVP+ Fix for screen flickering
 	{
 		// clang-format off
-		gpu_id = (Device.dwFrame - 1) % HW.Caps.iGPUNum;	// Фeen "ia?цaнey" tonemapping (HDR) iоnлa вueл?чaнey двойноaо ?aндa?a. 
-															// Iобочнuй эффaeo - i?e ?aбоoa двойноaо ?aндa?a neо?оnoь eзiaнaнey tonemapping (HDR) iaдaao в двa ?aзa
-															// Ia?цaнea nвyзaно n oai, чoо HDR длy nвоaй ?aбоou o?aнeo уiaньoaннea eоiee "i?оoлuo eaд?ов"
-															// Эoe eaд?u оoноneoaльно iоoоae д?уa нa д?уaa, однaeо i?e вeл?чaнноi двойноi ?aндa?a
-															// в iоловeнa eaд?ов оeaзuвaaony ea?oeнea eз вoо?оaо ?aндa?a, e iоneольeу онa чanoо iоaao оoлeчaony iо цвaoу\y?eоnoe
-															// oо i?e iоiuoea nоздaнey "iлaвноaо" ia?aoодa iaaду нeie iолучaaony эффaeo ia?цaнey
+		gpu_id = (Device.dwFrame - 1) % HW.Caps.iGPUNum;	// Ð¤een "ia?Ñ†aÐ½ey" tonemapping (HDR) iÐ¾nÐ»a Ð²ueÐ»?Ñ‡aÐ½ey Ð´Ð²Ð¾Ð¹Ð½Ð¾aÐ¾ ?aÐ½Ð´a?a. 
+															// IÐ¾Ð±Ð¾Ñ‡Ð½uÐ¹ ÑÑ„Ñ„aeo - i?e ?aÐ±Ð¾oa Ð´Ð²Ð¾Ð¹Ð½Ð¾aÐ¾ ?aÐ½Ð´a?a neÐ¾?Ð¾noÑŒ eÐ·iaÐ½aÐ½ey tonemapping (HDR) iaÐ´aao Ð² Ð´Ð²a ?aÐ·a
+															// Ia?Ñ†aÐ½ea nÐ²yÐ·aÐ½Ð¾ n oai, Ñ‡oÐ¾ HDR Ð´Ð»y nÐ²Ð¾aÐ¹ ?aÐ±Ð¾ou o?aÐ½eo ÑƒiaÐ½ÑŒoaÐ½Ð½ea eÐ¾iee "i?Ð¾oÐ»uo eaÐ´?Ð¾Ð²"
+															// Ð­oe eaÐ´?u Ð¾oÐ½Ð¾neoaÐ»ÑŒÐ½Ð¾ iÐ¾oÐ¾ae Ð´?Ñƒa Ð½a Ð´?Ñƒaa, Ð¾Ð´Ð½aeÐ¾ i?e Ð²eÐ»?Ñ‡aÐ½Ð½Ð¾i Ð´Ð²Ð¾Ð¹Ð½Ð¾i ?aÐ½Ð´a?a
+															// Ð² iÐ¾Ð»Ð¾Ð²eÐ½a eaÐ´?Ð¾Ð² Ð¾eaÐ·uÐ²aaony ea?oeÐ½ea eÐ· Ð²oÐ¾?Ð¾aÐ¾ ?aÐ½Ð´a?a, e iÐ¾neÐ¾Ð»ÑŒeÑƒ Ð¾Ð½a Ñ‡anoÐ¾ iÐ¾aao Ð¾oÐ»eÑ‡aony iÐ¾ Ñ†Ð²aoÑƒ\y?eÐ¾noe
+															// oÐ¾ i?e iÐ¾iuoea nÐ¾Ð·Ð´aÐ½ey "iÐ»aÐ²Ð½Ð¾aÐ¾" ia?aoÐ¾Ð´a iaaÐ´Ñƒ Ð½eie iÐ¾Ð»ÑƒÑ‡aaony ÑÑ„Ñ„aeo ia?Ñ†aÐ½ey
 
 	}
 
@@ -430,12 +430,12 @@ void CRenderTarget::phase_combine()
 	if (RImplementation.o.dx10_msaa)
 	{
 		if (PP_Complex) u_setrt(rt_Generic, 0, 0, HW.pBaseZB); // LDR RT
-		else u_setrt(Device.dwWidth, Device.dwHeight, HW.pBaseRT,NULL,NULL, HW.pBaseZB);
+		else u_setrt(Device.dwWidth, Device.dwHeight, HW.pBaseRT,nullptr,NULL, HW.pBaseZB);
 	}
 	else
 	{
 		if (PP_Complex) u_setrt(rt_Color, 0, 0, HW.pBaseZB); // LDR RT
-		else u_setrt(Device.dwWidth, Device.dwHeight, HW.pBaseRT,NULL,NULL, HW.pBaseZB);
+		else u_setrt(Device.dwWidth, Device.dwHeight, HW.pBaseRT,nullptr,NULL, HW.pBaseZB);
 	}
 	//. u_setrt				( Device.dwWidth,Device.dwHeight,HW.pBaseRT,NULL,NULL,HW.pBaseZB);
 	RCache.set_CullMode(CULL_NONE);
@@ -567,8 +567,8 @@ void CRenderTarget::phase_combine()
 	//*** exposure-pipeline-clear
 	{
 		std::swap(rt_LUM_pool[gpu_id * 2 + 0], rt_LUM_pool[gpu_id * 2 + 1]);
-		t_LUM_src->surface_set(NULL);
-		t_LUM_dest->surface_set(NULL);
+		t_LUM_src->surface_set(nullptr);
+		t_LUM_dest->surface_set(nullptr);
 	}
 
 #ifdef DEBUG
@@ -679,12 +679,12 @@ void CRenderTarget::phase_combine()
 void CRenderTarget::phase_wallmarks()
 {
 	// Targets
-	RCache.set_RT(NULL, 2);
-	RCache.set_RT(NULL, 1);
+	RCache.set_RT(nullptr, 2);
+	RCache.set_RT(nullptr, 1);
 	if (!RImplementation.o.dx10_msaa)
-		u_setrt(rt_Color,NULL,NULL, HW.pBaseZB);
+		u_setrt(rt_Color,nullptr,NULL, HW.pBaseZB);
 	else
-		u_setrt(rt_Color,NULL,NULL, rt_MSAADepth->pZRT);
+		u_setrt(rt_Color,nullptr,NULL, rt_MSAADepth->pZRT);
 	// Stencil	- draw only where stencil >= 0x1
 	RCache.set_Stencil(TRUE, D3DCMP_LESSEQUAL, 0x01, 0xff, 0x00);
 	RCache.set_CullMode(CULL_CCW);

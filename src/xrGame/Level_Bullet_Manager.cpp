@@ -1,5 +1,5 @@
-// Level_Bullet_Manager.cpp:	для обеспечения полета пули по траектории
-//								все пули и осколки передаются сюда
+﻿// Level_Bullet_Manager.cpp:	Ð´Ð»Ñ Ð¾Ð±ÐµÑÐ¿ÐµÑ‡ÐµÐ½Ð¸Ñ Ð¿Ð¾Ð»ÐµÑ‚Ð° Ð¿ÑƒÐ»Ð¸ Ð¿Ð¾ Ñ‚Ñ€Ð°ÐµÐºÑ‚Ð¾Ñ€Ð¸Ð¸
+//								Ð²ÑÐµ Ð¿ÑƒÐ»Ð¸ Ð¸ Ð¾ÑÐºÐ¾Ð»ÐºÐ¸ Ð¿ÐµÑ€ÐµÐ´Ð°ÑŽÑ‚ÑÑ ÑÑŽÐ´Ð°
 //////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
@@ -837,7 +837,7 @@ BOOL CBulletManager::firetrace_callback(collide::rq_result& result, LPVOID param
 	if (fis_zero(data.collide_time))
 		return (TRUE);
 
-	//статический объект
+	//ÑÑ‚Ð°Ñ‚Ð¸Ñ‡ÐµÑÐºÐ¸Ð¹ Ð¾Ð±ÑŠÐµÐºÑ‚
 	if (!result.O)
 	{
 		CDB::TRI const& triangle = *(Level().ObjectSpace.GetStaticTris() + result.element);
@@ -845,7 +845,7 @@ BOOL CBulletManager::firetrace_callback(collide::rq_result& result, LPVOID param
 		return (FALSE);
 	}
 
-	//динамический объект
+	//Ð´Ð¸Ð½Ð°Ð¼Ð¸Ñ‡ÐµÑÐºÐ¸Ð¹ Ð¾Ð±ÑŠÐµÐºÑ‚
 	VERIFY(!(result.O->ID() == bullet.parent_id && bullet.fly_dist < parent_ignore_distance));
 	IKinematics* const kinematics = smart_cast<IKinematics*>(result.O->Visual());
 	if (!kinematics)
@@ -898,7 +898,7 @@ bool CBulletManager::trajectory_check_error(
 
 	collide::ray_defs RD(start, start_to_target, distance, CDB::OPT_FULL_TEST, collide::rqtBoth);
 	BOOL const result = Level().ObjectSpace.RayQuery(storage, RD, CBulletManager::firetrace_callback, &data,
-	                                                 CBulletManager::test_callback, NULL);
+	                                                 CBulletManager::test_callback, nullptr);
 	if (!result || (data.collide_time == 0.f))
 	{
 		add_bullet_point(bullet.start_position, previous_position, bullet.start_velocity, gravity, air_resistance,
@@ -1136,9 +1136,9 @@ void CBulletManager::Render()
 	else
 		m_bullet_points.clear_not_free	();
 
-	//0-рикошет
-	//1-застрявание пули в материале
-	//2-пробивание материала
+	//0-Ñ€Ð¸ÐºÐ¾ÑˆÐµÑ‚
+	//1-Ð·Ð°ÑÑ‚Ñ€ÑÐ²Ð°Ð½Ð¸Ðµ Ð¿ÑƒÐ»Ð¸ Ð² Ð¼Ð°Ñ‚ÐµÑ€Ð¸Ð°Ð»Ðµ
+	//2-Ð¿Ñ€Ð¾Ð±Ð¸Ð²Ð°Ð½Ð¸Ðµ Ð¼Ð°Ñ‚ÐµÑ€Ð¸Ð°Ð»Ð°
 	if (g_bDrawBulletHit) {
 		extern FvectorVec g_hit[];
 		FvectorIt it;

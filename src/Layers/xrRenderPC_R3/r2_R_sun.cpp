@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "../../xrEngine/igame_persistent.h"
 #include "../../xrEngine/irenderable.h"
 #include "../xrRender/FBasicVisual.h"
@@ -467,7 +467,7 @@ void CRender::render_sun()
 			add_Geometry(root);
 		}
 	}
-	set_Recorder(NULL);
+	set_Recorder(nullptr);
 
 	//	Prepare to interact with D3DX code
 	const D3DXMATRIX& m_View = *((D3DXMATRIX*)(&Device.mView));

@@ -1,4 +1,4 @@
-// WallmarksEngine.cpp: implementation of the CWallmarksEngine class.
+﻿// WallmarksEngine.cpp: implementation of the CWallmarksEngine class.
 //
 //////////////////////////////////////////////////////////////////////
 
@@ -63,7 +63,7 @@ CWallmarksEngine::CWallmarksEngine()
 {
 	static_pool.reserve(256);
 	marks.reserve(256);
-	hGeom.create(FVF::F_LIT, RCache.Vertex.Buffer(), NULL);
+	hGeom.create(FVF::F_LIT, RCache.Vertex.Buffer(), nullptr);
 }
 
 CWallmarksEngine::~CWallmarksEngine()

@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "uiscrollbar.h"
 #include "UI3tButton.h"
 #include "UIScrollBox.h"
@@ -95,7 +95,7 @@ void CUIScrollBar::InitScrollBar(Fvector2 pos, float length, bool bIsHorizontal,
 }
 
 
-//корректировка размеров скроллера
+//ÐºÐ¾Ñ€Ñ€ÐµÐºÑ‚Ð¸Ñ€Ð¾Ð²ÐºÐ° Ñ€Ð°Ð·Ð¼ÐµÑ€Ð¾Ð² ÑÐºÑ€Ð¾Ð»Ð»ÐµÑ€Ð°
 void CUIScrollBar::SetWidth(float width)
 {
 	if (width <= 0.0f) width = 1.0f;
@@ -152,7 +152,7 @@ void CUIScrollBar::UpdateScrollBar()
 {
 	if (IsShown())
 	{
-		//уcтановить размер и положение каретки
+		//ÑƒcÑ‚Ð°Ð½Ð¾Ð²Ð¸Ñ‚ÑŒ Ñ€Ð°Ð·Ð¼ÐµÑ€ Ð¸ Ð¿Ð¾Ð»Ð¾Ð¶ÐµÐ½Ð¸Ðµ ÐºÐ°Ñ€ÐµÑ‚ÐºÐ¸
 		if (m_iMaxPos == m_iMinPos) m_iMaxPos++;
 		float box_sz = float(m_ScrollWorkArea) * float(m_iPageSize ? m_iPageSize : 1) / float(m_iMaxPos - m_iMinPos);
 		if (IsRelevant())
@@ -362,7 +362,7 @@ void CUIScrollBar::SendMessage(CUIWindow* pWnd, s16 msg, void* pData)
 	{
 		if (msg == SCROLLBOX_MOVE)
 		{
-			//вычислить новое положение прокрутки
+			//Ð²Ñ‹Ñ‡Ð¸ÑÐ»Ð¸Ñ‚ÑŒ Ð½Ð¾Ð²Ð¾Ðµ Ð¿Ð¾Ð»Ð¾Ð¶ÐµÐ½Ð¸Ðµ Ð¿Ñ€Ð¾ÐºÑ€ÑƒÑ‚ÐºÐ¸
 			ClampByViewRect();
 			if (m_bIsHorizontal)
 			{
@@ -471,5 +471,5 @@ void CUIScrollBar::Draw()
 
 void CUIScrollBar::Refresh()
 {
-	SendMessage(m_ScrollBox, SCROLLBOX_MOVE, NULL);
+	SendMessage(m_ScrollBox, SCROLLBOX_MOVE, nullptr);
 }

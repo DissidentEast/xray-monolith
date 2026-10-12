@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "UIScrollView.h"
 #include "UIScrollBar.h"
 #include "UIFixedScrollBar.h"
@@ -329,7 +329,7 @@ void CUIScrollView::SetScrollPos(int value)
 
 	clamp(value, GetMinScrollPos(), GetMaxScrollPos());
 	m_VScrollBar->SetScrollPos(value);
-	OnScrollV(NULL,NULL);
+	OnScrollV(nullptr,NULL);
 }
 
 void CUIScrollView::ScrollToBegin()
@@ -338,7 +338,7 @@ void CUIScrollView::ScrollToBegin()
 		RecalcSize();
 
 	m_VScrollBar->SetScrollPos(m_VScrollBar->GetMinRange());
-	OnScrollV(NULL,NULL);
+	OnScrollV(nullptr,NULL);
 }
 
 void CUIScrollView::ScrollToEnd()
@@ -347,7 +347,7 @@ void CUIScrollView::ScrollToEnd()
 		RecalcSize();
 
 	m_VScrollBar->SetScrollPos(m_VScrollBar->GetMaxRange());
-	OnScrollV(NULL,NULL);
+	OnScrollV(nullptr,NULL);
 }
 
 void CUIScrollView::SetRightIndention(float val)

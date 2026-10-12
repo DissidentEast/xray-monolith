@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "artefact.h"
 #include "../xrphysics/PhysicsShell.h"
 #include "PhysicsShellHolder.h"
@@ -459,7 +459,7 @@ void CArtefact::OnStateSwitch(u32 S, u32 oldState)
 
 void CArtefact::PlayAnimIdle()
 {
-	PlayHUDMotion("anm_idle", TRUE, NULL, eIdle);
+	PlayHUDMotion("anm_idle", TRUE, nullptr, eIdle);
 }
 
 void CArtefact::OnAnimationEnd(u32 state)
@@ -533,7 +533,7 @@ void CArtefact::CreateArtefactActivation()
 }
 
 SArtefactDetectorsSupport::SArtefactDetectorsSupport(CArtefact* A)
-	: m_parent(A), m_currPatrolPath(NULL), m_currPatrolVertex(NULL), m_switchVisTime(0)
+	: m_parent(A), m_currPatrolPath(nullptr), m_currPatrolVertex(nullptr), m_switchVisTime(0)
 {
 }
 

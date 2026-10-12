@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "UIMpTradeWnd.h"
 #include "UIMpItemsStoreWnd.h"
 
@@ -93,12 +93,12 @@ bool CUIMpTradeWnd::BuyItemAction(SBuyItemInfo* itm)
 			SBuyItemInfo* tmp_iinfo = nullptr;
 			TryToSellItem(to_sell, false, tmp_iinfo);
 
-			bool b_res = TryToBuyItem(itm, bf_normal, NULL);
+			bool b_res = TryToBuyItem(itm, bf_normal, nullptr);
 
 			if (!b_res)
 			{
 				to_sell->SetState(SBuyItemInfo::e_undefined); //hack
-				bool b_res2 = TryToBuyItem(to_sell, bf_check_money | bf_ignore_team | bf_own_itm, NULL);
+				bool b_res2 = TryToBuyItem(to_sell, bf_check_money | bf_ignore_team | bf_own_itm, nullptr);
 				R_ASSERT(b_res2);
 				to_sell->SetState(SBuyItemInfo::e_undefined); //hack
 				to_sell->SetState(_stored_state); //hack
@@ -111,7 +111,7 @@ bool CUIMpTradeWnd::BuyItemAction(SBuyItemInfo* itm)
 		}
 	}
 
-	return TryToBuyItem(itm, bf_normal, NULL);
+	return TryToBuyItem(itm, bf_normal, nullptr);
 }
 
 bool CUIMpTradeWnd::TryToBuyItem(SBuyItemInfo* buy_itm, u32 buy_flags, SBuyItemInfo* itm_parent)
@@ -184,7 +184,7 @@ bool CUIMpTradeWnd::TryToBuyItem(SBuyItemInfo* buy_itm, u32 buy_flags, SBuyItemI
 		R_ASSERT2(!_new_owner->IsOwner(cell_itm), buy_item_name.c_str());
 
 		_new_owner->SetItem(cell_itm);
-		cell_itm->SetCustomDraw(NULL);
+		cell_itm->SetCustomDraw(nullptr);
 		cell_itm->SetAccelerator(0);
 
 		UpdateCorrespondingItemsForList(_new_owner);

@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "ui_base.h"
 #include "GamePersistent.h"
 #include "UICursor.h"
@@ -196,7 +196,7 @@ void ui_core::PopScissor()
 	m_Scissors.pop();
 
 	if (m_Scissors.empty())
-		UIRender->SetScissor(NULL);
+		UIRender->SetScissor(nullptr);
 	else
 	{
 		const Frect& top = m_Scissors.top();

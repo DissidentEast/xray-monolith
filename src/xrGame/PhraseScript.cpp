@@ -1,4 +1,4 @@
-#include "pch_script.h"
+﻿#include "pch_script.h"
 #include "PhraseScript.h"
 #include "script_engine.h"
 #include "ai_space.h"
@@ -11,7 +11,7 @@
 #include "actor.h"
 
 
-//загрузка из XML файла
+//Ð·Ð°Ð³Ñ€ÑƒÐ·ÐºÐ° Ð¸Ð· XML Ñ„Ð°Ð¹Ð»Ð°
 void CDialogScriptHelper::Load(CUIXml* uiXml, XML_NODE* phrase_node)
 {
 	LoadSequence(uiXml, phrase_node, "precondition", m_Preconditions);
@@ -32,7 +32,7 @@ void CDialogScriptHelper::LoadSequence(CUIXml* uiXml, XML_NODE* phrase_node,
 	str_vector.clear();
 	for (int i = 0; i < tag_num; ++i)
 	{
-		LPCSTR tag_text = uiXml->Read(phrase_node, tag, i, NULL);
+		LPCSTR tag_text = uiXml->Read(phrase_node, tag, i, nullptr);
 		str_vector.push_back(tag_text);
 	}
 }

@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "UIMapWnd.h"
 #include "UIMap.h"
 #include "UIXmlInit.h"
@@ -368,7 +368,7 @@ void CUIMapWnd::MapLocationRelcase(CMapLocation* ml)
 	{
 		CMapSpot* ms = smart_cast<CMapSpot*>(owner);
 		if (ms && ms->MapLocation() == ml) //CUITaskItem also can be a HintOwner
-			m_map_location_hint->SetOwner(NULL);
+			m_map_location_hint->SetOwner(nullptr);
 	}
 }
 
@@ -459,7 +459,7 @@ bool CUIMapWnd::OnMouseAction(float x, float y, EUIMessages mouse_action)
 		switch (mouse_action)
 		{
 		case WINDOW_RBUTTON_UP:
-			ActivatePropertiesBox(NULL);
+			ActivatePropertiesBox(nullptr);
 			break;
 		case WINDOW_MOUSE_MOVE:
 			if (pInput->iGetAsyncBtnState(0))
@@ -1136,7 +1136,7 @@ void CUIMapWnd::HideHint(CUIWindow* parent)
 
 void CUIMapWnd::HideCurHint()
 {
-	m_map_location_hint->SetOwner(NULL);
+	m_map_location_hint->SetOwner(nullptr);
 }
 
 void CUIMapWnd::Hint(const shared_str& text)

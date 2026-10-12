@@ -1,4 +1,4 @@
-// HW.cpp: implementation of the CHW class.
+﻿// HW.cpp: implementation of the CHW class.
 //////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
@@ -30,11 +30,11 @@ IDirect3DStateBlock9*	dwDebugSB = 0;
 #endif
 
 CHW::CHW() :
-	hD3D(NULL),
-	pD3D(NULL),
-	pDevice(NULL),
-	pBaseRT(NULL),
-	pBaseZB(NULL),
+	hD3D(nullptr),
+	pD3D(nullptr),
+	pDevice(nullptr),
+	pBaseRT(nullptr),
+	pBaseZB(nullptr),
 	m_move_window(true),
 	maxRefreshRate(265) //ECO_RENDER
 {
@@ -367,7 +367,7 @@ void CHW::CreateDevice(HWND m_hWnd, bool move_window)
 			"Can not find matching format for back buffer."
 		);
 		FlushLog();
-		MessageBox(NULL, "Failed to initialize graphics hardware.\nPlease try to restart the game.", "Error!",
+		MessageBox(nullptr, "Failed to initialize graphics hardware.\nPlease try to restart the game.", "Error!",
 		           MB_OK | MB_ICONERROR);
 		TerminateProcess(GetCurrentProcess(), 0);
 	}
@@ -438,7 +438,7 @@ void CHW::CreateDevice(HWND m_hWnd, bool move_window)
 		    "Please try to restart the game.\n"
 		    "CreateDevice returned 0x%08x(D3DERR_DEVICELOST)", R);
 		FlushLog();
-		MessageBox(NULL, "Failed to initialize graphics hardware.\nPlease try to restart the game.", "Error!",
+		MessageBox(nullptr, "Failed to initialize graphics hardware.\nPlease try to restart the game.", "Error!",
 		           MB_OK | MB_ICONERROR);
 		TerminateProcess(GetCurrentProcess(), 0);
 	};
@@ -738,7 +738,7 @@ void	fill_render_mode_list()
 
         if (bBreakLoop) break;
 
-        _tmp.push_back				(NULL);
+        _tmp.push_back				(nullptr);
         LPCSTR val					= NULL;
         switch (i)
         {
@@ -799,7 +799,7 @@ void fill_vid_mode_list(CHW* _hw)
 		if (_tmp.end() != std::find_if(_tmp.begin(), _tmp.end(), _uniq_mode(str)))
 			continue;
 
-		_tmp.push_back(NULL);
+		_tmp.push_back(nullptr);
 		_tmp.back() = xr_strdup(str);
 	}
 

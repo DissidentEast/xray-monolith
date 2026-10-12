@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "UIMpTradeWnd.h"
 #include "UIMpItemsStoreWnd.h"
 
@@ -42,15 +42,15 @@ bool CUIMpTradeWnd::OnKeyboardAction(int dik, EUIMessages keyboard_action)
 	{
 		if (dik == DIK_Q)
 		{
-			OnBtnPistolAmmoClicked(NULL, NULL);
+			OnBtnPistolAmmoClicked(nullptr, NULL);
 		}
 		else if (dik == DIK_W)
 		{
-			OnBtnRifleAmmoClicked(NULL, NULL);
+			OnBtnRifleAmmoClicked(nullptr, NULL);
 		}
 		else if (dik == DIK_E)
 		{
-			OnBtnRifleAmmo2Clicked(NULL, NULL);
+			OnBtnRifleAmmo2Clicked(nullptr, NULL);
 		}
 	}
 
@@ -311,7 +311,7 @@ bool CUIMpTradeWnd::OnItemLButtonClick(CUICellItem* itm)
 	const shared_str& buy_item_name = iinfo->m_name_sect;
 
 	SBuyItemInfo* pitem = CreateItem(buy_item_name, SBuyItemInfo::e_undefined, false);
-	bool b_res = TryToBuyItem(pitem, bf_normal, NULL);
+	bool b_res = TryToBuyItem(pitem, bf_normal, nullptr);
 	if (!b_res)
 	{
 		DestroyItem(pitem);
@@ -518,7 +518,7 @@ void CUIMpTradeWnd::ResetItems()
 	CleanUserItems();
 	m_store_hierarchy->Reset();
 	UpdateShop();
-	SetCurrentItem(NULL);
+	SetCurrentItem(nullptr);
 }
 
 bool CUIMpTradeWnd::CanBuyAllItems()

@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #pragma hdrstop
 
 #include "../xrRender/ResourceManager.h"
@@ -133,7 +133,7 @@ void CRT::create(LPCSTR Name, u32 w, u32 h, D3DFORMAT f, u32 SampleCount)
 		desc.BindFlags |= D3D11_BIND_UNORDERED_ACCESS;
 #endif
 
-	CHK_DX(HW.pDevice->CreateTexture2D( &desc, NULL, &pSurface ));
+	CHK_DX(HW.pDevice->CreateTexture2D( &desc, nullptr, &pSurface ));
 	HW.stats_manager.increment_stats_rtarget(pSurface);
 	// OK
 #ifdef DEBUG
@@ -286,7 +286,7 @@ void CRTC::create	(LPCSTR Name, u32 size,	D3DFORMAT f)
 
 	// Try to create texture/surface
 	DEV->Evict					();
-	_hr = HW.pDevice->CreateCubeTexture	(size, 1, D3DUSAGE_RENDERTARGET, f, D3DPOOL_DEFAULT, &pSurface,NULL);
+	_hr = HW.pDevice->CreateCubeTexture	(size, 1, D3DUSAGE_RENDERTARGET, f, D3DPOOL_DEFAULT, &pSurface,nullptr);
 	if (FAILED(_hr) || (0==pSurface))	return;
 
 	// OK

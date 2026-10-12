@@ -106,7 +106,7 @@ void CWeaponSSRS::OnEvent(NET_Packet& P, u16 type)
 			{
 				m_strippedRockets.erase(it);
 				if (CObject* rocket = Level().Objects.net_Find(id))
-					rocket->H_SetParent(NULL, true);
+					rocket->H_SetParent(nullptr, true);
 			}
 			else
 				inheritedRL::DetachRocket(id, bLaunch);
@@ -128,7 +128,7 @@ void CWeaponSSRS::UpdateCL()
 // Rocket section for a cartridge, NULL when its ammo has no fake_grenade_name
 static LPCSTR rocket_section(const CCartridge& cartridge)
 {
-	LPCSTR rocket = READ_IF_EXISTS(pSettings, r_string, cartridge.m_ammoSect.c_str(), "fake_grenade_name", NULL);
+	LPCSTR rocket = READ_IF_EXISTS(pSettings, r_string, cartridge.m_ammoSect.c_str(), "fake_grenade_name", nullptr);
 	if (rocket && rocket[0])
 		return rocket;
 

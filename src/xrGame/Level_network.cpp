@@ -1,4 +1,4 @@
-#include "pch_script.h"
+﻿#include "pch_script.h"
 #include "Level.h"
 #include "Level_Bullet_Manager.h"
 #include "xrserver.h"
@@ -143,7 +143,7 @@ void CLevel::net_Stop()
 	if (IsDemoPlay() && m_current_spectator) //destroying demo spectator ...
 	{
 		m_current_spectator->setDestroy(TRUE);
-		SetControlEntity(NULL); //m_current_spectator == CurrentControlEntity()
+		SetControlEntity(nullptr); //m_current_spectator == CurrentControlEntity()
 		m_current_spectator = nullptr;
 	}
 	else if (IsDemoSave() && !IsDemoInfoSaved())

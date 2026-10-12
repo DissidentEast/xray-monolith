@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  *  This file is part of PPMd project                                       *
  *  Written and distributed to public domain by Dmitry Shkarin 1997,        *
  *  1999-2001                                                               *
@@ -518,7 +518,7 @@ static PPM_CONTEXT* _FASTCALL ReduceOrder(PPM_CONTEXT::STATE* p, PPM_CONTEXT* pc
 	{
 		p1 = FoundState;
 		FoundState = p;
-		p->Successor = CreateSuccessors(FALSE,NULL, pc);
+		p->Successor = CreateSuccessors(FALSE,nullptr, pc);
 		FoundState = p1;
 	}
 	if (OrderFall == 1 && pc1 == MaxContext)

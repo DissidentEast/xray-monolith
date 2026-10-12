@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "pseudo_gigant.h"
 #include "pseudo_gigant_step_effector.h"
 #include "../../../actor.h"
@@ -274,7 +274,7 @@ void CPseudoGigant::on_activate_control(ControlCom::EControlType type)
 
 		// callback for start animation, will be triggered by everyone in radius
 		m_nearest.clear_not_free();
-		Level().ObjectSpace.GetNearest(m_nearest, Position(), 15.f, NULL);
+		Level().ObjectSpace.GetNearest(m_nearest, Position(), 15.f, nullptr);
 		for (u32 i = 0; i < m_nearest.size(); i++)
 		{
 			CPhysicsShellHolder* obj = smart_cast<CPhysicsShellHolder*>(m_nearest[i]);
@@ -291,9 +291,9 @@ void CPseudoGigant::on_activate_control(ControlCom::EControlType type)
 
 void CPseudoGigant::on_threaten_execute()
 {
-	// разбросить объекты
+	// Ñ€Ð°Ð·Ð±Ñ€Ð¾ÑÐ¸Ñ‚ÑŒ Ð¾Ð±ÑŠÐµÐºÑ‚Ñ‹
 	m_nearest.clear_not_free();
-	Level().ObjectSpace.GetNearest(m_nearest, Position(), 15.f, NULL);
+	Level().ObjectSpace.GetNearest(m_nearest, Position(), 15.f, nullptr);
 	for (u32 i = 0; i < m_nearest.size(); i++)
 	{
 		CPhysicsShellHolder* obj = smart_cast<CPhysicsShellHolder *>(m_nearest[i]);
@@ -359,7 +359,7 @@ void CPseudoGigant::on_threaten_execute()
 		obj->m_pPhysicsShell->applyImpulse(dir, 20 * obj->m_pPhysicsShell->getMass());
 	}
 
-	// играть звук
+	// Ð¸Ð³Ñ€Ð°Ñ‚ÑŒ Ð·Ð²ÑƒÐº
 	Fvector pos;
 	pos.set(Position());
 	pos.y += 0.1f;
@@ -369,7 +369,7 @@ void CPseudoGigant::on_threaten_execute()
 	extern Fvector4 ps_ssfx_grass_interactive;
 	g_pGamePersistent->GrassBendersAddExplosion(ID(), pos, Fvector().set(0, -99, 0), 1.33f, 5.0f, ps_ssfx_grass_interactive.w, 20);
 
-	// играть партиклы
+	// Ð¸Ð³Ñ€Ð°Ñ‚ÑŒ Ð¿Ð°Ñ€Ñ‚Ð¸ÐºÐ»Ñ‹
 	PlayParticles(m_kick_particles, pos, Direction());
 
 	CActor* pA = const_cast<CActor *>(smart_cast<const CActor *>(EnemyMan.get_enemy()));
@@ -382,7 +382,7 @@ void CPseudoGigant::on_threaten_execute()
 	hit_value = m_kick_damage - m_kick_damage * dist_to_enemy / m_threaten_dist_max;
 	clamp(hit_value, 0.f, 1.f);
 
-	// запустить эффектор
+	// Ð·Ð°Ð¿ÑƒÑÑ‚Ð¸Ñ‚ÑŒ ÑÑ„Ñ„ÐµÐºÑ‚Ð¾Ñ€
 	Actor()->Cameras().AddCamEffector(xr_new<CMonsterEffectorHit>(m_threaten_effector.ce_time,
 	                                                              m_threaten_effector.ce_amplitude * hit_value,
 	                                                              m_threaten_effector.ce_period_number,
@@ -391,7 +391,7 @@ void CPseudoGigant::on_threaten_execute()
 	                                                          m_threaten_effector.time_attack,
 	                                                          m_threaten_effector.time_release, hit_value));
 
-	// развернуть камеру
+	// Ñ€Ð°Ð·Ð²ÐµÑ€Ð½ÑƒÑ‚ÑŒ ÐºÐ°Ð¼ÐµÑ€Ñƒ
 	if (pA->cam_Active())
 	{
 		pA->cam_Active()->Move(Random.randI(2) ? kRIGHT : kLEFT, Random.randF(0.3f * hit_value));
@@ -400,7 +400,7 @@ void CPseudoGigant::on_threaten_execute()
 
 	Actor()->lock_accel_for(m_time_kick_actor_slow_down);
 
-	// Нанести хит
+	// ÐÐ°Ð½ÐµÑÑ‚Ð¸ Ñ…Ð¸Ñ‚
 	NET_Packet l_P;
 	SHit HS;
 

@@ -1,4 +1,4 @@
-// Entity.cpp: implementation of the CEntity class.
+﻿// Entity.cpp: implementation of the CEntity class.
 
 //////////////////////////////////////////////////////////////////////
 
@@ -87,7 +87,7 @@ void CEntity::Die(CObject* who)
 		Level().seniority_holder().team(g_Team()).squad(g_Squad()).group(g_Group()).unregister_member(this);
 }
 
-//обновление состояния
+//Ð¾Ð±Ð½Ð¾Ð²Ð»ÐµÐ½Ð¸Ðµ ÑÐ¾ÑÑ‚Ð¾ÑÐ½Ð¸Ñ
 float CEntity::CalcCondition(float hit)
 {
 	// If Local() - perform some logic
@@ -148,7 +148,7 @@ void CEntity::Load(LPCSTR section)
 #pragma todo("Jim to Dima: no specific figures or comments needed")
 	m_fMorale = 66.f;
 
-	//время убирания тела с уровня
+	//Ð²Ñ€ÐµÐ¼Ñ ÑƒÐ±Ð¸Ñ€Ð°Ð½Ð¸Ñ Ñ‚ÐµÐ»Ð° Ñ ÑƒÑ€Ð¾Ð²Ð½Ñ
 	m_dwBodyRemoveTime = READ_IF_EXISTS(pSettings, r_u32, section, "body_remove_time", BODY_REMOVE_TIME);
 	//////////////////////////////////////
 }
@@ -268,7 +268,7 @@ void CEntity::KillEntity(u16 whoID, BOOL bypass_actor_check /*AVO: added for act
 #ifdef ACTOR_BEFORE_DEATH_CALLBACK
 	if (IsGameTypeSingle() && (this->ID() == Actor()->ID()) && (bypass_actor_check != TRUE))
 	{
-		Actor()->use_HolderEx(NULL, false);
+		Actor()->use_HolderEx(nullptr, false);
 		Actor()->callback(GameObject::eActorBeforeDeath)(whoID);
 		return;
 	}
@@ -353,7 +353,7 @@ DLL_Pure* CEntity::_construct()
 {
 	inherited::_construct();
 	CDamageManager::_construct();
-	m_entity_condition = create_entity_condition(NULL);
+	m_entity_condition = create_entity_condition(nullptr);
 	return (this);
 }
 

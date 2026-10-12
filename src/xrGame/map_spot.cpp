@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "map_spot.h"
 #include "map_location.h"
 
@@ -85,7 +85,7 @@ void CMapSpot::Update()
 	{
 		if (Device.dwTimeGlobal > (m_dwFocusReceiveTime + 500))
 		{
-			GetMessageTarget()->SendMessage(this, MAP_SHOW_HINT, NULL);
+			GetMessageTarget()->SendMessage(this, MAP_SHOW_HINT, nullptr);
 		}
 	}
 }
@@ -100,7 +100,7 @@ bool CMapSpot::OnMouseAction(float x, float y, EUIMessages mouse_action)
 	{
 		m_lbtn_down_pos = GetUICursor().GetCursorPosition();
 		m_lbtn_armed    = true;
-		// Don't return true — the map needs the DOWN to begin pan tracking.
+		// Don't return true â€” the map needs the DOWN to begin pan tracking.
 	}
 	else if (mouse_action == WINDOW_LBUTTON_UP && m_lbtn_armed)
 	{
@@ -134,7 +134,7 @@ void CMapSpot::OnFocusLost()
 	// Disarm so a later UP after the cursor re-enters can't fire a stale click.
 	m_lbtn_armed = false;
 	inherited::OnFocusLost();
-	GetMessageTarget()->SendMessage(this, MAP_HIDE_HINT, NULL);
+	GetMessageTarget()->SendMessage(this, MAP_HIDE_HINT, nullptr);
 }
 
 void CMapSpot::show_static_border(bool status)
@@ -195,7 +195,7 @@ void CMiniMapSpot::Load(CUIXml* xml, LPCSTR path)
 	n = xml->NavigateToNode(buf, 0);
 	if (n)
 	{
-		LPCSTR texture = xml->Read(buf, 0, NULL);
+		LPCSTR texture = xml->Read(buf, 0, nullptr);
 		CUITextureMaster::InitTexture(texture, &m_UIStaticItem);
 		if (strchr(texture, '\\'))
 		{
@@ -216,7 +216,7 @@ void CMiniMapSpot::Load(CUIXml* xml, LPCSTR path)
 	n = xml->NavigateToNode(buf, 0);
 	if (n)
 	{
-		LPCSTR texture = xml->Read(buf, 0, NULL);
+		LPCSTR texture = xml->Read(buf, 0, nullptr);
 		CUITextureMaster::InitTexture(texture, &m_UIStaticItem);
 		if (strchr(texture, '\\'))
 		{
@@ -236,7 +236,7 @@ void CMiniMapSpot::Load(CUIXml* xml, LPCSTR path)
 	n = xml->NavigateToNode(buf, 0);
 	if (n)
 	{
-		LPCSTR texture = xml->Read(buf, 0, NULL);
+		LPCSTR texture = xml->Read(buf, 0, nullptr);
 		CUITextureMaster::InitTexture(texture, &m_UIStaticItem);
 		if (strchr(texture, '\\'))
 		{

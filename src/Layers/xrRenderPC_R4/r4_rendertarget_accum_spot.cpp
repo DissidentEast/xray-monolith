@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "../xrRender/du_cone.h"
 
 //extern Fvector du_cone_vertices[DU_CONE_NUMVERTEX];
@@ -226,9 +226,9 @@ void CRenderTarget::accum_spot(light* L)
 	if (!RImplementation.o.fp16_blend)
 	{
 		if (!RImplementation.o.dx10_msaa)
-			u_setrt(rt_Accumulator,NULL,NULL, HW.pBaseZB);
+			u_setrt(rt_Accumulator,nullptr,NULL, HW.pBaseZB);
 		else
-			u_setrt(rt_Accumulator,NULL,NULL, rt_MSAADepth->pZRT);
+			u_setrt(rt_Accumulator,nullptr,NULL, rt_MSAADepth->pZRT);
 		RCache.set_Element(s_accum_mask->E[SE_MASK_ACCUM_VOL]);
 		RCache.set_c("m_texgen", m_Texgen);
 		RCache.set_c("m_texgen_J", m_Texgen_J);
@@ -300,7 +300,7 @@ void CRenderTarget::accum_volumetric(light* L)
 			HW.pContext->ClearRenderTargetView(rt_ssfx_volumetric->pRT, ColorRGBA);
 		}
 
-		u_setrt(rt_ssfx_volumetric, NULL, NULL, NULL);
+		u_setrt(rt_ssfx_volumetric, nullptr, NULL, nullptr);
 
 		RCache.set_Stencil(FALSE);
 		RCache.set_CullMode(CULL_NONE);
@@ -672,7 +672,7 @@ void CRenderTarget::accum_volumetric(light* L)
 	/*
 		// blend-copy
 		if (!RImplementation.o.fp16_blend)	{
-			u_setrt						(rt_Accumulator,NULL,NULL,HW.pBaseZB);
+			u_setrt						(rt_Accumulator,nullptr,NULL,HW.pBaseZB);
 			RCache.set_Element			(s_accum_mask->E[SE_MASK_ACCUM_VOL]	);
 			RCache.set_c				("m_texgen",		m_Texgen);
 			RCache.set_c				("m_texgen_J",		m_Texgen_J	);

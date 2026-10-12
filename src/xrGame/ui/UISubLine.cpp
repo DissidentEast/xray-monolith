@@ -1,4 +1,4 @@
-// File:		UISubLine.cpp
+﻿// File:		UISubLine.cpp
 // Description:	Text line. Owns color attribute
 // Created:		04.04.2005
 // Author:		Serge Vynnycheko
@@ -55,7 +55,7 @@ CUISubLine& CUISubLine::operator=(const CUISubLine& other)
 }
 
 CUISubLine::CUISubLine()
-	: m_color(0), m_pTempLine(NULL), m_last_in_line(false)
+	: m_color(0), m_pTempLine(nullptr), m_last_in_line(false)
 {
 #ifdef LOG_ALL_LINES
 	ListSubLinesCount++;

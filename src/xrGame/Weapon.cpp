@@ -1,4 +1,4 @@
-////////////////////////////////////////////////////////////////////////////
+﻿////////////////////////////////////////////////////////////////////////////
 //	Modified by Axel DominatoR
 //	Last updated: 13/08/2015
 ////////////////////////////////////////////////////////////////////////////
@@ -76,7 +76,7 @@ float CWeapon::SDS_Radius(bool alt) {
 			scope_tex_name = alt ? m_secondary_scope_tex_name : m_primary_scope_tex_name;
 
 			// demonized: ugly hack to fix stuck scope texture on old scopes system
-			if (!READ_IF_EXISTS(pSettings, r_string, cNameSect(), "scope_texture", NULL)) {
+			if (!READ_IF_EXISTS(pSettings, r_string, cNameSect(), "scope_texture", nullptr)) {
 				scope_tex_name = nullptr;
 			}
 		}
@@ -326,7 +326,7 @@ void CWeapon::UpdateZoomParams() {
 	} else if (m_zoomtype == 1) //Alt
 	{
 		m_zoom_params.m_bUseDynamicZoom = m_zoom_params.m_bUseDynamicZoom_Alt || READ_IF_EXISTS(pSettings, r_bool, cNameSect(), "scope_dynamic_zoom_alt", false);
-		m_zoom_params.m_fScopeZoomFactor = (g_player_hud->m_adjust_mode ? g_player_hud->m_adjust_zoom_factor[2] : READ_IF_EXISTS(pSettings, r_float, cNameSect(), "scope_zoom_factor_alt", 0)) / (READ_IF_EXISTS(pSettings, r_string, cNameSect(), "scope_texture_alt", NULL) && zoomFlags.test(SDS_ZOOM) && (SDS_Radius(true) > 0.0) ? zoom_multiple : 1);
+		m_zoom_params.m_fScopeZoomFactor = (g_player_hud->m_adjust_mode ? g_player_hud->m_adjust_zoom_factor[2] : READ_IF_EXISTS(pSettings, r_float, cNameSect(), "scope_zoom_factor_alt", 0)) / (READ_IF_EXISTS(pSettings, r_string, cNameSect(), "scope_texture_alt", nullptr) && zoomFlags.test(SDS_ZOOM) && (SDS_Radius(true) > 0.0) ? zoom_multiple : 1);
 		m_zoom_params.m_fZoomStepCount = 0;
 	} else //Main Sight
 	{
@@ -385,12 +385,12 @@ void CWeapon::UpdateUIScope()
 		else
 		{
 			if (!m_primary_scope_tex_name) {
-				m_primary_scope_tex_name = READ_IF_EXISTS(pSettings, r_string, cNameSect(), "scope_texture", NULL);
+				m_primary_scope_tex_name = READ_IF_EXISTS(pSettings, r_string, cNameSect(), "scope_texture", nullptr);
 			}
 			scope_tex_name = m_primary_scope_tex_name;
 
 			// demonized: ugly hack to fix stuck scope texture on old scopes system
-			if (!READ_IF_EXISTS(pSettings, r_string, cNameSect(), "scope_texture", NULL)) {
+			if (!READ_IF_EXISTS(pSettings, r_string, cNameSect(), "scope_texture", nullptr)) {
 				scope_tex_name = nullptr;
 			}
 		}
@@ -398,7 +398,7 @@ void CWeapon::UpdateUIScope()
 	else if (m_zoomtype == 1)
 	{
 		if (!m_secondary_scope_tex_name) {
-			m_secondary_scope_tex_name = READ_IF_EXISTS(pSettings, r_string, cNameSect(), "scope_texture_alt", NULL);
+			m_secondary_scope_tex_name = READ_IF_EXISTS(pSettings, r_string, cNameSect(), "scope_texture_alt", nullptr);
 		}
 		scope_tex_name = m_secondary_scope_tex_name;
 	}
@@ -600,9 +600,9 @@ void CWeapon::Load(LPCSTR section)
 	iMagazineSize = pSettings->r_s32(section, "ammo_mag_size");
 
 	////////////////////////////////////////////////////
-	// дисперсия стрельбы
+	// Ð´Ð¸ÑÐ¿ÐµÑ€ÑÐ¸Ñ ÑÑ‚Ñ€ÐµÐ»ÑŒÐ±Ñ‹
 
-	//подбрасывание камеры во время отдачи
+	//Ð¿Ð¾Ð´Ð±Ñ€Ð°ÑÑ‹Ð²Ð°Ð½Ð¸Ðµ ÐºÐ°Ð¼ÐµÑ€Ñ‹ Ð²Ð¾ Ð²Ñ€ÐµÐ¼Ñ Ð¾Ñ‚Ð´Ð°Ñ‡Ð¸
 	u8 rm = READ_IF_EXISTS(pSettings, r_u8, section, "cam_return", 1);
 	cam_recoil.ReturnMode = (rm == 1);
 
@@ -652,8 +652,8 @@ void CWeapon::Load(LPCSTR section)
 
 	cam_recoil.DispersionFrac = _abs(READ_IF_EXISTS(pSettings, r_float, section, "cam_dispersion_frac", 0.7f));
 
-	//ïîäáðàñûâàíèå êàìåðû âî âðåìÿ îòäà÷è â ðåæèìå zoom ==> ironsight or scope
-	//zoom_cam_recoil.Clone( cam_recoil ); ==== íåëüçÿ !!!!!!!!!!
+	//Ã¯Ã®Ã¤Ã¡Ã°Ã Ã±Ã»Ã¢Ã Ã­Ã¨Ã¥ ÃªÃ Ã¬Ã¥Ã°Ã» Ã¢Ã® Ã¢Ã°Ã¥Ã¬Ã¿ Ã®Ã²Ã¤Ã Ã·Ã¨ Ã¢ Ã°Ã¥Ã¦Ã¨Ã¬Ã¥ zoom ==> ironsight or scope
+	//zoom_cam_recoil.Clone( cam_recoil ); ==== Ã­Ã¥Ã«Ã¼Ã§Ã¿ !!!!!!!!!!
 	zoom_cam_recoil.RelaxSpeed = cam_recoil.RelaxSpeed;
 	zoom_cam_recoil.RelaxSpeed_AI = cam_recoil.RelaxSpeed_AI;
 	zoom_cam_recoil.DispersionFrac = cam_recoil.DispersionFrac;
@@ -751,7 +751,7 @@ void CWeapon::Load(LPCSTR section)
 	m_fMinRadius = pSettings->r_float(section, "min_radius");
 	m_fMaxRadius = pSettings->r_float(section, "max_radius");
 
-	// èíôîðìàöèÿ î âîçìîæíûõ àïãðåéäàõ è èõ âèçóàëèçàöèè â èíâåíòàðå
+	// Ã¨Ã­Ã´Ã®Ã°Ã¬Ã Ã¶Ã¨Ã¿ Ã® Ã¢Ã®Ã§Ã¬Ã®Ã¦Ã­Ã»Ãµ Ã Ã¯Ã£Ã°Ã¥Ã©Ã¤Ã Ãµ Ã¨ Ã¨Ãµ Ã¢Ã¨Ã§Ã³Ã Ã«Ã¨Ã§Ã Ã¶Ã¨Ã¨ Ã¢ Ã¨Ã­Ã¢Ã¥Ã­Ã²Ã Ã°Ã¥
 	m_eScopeStatus = (ALife::EWeaponAddonStatus)pSettings->r_s32(section, "scope_status");
 	m_eSilencerStatus = (ALife::EWeaponAddonStatus)pSettings->r_s32(section, "silencer_status");
 	m_eGrenadeLauncherStatus = (ALife::EWeaponAddonStatus)pSettings->r_s32(section, "grenade_launcher_status");
@@ -795,7 +795,7 @@ void CWeapon::Load(LPCSTR section)
 	}
 	else if (m_eScopeStatus == ALife::eAddonPermanent)
 	{
-		shared_str scope_tex_name = READ_IF_EXISTS(pSettings, r_string, cNameSect(), "scope_texture", NULL);
+		shared_str scope_tex_name = READ_IF_EXISTS(pSettings, r_string, cNameSect(), "scope_texture", nullptr);
 
 		if (!!scope_tex_name && !scope_tex_name.equal("none") && !g_player_hud->m_adjust_mode)
 		{
@@ -1048,7 +1048,7 @@ void CWeapon::net_Destroy()
 {
 	inherited::net_Destroy();
 
-	//óäàëèòü îáúåêòû ïàðòèêëîâ
+	//Ã³Ã¤Ã Ã«Ã¨Ã²Ã¼ Ã®Ã¡ÃºÃ¥ÃªÃ²Ã» Ã¯Ã Ã°Ã²Ã¨ÃªÃ«Ã®Ã¢
 	StopFlameParticles();
 	StopFlameParticles2();
 	StopLight();
@@ -1263,7 +1263,7 @@ void CWeapon::OnActiveItem()
 	//-
 
 	inherited::OnActiveItem();
-	//åñëè ìû çàíðóæàåìñÿ è îðóæèå áûëî â ðóêàõ
+	//Ã¥Ã±Ã«Ã¨ Ã¬Ã» Ã§Ã Ã­Ã°Ã³Ã¦Ã Ã¥Ã¬Ã±Ã¿ Ã¨ Ã®Ã°Ã³Ã¦Ã¨Ã¥ Ã¡Ã»Ã«Ã® Ã¢ Ã°Ã³ÃªÃ Ãµ
 	//.	SetState					(eIdle);
 	//.	SetNextState				(eIdle);
 }
@@ -1334,10 +1334,10 @@ void CWeapon::UpdateCL()
 {
 	inherited::UpdateCL();
 	UpdateHUDAddonsVisibility();
-	//ïîäñâåòêà îò âûñòðåëà
+	//Ã¯Ã®Ã¤Ã±Ã¢Ã¥Ã²ÃªÃ  Ã®Ã² Ã¢Ã»Ã±Ã²Ã°Ã¥Ã«Ã 
 	UpdateLight();
 
-	//íàðèñîâàòü ïàðòèêëû
+	//Ã­Ã Ã°Ã¨Ã±Ã®Ã¢Ã Ã²Ã¼ Ã¯Ã Ã°Ã²Ã¨ÃªÃ«Ã»
 	UpdateFlameParticles();
 	UpdateFlameParticles2();
 
@@ -1410,10 +1410,10 @@ void CWeapon::renderable_Render()
 {
 	UpdateXForm();
 
-	//íàðèñîâàòü ïîäñâåòêó
+	//Ã­Ã Ã°Ã¨Ã±Ã®Ã¢Ã Ã²Ã¼ Ã¯Ã®Ã¤Ã±Ã¢Ã¥Ã²ÃªÃ³
 	RenderLight();
 
-	//åñëè ìû â ðåæèìå ñíàéïåðêè, òî ñàì HUD ðèñîâàòü íå íàäî
+	//Ã¥Ã±Ã«Ã¨ Ã¬Ã» Ã¢ Ã°Ã¥Ã¦Ã¨Ã¬Ã¥ Ã±Ã­Ã Ã©Ã¯Ã¥Ã°ÃªÃ¨, Ã²Ã® Ã±Ã Ã¬ HUD Ã°Ã¨Ã±Ã®Ã¢Ã Ã²Ã¼ Ã­Ã¥ Ã­Ã Ã¤Ã®
 	if (IsZoomed() && !IsRotatingToZoom() && ZoomTexture())
 		RenderHud(FALSE);
 	else
@@ -1693,7 +1693,7 @@ int CWeapon::GetSuitableAmmoTotal(bool use_item_to_spawn) const
 		return ae_count;
 	}
 
-	//÷òîá íå äåëàòü ëèøíèõ ïåðåñ÷åòîâ
+	//Ã·Ã²Ã®Ã¡ Ã­Ã¥ Ã¤Ã¥Ã«Ã Ã²Ã¼ Ã«Ã¨Ã¸Ã­Ã¨Ãµ Ã¯Ã¥Ã°Ã¥Ã±Ã·Ã¥Ã²Ã®Ã¢
 	if (m_pInventory->ModifyFrame() <= m_BriefInfo_CalcFrame)
 	{
 		return ae_count + m_iAmmoCurrentTotal;
@@ -2440,7 +2440,7 @@ void CWeapon::InterpolateOffset(Fvector& current, const Fvector& target, const f
 	}
 }
 
-// Обновление координат текущего худа
+// ÐžÐ±Ð½Ð¾Ð²Ð»ÐµÐ½Ð¸Ðµ ÐºÐ¾Ð¾Ñ€Ð´Ð¸Ð½Ð°Ñ‚ Ñ‚ÐµÐºÑƒÑ‰ÐµÐ³Ð¾ Ñ…ÑƒÐ´Ð°
 void CWeapon::UpdateHudAdditional(Fmatrix& trans)
 {
 	CActor* pActor = smart_cast<CActor*>(H_Parent());
@@ -2456,7 +2456,7 @@ void CWeapon::UpdateHudAdditional(Fmatrix& trans)
 
 	u8 idx = GetCurrentHudOffsetIdx();
 
-	//============= Поворот ствола во время аима =============//
+	//============= ÐŸÐ¾Ð²Ð¾Ñ€Ð¾Ñ‚ ÑÑ‚Ð²Ð¾Ð»Ð° Ð²Ð¾ Ð²Ñ€ÐµÐ¼Ñ Ð°Ð¸Ð¼Ð° =============//
 	{
 		Fvector curr_offs, curr_rot, curr_aim_rot;
 		curr_aim_rot.set(0, 0, 0);
@@ -2560,17 +2560,17 @@ void CWeapon::UpdateHudAdditional(Fmatrix& trans)
 		clamp(m_zoom_params.m_fZoomRotationFactor, 0.f, 1.f);
 	}
 
-	//============= Подготавливаем общие переменные =============//
+	//============= ÐŸÐ¾Ð´Ð³Ð¾Ñ‚Ð°Ð²Ð»Ð¸Ð²Ð°ÐµÐ¼ Ð¾Ð±Ñ‰Ð¸Ðµ Ð¿ÐµÑ€ÐµÐ¼ÐµÐ½Ð½Ñ‹Ðµ =============//
 	clamp(idx, u8(0), u8(1));
 	bool bForAim = (idx == 1);
 
 	static float fAvgTimeDelta = Device.fTimeDelta;
 	fAvgTimeDelta = _inertion(fAvgTimeDelta, Device.fTimeDelta, 0.8f);
 
-	//============= Сдвиг оружия при стрельбе =============//
+	//============= Ð¡Ð´Ð²Ð¸Ð³ Ð¾Ñ€ÑƒÐ¶Ð¸Ñ Ð¿Ñ€Ð¸ ÑÑ‚Ñ€ÐµÐ»ÑŒÐ±Ðµ =============//
 	if (hi->m_measures.m_shooting_params.bShootShake)
 	{
-		// Параметры сдвига
+		// ÐŸÐ°Ñ€Ð°Ð¼ÐµÑ‚Ñ€Ñ‹ ÑÐ´Ð²Ð¸Ð³Ð°
 		float fShootingReturnSpeedMod = _lerp(
 			hi->m_measures.m_shooting_params.m_ret_speed,
 			hi->m_measures.m_shooting_params.m_ret_speed_aim,
@@ -2599,12 +2599,12 @@ void CWeapon::UpdateHudAdditional(Fmatrix& trans)
 			hi->m_measures.m_shooting_params.m_shot_max_offset_LRUD_aim.w,
 			m_zoom_params.m_fZoomRotationFactor);
 
-		// Плавное затухание сдвига от стрельбы (основное, но без линейной никогда не опустит до полного 0.0f)
+		// ÐŸÐ»Ð°Ð²Ð½Ð¾Ðµ Ð·Ð°Ñ‚ÑƒÑ…Ð°Ð½Ð¸Ðµ ÑÐ´Ð²Ð¸Ð³Ð° Ð¾Ñ‚ ÑÑ‚Ñ€ÐµÐ»ÑŒÐ±Ñ‹ (Ð¾ÑÐ½Ð¾Ð²Ð½Ð¾Ðµ, Ð½Ð¾ Ð±ÐµÐ· Ð»Ð¸Ð½ÐµÐ¹Ð½Ð¾Ð¹ Ð½Ð¸ÐºÐ¾Ð³Ð´Ð° Ð½Ðµ Ð¾Ð¿ÑƒÑÑ‚Ð¸Ñ‚ Ð´Ð¾ Ð¿Ð¾Ð»Ð½Ð¾Ð³Ð¾ 0.0f)
 		m_fLR_ShootingFactor *= clampr(1.f - fAvgTimeDelta * fShootingReturnSpeedMod, 0.0f, 1.0f);
 		m_fUD_ShootingFactor *= clampr(1.f - fAvgTimeDelta * fShootingReturnSpeedMod, 0.0f, 1.0f);
 		m_fBACKW_ShootingFactor *= clampr(1.f - fAvgTimeDelta * fShootingReturnSpeedMod, 0.0f, 1.0f);
 
-		// Минимальное линейное затухание сдвига от стрельбы при покое (горизонталь)
+		// ÐœÐ¸Ð½Ð¸Ð¼Ð°Ð»ÑŒÐ½Ð¾Ðµ Ð»Ð¸Ð½ÐµÐ¹Ð½Ð¾Ðµ Ð·Ð°Ñ‚ÑƒÑ…Ð°Ð½Ð¸Ðµ ÑÐ´Ð²Ð¸Ð³Ð° Ð¾Ñ‚ ÑÑ‚Ñ€ÐµÐ»ÑŒÐ±Ñ‹ Ð¿Ñ€Ð¸ Ð¿Ð¾ÐºÐ¾Ðµ (Ð³Ð¾Ñ€Ð¸Ð·Ð¾Ð½Ñ‚Ð°Ð»ÑŒ)
 		{
 			float fRetSpeedMod = fShootingReturnSpeedMod * 0.125f;
 			if (m_fLR_ShootingFactor < 0.0f)
@@ -2619,7 +2619,7 @@ void CWeapon::UpdateHudAdditional(Fmatrix& trans)
 			}
 		}
 
-		// Минимальное линейное затухание сдвига от стрельбы при покое (вертикаль)
+		// ÐœÐ¸Ð½Ð¸Ð¼Ð°Ð»ÑŒÐ½Ð¾Ðµ Ð»Ð¸Ð½ÐµÐ¹Ð½Ð¾Ðµ Ð·Ð°Ñ‚ÑƒÑ…Ð°Ð½Ð¸Ðµ ÑÐ´Ð²Ð¸Ð³Ð° Ð¾Ñ‚ ÑÑ‚Ñ€ÐµÐ»ÑŒÐ±Ñ‹ Ð¿Ñ€Ð¸ Ð¿Ð¾ÐºÐ¾Ðµ (Ð²ÐµÑ€Ñ‚Ð¸ÐºÐ°Ð»ÑŒ)
 		{
 			float fRetSpeedMod = fShootingReturnSpeedMod * 0.125f;
 			if (m_fUD_ShootingFactor < 0.0f)
@@ -2634,14 +2634,14 @@ void CWeapon::UpdateHudAdditional(Fmatrix& trans)
 			}
 		}
 
-		// Минимальное линейное затухание сдвига от стрельбы при покое (вперёд\назад)
+		// ÐœÐ¸Ð½Ð¸Ð¼Ð°Ð»ÑŒÐ½Ð¾Ðµ Ð»Ð¸Ð½ÐµÐ¹Ð½Ð¾Ðµ Ð·Ð°Ñ‚ÑƒÑ…Ð°Ð½Ð¸Ðµ ÑÐ´Ð²Ð¸Ð³Ð° Ð¾Ñ‚ ÑÑ‚Ñ€ÐµÐ»ÑŒÐ±Ñ‹ Ð¿Ñ€Ð¸ Ð¿Ð¾ÐºÐ¾Ðµ (Ð²Ð¿ÐµÑ€Ñ‘Ð´\Ð½Ð°Ð·Ð°Ð´)
 		{
 			float fRetSpeedMod = fShootingReturnSpeedMod * 0.125f;
 			m_fBACKW_ShootingFactor -= fAvgTimeDelta * fRetSpeedMod;
 			clamp(m_fBACKW_ShootingFactor, 0.0f, 1.0f);
 		}
 
-		// Применяем сдвиг от стрельбы к худу
+		// ÐŸÑ€Ð¸Ð¼ÐµÐ½ÑÐµÐ¼ ÑÐ´Ð²Ð¸Ð³ Ð¾Ñ‚ ÑÑ‚Ñ€ÐµÐ»ÑŒÐ±Ñ‹ Ðº Ñ…ÑƒÐ´Ñƒ
 		{
 			float fLR_lim = (m_fLR_ShootingFactor < 0.0f ? vShOffsets.x : vShOffsets.y);
 			float fUD_lim = (m_fUD_ShootingFactor < 0.0f ? vShOffsets.z : vShOffsets.w);
@@ -2657,48 +2657,48 @@ void CWeapon::UpdateHudAdditional(Fmatrix& trans)
 		}
 	}
 
-	//======== Проверяем доступность инерции и стрейфа ========//
+	//======== ÐŸÑ€Ð¾Ð²ÐµÑ€ÑÐµÐ¼ Ð´Ð¾ÑÑ‚ÑƒÐ¿Ð½Ð¾ÑÑ‚ÑŒ Ð¸Ð½ÐµÑ€Ñ†Ð¸Ð¸ Ð¸ ÑÑ‚Ñ€ÐµÐ¹Ñ„Ð° ========//
 	if (!g_player_hud->inertion_allowed())
 		return;
 
 	float fYMag = pActor->fFPCamYawMagnitude;
 	float fPMag = pActor->fFPCamPitchMagnitude;
 
-	//============= Боковой стрейф с оружием =============//
-	// Рассчитываем фактор боковой ходьбы
+	//============= Ð‘Ð¾ÐºÐ¾Ð²Ð¾Ð¹ ÑÑ‚Ñ€ÐµÐ¹Ñ„ Ñ Ð¾Ñ€ÑƒÐ¶Ð¸ÐµÐ¼ =============//
+	// Ð Ð°ÑÑÑ‡Ð¸Ñ‚Ñ‹Ð²Ð°ÐµÐ¼ Ñ„Ð°ÐºÑ‚Ð¾Ñ€ Ð±Ð¾ÐºÐ¾Ð²Ð¾Ð¹ Ñ…Ð¾Ð´ÑŒÐ±Ñ‹
 	float fStrafeMaxTime = hi->m_measures.m_strafe_offset[2][idx].y;
-	// Макс. время в секундах, за которое мы наклонимся из центрального положения
+	// ÐœÐ°ÐºÑ. Ð²Ñ€ÐµÐ¼Ñ Ð² ÑÐµÐºÑƒÐ½Ð´Ð°Ñ…, Ð·Ð° ÐºÐ¾Ñ‚Ð¾Ñ€Ð¾Ðµ Ð¼Ñ‹ Ð½Ð°ÐºÐ»Ð¾Ð½Ð¸Ð¼ÑÑ Ð¸Ð· Ñ†ÐµÐ½Ñ‚Ñ€Ð°Ð»ÑŒÐ½Ð¾Ð³Ð¾ Ð¿Ð¾Ð»Ð¾Ð¶ÐµÐ½Ð¸Ñ
 	if (fStrafeMaxTime <= EPS)
 		fStrafeMaxTime = 0.01f;
 
-	float fStepPerUpd = fAvgTimeDelta / fStrafeMaxTime; // Величина изменение фактора поворота
+	float fStepPerUpd = fAvgTimeDelta / fStrafeMaxTime; // Ð’ÐµÐ»Ð¸Ñ‡Ð¸Ð½Ð° Ð¸Ð·Ð¼ÐµÐ½ÐµÐ½Ð¸Ðµ Ñ„Ð°ÐºÑ‚Ð¾Ñ€Ð° Ð¿Ð¾Ð²Ð¾Ñ€Ð¾Ñ‚Ð°
 
-	// Добавляем боковой наклон от движения камеры
+	// Ð”Ð¾Ð±Ð°Ð²Ð»ÑÐµÐ¼ Ð±Ð¾ÐºÐ¾Ð²Ð¾Ð¹ Ð½Ð°ÐºÐ»Ð¾Ð½ Ð¾Ñ‚ Ð´Ð²Ð¸Ð¶ÐµÐ½Ð¸Ñ ÐºÐ°Ð¼ÐµÑ€Ñ‹
 	float fCamReturnSpeedMod = 1.5f;
-	// Восколько ускоряем нормализацию наклона, полученного от движения камеры (только от бедра)
+	// Ð’Ð¾ÑÐºÐ¾Ð»ÑŒÐºÐ¾ ÑƒÑÐºÐ¾Ñ€ÑÐµÐ¼ Ð½Ð¾Ñ€Ð¼Ð°Ð»Ð¸Ð·Ð°Ñ†Ð¸ÑŽ Ð½Ð°ÐºÐ»Ð¾Ð½Ð°, Ð¿Ð¾Ð»ÑƒÑ‡ÐµÐ½Ð½Ð¾Ð³Ð¾ Ð¾Ñ‚ Ð´Ð²Ð¸Ð¶ÐµÐ½Ð¸Ñ ÐºÐ°Ð¼ÐµÑ€Ñ‹ (Ñ‚Ð¾Ð»ÑŒÐºÐ¾ Ð¾Ñ‚ Ð±ÐµÐ´Ñ€Ð°)
 
-	// Высчитываем минимальную скорость поворота камеры для начала инерции
+	// Ð’Ñ‹ÑÑ‡Ð¸Ñ‚Ñ‹Ð²Ð°ÐµÐ¼ Ð¼Ð¸Ð½Ð¸Ð¼Ð°Ð»ÑŒÐ½ÑƒÑŽ ÑÐºÐ¾Ñ€Ð¾ÑÑ‚ÑŒ Ð¿Ð¾Ð²Ð¾Ñ€Ð¾Ñ‚Ð° ÐºÐ°Ð¼ÐµÑ€Ñ‹ Ð´Ð»Ñ Ð½Ð°Ñ‡Ð°Ð»Ð° Ð¸Ð½ÐµÑ€Ñ†Ð¸Ð¸
 	float fStrafeMinAngle = _lerp(
 		hi->m_measures.m_strafe_offset[3][0].y,
 		hi->m_measures.m_strafe_offset[3][1].y,
 		m_zoom_params.m_fZoomRotationFactor);
 
-	// Высчитываем мксимальный наклон от поворота камеры
+	// Ð’Ñ‹ÑÑ‡Ð¸Ñ‚Ñ‹Ð²Ð°ÐµÐ¼ Ð¼ÐºÑÐ¸Ð¼Ð°Ð»ÑŒÐ½Ñ‹Ð¹ Ð½Ð°ÐºÐ»Ð¾Ð½ Ð¾Ñ‚ Ð¿Ð¾Ð²Ð¾Ñ€Ð¾Ñ‚Ð° ÐºÐ°Ð¼ÐµÑ€Ñ‹
 	float fCamLimitBlend = _lerp(
 		hi->m_measures.m_strafe_offset[3][0].x,
 		hi->m_measures.m_strafe_offset[3][1].x,
 		m_zoom_params.m_fZoomRotationFactor);
 
-	// Считаем стрейф от поворота камеры
+	// Ð¡Ñ‡Ð¸Ñ‚Ð°ÐµÐ¼ ÑÑ‚Ñ€ÐµÐ¹Ñ„ Ð¾Ñ‚ Ð¿Ð¾Ð²Ð¾Ñ€Ð¾Ñ‚Ð° ÐºÐ°Ð¼ÐµÑ€Ñ‹
 	if (abs(fYMag) > (m_fLR_CameraFactor == 0.0f ? fStrafeMinAngle : 0.0f))
 	{
-		//--> Камера крутится по оси Y
+		//--> ÐšÐ°Ð¼ÐµÑ€Ð° ÐºÑ€ÑƒÑ‚Ð¸Ñ‚ÑÑ Ð¿Ð¾ Ð¾ÑÐ¸ Y
 		m_fLR_CameraFactor -= (fYMag * fAvgTimeDelta * 0.75f);
 		clamp(m_fLR_CameraFactor, -fCamLimitBlend, fCamLimitBlend);
 	}
 	else
 	{
-		//--> Камера не поворачивается - убираем наклон
+		//--> ÐšÐ°Ð¼ÐµÑ€Ð° Ð½Ðµ Ð¿Ð¾Ð²Ð¾Ñ€Ð°Ñ‡Ð¸Ð²Ð°ÐµÑ‚ÑÑ - ÑƒÐ±Ð¸Ñ€Ð°ÐµÐ¼ Ð½Ð°ÐºÐ»Ð¾Ð½
 		if (m_fLR_CameraFactor < 0.0f)
 		{
 			m_fLR_CameraFactor += fStepPerUpd * (bForAim ? 1.0f : fCamReturnSpeedMod);
@@ -2711,25 +2711,25 @@ void CWeapon::UpdateHudAdditional(Fmatrix& trans)
 		}
 	}
 
-	// Добавляем боковой наклон от ходьбы вбок
+	// Ð”Ð¾Ð±Ð°Ð²Ð»ÑÐµÐ¼ Ð±Ð¾ÐºÐ¾Ð²Ð¾Ð¹ Ð½Ð°ÐºÐ»Ð¾Ð½ Ð¾Ñ‚ Ñ…Ð¾Ð´ÑŒÐ±Ñ‹ Ð²Ð±Ð¾Ðº
 	float fChangeDirSpeedMod = 3;
-	// Восколько быстро меняем направление направление наклона, если оно в другую сторону от текущего
+	// Ð’Ð¾ÑÐºÐ¾Ð»ÑŒÐºÐ¾ Ð±Ñ‹ÑÑ‚Ñ€Ð¾ Ð¼ÐµÐ½ÑÐµÐ¼ Ð½Ð°Ð¿Ñ€Ð°Ð²Ð»ÐµÐ½Ð¸Ðµ Ð½Ð°Ð¿Ñ€Ð°Ð²Ð»ÐµÐ½Ð¸Ðµ Ð½Ð°ÐºÐ»Ð¾Ð½Ð°, ÐµÑÐ»Ð¸ Ð¾Ð½Ð¾ Ð² Ð´Ñ€ÑƒÐ³ÑƒÑŽ ÑÑ‚Ð¾Ñ€Ð¾Ð½Ñƒ Ð¾Ñ‚ Ñ‚ÐµÐºÑƒÑ‰ÐµÐ³Ð¾
 	u32 iMovingState = pActor->MovingState();
 	if ((iMovingState & mcLStrafe) != 0)
 	{
-		// Движемся влево
+		// Ð”Ð²Ð¸Ð¶ÐµÐ¼ÑÑ Ð²Ð»ÐµÐ²Ð¾
 		float fVal = (m_fLR_MovingFactor > 0.f ? fStepPerUpd * fChangeDirSpeedMod : fStepPerUpd);
 		m_fLR_MovingFactor -= fVal;
 	}
 	else if ((iMovingState & mcRStrafe) != 0)
 	{
-		// Движемся вправо
+		// Ð”Ð²Ð¸Ð¶ÐµÐ¼ÑÑ Ð²Ð¿Ñ€Ð°Ð²Ð¾
 		float fVal = (m_fLR_MovingFactor < 0.f ? fStepPerUpd * fChangeDirSpeedMod : fStepPerUpd);
 		m_fLR_MovingFactor += fVal;
 	}
 	else
 	{
-		// Двигаемся в любом другом направлении - плавно убираем наклон
+		// Ð”Ð²Ð¸Ð³Ð°ÐµÐ¼ÑÑ Ð² Ð»ÑŽÐ±Ð¾Ð¼ Ð´Ñ€ÑƒÐ³Ð¾Ð¼ Ð½Ð°Ð¿Ñ€Ð°Ð²Ð»ÐµÐ½Ð¸Ð¸ - Ð¿Ð»Ð°Ð²Ð½Ð¾ ÑƒÐ±Ð¸Ñ€Ð°ÐµÐ¼ Ð½Ð°ÐºÐ»Ð¾Ð½
 		if (m_fLR_MovingFactor < 0.0f)
 		{
 			if (g_use_non_linear_inertia)
@@ -2755,16 +2755,16 @@ void CWeapon::UpdateHudAdditional(Fmatrix& trans)
 			clamp(m_fLR_MovingFactor, 0.0f, 1.0f);
 		}
 	}
-	clamp(m_fLR_MovingFactor, -1.0f, 1.0f); // Фактор боковой ходьбы не должен превышать эти лимиты
+	clamp(m_fLR_MovingFactor, -1.0f, 1.0f); // Ð¤Ð°ÐºÑ‚Ð¾Ñ€ Ð±Ð¾ÐºÐ¾Ð²Ð¾Ð¹ Ñ…Ð¾Ð´ÑŒÐ±Ñ‹ Ð½Ðµ Ð´Ð¾Ð»Ð¶ÐµÐ½ Ð¿Ñ€ÐµÐ²Ñ‹ÑˆÐ°Ñ‚ÑŒ ÑÑ‚Ð¸ Ð»Ð¸Ð¼Ð¸Ñ‚Ñ‹
 
-	// Вычисляем и нормализируем итоговый фактор наклона
+	// Ð’Ñ‹Ñ‡Ð¸ÑÐ»ÑÐµÐ¼ Ð¸ Ð½Ð¾Ñ€Ð¼Ð°Ð»Ð¸Ð·Ð¸Ñ€ÑƒÐµÐ¼ Ð¸Ñ‚Ð¾Ð³Ð¾Ð²Ñ‹Ð¹ Ñ„Ð°ÐºÑ‚Ð¾Ñ€ Ð½Ð°ÐºÐ»Ð¾Ð½Ð°
 	float fLR_Factor = m_fLR_MovingFactor; 
 	fLR_Factor += m_fLR_CameraFactor;
 
-	clamp(fLR_Factor, -1.0f, 1.0f); // Фактор боковой ходьбы не должен превышать эти лимиты
+	clamp(fLR_Factor, -1.0f, 1.0f); // Ð¤Ð°ÐºÑ‚Ð¾Ñ€ Ð±Ð¾ÐºÐ¾Ð²Ð¾Ð¹ Ñ…Ð¾Ð´ÑŒÐ±Ñ‹ Ð½Ðµ Ð´Ð¾Ð»Ð¶ÐµÐ½ Ð¿Ñ€ÐµÐ²Ñ‹ÑˆÐ°Ñ‚ÑŒ ÑÑ‚Ð¸ Ð»Ð¸Ð¼Ð¸Ñ‚Ñ‹
 
-	// Производим наклон ствола для нормального режима и аима
-	for (int _idx = 0; _idx <= 1; _idx++) //<-- Для плавного перехода
+	// ÐŸÑ€Ð¾Ð¸Ð·Ð²Ð¾Ð´Ð¸Ð¼ Ð½Ð°ÐºÐ»Ð¾Ð½ ÑÑ‚Ð²Ð¾Ð»Ð° Ð´Ð»Ñ Ð½Ð¾Ñ€Ð¼Ð°Ð»ÑŒÐ½Ð¾Ð³Ð¾ Ñ€ÐµÐ¶Ð¸Ð¼Ð° Ð¸ Ð°Ð¸Ð¼Ð°
+	for (int _idx = 0; _idx <= 1; _idx++) //<-- Ð”Ð»Ñ Ð¿Ð»Ð°Ð²Ð½Ð¾Ð³Ð¾ Ð¿ÐµÑ€ÐµÑ…Ð¾Ð´Ð°
 	{
 		bool bEnabled = (hi->m_measures.m_strafe_offset[2][_idx].x != 0.0f);
 		if (!bEnabled)
@@ -2772,25 +2772,25 @@ void CWeapon::UpdateHudAdditional(Fmatrix& trans)
 
 		Fvector curr_offs, curr_rot;
 
-		// Смещение позиции худа в стрейфе
+		// Ð¡Ð¼ÐµÑ‰ÐµÐ½Ð¸Ðµ Ð¿Ð¾Ð·Ð¸Ñ†Ð¸Ð¸ Ñ…ÑƒÐ´Ð° Ð² ÑÑ‚Ñ€ÐµÐ¹Ñ„Ðµ
 		curr_offs = hi->m_measures.m_strafe_offset[0][_idx]; // pos
-		curr_offs.mul(fLR_Factor); // Умножаем на фактор стрейфа
+		curr_offs.mul(fLR_Factor); // Ð£Ð¼Ð½Ð¾Ð¶Ð°ÐµÐ¼ Ð½Ð° Ñ„Ð°ÐºÑ‚Ð¾Ñ€ ÑÑ‚Ñ€ÐµÐ¹Ñ„Ð°
 
-		// Поворот худа в стрейфе
+		// ÐŸÐ¾Ð²Ð¾Ñ€Ð¾Ñ‚ Ñ…ÑƒÐ´Ð° Ð² ÑÑ‚Ñ€ÐµÐ¹Ñ„Ðµ
 		curr_rot = hi->m_measures.m_strafe_offset[1][_idx]; // rot
-		curr_rot.mul(-PI / 180.f); // Преобразуем углы в радианы
-		curr_rot.mul(fLR_Factor); // Умножаем на фактор стрейфа
+		curr_rot.mul(-PI / 180.f); // ÐŸÑ€ÐµÐ¾Ð±Ñ€Ð°Ð·ÑƒÐµÐ¼ ÑƒÐ³Ð»Ñ‹ Ð² Ñ€Ð°Ð´Ð¸Ð°Ð½Ñ‹
+		curr_rot.mul(fLR_Factor); // Ð£Ð¼Ð½Ð¾Ð¶Ð°ÐµÐ¼ Ð½Ð° Ñ„Ð°ÐºÑ‚Ð¾Ñ€ ÑÑ‚Ñ€ÐµÐ¹Ñ„Ð°
 
-		// Мягкий переход между бедром \ прицелом
+		// ÐœÑÐ³ÐºÐ¸Ð¹ Ð¿ÐµÑ€ÐµÑ…Ð¾Ð´ Ð¼ÐµÐ¶Ð´Ñƒ Ð±ÐµÐ´Ñ€Ð¾Ð¼ \ Ð¿Ñ€Ð¸Ñ†ÐµÐ»Ð¾Ð¼
 		if (_idx == 0)
 		{
-			// От бедра
+			// ÐžÑ‚ Ð±ÐµÐ´Ñ€Ð°
 			curr_offs.mul(1.f - m_zoom_params.m_fZoomRotationFactor);
 			curr_rot.mul(1.f - m_zoom_params.m_fZoomRotationFactor);
 		}
 		else
 		{
-			// Во время аима
+			// Ð’Ð¾ Ð²Ñ€ÐµÐ¼Ñ Ð°Ð¸Ð¼Ð°
 			curr_offs.mul(m_zoom_params.m_fZoomRotationFactor);
 			curr_rot.mul(m_zoom_params.m_fZoomRotationFactor);
 		}
@@ -2813,8 +2813,8 @@ void CWeapon::UpdateHudAdditional(Fmatrix& trans)
 		trans.mulB_43(hud_rotation);
 	}
 
-	//============= Инерция оружия =============//
-	// Параметры инерции
+	//============= Ð˜Ð½ÐµÑ€Ñ†Ð¸Ñ Ð¾Ñ€ÑƒÐ¶Ð¸Ñ =============//
+	// ÐŸÐ°Ñ€Ð°Ð¼ÐµÑ‚Ñ€Ñ‹ Ð¸Ð½ÐµÑ€Ñ†Ð¸Ð¸
 	float fInertiaSpeedMod = _lerp(
 		hi->m_measures.m_inertion_params.m_tendto_speed,
 		hi->m_measures.m_inertion_params.m_tendto_speed_aim,
@@ -2848,7 +2848,7 @@ void CWeapon::UpdateHudAdditional(Fmatrix& trans)
 		hi->m_measures.m_inertion_params.m_offset_LRUD_aim.w,
 		m_zoom_params.m_fZoomRotationFactor);
 
-	// Высчитываем инерцию из поворотов камеры
+	// Ð’Ñ‹ÑÑ‡Ð¸Ñ‚Ñ‹Ð²Ð°ÐµÐ¼ Ð¸Ð½ÐµÑ€Ñ†Ð¸ÑŽ Ð¸Ð· Ð¿Ð¾Ð²Ð¾Ñ€Ð¾Ñ‚Ð¾Ð² ÐºÐ°Ð¼ÐµÑ€Ñ‹
 	bool bIsInertionPresent = m_fLR_InertiaFactor != 0.0f || m_fUD_InertiaFactor != 0.0f;
 	if (abs(fYMag) > fInertiaMinAngle || bIsInertionPresent)
 	{
@@ -2856,10 +2856,10 @@ void CWeapon::UpdateHudAdditional(Fmatrix& trans)
 		if (fYMag > 0.0f && m_fLR_InertiaFactor > 0.0f ||
 			fYMag < 0.0f && m_fLR_InertiaFactor < 0.0f)
 		{
-			fSpeed *= 2.f; //--> Ускоряем инерцию при движении в противоположную сторону
+			fSpeed *= 2.f; //--> Ð£ÑÐºÐ¾Ñ€ÑÐµÐ¼ Ð¸Ð½ÐµÑ€Ñ†Ð¸ÑŽ Ð¿Ñ€Ð¸ Ð´Ð²Ð¸Ð¶ÐµÐ½Ð¸Ð¸ Ð² Ð¿Ñ€Ð¾Ñ‚Ð¸Ð²Ð¾Ð¿Ð¾Ð»Ð¾Ð¶Ð½ÑƒÑŽ ÑÑ‚Ð¾Ñ€Ð¾Ð½Ñƒ
 		}
 
-		m_fLR_InertiaFactor -= (fYMag * fAvgTimeDelta * fSpeed); // Горизонталь (м.б. > |1.0|)
+		m_fLR_InertiaFactor -= (fYMag * fAvgTimeDelta * fSpeed); // Ð“Ð¾Ñ€Ð¸Ð·Ð¾Ð½Ñ‚Ð°Ð»ÑŒ (Ð¼.Ð±. > |1.0|)
 	}
 
 	if (abs(fPMag) > fInertiaMinAngle || bIsInertionPresent)
@@ -2868,20 +2868,20 @@ void CWeapon::UpdateHudAdditional(Fmatrix& trans)
 		if (fPMag > 0.0f && m_fUD_InertiaFactor > 0.0f ||
 			fPMag < 0.0f && m_fUD_InertiaFactor < 0.0f)
 		{
-			fSpeed *= 2.f; //--> Ускоряем инерцию при движении в противоположную сторону
+			fSpeed *= 2.f; //--> Ð£ÑÐºÐ¾Ñ€ÑÐµÐ¼ Ð¸Ð½ÐµÑ€Ñ†Ð¸ÑŽ Ð¿Ñ€Ð¸ Ð´Ð²Ð¸Ð¶ÐµÐ½Ð¸Ð¸ Ð² Ð¿Ñ€Ð¾Ñ‚Ð¸Ð²Ð¾Ð¿Ð¾Ð»Ð¾Ð¶Ð½ÑƒÑŽ ÑÑ‚Ð¾Ñ€Ð¾Ð½Ñƒ
 		}
 
-		m_fUD_InertiaFactor -= (fPMag * fAvgTimeDelta * fSpeed); // Вертикаль (м.б. > |1.0|)
+		m_fUD_InertiaFactor -= (fPMag * fAvgTimeDelta * fSpeed); // Ð’ÐµÑ€Ñ‚Ð¸ÐºÐ°Ð»ÑŒ (Ð¼.Ð±. > |1.0|)
 	}
 
 	clamp(m_fLR_InertiaFactor, -1.0f, 1.0f);
 	clamp(m_fUD_InertiaFactor, -1.0f, 1.0f);
 
-	// Плавное затухание инерции (основное, но без линейной никогда не опустит инерцию до полного 0.0f)
+	// ÐŸÐ»Ð°Ð²Ð½Ð¾Ðµ Ð·Ð°Ñ‚ÑƒÑ…Ð°Ð½Ð¸Ðµ Ð¸Ð½ÐµÑ€Ñ†Ð¸Ð¸ (Ð¾ÑÐ½Ð¾Ð²Ð½Ð¾Ðµ, Ð½Ð¾ Ð±ÐµÐ· Ð»Ð¸Ð½ÐµÐ¹Ð½Ð¾Ð¹ Ð½Ð¸ÐºÐ¾Ð³Ð´Ð° Ð½Ðµ Ð¾Ð¿ÑƒÑÑ‚Ð¸Ñ‚ Ð¸Ð½ÐµÑ€Ñ†Ð¸ÑŽ Ð´Ð¾ Ð¿Ð¾Ð»Ð½Ð¾Ð³Ð¾ 0.0f)
 	m_fLR_InertiaFactor *= clampr(1.f - fAvgTimeDelta * fInertiaReturnSpeedMod, 0.0f, 1.0f);
 	m_fUD_InertiaFactor *= clampr(1.f - fAvgTimeDelta * fInertiaReturnSpeedMod, 0.0f, 1.0f);
 
-	// Минимальное линейное затухание инерции при покое (горизонталь)
+	// ÐœÐ¸Ð½Ð¸Ð¼Ð°Ð»ÑŒÐ½Ð¾Ðµ Ð»Ð¸Ð½ÐµÐ¹Ð½Ð¾Ðµ Ð·Ð°Ñ‚ÑƒÑ…Ð°Ð½Ð¸Ðµ Ð¸Ð½ÐµÑ€Ñ†Ð¸Ð¸ Ð¿Ñ€Ð¸ Ð¿Ð¾ÐºÐ¾Ðµ (Ð³Ð¾Ñ€Ð¸Ð·Ð¾Ð½Ñ‚Ð°Ð»ÑŒ)
 	if (fYMag == 0.0f)
 	{
 		float fRetSpeedMod = (fYMag == 0.0f ? 1.0f : 0.75f) * (fInertiaReturnSpeedMod * 0.075f);
@@ -2911,7 +2911,7 @@ void CWeapon::UpdateHudAdditional(Fmatrix& trans)
 		}
 	}
 
-	// Минимальное линейное затухание инерции при покое (вертикаль)
+	// ÐœÐ¸Ð½Ð¸Ð¼Ð°Ð»ÑŒÐ½Ð¾Ðµ Ð»Ð¸Ð½ÐµÐ¹Ð½Ð¾Ðµ Ð·Ð°Ñ‚ÑƒÑ…Ð°Ð½Ð¸Ðµ Ð¸Ð½ÐµÑ€Ñ†Ð¸Ð¸ Ð¿Ñ€Ð¸ Ð¿Ð¾ÐºÐ¾Ðµ (Ð²ÐµÑ€Ñ‚Ð¸ÐºÐ°Ð»ÑŒ)
 	if (fPMag == 0.0f)
 	{
 		float fRetSpeedMod = (fPMag == 0.0f ? 1.0f : 0.75f) * (fInertiaReturnSpeedMod * 0.075f);
@@ -2941,7 +2941,7 @@ void CWeapon::UpdateHudAdditional(Fmatrix& trans)
 		}
 	}
 
-	// Применяем инерцию к худу
+	// ÐŸÑ€Ð¸Ð¼ÐµÐ½ÑÐµÐ¼ Ð¸Ð½ÐµÑ€Ñ†Ð¸ÑŽ Ðº Ñ…ÑƒÐ´Ñƒ
 	float fLR_lim = (m_fLR_InertiaFactor < 0.0f ? vIOffsets.x : vIOffsets.y);
 	float fUD_lim = (m_fUD_InertiaFactor < 0.0f ? vIOffsets.z : vIOffsets.w);
 
@@ -2959,16 +2959,16 @@ void CWeapon::UpdateHudAdditional(Fmatrix& trans)
 	trans.mulB_43(hud_rotation);
 }
 
-// Добавить эффект сдвига оружия от выстрела
+// Ð”Ð¾Ð±Ð°Ð²Ð¸Ñ‚ÑŒ ÑÑ„Ñ„ÐµÐºÑ‚ ÑÐ´Ð²Ð¸Ð³Ð° Ð¾Ñ€ÑƒÐ¶Ð¸Ñ Ð¾Ñ‚ Ð²Ñ‹ÑÑ‚Ñ€ÐµÐ»Ð°
 void CWeapon::AddHUDShootingEffect()
 {
 	if (IsHidden() || ParentIsActor() == false)
 		return;
 
-	// Отдача назад
+	// ÐžÑ‚Ð´Ð°Ñ‡Ð° Ð½Ð°Ð·Ð°Ð´
 	m_fBACKW_ShootingFactor = 1.0f;
 
-	// Отдача в бока
+	// ÐžÑ‚Ð´Ð°Ñ‡Ð° Ð² Ð±Ð¾ÐºÐ°
 	float fPowerMin = 0.0f;
 	attachable_hud_item* hi = HudItemData();
 	if (hi != nullptr)

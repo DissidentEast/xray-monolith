@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "UIHudStatesWnd.h"
 
 #include "../Actor.h"
@@ -627,12 +627,12 @@ void CUIHudStatesWnd::UpdateZones()
 			if (dist_to_zone < rad_zone)
 			{
 				fRelPow *= 0.3f;
-				fRelPow *= (2.5f - 2.0f * power); // звук зависит от силы зоны
+				fRelPow *= (2.5f - 2.0f * power); // Ð·Ð²ÑƒÐº Ð·Ð°Ð²Ð¸ÑÐ¸Ñ‚ Ð¾Ñ‚ ÑÐ¸Ð»Ñ‹ Ð·Ð¾Ð½Ñ‹
 			}
 		}
 		clamp(fRelPow, 0.0f, 1.0f);
 
-		//определить текущую частоту срабатывания сигнала
+		//Ð¾Ð¿Ñ€ÐµÐ´ÐµÐ»Ð¸Ñ‚ÑŒ Ñ‚ÐµÐºÑƒÑ‰ÑƒÑŽ Ñ‡Ð°ÑÑ‚Ð¾Ñ‚Ñƒ ÑÑ€Ð°Ð±Ð°Ñ‚Ñ‹Ð²Ð°Ð½Ð¸Ñ ÑÐ¸Ð³Ð½Ð°Ð»Ð°
 		zone_info.cur_period = zone_type->freq.x + (zone_type->freq.y - zone_type->freq.x) * (fRelPow * fRelPow);
 
 		//string256	buff_z;
@@ -645,7 +645,7 @@ void CUIHudStatesWnd::UpdateZones()
 			if (ai().script_engine().functor("_G.CZone_Touch", funct))
 			{
 				if (funct(pZone->lua_game_object()))
-					HUD_SOUND_ITEM::PlaySound(zone_type->detect_snds, Fvector().set(0, 0, 0), NULL, true, false);
+					HUD_SOUND_ITEM::PlaySound(zone_type->detect_snds, Fvector().set(0, 0, 0), nullptr, true, false);
 			}
 		}
 		else
@@ -781,7 +781,7 @@ void CUIHudStatesWnd::SwitchLA( bool state, ALife::EInfluenceType type )
 	}
 	else
 	{
-		m_indik[type]->SetColorAnimation( NULL, 0);//off
+		m_indik[type]->SetColorAnimation( nullptr, 0);//off
 		m_cur_state_LA[type] = false;
 	}
 }

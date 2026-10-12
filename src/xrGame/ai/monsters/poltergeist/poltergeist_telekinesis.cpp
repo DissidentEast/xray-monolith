@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "poltergeist.h"
 #include "../../../PhysicsShellHolder.h"
 #include "../../../level.h"
@@ -118,7 +118,7 @@ void CPolterTele::update_schedule()
 }
 
 //////////////////////////////////////////////////////////////////////////
-// Выбор подходящих объектов для телекинеза
+// Ð’Ñ‹Ð±Ð¾Ñ€ Ð¿Ð¾Ð´Ñ…Ð¾Ð´ÑÑ‰Ð¸Ñ… Ð¾Ð±ÑŠÐµÐºÑ‚Ð¾Ð² Ð´Ð»Ñ Ñ‚ÐµÐ»ÐµÐºÐ¸Ð½ÐµÐ·Ð°
 //////////////////////////////////////////////////////////////////////////
 class best_object_predicate
 {
@@ -193,7 +193,7 @@ extern BOOL g_telekinetic_objects_include_corpses;
 void CPolterTele::tele_find_objects(xr_vector<CObject*>& objects, const Fvector& pos)
 {
 	m_nearest.clear_not_free();
-	Level().ObjectSpace.GetNearest(m_nearest, pos, m_pmt_radius, NULL);
+	Level().ObjectSpace.GetNearest(m_nearest, pos, m_pmt_radius, nullptr);
 
 	for (u32 i = 0; i < m_nearest.size(); i++)
 	{
@@ -228,13 +228,13 @@ bool CPolterTele::tele_raise_objects()
 	xr_vector<CObject*> tele_objects;
 	tele_objects.reserve(20);
 
-	// получить список объектов вокруг врага
+	// Ð¿Ð¾Ð»ÑƒÑ‡Ð¸Ñ‚ÑŒ ÑÐ¿Ð¸ÑÐ¾Ðº Ð¾Ð±ÑŠÐµÐºÑ‚Ð¾Ð² Ð²Ð¾ÐºÑ€ÑƒÐ³ Ð²Ñ€Ð°Ð³Ð°
 	tele_find_objects(tele_objects, Actor()->Position());
 
-	// получить список объектов вокруг монстра
+	// Ð¿Ð¾Ð»ÑƒÑ‡Ð¸Ñ‚ÑŒ ÑÐ¿Ð¸ÑÐ¾Ðº Ð¾Ð±ÑŠÐµÐºÑ‚Ð¾Ð² Ð²Ð¾ÐºÑ€ÑƒÐ³ Ð¼Ð¾Ð½ÑÑ‚Ñ€Ð°
 	tele_find_objects(tele_objects, m_object->Position());
 
-	// получить список объектов между монстром и врагом
+	// Ð¿Ð¾Ð»ÑƒÑ‡Ð¸Ñ‚ÑŒ ÑÐ¿Ð¸ÑÐ¾Ðº Ð¾Ð±ÑŠÐµÐºÑ‚Ð¾Ð² Ð¼ÐµÐ¶Ð´Ñƒ Ð¼Ð¾Ð½ÑÑ‚Ñ€Ð¾Ð¼ Ð¸ Ð²Ñ€Ð°Ð³Ð¾Ð¼
 	float dist = Actor()->Position().distance_to(m_object->Position());
 	Fvector dir;
 	dir.sub(Actor()->Position(), m_object->Position());
@@ -244,11 +244,11 @@ bool CPolterTele::tele_raise_objects()
 	pos.mad(m_object->Position(), dir, dist / 2.f);
 	tele_find_objects(tele_objects, pos);
 
-	// сортировать и оставить только необходимое количество объектов
+	// ÑÐ¾Ñ€Ñ‚Ð¸Ñ€Ð¾Ð²Ð°Ñ‚ÑŒ Ð¸ Ð¾ÑÑ‚Ð°Ð²Ð¸Ñ‚ÑŒ Ñ‚Ð¾Ð»ÑŒÐºÐ¾ Ð½ÐµÐ¾Ð±Ñ…Ð¾Ð´Ð¸Ð¼Ð¾Ðµ ÐºÐ¾Ð»Ð¸Ñ‡ÐµÑÑ‚Ð²Ð¾ Ð¾Ð±ÑŠÐµÐºÑ‚Ð¾Ð²
 	std::sort(tele_objects.begin(), tele_objects.end(),
 	          best_object_predicate2(m_object->Position(), Actor()->Position()));
 
-	// оставить уникальные объекты
+	// Ð¾ÑÑ‚Ð°Ð²Ð¸Ñ‚ÑŒ ÑƒÐ½Ð¸ÐºÐ°Ð»ÑŒÐ½Ñ‹Ðµ Ð¾Ð±ÑŠÐµÐºÑ‚Ñ‹
 	tele_objects.erase(
 		std::unique(
 			tele_objects.begin(),
@@ -257,14 +257,14 @@ bool CPolterTele::tele_raise_objects()
 		tele_objects.end()
 	);
 
-	// оставить необходимое количество объектов
+	// Ð¾ÑÑ‚Ð°Ð²Ð¸Ñ‚ÑŒ Ð½ÐµÐ¾Ð±Ñ…Ð¾Ð´Ð¸Ð¼Ð¾Ðµ ÐºÐ¾Ð»Ð¸Ñ‡ÐµÑÑ‚Ð²Ð¾ Ð¾Ð±ÑŠÐµÐºÑ‚Ð¾Ð²
 	//if (tele_objects.size() > m_pmt_tele_object_count) tele_objects.resize	(m_pmt_tele_object_count);
 
-	//// активировать
+	//// Ð°ÐºÑ‚Ð¸Ð²Ð¸Ñ€Ð¾Ð²Ð°Ñ‚ÑŒ
 	//for (u32 i=0; i<tele_objects.size(); i++) {
 	//	CPhysicsShellHolder *obj = smart_cast<CPhysicsShellHolder *>(tele_objects[i]);
 
-	//	// применить телекинез на объект
+	//	// Ð¿Ñ€Ð¸Ð¼ÐµÐ½Ð¸Ñ‚ÑŒ Ñ‚ÐµÐ»ÐµÐºÐ¸Ð½ÐµÐ· Ð½Ð° Ð¾Ð±ÑŠÐµÐºÑ‚
 	//	bool	rotate = false;
 
 	//	CTelekinesis::activate		(obj, m_pmt_tele_raise_speed, m_pmt_tele_object_height, m_pmt_tele_time_object_keep, rotate);
@@ -274,7 +274,7 @@ bool CPolterTele::tele_raise_objects()
 	{
 		CPhysicsShellHolder* obj = smart_cast<CPhysicsShellHolder *>(tele_objects[0]);
 
-		// применить телекинез на объект
+		// Ð¿Ñ€Ð¸Ð¼ÐµÐ½Ð¸Ñ‚ÑŒ Ñ‚ÐµÐ»ÐµÐºÐ¸Ð½ÐµÐ· Ð½Ð° Ð¾Ð±ÑŠÐµÐºÑ‚
 		bool rotate = false;
 
 		CTelekineticObject* tele_obj = m_object->CTelekinesis::activate(obj, m_pmt_raise_speed, m_pmt_object_height,

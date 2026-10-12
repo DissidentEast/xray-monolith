@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "../xrRender/resourcemanager.h"
 #include "blender_light_occq.h"
 #include "blender_light_mask.h"
@@ -61,11 +61,11 @@ void CRenderTarget::u_setrt(const ref_rt& _1, const ref_rt& _2, const ref_rt& _3
 	}
 
 	if (_1) RCache.set_RT(_1->pRT, 0);
-	else RCache.set_RT(NULL, 0);
+	else RCache.set_RT(nullptr, 0);
 	if (_2) RCache.set_RT(_2->pRT, 1);
-	else RCache.set_RT(NULL, 1);
+	else RCache.set_RT(nullptr, 1);
 	if (_3) RCache.set_RT(_3->pRT, 2);
-	else RCache.set_RT(NULL, 2);
+	else RCache.set_RT(nullptr, 2);
 	RCache.set_ZB(zb);
 	//	RImplementation.rmNormal				();
 }
@@ -101,9 +101,9 @@ void CRenderTarget::u_setrt(const ref_rt& _1, const ref_rt& _2, ID3DDepthStencil
 	}
 
 	if (_1) RCache.set_RT(_1->pRT, 0);
-	else RCache.set_RT(NULL, 0);
+	else RCache.set_RT(nullptr, 0);
 	if (_2) RCache.set_RT(_2->pRT, 1);
-	else RCache.set_RT(NULL, 1);
+	else RCache.set_RT(nullptr, 1);
 	RCache.set_ZB(zb);
 	//	RImplementation.rmNormal				();
 }
@@ -711,7 +711,7 @@ CRenderTarget::CRenderTarget()
 			FLOAT ColorRGBA[4] = {127.0f / 255.0f, 127.0f / 255.0f, 127.0f / 255.0f, 127.0f / 255.0f};
 			HW.pDevice->ClearRenderTargetView(rt_LUM_pool[it]->pRT, ColorRGBA);
 		}
-		u_setrt(Device.dwWidth, Device.dwHeight, HW.pBaseRT,NULL,NULL, HW.pBaseZB);
+		u_setrt(Device.dwWidth, Device.dwHeight, HW.pBaseRT,nullptr,NULL, HW.pBaseZB);
 	}
 
 	// HBAO
@@ -1087,15 +1087,15 @@ CRenderTarget::~CRenderTarget()
 	_RELEASE(t_ss_async);
 
 	// Textures
-	t_material->surface_set(NULL);
+	t_material->surface_set(nullptr);
 
 #ifdef DEBUG
 	_SHOW_REF					("t_material_surf",t_material_surf);
 #endif // DEBUG
 	_RELEASE(t_material_surf);
 
-	t_LUM_src->surface_set(NULL);
-	t_LUM_dest->surface_set(NULL);
+	t_LUM_src->surface_set(nullptr);
+	t_LUM_dest->surface_set(nullptr);
 
 #ifdef DEBUG
 	ID3DBaseTexture*	pSurf = 0;
@@ -1110,8 +1110,8 @@ CRenderTarget::~CRenderTarget()
 	//_SHOW_REF("t_envmap_0 - #small",t_envmap_0->pSurface);
 	//_SHOW_REF("t_envmap_1 - #small",t_envmap_1->pSurface);
 #endif // DEBUG
-	t_envmap_0->surface_set(NULL);
-	t_envmap_1->surface_set(NULL);
+	t_envmap_0->surface_set(nullptr);
+	t_envmap_1->surface_set(nullptr);
 	t_envmap_0.destroy();
 	t_envmap_1.destroy();
 
@@ -1121,14 +1121,14 @@ CRenderTarget::~CRenderTarget()
 	// Jitter
 	for (int it = 0; it < TEX_jitter_count; it++)
 	{
-		t_noise[it]->surface_set(NULL);
+		t_noise[it]->surface_set(nullptr);
 #ifdef DEBUG
 		_SHOW_REF("t_noise_surf[it]",t_noise_surf[it]);
 #endif // DEBUG
 		_RELEASE(t_noise_surf[it]);
 	}
 
-	t_noise_mipped->surface_set(NULL);
+	t_noise_mipped->surface_set(nullptr);
 #ifdef DEBUG
 	_SHOW_REF("t_noise_surf_mipped",t_noise_surf_mipped);
 #endif // DEBUG

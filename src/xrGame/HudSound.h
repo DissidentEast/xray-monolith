@@ -1,8 +1,8 @@
-#pragma once
+﻿#pragma once
 
 struct HUD_SOUND_ITEM
 {
-	HUD_SOUND_ITEM() : m_activeSnd(NULL), m_b_exclusive(false)
+	HUD_SOUND_ITEM() : m_activeSnd(nullptr), m_b_exclusive(false)
 	{
 	}
 
@@ -50,8 +50,8 @@ struct HUD_SOUND_ITEM
 	struct SSnd
 	{
 		ref_sound snd;
-		float delay; //задержка перед проигрыванием
-		float volume; //громкость
+		float delay; //Ð·Ð°Ð´ÐµÑ€Ð¶ÐºÐ° Ð¿ÐµÑ€ÐµÐ´ Ð¿Ñ€Ð¾Ð¸Ð³Ñ€Ñ‹Ð²Ð°Ð½Ð¸ÐµÐ¼
+		float volume; //Ð³Ñ€Ð¾Ð¼ÐºÐ¾ÑÑ‚ÑŒ
 	};
 
 	shared_str m_alias;

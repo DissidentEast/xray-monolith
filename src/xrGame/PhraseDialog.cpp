@@ -1,4 +1,4 @@
-#include "pch_script.h"
+﻿#include "pch_script.h"
 #include "phrasedialog.h"
 #include "phrasedialogmanager.h"
 #include "gameobject.h"
@@ -9,7 +9,7 @@
 #include "actor.h"
 
 
-//предикат для сортировки вектора фраз
+//Ð¿Ñ€ÐµÐ´Ð¸ÐºÐ°Ñ‚ Ð´Ð»Ñ ÑÐ¾Ñ€Ñ‚Ð¸Ñ€Ð¾Ð²ÐºÐ¸ Ð²ÐµÐºÑ‚Ð¾Ñ€Ð° Ñ„Ñ€Ð°Ð·
 static bool PhraseGoodwillPred(const CPhrase* phrase1, const CPhrase* phrase2)
 {
     return phrase1->GoodwillLevel() > phrase2->GoodwillLevel();
@@ -59,7 +59,7 @@ void CPhraseDialog::Init(CPhraseDialogManager* speaker_first, CPhraseDialogManag
 	m_bFirstIsSpeaking = true;
 }
 
-//обнуляем все связи
+//Ð¾Ð±Ð½ÑƒÐ»ÑÐµÐ¼ Ð²ÑÐµ ÑÐ²ÑÐ·Ð¸
 void CPhraseDialog::Reset()
 {
 }
@@ -102,12 +102,12 @@ bool CPhraseDialog::SayPhrase(DIALOG_SHARED_PTR& phrase_dialog, const shared_str
 
 	CPhrase* last_phrase = phrase_vertex->data();
 
-	//вызвать скриптовую присоединенную функцию 
-	//активируется после сказанной фразы
-	//первый параметр - тот кто говорит фразу, второй - тот кто слушает
+	//Ð²Ñ‹Ð·Ð²Ð°Ñ‚ÑŒ ÑÐºÑ€Ð¸Ð¿Ñ‚Ð¾Ð²ÑƒÑŽ Ð¿Ñ€Ð¸ÑÐ¾ÐµÐ´Ð¸Ð½ÐµÐ½Ð½ÑƒÑŽ Ñ„ÑƒÐ½ÐºÑ†Ð¸ÑŽ 
+	//Ð°ÐºÑ‚Ð¸Ð²Ð¸Ñ€ÑƒÐµÑ‚ÑÑ Ð¿Ð¾ÑÐ»Ðµ ÑÐºÐ°Ð·Ð°Ð½Ð½Ð¾Ð¹ Ñ„Ñ€Ð°Ð·Ñ‹
+	//Ð¿ÐµÑ€Ð²Ñ‹Ð¹ Ð¿Ð°Ñ€Ð°Ð¼ÐµÑ‚Ñ€ - Ñ‚Ð¾Ñ‚ ÐºÑ‚Ð¾ Ð³Ð¾Ð²Ð¾Ñ€Ð¸Ñ‚ Ñ„Ñ€Ð°Ð·Ñƒ, Ð²Ñ‚Ð¾Ñ€Ð¾Ð¹ - Ñ‚Ð¾Ñ‚ ÐºÑ‚Ð¾ ÑÐ»ÑƒÑˆÐ°ÐµÑ‚
 	last_phrase->GetScriptHelper()->Action(pSpeakerGO1, pSpeakerGO2, *phrase_dialog->m_DialogId, phrase_id.c_str());
 
-	//больше нет фраз, чтоб говорить
+	//Ð±Ð¾Ð»ÑŒÑˆÐµ Ð½ÐµÑ‚ Ñ„Ñ€Ð°Ð·, Ñ‡Ñ‚Ð¾Ð± Ð³Ð¾Ð²Ð¾Ñ€Ð¸Ñ‚ÑŒ
 	phrase_dialog->m_PhraseVector.clear();
 	if (phrase_vertex->edges().empty())
 	{
@@ -115,7 +115,7 @@ bool CPhraseDialog::SayPhrase(DIALOG_SHARED_PTR& phrase_dialog, const shared_str
 	}
 	else
 	{
-		//обновить список фраз, которые сейчас сможет говорить собеседник
+		//Ð¾Ð±Ð½Ð¾Ð²Ð¸Ñ‚ÑŒ ÑÐ¿Ð¸ÑÐ¾Ðº Ñ„Ñ€Ð°Ð·, ÐºÐ¾Ñ‚Ð¾Ñ€Ñ‹Ðµ ÑÐµÐ¹Ñ‡Ð°Ñ ÑÐ¼Ð¾Ð¶ÐµÑ‚ Ð³Ð¾Ð²Ð¾Ñ€Ð¸Ñ‚ÑŒ ÑÐ¾Ð±ÐµÑÐµÐ´Ð½Ð¸Ðº
 		for (xr_vector<CPhraseGraph::CEdge>::const_iterator it = phrase_vertex->edges().begin();
 		     it != phrase_vertex->edges().end();
 		     it++)
@@ -143,12 +143,12 @@ bool CPhraseDialog::SayPhrase(DIALOG_SHARED_PTR& phrase_dialog, const shared_str
                 make_string("No available phrase to say, dialog[%s]", *phrase_dialog->m_DialogId)
         );
 
-		//упорядочить списко по убыванию благосклонности
+		//ÑƒÐ¿Ð¾Ñ€ÑÐ´Ð¾Ñ‡Ð¸Ñ‚ÑŒ ÑÐ¿Ð¸ÑÐºÐ¾ Ð¿Ð¾ ÑƒÐ±Ñ‹Ð²Ð°Ð½Ð¸ÑŽ Ð±Ð»Ð°Ð³Ð¾ÑÐºÐ»Ð¾Ð½Ð½Ð¾ÑÑ‚Ð¸
 		std::sort(phrase_dialog->m_PhraseVector.begin(), phrase_dialog->m_PhraseVector.end(), PhraseGoodwillPred);
 	}
 
-	//сообщить CDialogManager, что сказана фраза
-	//и ожидается ответ
+	//ÑÐ¾Ð¾Ð±Ñ‰Ð¸Ñ‚ÑŒ CDialogManager, Ñ‡Ñ‚Ð¾ ÑÐºÐ°Ð·Ð°Ð½Ð° Ñ„Ñ€Ð°Ð·Ð°
+	//Ð¸ Ð¾Ð¶Ð¸Ð´Ð°ÐµÑ‚ÑÑ Ð¾Ñ‚Ð²ÐµÑ‚
 	if (first_is_speaking)
 		phrase_dialog->SecondSpeaker()->ReceivePhrase(phrase_dialog);
 	else
@@ -234,7 +234,7 @@ int CPhraseDialog::Priority()
 void CPhraseDialog::Load(shared_str dialog_id)
 {
 	m_DialogId = dialog_id;
-	inherited_shared::load_shared(m_DialogId, NULL);
+	inherited_shared::load_shared(m_DialogId, nullptr);
 }
 
 void CPhraseDialog::load_shared(LPCSTR)
@@ -252,13 +252,13 @@ void CPhraseDialog::load_shared(LPCSTR)
 
 	SetPriority(pXML->ReadAttribInt(dialog_node, "priority", 0));
 
-	//заголовок 
-	SetCaption(pXML->Read(dialog_node, "caption", 0, NULL));
+	//Ð·Ð°Ð³Ð¾Ð»Ð¾Ð²Ð¾Ðº 
+	SetCaption(pXML->Read(dialog_node, "caption", 0, nullptr));
 
-	//предикаты начала диалога
+	//Ð¿Ñ€ÐµÐ´Ð¸ÐºÐ°Ñ‚Ñ‹ Ð½Ð°Ñ‡Ð°Ð»Ð° Ð´Ð¸Ð°Ð»Ð¾Ð³Ð°
 	data()->m_ScriptDialogHelper.Load(pXML, dialog_node);
 
-	//заполнить граф диалога фразами
+	//Ð·Ð°Ð¿Ð¾Ð»Ð½Ð¸Ñ‚ÑŒ Ð³Ñ€Ð°Ñ„ Ð´Ð¸Ð°Ð»Ð¾Ð³Ð° Ñ„Ñ€Ð°Ð·Ð°Ð¼Ð¸
 	data()->m_PhraseGraph.clear();
 
 	XML_NODE* phrase_list_node = pXML->NavigateToNode(dialog_node, "phrase_list", 0);
@@ -283,7 +283,7 @@ void CPhraseDialog::load_shared(LPCSTR)
 	THROW3(wrong_phrase_id == nullptr, *item_data.id, wrong_phrase_id);
 #endif
 
-	//ищем стартовую фразу
+	//Ð¸Ñ‰ÐµÐ¼ ÑÑ‚Ð°Ñ€Ñ‚Ð¾Ð²ÑƒÑŽ Ñ„Ñ€Ð°Ð·Ñƒ
 	XML_NODE* phrase_node = pXML->NavigateToNodeWithAttribute("phrase", "id", "0");
 	THROW(phrase_node);
 	AddPhrase(pXML, phrase_node, "0", "");
@@ -334,7 +334,7 @@ void CPhraseDialog::AddPhrase(CUIXml* pXml, XML_NODE* phrase_node, const shared_
 
 	ph->GetScriptHelper()->Load(pXml, phrase_node);
 
-	//фразы которые собеседник может говорить после этой
+	//Ñ„Ñ€Ð°Ð·Ñ‹ ÐºÐ¾Ñ‚Ð¾Ñ€Ñ‹Ðµ ÑÐ¾Ð±ÐµÑÐµÐ´Ð½Ð¸Ðº Ð¼Ð¾Ð¶ÐµÑ‚ Ð³Ð¾Ð²Ð¾Ñ€Ð¸Ñ‚ÑŒ Ð¿Ð¾ÑÐ»Ðµ ÑÑ‚Ð¾Ð¹
 	int next_num = pXml->GetNodesNum(phrase_node, "next");
 	for (int i = 0; i < next_num; ++i)
 	{

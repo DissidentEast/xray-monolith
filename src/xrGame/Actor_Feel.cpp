@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "actor.h"
 #include "weapon.h"
 #include "mercuryball.h"
@@ -87,7 +87,7 @@ ICF static BOOL info_trace_callback(collide::rq_result& result, LPVOID params)
 	}
 	else
 	{
-		//получить треугольник и узнать его материал
+		//Ð¿Ð¾Ð»ÑƒÑ‡Ð¸Ñ‚ÑŒ Ñ‚Ñ€ÐµÑƒÐ³Ð¾Ð»ÑŒÐ½Ð¸Ðº Ð¸ ÑƒÐ·Ð½Ð°Ñ‚ÑŒ ÐµÐ³Ð¾ Ð¼Ð°Ñ‚ÐµÑ€Ð¸Ð°Ð»
 		CDB::TRI* T = Level().ObjectSpace.GetStaticTris() + result.element;
 		if (GMLib.GetMaterialByIdx(T->material)->Flags.is(SGameMtl::flPassable))
 			return TRUE;
@@ -113,7 +113,7 @@ BOOL CActor::CanPickItem(const CFrustum& frustum, const Fvector& from, CObject* 
 			collide::ray_defs RD(from, dir, range, CDB::OPT_CULL, collide::rqtBoth);
 			VERIFY(!fis_zero(RD.dir.square_magnitude()));
 			RQR.r_clear();
-			Level().ObjectSpace.RayQuery(RQR, RD, info_trace_callback, &bOverlaped, NULL, item);
+			Level().ObjectSpace.RayQuery(RQR, RD, info_trace_callback, &bOverlaped, nullptr, item);
 		}
 	}
 	return !bOverlaped;
@@ -124,7 +124,7 @@ CActor::pickup_result_t CActor::PickupModeUpdate()
 	if (!m_bPickupMode) return {true, false}; // kUSE key pressed
 	if (!IsGameTypeSingle()) return {true, false};
 
-	//подбирание объекта
+	//Ð¿Ð¾Ð´Ð±Ð¸Ñ€Ð°Ð½Ð¸Ðµ Ð¾Ð±ÑŠÐµÐºÑ‚Ð°
 	bool callback_handled = false;
 	if (m_pObjectWeLookingAt && m_pObjectWeLookingAt->cast_inventory_item() &&
 		m_pObjectWeLookingAt->cast_inventory_item()->Useful() && m_pUsableObject &&
@@ -368,7 +368,7 @@ void CActor::Feel_Grenade_Update( float rad )
 	Center( pos_actor );
 
 	q_nearest.clear_not_free();
-	g_pGameLevel->ObjectSpace.GetNearest( q_nearest, pos_actor, rad, NULL );
+	g_pGameLevel->ObjectSpace.GetNearest( q_nearest, pos_actor, rad, nullptr );
 
 	xr_vector<CObject*>::iterator	it_b = q_nearest.begin();
 	xr_vector<CObject*>::iterator	it_e = q_nearest.end();

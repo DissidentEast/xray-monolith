@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 // Singleton template definition 
 template <class T>
@@ -111,7 +111,7 @@ class CSharedClass
 	SHARED_TYPE* _sd;
 	CSharedObj<SHARED_TYPE, KEY_TYPE>* pSharedObj;
 public:
-	CSharedClass(): _sd(NULL)
+	CSharedClass(): _sd(nullptr)
 	{
 		pSharedObj = CSharedObj<SHARED_TYPE, KEY_TYPE>::Instance();
 		pSharedObj->_on_self_delete = auto_delete;
@@ -144,7 +144,7 @@ public:
 	const SHARED_TYPE* get_sd() const { return _sd; }
 
 
-	// управление загрузкой данных при компонентном подходе (загрузка данных вручную)
+	// ÑƒÐ¿Ñ€Ð°Ð²Ð»ÐµÐ½Ð¸Ðµ Ð·Ð°Ð³Ñ€ÑƒÐ·ÐºÐ¾Ð¹ Ð´Ð°Ð½Ð½Ñ‹Ñ… Ð¿Ñ€Ð¸ ÐºÐ¾Ð¼Ð¿Ð¾Ð½ÐµÐ½Ñ‚Ð½Ð¾Ð¼ Ð¿Ð¾Ð´Ñ…Ð¾Ð´Ðµ (Ð·Ð°Ð³Ñ€ÑƒÐ·ÐºÐ° Ð´Ð°Ð½Ð½Ñ‹Ñ… Ð²Ñ€ÑƒÑ‡Ð½ÑƒÑŽ)
 	bool start_load_shared(KEY_TYPE key)
 	{
 		_sd = pSharedObj->get_shared(key);

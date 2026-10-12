@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "control_manager_custom.h"
 #include "BaseMonster/base_monster.h"
 #include "control_sequencer.h"
@@ -247,7 +247,7 @@ void CControlManagerCustom::ta_deactivate()
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-// Работа с последовательностями
+// Ð Ð°Ð±Ð¾Ñ‚Ð° Ñ Ð¿Ð¾ÑÐ»ÐµÐ´Ð¾Ð²Ð°Ñ‚ÐµÐ»ÑŒÐ½Ð¾ÑÑ‚ÑÐ¼Ð¸
 void CControlManagerCustom::seq_init()
 {
 	m_man->capture(this, ControlCom::eControlSequencer);
@@ -620,9 +620,9 @@ void CControlManagerCustom::check_jump_over_physics()
 	{
 		const DetailPathManager::STravelPathPoint& travel_point = m_man->path_builder().detail().path()[i];
 
-		// получить список объектов вокруг врага
+		// Ð¿Ð¾Ð»ÑƒÑ‡Ð¸Ñ‚ÑŒ ÑÐ¿Ð¸ÑÐ¾Ðº Ð¾Ð±ÑŠÐµÐºÑ‚Ð¾Ð² Ð²Ð¾ÐºÑ€ÑƒÐ³ Ð²Ñ€Ð°Ð³Ð°
 		m_nearest.clear_not_free();
-		Level().ObjectSpace.GetNearest(m_nearest, travel_point.position, m_object->Radius(), NULL);
+		Level().ObjectSpace.GetNearest(m_nearest, travel_point.position, m_object->Radius(), nullptr);
 
 		for (u32 k = 0; k < m_nearest.size(); k++)
 		{
@@ -632,7 +632,7 @@ void CControlManagerCustom::check_jump_over_physics()
 
 			Fvector dir = Fvector().sub(travel_point.position, m_object->Position());
 
-			// проверка на  Field-Of-View
+			// Ð¿Ñ€Ð¾Ð²ÐµÑ€ÐºÐ° Ð½Ð°  Field-Of-View
 			float my_h = m_object->Direction().getH();
 			float h = dir.getH();
 
@@ -643,7 +643,7 @@ void CControlManagerCustom::check_jump_over_physics()
 
 			dir = Fvector().sub(obj->Position(), m_object->Position());
 
-			// вычислить целевую позицию для прыжка
+			// Ð²Ñ‹Ñ‡Ð¸ÑÐ»Ð¸Ñ‚ÑŒ Ñ†ÐµÐ»ÐµÐ²ÑƒÑŽ Ð¿Ð¾Ð·Ð¸Ñ†Ð¸ÑŽ Ð´Ð»Ñ Ð¿Ñ€Ñ‹Ð¶ÐºÐ°
 			Fvector target;
 			obj->Center(target);
 			target.y += obj->Radius();

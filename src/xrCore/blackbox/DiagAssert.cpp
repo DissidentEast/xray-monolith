@@ -1,4 +1,4 @@
-/*----------------------------------------------------------------------
+﻿/*----------------------------------------------------------------------
 "Debugging Applications" (Microsoft Press)
 Copyright (c) 1997-2000 John Robbins -- All rights reserved.
 ----------------------------------------------------------------------*/
@@ -235,7 +235,7 @@ BOOL __stdcall RealAssert  ( DWORD  dwOverrideOpts  ,
     }
 
     // Get the module name.
-    if ( 0 == GetModuleFileNameA ( NULL , szModName , MAX_PATH ) )
+    if ( 0 == GetModuleFileNameA ( nullptr , szModName , MAX_PATH ) )
     {
         lstrcpy ( szModName , "<unknown application>" ) ;
     }

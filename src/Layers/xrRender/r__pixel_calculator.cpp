@@ -1,4 +1,4 @@
-#include	"stdafx.h"
+﻿#include	"stdafx.h"
 #include	"r__pixel_calculator.h"
 #define		rt_dimensions 1024
 #include	"../xrRender/FBasicVisual.h"
@@ -8,7 +8,7 @@ void r_pixel_calculator::begin()
 {
 	rt.create("$user$test", rt_dimensions,rt_dimensions, HW.Caps.fTarget);
 	R_CHK(HW.pDevice->CreateDepthStencilSurface (rt_dimensions,rt_dimensions,HW.Caps.fDepth,D3DMULTISAMPLE_NONE,0,TRUE,&
-		zb,NULL));
+		zb,nullptr));
 
 	RCache.set_RT(rt->pRT);
 	RCache.set_ZB(zb);

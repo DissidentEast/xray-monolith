@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+﻿#include "StdAfx.h"
 
 #include "MMSound.h"
 #include "xrUIXmlParser.h"
@@ -46,7 +46,7 @@ bool CMMSound::check_file(LPCSTR fname)
 void CMMSound::whell_Play()
 {
 	if (m_whell._handle() && !m_whell._feedback())
-		m_whell.play(NULL, sm_Looped | sm_Intro);
+		m_whell.play(nullptr, sm_Looped | sm_Intro);
 }
 
 void CMMSound::whell_Stop()
@@ -58,7 +58,7 @@ void CMMSound::whell_Stop()
 void CMMSound::whell_Click()
 {
 	if (m_whell_click._handle())
-		m_whell_click.play(NULL, sm_Intro);
+		m_whell_click.play(nullptr, sm_Intro);
 }
 
 void CMMSound::whell_UpdateMoving(float frequency)
@@ -80,7 +80,7 @@ void CMMSound::music_Play()
 	VERIFY(FS.exist("$game_sounds$", _path ));
 
 	m_music_stereo.create(_path, st_Music, sg_SourceType);
-	m_music_stereo.play(NULL, sm_Intro);
+	m_music_stereo.play(nullptr, sm_Intro);
 }
 
 void CMMSound::music_Update()

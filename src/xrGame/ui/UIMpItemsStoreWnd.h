@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "../../xrServerEntities/object_interfaces.h"
 #include "UIBuyWndShared.h"
 
@@ -11,7 +11,7 @@ class CStoreHierarchy
 public:
 	struct item : public IPureDestroyableObject
 	{
-		item(): m_parent(NULL), m_button(NULL)
+		item(): m_parent(nullptr), m_button(nullptr)
 		{
 		}
 

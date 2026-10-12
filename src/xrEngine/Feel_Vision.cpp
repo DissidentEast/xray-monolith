@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "feel_vision.h"
 #include "render.h"
 #include "xr_object.h"
@@ -241,7 +241,7 @@ namespace Feel
 #ifdef SPATIAL_CHANGE
 					    if (g_pGameLevel->ObjectSpace.RayQuery(RQR, RD, feel_vision_callback, &feel_params, feel_vision_test_callback, const_cast<CObject*>(m_owner)))
 #else
-					    if (g_pGameLevel->ObjectSpace.RayQuery(RQR, RD, feel_vision_callback, &feel_params, NULL, const_cast<CObject*>(m_owner)))
+					    if (g_pGameLevel->ObjectSpace.RayQuery(RQR, RD, feel_vision_callback, &feel_params, nullptr, const_cast<CObject*>(m_owner)))
 #endif
 						{
 							I->Cache_vis = feel_params.vis;

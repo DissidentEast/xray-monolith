@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 
 #include "UIMainIngameWnd.h"
 #include "UIMessagesWindow.h"
@@ -77,7 +77,7 @@ const u32 g_clWhite = 0xffffffff;
 #define				MAININGAME_XML				"maingame.xml"
 
 CUIMainIngameWnd::CUIMainIngameWnd()
-	:/*m_pGrenade(NULL),m_pItem(NULL),*/m_pPickUpItem(NULL), m_pMPChatWnd(NULL), UIArtefactIcon(NULL), m_pMPLogWnd(NULL)
+	:/*m_pGrenade(nullptr),m_pItem(nullptr),*/m_pPickUpItem(nullptr), m_pMPChatWnd(nullptr), UIArtefactIcon(nullptr), m_pMPLogWnd(nullptr)
 {
 	UIZoneMap = xr_new<CUIZoneMap>();
 }
@@ -129,10 +129,10 @@ void CUIMainIngameWnd::Init()
 	m_iPickUpItemIconY = UIPickUpItemIcon->GetWndRect().top;
 	//---------------------------------------------------------
 
-	//индикаторы
+	//Ð¸Ð½Ð´Ð¸ÐºÐ°Ñ‚Ð¾Ñ€Ñ‹
 	UIZoneMap->Init();
 
-	// Подсказки, которые возникают при наведении прицела на объект
+	// ÐŸÐ¾Ð´ÑÐºÐ°Ð·ÐºÐ¸, ÐºÐ¾Ñ‚Ð¾Ñ€Ñ‹Ðµ Ð²Ð¾Ð·Ð½Ð¸ÐºÐ°ÑŽÑ‚ Ð¿Ñ€Ð¸ Ð½Ð°Ð²ÐµÐ´ÐµÐ½Ð¸Ð¸ Ð¿Ñ€Ð¸Ñ†ÐµÐ»Ð° Ð½Ð° Ð¾Ð±ÑŠÐµÐºÑ‚
 	UIStaticQuickHelp = UIHelper::CreateTextWnd(uiXml, "quick_info", this);
 
 	uiXml.SetLocalRoot(uiXml.GetRoot());
@@ -167,7 +167,7 @@ void CUIMainIngameWnd::Init()
 	m_ind_boost_power->Show(false);
 	m_ind_boost_rad->Show(false);
 
-	// Загружаем иконки
+	// Ð—Ð°Ð³Ñ€ÑƒÐ¶Ð°ÐµÐ¼ Ð¸ÐºÐ¾Ð½ÐºÐ¸
 	/*	if ( IsGameTypeSingle() )
 		{
 			xml_init.InitStatic		(uiXml, "starvation_static", 0, &UIStarvationIcon);
@@ -177,7 +177,7 @@ void CUIMainIngameWnd::Init()
 	//		UIPsyHealthIcon.Show	(false);
 		}
 	*/
-	UIWeaponJammedIcon = UIHelper::CreateStatic(uiXml, "weapon_jammed_static", NULL);
+	UIWeaponJammedIcon = UIHelper::CreateStatic(uiXml, "weapon_jammed_static", nullptr);
 	UIWeaponJammedIcon->Show(false);
 
 	//	xml_init.InitStatic			(uiXml, "radiation_static", 0, &UIRadiaitionIcon);
@@ -186,13 +186,13 @@ void CUIMainIngameWnd::Init()
 	//	xml_init.InitStatic			(uiXml, "wound_static", 0, &UIWoundIcon);
 	//	UIWoundIcon.Show			(false);
 
-	UIInvincibleIcon = UIHelper::CreateStatic(uiXml, "invincible_static", NULL);
+	UIInvincibleIcon = UIHelper::CreateStatic(uiXml, "invincible_static", nullptr);
 	UIInvincibleIcon->Show(false);
 
 
 	if ((GameID() == eGameIDArtefactHunt) || (GameID() == eGameIDCaptureTheArtefact))
 	{
-		UIArtefactIcon = UIHelper::CreateStatic(uiXml, "artefact_static", NULL);
+		UIArtefactIcon = UIHelper::CreateStatic(uiXml, "artefact_static", nullptr);
 		UIArtefactIcon->Show(false);
 	}
 
@@ -207,11 +207,11 @@ void CUIMainIngameWnd::Init()
 		"artefact"
 	};
 
-	// Загружаем пороговые значения для индикаторов
+	// Ð—Ð°Ð³Ñ€ÑƒÐ¶Ð°ÐµÐ¼ Ð¿Ð¾Ñ€Ð¾Ð³Ð¾Ð²Ñ‹Ðµ Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ñ Ð´Ð»Ñ Ð¸Ð½Ð´Ð¸ÐºÐ°Ñ‚Ð¾Ñ€Ð¾Ð²
 	EWarningIcons j = ewiWeaponJammed;
 	while (j < ewiInvincible)
 	{
-		// Читаем данные порогов для каждого индикатора
+		// Ð§Ð¸Ñ‚Ð°ÐµÐ¼ Ð´Ð°Ð½Ð½Ñ‹Ðµ Ð¿Ð¾Ñ€Ð¾Ð³Ð¾Ð² Ð´Ð»Ñ ÐºÐ°Ð¶Ð´Ð¾Ð³Ð¾ Ð¸Ð½Ð´Ð¸ÐºÐ°Ñ‚Ð¾Ñ€Ð°
 		shared_str cfgRecord = pSettings->r_string("main_ingame_indicators_thresholds",
 		                                           *warningStrings[static_cast<int>(j) - 1]);
 		u32 count = _GetItemCount(*cfgRecord);
@@ -462,7 +462,7 @@ void CUIMainIngameWnd::SetWarningIconColor(EWarningIcons icon, const u32 cl)
 {
 	bool bMagicFlag = true;
 
-	// Задаем цвет требуемой иконки
+	// Ð—Ð°Ð´Ð°ÐµÐ¼ Ñ†Ð²ÐµÑ‚ Ñ‚Ñ€ÐµÐ±ÑƒÐµÐ¼Ð¾Ð¹ Ð¸ÐºÐ¾Ð½ÐºÐ¸
 	switch (icon)
 	{
 	case ewiAll:
@@ -505,7 +505,7 @@ void CUIMainIngameWnd::TurnOffWarningIcon(EWarningIcons icon)
 
 void CUIMainIngameWnd::SetFlashIconState_(EFlashingIcons type, bool enable)
 {
-	// Включаем анимацию требуемой иконки
+	// Ð’ÐºÐ»ÑŽÑ‡Ð°ÐµÐ¼ Ð°Ð½Ð¸Ð¼Ð°Ñ†Ð¸ÑŽ Ñ‚Ñ€ÐµÐ±ÑƒÐµÐ¼Ð¾Ð¹ Ð¸ÐºÐ¾Ð½ÐºÐ¸
 	FlashingIcons_it icon = m_FlashingIcons.find(type);
 	R_ASSERT2(icon != m_FlashingIcons.end(), "Flashing icon with this type not existed");
 	icon->second->Show(enable);
@@ -518,14 +518,14 @@ void CUIMainIngameWnd::InitFlashingIcons(CUIXml* node)
 
 	CUIXmlInit xml_init;
 	CUIStatic* pIcon = nullptr;
-	// Пробегаемся по всем нодам и инициализируем из них статики
+	// ÐŸÑ€Ð¾Ð±ÐµÐ³Ð°ÐµÐ¼ÑÑ Ð¿Ð¾ Ð²ÑÐµÐ¼ Ð½Ð¾Ð´Ð°Ð¼ Ð¸ Ð¸Ð½Ð¸Ñ†Ð¸Ð°Ð»Ð¸Ð·Ð¸Ñ€ÑƒÐµÐ¼ Ð¸Ð· Ð½Ð¸Ñ… ÑÑ‚Ð°Ñ‚Ð¸ÐºÐ¸
 	for (int i = 0; i < staticsCount; ++i)
 	{
 		pIcon = xr_new<CUIStatic>();
 		xml_init.InitStatic(*node, flashingIconNodeName, i, pIcon);
 		shared_str iconType = node->ReadAttrib(flashingIconNodeName, i, "type", "none");
 
-		// Теперь запоминаем иконку и ее тип
+		// Ð¢ÐµÐ¿ÐµÑ€ÑŒ Ð·Ð°Ð¿Ð¾Ð¼Ð¸Ð½Ð°ÐµÐ¼ Ð¸ÐºÐ¾Ð½ÐºÑƒ Ð¸ ÐµÐµ Ñ‚Ð¸Ð¿
 		EFlashingIcons type = efiPdaTask;
 
 		if (iconType == "pda") type = efiPdaTask;

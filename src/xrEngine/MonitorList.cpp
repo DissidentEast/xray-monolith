@@ -1,4 +1,4 @@
-// MonitorList.cpp — monitor enumeration for the vid_monitor dropdown.
+﻿// MonitorList.cpp â€” monitor enumeration for the vid_monitor dropdown.
 //
 // Enumerates monitors via EnumDisplayMonitors + GetMonitorInfoA,
 // looks up friendly names via QueryDisplayConfig / DisplayConfigGetDeviceInfo,
@@ -47,7 +47,7 @@ typedef enum _DISPLAYCONFIG_VIDEO_OUTPUT_TECHNOLOGY_LOCAL
     DCVOT_INTERNAL          = 0x80000000,
 } DCVOT_LOCAL;
 
-// Minimal structs — just enough fields to read what we need.
+// Minimal structs â€” just enough fields to read what we need.
 // Offsets must match the Win7 SDK ABI; we only use the first few fields.
 // Default alignment (no pack pragma) matches the real SDK ABI since every
 // field is already 4-byte aligned.
@@ -343,7 +343,7 @@ void fill_vid_monitor_list()
     xr_vector<OutputEntry> outputs;
     {
         EnumCtx ctx{ &outputs, &friendly_map };
-        if (!EnumDisplayMonitors(NULL, NULL, EnumMonitorsProc, reinterpret_cast<LPARAM>(&ctx)) || outputs.empty())
+        if (!EnumDisplayMonitors(nullptr, NULL, EnumMonitorsProc, reinterpret_cast<LPARAM>(&ctx)) || outputs.empty())
             Msg("! vid_monitor: EnumDisplayMonitors returned no monitors, list will be Auto-only");
     }
 
@@ -356,7 +356,7 @@ void fill_vid_monitor_list()
 
     vid_monitor_token[0].name = xr_strdup("Auto");
     vid_monitor_token[0].id   = 0;
-    s_monitor_handles.push_back(NULL);
+    s_monitor_handles.push_back(nullptr);
 
     for (u32 i = 0; i < N; ++i)
     {

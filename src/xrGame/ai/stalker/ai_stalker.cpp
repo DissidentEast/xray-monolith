@@ -1,4 +1,4 @@
-////////////////////////////////////////////////////////////////////////////
+﻿////////////////////////////////////////////////////////////////////////////
 //	Module 		: ai_stalker.cpp
 //	Created 	: 25.02.2003
 //  Modified 	: 25.02.2003
@@ -138,7 +138,7 @@ void CAI_Stalker::reinit()
 	animation().reinit();
 	//	movement().reinit				();
 
-	//загрузка спецевической звуковой схемы для сталкера согласно m_SpecificCharacter
+	//Ð·Ð°Ð³Ñ€ÑƒÐ·ÐºÐ° ÑÐ¿ÐµÑ†ÐµÐ²Ð¸Ñ‡ÐµÑÐºÐ¾Ð¹ Ð·Ð²ÑƒÐºÐ¾Ð²Ð¾Ð¹ ÑÑ…ÐµÐ¼Ñ‹ Ð´Ð»Ñ ÑÑ‚Ð°Ð»ÐºÐµÑ€Ð° ÑÐ¾Ð³Ð»Ð°ÑÐ½Ð¾ m_SpecificCharacter
 	sound().sound_prefix(SpecificCharacter().sound_voice_prefix());
 
 #ifdef DEBUG_MEMORY_MANAGER
@@ -626,7 +626,7 @@ void CAI_Stalker::Die(CObject* who)
 	detach_Holder();
 #endif
 
-	//запретить использование слотов в инвенторе
+	//Ð·Ð°Ð¿Ñ€ÐµÑ‚Ð¸Ñ‚ÑŒ Ð¸ÑÐ¿Ð¾Ð»ÑŒÐ·Ð¾Ð²Ð°Ð½Ð¸Ðµ ÑÐ»Ð¾Ñ‚Ð¾Ð² Ð² Ð¸Ð½Ð²ÐµÐ½Ñ‚Ð¾Ñ€Ðµ
 	inventory().SetSlotsUseful(false);
 
 	if (inventory().GetActiveSlot() == NO_ACTIVE_SLOT)
@@ -740,7 +740,7 @@ BOOL CAI_Stalker::net_Spawn(CSE_Abstract* DC)
 	if (!g_Alive())
 		sound().set_sound_mask(u32(eStalkerSoundMaskDie));
 
-	//загрузить иммунитеты из модельки сталкера
+	//Ð·Ð°Ð³Ñ€ÑƒÐ·Ð¸Ñ‚ÑŒ Ð¸Ð¼Ð¼ÑƒÐ½Ð¸Ñ‚ÐµÑ‚Ñ‹ Ð¸Ð· Ð¼Ð¾Ð´ÐµÐ»ÑŒÐºÐ¸ ÑÑ‚Ð°Ð»ÐºÐµÑ€Ð°
 	IKinematics* pKinematics = smart_cast<IKinematics*>(Visual());
 	VERIFY(pKinematics);
 	CInifile* ini = pKinematics->LL_UserData();
@@ -759,7 +759,7 @@ BOOL CAI_Stalker::net_Spawn(CSE_Abstract* DC)
 		}
 	}
 
-	//вычислить иммунета в зависимости от ранга
+	//Ð²Ñ‹Ñ‡Ð¸ÑÐ»Ð¸Ñ‚ÑŒ Ð¸Ð¼Ð¼ÑƒÐ½ÐµÑ‚Ð° Ð² Ð·Ð°Ð²Ð¸ÑÐ¸Ð¼Ð¾ÑÑ‚Ð¸ Ð¾Ñ‚ Ñ€Ð°Ð½Ð³Ð°
 	static float novice_rank_immunity = pSettings->r_float("ranks_properties", "immunities_novice_k");
 	static float expirienced_rank_immunity = pSettings->r_float("ranks_properties", "immunities_experienced_k");
 
@@ -1635,7 +1635,7 @@ void CAI_Stalker::ChangeVisual(shared_str NewVisual)
 		}
 
 		CDamageManager::reload(cNameSect_str(), "damage", pSettings);
-		ResetBoneProtections(NULL, NULL);
+		ResetBoneProtections(nullptr, NULL);
 		reattach_items();
 		m_pPhysics_support->in_ChangeVisual();
 		animation().reload();

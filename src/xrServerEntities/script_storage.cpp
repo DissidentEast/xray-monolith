@@ -1,4 +1,4 @@
-////////////////////////////////////////////////////////////////////////////
+﻿////////////////////////////////////////////////////////////////////////////
 //	Module 		: script_storage.cpp
 //	Created 	: 01.04.2004
 //  Modified 	: [1/14/2015 Andrey]
@@ -394,7 +394,7 @@ void CScriptStorage::reinit()
 		lua_close(m_virtual_machine);
 
 #ifdef USE_GSC_MEM_ALLOC
-    m_virtual_machine = lua_newstate(lua_alloc, NULL);
+    m_virtual_machine = lua_newstate(lua_alloc, nullptr);
 #else
 	m_virtual_machine = luaL_newstate();
 #endif //-USE_GSC_MEM_ALLOC

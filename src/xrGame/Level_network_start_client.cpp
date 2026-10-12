@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 //#include "PHdynamicdata.h"
 //#include "Physics.h"
 #include "level.h"
@@ -204,7 +204,7 @@ void CLevel::ClientSendProfileData()
 #endif
 	NET_Packet NP;
 	NP.w_begin(M_CREATE_PLAYER_STATE);
-	game_PlayerState tmp_player_state(NULL);
+	game_PlayerState tmp_player_state(nullptr);
 	tmp_player_state.net_Export(NP, TRUE);
 	SecureSend(NP, net_flags(TRUE, TRUE, TRUE, TRUE));
 }

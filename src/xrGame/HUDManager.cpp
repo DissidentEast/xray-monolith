@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "HUDManager.h"
 #include "hudtarget.h"
 #include "actor.h"
@@ -108,7 +108,7 @@ void CFontManager::OnDeviceReset()
 }
 
 //--------------------------------------------------------------------
-CHUDManager::CHUDManager() : pUIGame(NULL), m_pHUDTarget(xr_new<CHUDTarget>()), b_online(false)
+CHUDManager::CHUDManager() : pUIGame(nullptr), m_pHUDTarget(xr_new<CHUDTarget>()), b_online(false)
 {
 }
 
@@ -243,7 +243,7 @@ void CHUDManager::RenderCamAttachedUI()
 }
 
 extern ENGINE_API BOOL bShowPauseString;
-//отрисовка элементов интерфейса
+//Ð¾Ñ‚Ñ€Ð¸ÑÐ¾Ð²ÐºÐ° ÑÐ»ÐµÐ¼ÐµÐ½Ñ‚Ð¾Ð² Ð¸Ð½Ñ‚ÐµÑ€Ñ„ÐµÐ¹ÑÐ°
 void CHUDManager::RenderUI()
 {
 	if (!psHUD_Flags.is(HUD_DRAW_RT2))
@@ -336,7 +336,7 @@ ICF static BOOL pick_trace_callback(collide::rq_result& result, LPVOID params)
 	}
 	else
 	{
-		//получить треугольник и узнать его материал
+		//Ð¿Ð¾Ð»ÑƒÑ‡Ð¸Ñ‚ÑŒ Ñ‚Ñ€ÐµÑƒÐ³Ð¾Ð»ÑŒÐ½Ð¸Ðº Ð¸ ÑƒÐ·Ð½Ð°Ñ‚ÑŒ ÐµÐ³Ð¾ Ð¼Ð°Ñ‚ÐµÑ€Ð¸Ð°Ð»
 		CDB::TRI* T = Level().ObjectSpace.GetStaticTris() + result.element;
 
 		SGameMtl* mtl = GMLib.GetMaterialByIdx(T->material);
@@ -356,7 +356,7 @@ bool CHUDManager::DoPick(SPickParam& pp)
 {
 	VERIFY(!fis_zero(pp.defs.dir.square_magnitude()));
 
-	pp.result.set(NULL, pp.defs.range, -1);
+	pp.result.set(nullptr, pp.defs.range, -1);
 	pp.power = 1.0f;
 	pp.pass = 0;
 

@@ -1,4 +1,4 @@
-////////////////////////////////////////////////////////////////////////////
+﻿////////////////////////////////////////////////////////////////////////////
 //	Module 		: stalker_movement_manager_smart_cover_loopholes.cpp
 //	Created 	: 14.02.2008
 //	Modified	: 14.02.2008
@@ -161,7 +161,7 @@ bool stalker_movement_manager_smart_cover::test_pick(Fvector source, Fvector des
 	float range = distance;
 	parameters params(range, object());
 	collide::ray_defs ray_defs(source, direction, distance, CDB::OPT_CULL, collide::rqtStatic);
-	Level().ObjectSpace.RayQuery(m_ray_query_storage, ray_defs, &test_pick::callback, &params, NULL, NULL);
+	Level().ObjectSpace.RayQuery(m_ray_query_storage, ray_defs, &test_pick::callback, &params, nullptr, NULL);
 	return (range == distance);
 }
 

@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "configs_dump_verifyer.h"
 #include "configs_common.h"
 #include "configs_dumper.h"
@@ -204,7 +204,7 @@ namespace mp_anticheat
 
 		IReader tmp_reader(data, data_size);
 		CInifile tmp_ini(&tmp_reader);
-		CInifile tmp_active_params(NULL, FALSE, FALSE, FALSE);
+		CInifile tmp_active_params(nullptr, FALSE, FALSE, FALSE);
 
 		string16 tmp_digit;
 		u32 ap_index = 1;

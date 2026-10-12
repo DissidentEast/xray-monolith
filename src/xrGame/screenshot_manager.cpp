@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "screenshot_manager.h"
 #include "level.h"
 #include "game_cl_mp.h"
@@ -279,8 +279,8 @@ void screenshot_manager::process_screenshot(bool singlecore)
 		SetEvent(m_make_start_event);
 		return;
 	}
-	m_make_start_event = CreateEvent(NULL, FALSE, TRUE, NULL);
-	m_make_done_event = CreateEvent(NULL, FALSE, FALSE, NULL);
+	m_make_start_event = CreateEvent(nullptr, FALSE, TRUE, nullptr);
+	m_make_done_event = CreateEvent(nullptr, FALSE, FALSE, nullptr);
 	thread_spawn(&screenshot_manager::screenshot_maker_thread, "screenshot_maker", 0, this);
 }
 

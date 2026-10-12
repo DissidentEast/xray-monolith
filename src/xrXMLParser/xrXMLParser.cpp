@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #pragma hdrstop
 
 #include "xrXMLParser.h"
@@ -6,8 +6,8 @@
 extern void XMLLuaCallback(CXml &m_xml, LPCSTR xml_string);
 
 XRXMLPARSER_API CXml::CXml()
-	: m_root(NULL),
-	  m_pLocalRoot(NULL)
+	: m_root(nullptr),
+	  m_pLocalRoot(nullptr)
 {
 }
 
@@ -117,7 +117,7 @@ void CXml::Load(LPCSTR path_alias, LPCSTR path, LPCSTR _xml_filename)
 	return Load(path_alias, str);
 }
 
-//инициализация и загрузка XML файла
+//Ð¸Ð½Ð¸Ñ†Ð¸Ð°Ð»Ð¸Ð·Ð°Ñ†Ð¸Ñ Ð¸ Ð·Ð°Ð³Ñ€ÑƒÐ·ÐºÐ° XML Ñ„Ð°Ð¹Ð»Ð°
 void CXml::Load(LPCSTR path, LPCSTR xml_filename)
 {
 	xr_strcpy(m_xml_file_name, xml_filename);
@@ -171,7 +171,7 @@ XML_NODE* CXml::NavigateToNode(XML_NODE* start_node, LPCSTR path, int node_index
 	char* token;
 	int tmp = 0;
 
-	//разбить путь на отдельные подпути
+	//Ñ€Ð°Ð·Ð±Ð¸Ñ‚ÑŒ Ð¿ÑƒÑ‚ÑŒ Ð½Ð° Ð¾Ñ‚Ð´ÐµÐ»ÑŒÐ½Ñ‹Ðµ Ð¿Ð¾Ð´Ð¿ÑƒÑ‚Ð¸
 	token = strtok(buf_str, seps);
 
 	if (token != nullptr)
@@ -187,7 +187,7 @@ XML_NODE* CXml::NavigateToNode(XML_NODE* start_node, LPCSTR path, int node_index
 	while (token != nullptr)
 	{
 		// Get next token: 
-		token = strtok(NULL, seps);
+		token = strtok(nullptr, seps);
 
 		if (token != nullptr)
 			if (node != 0)
@@ -255,7 +255,7 @@ LPCSTR CXml::Read(XML_NODE* node, LPCSTR default_str_val)
 
 int CXml::ReadInt(XML_NODE* node, int default_int_val)
 {
-	LPCSTR result_str = Read(node, NULL);
+	LPCSTR result_str = Read(node, nullptr);
 
 	if (result_str == nullptr)
 		return default_int_val;
@@ -265,7 +265,7 @@ int CXml::ReadInt(XML_NODE* node, int default_int_val)
 
 int CXml::ReadInt(LPCSTR path, int index, int default_int_val)
 {
-	LPCSTR result_str = Read(path, index, NULL);
+	LPCSTR result_str = Read(path, index, nullptr);
 	if (result_str == nullptr)
 		return default_int_val;
 
@@ -274,7 +274,7 @@ int CXml::ReadInt(LPCSTR path, int index, int default_int_val)
 
 int CXml::ReadInt(XML_NODE* start_node, LPCSTR path, int index, int default_int_val)
 {
-	LPCSTR result_str = Read(start_node, path, index, NULL);
+	LPCSTR result_str = Read(start_node, path, index, nullptr);
 	if (result_str == nullptr)
 		return default_int_val;
 
@@ -283,7 +283,7 @@ int CXml::ReadInt(XML_NODE* start_node, LPCSTR path, int index, int default_int_
 
 float CXml::ReadFlt(LPCSTR path, int index, float default_flt_val)
 {
-	LPCSTR result_str = Read(path, index, NULL);
+	LPCSTR result_str = Read(path, index, nullptr);
 	if (result_str == nullptr)
 		return default_flt_val;
 
@@ -292,7 +292,7 @@ float CXml::ReadFlt(LPCSTR path, int index, float default_flt_val)
 
 float CXml::ReadFlt(XML_NODE* start_node, LPCSTR path, int index, float default_flt_val)
 {
-	LPCSTR result_str = Read(start_node, path, index, NULL);
+	LPCSTR result_str = Read(start_node, path, index, nullptr);
 	if (result_str == nullptr)
 		return default_flt_val;
 
@@ -301,7 +301,7 @@ float CXml::ReadFlt(XML_NODE* start_node, LPCSTR path, int index, float default_
 
 float CXml::ReadFlt(XML_NODE* node, float default_flt_val)
 {
-	LPCSTR result_str = Read(node, NULL);
+	LPCSTR result_str = Read(node, nullptr);
 
 	if (result_str == nullptr)
 		return default_flt_val;
@@ -334,12 +334,12 @@ LPCSTR CXml::ReadAttrib(XML_NODE* node, LPCSTR attrib, LPCSTR default_str_val)
 	else
 	{
 		/*
-				//обязательно делаем ref_str, а то 
-				//не сможем запомнить строку и return вернет левый указатель
+				//Ð¾Ð±ÑÐ·Ð°Ñ‚ÐµÐ»ÑŒÐ½Ð¾ Ð´ÐµÐ»Ð°ÐµÐ¼ ref_str, Ð° Ñ‚Ð¾ 
+				//Ð½Ðµ ÑÐ¼Ð¾Ð¶ÐµÐ¼ Ð·Ð°Ð¿Ð¾Ð¼Ð½Ð¸Ñ‚ÑŒ ÑÑ‚Ñ€Ð¾ÐºÑƒ Ð¸ return Ð²ÐµÑ€Ð½ÐµÑ‚ Ð»ÐµÐ²Ñ‹Ð¹ ÑƒÐºÐ°Ð·Ð°Ñ‚ÐµÐ»ÑŒ
 				shared_str result_str;
 		*/
 		LPCSTR result_str = nullptr;
-		// Кастаем ниже по иерархии
+		// ÐšÐ°ÑÑ‚Ð°ÐµÐ¼ Ð½Ð¸Ð¶Ðµ Ð¿Ð¾ Ð¸ÐµÑ€Ð°Ñ€Ñ…Ð¸Ð¸
 
 		TiXmlElement* el = node->ToElement();
 
@@ -361,7 +361,7 @@ LPCSTR CXml::ReadAttrib(XML_NODE* node, LPCSTR attrib, LPCSTR default_str_val)
 
 int CXml::ReadAttribInt(XML_NODE* node, LPCSTR attrib, int default_int_val)
 {
-	LPCSTR result_str = ReadAttrib(node, attrib, NULL);
+	LPCSTR result_str = ReadAttrib(node, attrib, nullptr);
 
 	if (result_str == nullptr)
 		return default_int_val;
@@ -371,7 +371,7 @@ int CXml::ReadAttribInt(XML_NODE* node, LPCSTR attrib, int default_int_val)
 
 int CXml::ReadAttribInt(LPCSTR path, int index, LPCSTR attrib, int default_int_val)
 {
-	LPCSTR result_str = ReadAttrib(path, index, attrib, NULL);
+	LPCSTR result_str = ReadAttrib(path, index, attrib, nullptr);
 
 	if (result_str == nullptr)
 		return default_int_val;
@@ -382,7 +382,7 @@ int CXml::ReadAttribInt(LPCSTR path, int index, LPCSTR attrib, int default_int_v
 
 int CXml::ReadAttribInt(XML_NODE* start_node, LPCSTR path, int index, LPCSTR attrib, int default_int_val)
 {
-	LPCSTR result_str = ReadAttrib(start_node, path, index, attrib, NULL);
+	LPCSTR result_str = ReadAttrib(start_node, path, index, attrib, nullptr);
 
 	if (result_str == nullptr)
 		return default_int_val;
@@ -391,7 +391,7 @@ int CXml::ReadAttribInt(XML_NODE* start_node, LPCSTR path, int index, LPCSTR att
 
 float CXml::ReadAttribFlt(LPCSTR path, int index, LPCSTR attrib, float default_flt_val)
 {
-	LPCSTR result_str = ReadAttrib(path, index, attrib, NULL);
+	LPCSTR result_str = ReadAttrib(path, index, attrib, nullptr);
 
 	if (result_str == nullptr)
 		return default_flt_val;
@@ -401,7 +401,7 @@ float CXml::ReadAttribFlt(LPCSTR path, int index, LPCSTR attrib, float default_f
 
 float CXml::ReadAttribFlt(XML_NODE* start_node, LPCSTR path, int index, LPCSTR attrib, float default_flt_val)
 {
-	LPCSTR result_str = ReadAttrib(start_node, path, index, attrib, NULL);
+	LPCSTR result_str = ReadAttrib(start_node, path, index, attrib, nullptr);
 
 	if (result_str == nullptr)
 		return default_flt_val;
@@ -411,7 +411,7 @@ float CXml::ReadAttribFlt(XML_NODE* start_node, LPCSTR path, int index, LPCSTR a
 
 float CXml::ReadAttribFlt(XML_NODE* node, LPCSTR attrib, float default_flt_val)
 {
-	LPCSTR result_str = ReadAttrib(node, attrib, NULL);
+	LPCSTR result_str = ReadAttrib(node, attrib, nullptr);
 
 	if (result_str == nullptr)
 		return default_flt_val;
@@ -464,7 +464,7 @@ int CXml::GetNodesNum(XML_NODE* node, LPCSTR tag_name)
 	return result;
 }
 
-//нахождение элемнета по его атрибуту
+//Ð½Ð°Ñ…Ð¾Ð¶Ð´ÐµÐ½Ð¸Ðµ ÑÐ»ÐµÐ¼Ð½ÐµÑ‚Ð° Ð¿Ð¾ ÐµÐ³Ð¾ Ð°Ñ‚Ñ€Ð¸Ð±ÑƒÑ‚Ñƒ
 XML_NODE* CXml::SearchForAttribute(LPCSTR path, int index, LPCSTR tag_name, LPCSTR attrib, LPCSTR attrib_value_pattern)
 {
 	XML_NODE* start_node = NavigateToNode(path, index);
@@ -509,7 +509,7 @@ LPCSTR CXml::CheckUniqueAttrib (XML_NODE* start_node, LPCSTR tag_name, LPCSTR at
 
 	for(int i=0; i<tags_num; i++)
 	{
-		LPCSTR attrib				= ReadAttrib(start_node, tag_name, i, attrib_name, NULL);
+		LPCSTR attrib				= ReadAttrib(start_node, tag_name, i, attrib_name, nullptr);
 		
 		xr_vector<shared_str>::iterator it = std::find(m_AttribValues.begin(), m_AttribValues.end(), attrib);
 

@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #pragma hdrstop
 
 #include "IGame_Persistent.h"
@@ -611,7 +611,7 @@ void IGame_Persistent::GrassBendersRemoveById(u16 id)
 void IGame_Persistent::GrassBendersReset(u8 idx)
 {
 	// Reset Everything
-	GrassBendersSet(idx, NULL, Fvector3().set(0, 0, 0), Fvector3().set(0, -99, 0), 0, 0, 0, 0, BENDER_ANIM_DEFAULT, true);
+	GrassBendersSet(idx, 0, Fvector3().set(0, 0, 0), Fvector3().set(0, -99, 0), 0, 0, 0, 0, BENDER_ANIM_DEFAULT, true);
 	grass_shader_data.str_target[idx] = 0;
 }
 

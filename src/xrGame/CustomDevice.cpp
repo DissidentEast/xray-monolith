@@ -73,7 +73,7 @@ bool CCustomDevice::CheckCompatibility(CHudItem* itm)
 	if (!inherited::CheckCompatibility(itm))
 		return false;
 
-	if (!CheckCompatibilityInt(itm, NULL))
+	if (!CheckCompatibilityInt(itm, nullptr))
 	{
 		HideDevice(true);
 		return false;

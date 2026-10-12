@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 
 #include "UIStatix.h"
 
@@ -19,7 +19,7 @@ void CUIStatix::start_anim()
 
 void CUIStatix::stop_anim()
 {
-	SetColorAnimation(NULL, 0);
+	SetColorAnimation(nullptr, 0);
 }
 
 void CUIStatix::Update()

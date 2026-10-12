@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "map_location.h"
 #include "map_spot.h"
 #include "map_manager.h"
@@ -136,13 +136,13 @@ void CMapLocation::LoadSpot(LPCSTR type, bool bReload)
 	LPCSTR s = g_uiSpotXml->ReadAttrib(path_base, 0, "hint", "no hint");
 	SetHint(s);
 
-	s = g_uiSpotXml->ReadAttrib(path_base, 0, "store", NULL);
+	s = g_uiSpotXml->ReadAttrib(path_base, 0, "store", nullptr);
 	if (s)
 	{
 		m_flags.set(eSerailizable, TRUE);
 	}
 
-	s = g_uiSpotXml->ReadAttrib(path_base, 0, "no_offline", NULL);
+	s = g_uiSpotXml->ReadAttrib(path_base, 0, "no_offline", nullptr);
 	if (s)
 	{
 		m_flags.set(eHideInOffline, TRUE);
@@ -155,7 +155,7 @@ void CMapLocation::LoadSpot(LPCSTR type, bool bReload)
 		m_actual_time = Device.dwTimeGlobal + m_ttl * 1000;
 	}
 
-	s = g_uiSpotXml->ReadAttrib(path_base, 0, "pos_to_actor", NULL);
+	s = g_uiSpotXml->ReadAttrib(path_base, 0, "pos_to_actor", nullptr);
 	if (s)
 	{
 		m_flags.set(ePosToActor, TRUE);

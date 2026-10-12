@@ -1,4 +1,4 @@
-////////////////////////////////////////////////////////////////////////////
+﻿////////////////////////////////////////////////////////////////////////////
 //	Module 		: level_script.cpp
 //	Created 	: 28.06.2004
 //  Modified 	: 28.06.2004
@@ -2280,7 +2280,7 @@ xrTime get_start_time()
 void iterate_nearest(const Fvector& pos, float radius, const ::luabind::functor<bool>& functor)
 {
 	xr_vector<CObject*> m_nearest;
-	Level().ObjectSpace.GetNearest(m_nearest, pos, radius, NULL);
+	Level().ObjectSpace.GetNearest(m_nearest, pos, radius, nullptr);
 
 	if (!m_nearest.size()) return;
 
@@ -2313,7 +2313,7 @@ CScriptGameObject* nearest_object_of_class(const Fvector& pos, float radius, int
 	}
 
 	xr_vector<CObject*> nearest;
-	Level().ObjectSpace.GetNearest(nearest, pos, radius, NULL);
+	Level().ObjectSpace.GetNearest(nearest, pos, radius, nullptr);
 
 	CGameObject* best = nullptr;
 	float best_dist = flt_max;

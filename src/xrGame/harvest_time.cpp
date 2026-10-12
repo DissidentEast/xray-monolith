@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "harvest_time.h"
 #include "kills_store.h"
 #include "game_base.h"
@@ -85,7 +85,7 @@ namespace award_system
 			victim_obj->cName(),
 			m_spawn_time);
 
-		buffer_vector<kills_store::kill> tmp_fake_buffer(NULL, 0);
+		buffer_vector<kills_store::kill> tmp_fake_buffer(nullptr, 0);
 
 		m_harvest_count = m_owner->get_kills_store().fetch_kills(
 			tmp_predicate,

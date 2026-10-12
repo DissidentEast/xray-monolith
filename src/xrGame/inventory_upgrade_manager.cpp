@@ -1,4 +1,4 @@
-////////////////////////////////////////////////////////////////////////////
+﻿////////////////////////////////////////////////////////////////////////////
 //	Module 		: inventory_upgrade_manager.cpp
 //	Created 	: 19.10.2007
 //	Author		: Dmitriy Iassenev, Evgeniy Sokolov
@@ -51,7 +51,7 @@ namespace inventory
 			{
 				return ((*i).second);
 			}
-			return (NULL);
+			return (nullptr);
 		}
 
 		Upgrade* Manager::get_upgrade(shared_str const& upgrade_id)
@@ -61,7 +61,7 @@ namespace inventory
 			{
 				return ((*i).second);
 			}
-			return (NULL);
+			return (nullptr);
 		}
 
 		Group* Manager::get_group(shared_str const& group_id)
@@ -71,7 +71,7 @@ namespace inventory
 			{
 				return ((*i).second);
 			}
-			return (NULL);
+			return (nullptr);
 		}
 
 		Property* Manager::get_property(shared_str const& property_id)
@@ -81,7 +81,7 @@ namespace inventory
 			{
 				return ((*i).second);
 			}
-			return (NULL);
+			return (nullptr);
 		}
 
 		// -----------------------------------------------------------------------

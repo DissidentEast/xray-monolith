@@ -1,4 +1,4 @@
-////////////////////////////////////////////////////////////////////////////
+﻿////////////////////////////////////////////////////////////////////////////
 //	Module 		: ai_stalker_fire.cpp
 //	Created 	: 25.02.2003
 //  Modified 	: 25.02.2003
@@ -265,7 +265,7 @@ void CAI_Stalker::g_WeaponBones(int& L, int& R1, int& R2)
 
 void CAI_Stalker::Hit(SHit* pHDS)
 {
-	//хит может меняться в зависимости от ранга (новички получают больше хита, чем ветераны)
+	//Ñ…Ð¸Ñ‚ Ð¼Ð¾Ð¶ÐµÑ‚ Ð¼ÐµÐ½ÑÑ‚ÑŒÑÑ Ð² Ð·Ð°Ð²Ð¸ÑÐ¸Ð¼Ð¾ÑÑ‚Ð¸ Ð¾Ñ‚ Ñ€Ð°Ð½Ð³Ð° (Ð½Ð¾Ð²Ð¸Ñ‡ÐºÐ¸ Ð¿Ð¾Ð»ÑƒÑ‡Ð°ÑŽÑ‚ Ð±Ð¾Ð»ÑŒÑˆÐµ Ñ…Ð¸Ñ‚Ð°, Ñ‡ÐµÐ¼ Ð²ÐµÑ‚ÐµÑ€Ð°Ð½Ñ‹)
 	SHit HDS = *pHDS;
 	HDS.add_wound = true;
 
@@ -312,7 +312,7 @@ void CAI_Stalker::Hit(SHit* pHDS)
 			}
 		}
 
-		if (wounded()) //уже лежит => добивание
+		if (wounded()) //ÑƒÐ¶Ðµ Ð»ÐµÐ¶Ð¸Ñ‚ => Ð´Ð¾Ð±Ð¸Ð²Ð°Ð½Ð¸Ðµ
 		{
 			hit_power = 1000.f;
 		}
@@ -744,7 +744,7 @@ void CAI_Stalker::can_kill_entity(const Fvector& position, const Fvector& direct
 
 	ray_query_param params(this, memory().visual().transparency_threshold(), distance);
 
-	Level().ObjectSpace.RayQuery(rq_storage, ray_defs, ray_query_callback, &params,NULL, this);
+	Level().ObjectSpace.RayQuery(rq_storage, ray_defs, ray_query_callback, &params,nullptr, this);
 	m_can_kill_enemy = m_can_kill_enemy || params.m_can_kill_enemy;
 	m_can_kill_member = m_can_kill_member || params.m_can_kill_member;
 	m_pick_distance = _max(m_pick_distance, params.m_pick_distance);

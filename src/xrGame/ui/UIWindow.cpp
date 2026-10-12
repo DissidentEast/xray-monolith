@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "UIWindow.h"
 #include "../UICursor.h"
 #include "../MainMenu.h"
@@ -149,9 +149,9 @@ static void erase_capture_subtree(CUIWindow* w)
 }
 
 CUIWindow::CUIWindow()
-	: m_pParentWnd(NULL),
-	  m_pMessageTarget(NULL),
-	  m_pKeyboardCapturer(NULL),
+	: m_pParentWnd(nullptr),
+	  m_pMessageTarget(nullptr),
+	  m_pKeyboardCapturer(nullptr),
 	  m_bAutoDelete(false),
 	  //m_pHint(NULL),
 	  m_bCursorOverWindow(false),
@@ -310,7 +310,7 @@ void CUIWindow::DetachChild(CUIWindow* pChild)
 	R_ASSERT(it!=m_ChildWndList.end());
 	m_ChildWndList.erase(it);
 
-	pChild->SetParent(NULL);
+	pChild->SetParent(nullptr);
 
 	if (pChild->IsAutoDelete())
 		xr_delete(pChild);
@@ -341,9 +341,9 @@ void CUIWindow::GetAbsoluteRect(Frect& r)
 	r.bottom = r.top + GetHeight();
 }
 
-//реакция на мышь
-//координаты курсора всегда, кроме начального вызова 
-//задаются относительно текущего окна
+//Ñ€ÐµÐ°ÐºÑ†Ð¸Ñ Ð½Ð° Ð¼Ñ‹ÑˆÑŒ
+//ÐºÐ¾Ð¾Ñ€Ð´Ð¸Ð½Ð°Ñ‚Ñ‹ ÐºÑƒÑ€ÑÐ¾Ñ€Ð° Ð²ÑÐµÐ³Ð´Ð°, ÐºÑ€Ð¾Ð¼Ðµ Ð½Ð°Ñ‡Ð°Ð»ÑŒÐ½Ð¾Ð³Ð¾ Ð²Ñ‹Ð·Ð¾Ð²Ð° 
+//Ð·Ð°Ð´Ð°ÑŽÑ‚ÑÑ Ð¾Ñ‚Ð½Ð¾ÑÐ¸Ñ‚ÐµÐ»ÑŒÐ½Ð¾ Ñ‚ÐµÐºÑƒÑ‰ÐµÐ³Ð¾ Ð¾ÐºÐ½Ð°
 
 #define DOUBLE_CLICK_TIME 250
 
@@ -397,7 +397,7 @@ bool CUIWindow::OnMouseAction(float x, float y, EUIMessages mouse_action)
 		// a window that captured the mouse keeps receiving actions from outside its rect
 		if (!wndRect.in(cursor_pos) && cap != this)
 			return false;
-		//получить координаты относительно окна
+		//Ð¿Ð¾Ð»ÑƒÑ‡Ð¸Ñ‚ÑŒ ÐºÐ¾Ð¾Ñ€Ð´Ð¸Ð½Ð°Ñ‚Ñ‹ Ð¾Ñ‚Ð½Ð¾ÑÐ¸Ñ‚ÐµÐ»ÑŒÐ½Ð¾ Ð¾ÐºÐ½Ð°
 		cursor_pos.x -= wndRect.left;
 		cursor_pos.y -= wndRect.top;
 	}
@@ -430,9 +430,9 @@ bool CUIWindow::OnMouseAction(float x, float y, EUIMessages mouse_action)
 		break;
 	}
 
-	//Проверка на попадание мыши в окно,
-	//происходит в обратном порядке, чем рисование окон
-	//(последние в списке имеют высший приоритет)
+	//ÐŸÑ€Ð¾Ð²ÐµÑ€ÐºÐ° Ð½Ð° Ð¿Ð¾Ð¿Ð°Ð´Ð°Ð½Ð¸Ðµ Ð¼Ñ‹ÑˆÐ¸ Ð² Ð¾ÐºÐ½Ð¾,
+	//Ð¿Ñ€Ð¾Ð¸ÑÑ…Ð¾Ð´Ð¸Ñ‚ Ð² Ð¾Ð±Ñ€Ð°Ñ‚Ð½Ð¾Ð¼ Ð¿Ð¾Ñ€ÑÐ´ÐºÐµ, Ñ‡ÐµÐ¼ Ñ€Ð¸ÑÐ¾Ð²Ð°Ð½Ð¸Ðµ Ð¾ÐºÐ¾Ð½
+	//(Ð¿Ð¾ÑÐ»ÐµÐ´Ð½Ð¸Ðµ Ð² ÑÐ¿Ð¸ÑÐºÐµ Ð¸Ð¼ÐµÑŽÑ‚ Ð²Ñ‹ÑÑˆÐ¸Ð¹ Ð¿Ñ€Ð¸Ð¾Ñ€Ð¸Ñ‚ÐµÑ‚)
 	WINDOW_LIST::reverse_iterator it = m_ChildWndList.rbegin();
 
 	for (; it != m_ChildWndList.rend(); ++it)
@@ -491,7 +491,7 @@ void CUIWindow::OnFocusReceive()
 	m_bCursorOverWindow = true;
 
 	if (GetMessageTarget())
-		GetMessageTarget()->SendMessage(this, WINDOW_FOCUS_RECEIVED, NULL);
+		GetMessageTarget()->SendMessage(this, WINDOW_FOCUS_RECEIVED, nullptr);
 
 	//if (m_pHint)
 	//	bShowHint = true;
@@ -503,16 +503,16 @@ void CUIWindow::OnFocusLost()
 	m_bCursorOverWindow = false;
 
 	if (GetMessageTarget())
-		GetMessageTarget()->SendMessage(this, WINDOW_FOCUS_LOST, NULL);
+		GetMessageTarget()->SendMessage(this, WINDOW_FOCUS_LOST, nullptr);
 
 	//bShowHint = false;
 }
 
 
-//Сообщение, посылаемое дочерним окном,
-//о том, что окно хочет захватить мышь,
-//все сообщения от нее будут направляться только
-//ему в независимости от того где мышь
+//Ð¡Ð¾Ð¾Ð±Ñ‰ÐµÐ½Ð¸Ðµ, Ð¿Ð¾ÑÑ‹Ð»Ð°ÐµÐ¼Ð¾Ðµ Ð´Ð¾Ñ‡ÐµÑ€Ð½Ð¸Ð¼ Ð¾ÐºÐ½Ð¾Ð¼,
+//Ð¾ Ñ‚Ð¾Ð¼, Ñ‡Ñ‚Ð¾ Ð¾ÐºÐ½Ð¾ Ñ…Ð¾Ñ‡ÐµÑ‚ Ð·Ð°Ñ…Ð²Ð°Ñ‚Ð¸Ñ‚ÑŒ Ð¼Ñ‹ÑˆÑŒ,
+//Ð²ÑÐµ ÑÐ¾Ð¾Ð±Ñ‰ÐµÐ½Ð¸Ñ Ð¾Ñ‚ Ð½ÐµÐµ Ð±ÑƒÐ´ÑƒÑ‚ Ð½Ð°Ð¿Ñ€Ð°Ð²Ð»ÑÑ‚ÑŒÑÑ Ñ‚Ð¾Ð»ÑŒÐºÐ¾
+//ÐµÐ¼Ñƒ Ð² Ð½ÐµÐ·Ð°Ð²Ð¸ÑÐ¸Ð¼Ð¾ÑÑ‚Ð¸ Ð¾Ñ‚ Ñ‚Ð¾Ð³Ð¾ Ð³Ð´Ðµ Ð¼Ñ‹ÑˆÑŒ
 void CUIWindow::SetCapture(CUIWindow* pChildWindow, bool capture_status)
 {
 	if (capture_status)
@@ -520,7 +520,7 @@ void CUIWindow::SetCapture(CUIWindow* pChildWindow, bool capture_status)
 		if (!pChildWindow)
 			return;
 
-		//оповестить дочернее окно о потере фокуса мыши
+		//Ð¾Ð¿Ð¾Ð²ÐµÑÑ‚Ð¸Ñ‚ÑŒ Ð´Ð¾Ñ‡ÐµÑ€Ð½ÐµÐµ Ð¾ÐºÐ½Ð¾ Ð¾ Ð¿Ð¾Ñ‚ÐµÑ€Ðµ Ñ„Ð¾ÐºÑƒÑÐ° Ð¼Ñ‹ÑˆÐ¸
 		if (!s_capture_stack.empty() && s_capture_stack.back() != pChildWindow)
 			s_capture_stack.back()->SendMessage(this, WINDOW_MOUSE_CAPTURE_LOST);
 
@@ -573,13 +573,13 @@ void CUIWindow::FeedCursorDelta(const Fvector2& cursor)
 }
 
 
-//реакция на клавиатуру
+//Ñ€ÐµÐ°ÐºÑ†Ð¸Ñ Ð½Ð° ÐºÐ»Ð°Ð²Ð¸Ð°Ñ‚ÑƒÑ€Ñƒ
 bool CUIWindow::OnKeyboardAction(int dik, EUIMessages keyboard_action)
 {
 	bool result;
 
-	//если есть дочернее окно,захватившее клавиатуру, то
-	//сообщение направляем ему сразу
+	//ÐµÑÐ»Ð¸ ÐµÑÑ‚ÑŒ Ð´Ð¾Ñ‡ÐµÑ€Ð½ÐµÐµ Ð¾ÐºÐ½Ð¾,Ð·Ð°Ñ…Ð²Ð°Ñ‚Ð¸Ð²ÑˆÐµÐµ ÐºÐ»Ð°Ð²Ð¸Ð°Ñ‚ÑƒÑ€Ñƒ, Ñ‚Ð¾
+	//ÑÐ¾Ð¾Ð±Ñ‰ÐµÐ½Ð¸Ðµ Ð½Ð°Ð¿Ñ€Ð°Ð²Ð»ÑÐµÐ¼ ÐµÐ¼Ñƒ ÑÑ€Ð°Ð·Ñƒ
 	if (nullptr != m_pKeyboardCapturer)
 	{
 		result = m_pKeyboardCapturer->OnKeyboardAction(dik, keyboard_action);
@@ -634,7 +634,7 @@ void CUIWindow::SetKeyboardCapture(CUIWindow* pChildWindow, bool capture_status)
 
 	if (capture_status)
 	{
-		//оповестить дочернее окно о потере фокуса клавиатуры
+		//Ð¾Ð¿Ð¾Ð²ÐµÑÑ‚Ð¸Ñ‚ÑŒ Ð´Ð¾Ñ‡ÐµÑ€Ð½ÐµÐµ Ð¾ÐºÐ½Ð¾ Ð¾ Ð¿Ð¾Ñ‚ÐµÑ€Ðµ Ñ„Ð¾ÐºÑƒÑÐ° ÐºÐ»Ð°Ð²Ð¸Ð°Ñ‚ÑƒÑ€Ñ‹
 		if (nullptr != m_pKeyboardCapturer)
 			m_pKeyboardCapturer->SendMessage(this, WINDOW_KEYBOARD_CAPTURE_LOST);
 
@@ -645,10 +645,10 @@ void CUIWindow::SetKeyboardCapture(CUIWindow* pChildWindow, bool capture_status)
 }
 
 
-//обработка сообщений 
+//Ð¾Ð±Ñ€Ð°Ð±Ð¾Ñ‚ÐºÐ° ÑÐ¾Ð¾Ð±Ñ‰ÐµÐ½Ð¸Ð¹ 
 void CUIWindow::SendMessage(CUIWindow* pWnd, s16 msg, void* pData)
 {
-	//оповестить дочерние окна
+	//Ð¾Ð¿Ð¾Ð²ÐµÑÑ‚Ð¸Ñ‚ÑŒ Ð´Ð¾Ñ‡ÐµÑ€Ð½Ð¸Ðµ Ð¾ÐºÐ½Ð°
 	for (WINDOW_LIST_it it = m_ChildWndList.begin(); m_ChildWndList.end() != it; ++it)
 	{
 		if ((*it)->IsEnabled())
@@ -687,7 +687,7 @@ CUIWindow* CUIWindow::GetChildMouseHandler()
 	return this;
 }
 
-//для перевода окна и потомков в исходное состояние
+//Ð´Ð»Ñ Ð¿ÐµÑ€ÐµÐ²Ð¾Ð´Ð° Ð¾ÐºÐ½Ð° Ð¸ Ð¿Ð¾Ñ‚Ð¾Ð¼ÐºÐ¾Ð² Ð² Ð¸ÑÑ…Ð¾Ð´Ð½Ð¾Ðµ ÑÐ¾ÑÑ‚Ð¾ÑÐ½Ð¸Ðµ
 void CUIWindow::Reset()
 {
 }

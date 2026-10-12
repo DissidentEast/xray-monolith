@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "dx103DFluidManager.h"
 
 #include "../../xrRender/dxRenderDeviceRender.h"
@@ -238,7 +238,7 @@ void dx103DFluidManager::CreateRTTextureAndViews(int rtIndex, D3D_TEXTURE3D_DESC
 	ID3DTexture3D* pRT;
 
 	// Create the texture
-	CHK_DX(HW.pDevice->CreateTexture3D(&TexDesc,NULL,&pRT));
+	CHK_DX(HW.pDevice->CreateTexture3D(&TexDesc,nullptr,&pRT));
 	// Create the render target view
 	D3D_RENDER_TARGET_VIEW_DESC DescRT;
 	DescRT.Format = TexDesc.Format;

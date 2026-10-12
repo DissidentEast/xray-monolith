@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "../xrEngine/xr_ioconsole.h"
 #include "../xrEngine/xr_ioc_cmd.h"
 #include "level.h"
@@ -487,7 +487,7 @@ static xrClientData* exclude_command_initiator(LPCSTR args)
 	if (clientidstr)
 	{
 		clientidstr += sizeof(RAPREFIX) - 1;
-		u32 client_id = static_cast<u32>(strtoul(clientidstr, NULL, 10));
+		u32 client_id = static_cast<u32>(strtoul(clientidstr, nullptr, 10));
 		ClientID tmp_id;
 		tmp_id.set(client_id);
 		if (g_pGameLevel && Level().Server)

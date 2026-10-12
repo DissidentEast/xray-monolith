@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "../xrRender/resourcemanager.h"
 #include "blender_light_occq.h"
 #include "blender_light_mask.h"
@@ -31,11 +31,11 @@ void CRenderTarget::u_setrt(const ref_rt& _1, const ref_rt& _2, const ref_rt& _3
 	dwWidth = _1->dwWidth;
 	dwHeight = _1->dwHeight;
 	if (_1) RCache.set_RT(_1->pRT, 0);
-	else RCache.set_RT(NULL, 0);
+	else RCache.set_RT(nullptr, 0);
 	if (_2) RCache.set_RT(_2->pRT, 1);
-	else RCache.set_RT(NULL, 1);
+	else RCache.set_RT(nullptr, 1);
 	if (_3) RCache.set_RT(_3->pRT, 2);
-	else RCache.set_RT(NULL, 2);
+	else RCache.set_RT(nullptr, 2);
 	RCache.set_ZB(zb);
 	//	RImplementation.rmNormal				();
 }
@@ -299,15 +299,15 @@ CRenderTarget::CRenderTarget()
 		// RT Blur
 		rt_blur_h_2.create(r2_RT_blur_h_2, u32(w/2), u32(h/2), D3DFMT_A8R8G8B8);
 		rt_blur_2.create(r2_RT_blur_2, u32(w/2), u32(h/2), D3DFMT_A8R8G8B8);
-		R_CHK(HW.pDevice->CreateDepthStencilSurface(u32(w/2), u32(h/2), D3DFMT_D24S8, D3DMULTISAMPLE_NONE, 0, TRUE, &rt_blur_2_zb, NULL));
+		R_CHK(HW.pDevice->CreateDepthStencilSurface(u32(w/2), u32(h/2), D3DFMT_D24S8, D3DMULTISAMPLE_NONE, 0, TRUE, &rt_blur_2_zb, nullptr));
 
 		rt_blur_h_4.create(r2_RT_blur_h_4, u32(w/4), u32(h/4), D3DFMT_A8R8G8B8);
 		rt_blur_4.create(r2_RT_blur_4, u32(w/4), u32(h/4), D3DFMT_A8R8G8B8);
-		R_CHK(HW.pDevice->CreateDepthStencilSurface(u32(w/4), u32(h/4), D3DFMT_D24S8, D3DMULTISAMPLE_NONE, 0, TRUE, &rt_blur_4_zb, NULL));
+		R_CHK(HW.pDevice->CreateDepthStencilSurface(u32(w/4), u32(h/4), D3DFMT_D24S8, D3DMULTISAMPLE_NONE, 0, TRUE, &rt_blur_4_zb, nullptr));
 
 		rt_blur_h_8.create(r2_RT_blur_h_8, u32(w/8), u32(h/8), D3DFMT_A8R8G8B8);
 		rt_blur_8.create(r2_RT_blur_8, u32(w/8), u32(h/8), D3DFMT_A8R8G8B8);
-		R_CHK(HW.pDevice->CreateDepthStencilSurface(u32(w/8), u32(h/8), D3DFMT_D24S8, D3DMULTISAMPLE_NONE, 0, TRUE, &rt_blur_8_zb, NULL));
+		R_CHK(HW.pDevice->CreateDepthStencilSurface(u32(w/8), u32(h/8), D3DFMT_D24S8, D3DMULTISAMPLE_NONE, 0, TRUE, &rt_blur_8_zb, nullptr));
 
 		rt_dof.create(r2_RT_dof, w, h, D3DFMT_A8R8G8B8);
 
@@ -482,9 +482,9 @@ CRenderTarget::CRenderTarget()
 			xr_sprintf(name, "%s_%d", r2_RT_luminance_pool, it);
 			rt_LUM_pool[it].create(name, 1, 1, D3DFMT_R32F);
 			u_setrt(rt_LUM_pool[it], 0, 0, 0);
-			CHK_DX(HW.pDevice->Clear( 0L, NULL, D3DCLEAR_TARGET, 0x7f7f7f7f, 1.0f, 0L));
+			CHK_DX(HW.pDevice->Clear( 0L, nullptr, D3DCLEAR_TARGET, 0x7f7f7f7f, 1.0f, 0L));
 		}
-		u_setrt(Device.dwWidth, Device.dwHeight, HW.pBaseRT,NULL,NULL, HW.pBaseZB);
+		u_setrt(Device.dwWidth, Device.dwHeight, HW.pBaseRT,nullptr,NULL, HW.pBaseZB);
 	}
 
 	// COMBINE
@@ -695,7 +695,7 @@ CRenderTarget::CRenderTarget()
 	//HW.pDevice->CreateOffscreenPlainSurface(Device.dwWidth,Device.dwHeight,rt_Color->fmt,D3DPOOL_SYSTEMMEM,&pFB,NULL);
 	D3DSURFACE_DESC desc;
 	HW.pBaseRT->GetDesc(&desc);
-	HW.pDevice->CreateOffscreenPlainSurface(Device.dwWidth, Device.dwHeight, desc.Format, D3DPOOL_SYSTEMMEM, &pFB,NULL);
+	HW.pDevice->CreateOffscreenPlainSurface(Device.dwWidth, Device.dwHeight, desc.Format, D3DPOOL_SYSTEMMEM, &pFB,nullptr);
 
 	//
 	dwWidth = Device.dwWidth;
@@ -707,15 +707,15 @@ CRenderTarget::~CRenderTarget()
 	_RELEASE(pFB);
 
 	// Textures
-	t_material->surface_set(NULL);
+	t_material->surface_set(nullptr);
 
 #ifdef DEBUG
 	_SHOW_REF					("t_material_surf",t_material_surf);
 #endif // DEBUG
 	_RELEASE(t_material_surf);
 
-	t_LUM_src->surface_set(NULL);
-	t_LUM_dest->surface_set(NULL);
+	t_LUM_src->surface_set(nullptr);
+	t_LUM_dest->surface_set(nullptr);
 
 #ifdef DEBUG
 	ID3DBaseTexture*	pSurf = 0;
@@ -730,8 +730,8 @@ CRenderTarget::~CRenderTarget()
 	//_SHOW_REF("t_envmap_0 - #small",t_envmap_0->pSurface);
 	//_SHOW_REF("t_envmap_1 - #small",t_envmap_1->pSurface);
 #endif // DEBUG
-	t_envmap_0->surface_set(NULL);
-	t_envmap_1->surface_set(NULL);
+	t_envmap_0->surface_set(nullptr);
+	t_envmap_1->surface_set(nullptr);
 	t_envmap_0.destroy();
 	t_envmap_1.destroy();
 
@@ -744,7 +744,7 @@ CRenderTarget::~CRenderTarget()
 	// Jitter
 	for (int it = 0; it < TEX_jitter_count; it++)
 	{
-		t_noise[it]->surface_set(NULL);
+		t_noise[it]->surface_set(nullptr);
 #ifdef DEBUG
 		_SHOW_REF("t_noise_surf[it]",t_noise_surf[it]);
 #endif // DEBUG

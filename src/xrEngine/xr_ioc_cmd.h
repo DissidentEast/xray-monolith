@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #define CMD0(cls) { static cls x##cls(); Console->AddCommand(&x##cls);}
 #define CMD1(cls,p1) { static cls x##cls(p1); Console->AddCommand(&x##cls);}
@@ -652,7 +652,7 @@ public:
 
 	virtual void Execute(LPCSTR args)
 	{
-		strncpy_s(value, size, !xr_strcmp(args, "(NULL)") ? "" : args, size - 1);
+		strncpy_s(value, size, !xr_strcmp(args, "(nullptr)") ? "" : args, size - 1);
 	}
 
 	virtual void Status(TStatus& S)

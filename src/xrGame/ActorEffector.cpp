@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 
 #include "ActorEffector.h"
 #include "PostprocessAnimator.h"
@@ -286,7 +286,7 @@ CCameraEffectorControlled::CCameraEffectorControlled(CEffectorController* c)
 
 CCameraEffectorControlled::~CCameraEffectorControlled()
 {
-	m_controller->SetCam(NULL);
+	m_controller->SetCam(nullptr);
 }
 
 BOOL CCameraEffectorControlled::Valid()
@@ -438,7 +438,7 @@ BOOL CControllerPsyHitCamEffector::ProcessCam(SCamEffectorInfo& info)
 
 	//////////////////////////////////////////////////////////////////////////
 
-	// Установить углы смещения
+	// Ð£ÑÑ‚Ð°Ð½Ð¾Ð²Ð¸Ñ‚ÑŒ ÑƒÐ³Ð»Ñ‹ ÑÐ¼ÐµÑ‰ÐµÐ½Ð¸Ñ
 	Fmatrix R;
 	if (m_time_current > m_time_total)
 		R.identity();

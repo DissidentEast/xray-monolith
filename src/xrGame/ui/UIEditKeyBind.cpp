@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 
 #include "UIEditKeyBind.h"
 #include "UIStatic.h"
@@ -152,7 +152,7 @@ void CUIEditKeyBind::SetEditMode(bool b)
 	if (b)
 		m_text->SetColorAnimation("ui_map_area_anim", LA_CYCLIC | LA_ONLYALPHA | LA_TEXTCOLOR);
 	else
-		m_text->SetColorAnimation(NULL, 0);
+		m_text->SetColorAnimation(nullptr, 0);
 }
 
 void CUIEditKeyBind::AssignProps(const shared_str& entry, const shared_str& group)
@@ -166,7 +166,7 @@ void CUIEditKeyBind::SetValue()
 	if (m_keyboard)
 		SetText(m_keyboard->key_local_name.c_str());
 	else
-		SetText(NULL);
+		SetText(nullptr);
 }
 
 void CUIEditKeyBind::SetCurrentOptValue()

@@ -1,6 +1,6 @@
-//////////////////////////////////////////////////////////////////////
-// RocketLauncher.cpp:	интерфейс для семейства объектов 
-//						стреляющих гранатами и ракетами
+﻿//////////////////////////////////////////////////////////////////////
+// RocketLauncher.cpp:	Ð¸Ð½Ñ‚ÐµÑ€Ñ„ÐµÐ¹Ñ Ð´Ð»Ñ ÑÐµÐ¼ÐµÐ¹ÑÑ‚Ð²Ð° Ð¾Ð±ÑŠÐµÐºÑ‚Ð¾Ð² 
+//						ÑÑ‚Ñ€ÐµÐ»ÑÑŽÑ‰Ð¸Ñ… Ð³Ñ€Ð°Ð½Ð°Ñ‚Ð°Ð¼Ð¸ Ð¸ Ñ€Ð°ÐºÐµÑ‚Ð°Ð¼Ð¸
 //////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
@@ -78,14 +78,14 @@ void CRocketLauncher::DetachRocket(u16 rocket_id, bool bLaunch)
 	if (It != m_rockets.end())
 	{
 		(*It)->m_bLaunched = bLaunch;
-		(*It)->H_SetParent(NULL);
+		(*It)->H_SetParent(nullptr);
 		m_rockets.erase(It);
 	};
 
 	if (It_l != m_launched_rockets.end())
 	{
 		(*It_l)->m_bLaunched = bLaunch;
-		(*It_l)->H_SetParent(NULL);
+		(*It_l)->H_SetParent(nullptr);
 		m_launched_rockets.erase(It_l);
 	}
 }

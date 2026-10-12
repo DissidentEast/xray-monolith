@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #if XRGAME_EXPORTS | XRSE_FACTORY_EXPORTS
 #	define	_memcpy CopyMemory
@@ -174,7 +174,7 @@ inline BOOL CheckMailslotMessage(HANDLE hSlot, CMailSlotMsg& msg)
 
 	cbMessage = cMessage = cbRead = 0;
 
-	hEvent = CreateEvent(NULL, FALSE, FALSE, "__Slot");
+	hEvent = CreateEvent(nullptr, FALSE, FALSE, "__Slot");
 	if (nullptr == hEvent)
 		return FALSE;
 	ov.Offset = 0;

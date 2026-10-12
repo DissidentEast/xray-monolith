@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #pragma hdrstop
 
 #include "ResourceManager.h"
@@ -117,7 +117,7 @@ void CTexture::apply_avi(u32 dwStage)
 
 		// AVI
 		D3DLOCKED_RECT R;
-		R_CHK(T2D->LockRect(0,&R,NULL,0));
+		R_CHK(T2D->LockRect(0,&R,nullptr,0));
 		R_ASSERT(R.Pitch == int(pAVI->m_dwWidth*4));
 		//		R_ASSERT(pAVI->DecompressFrame((u32*)(R.pBits)));
 		BYTE* ptr;
@@ -218,7 +218,7 @@ void CTexture::Load()
 				u32 _h = pTheora->Height(false);
 
 				HRESULT hrr = HW.pDevice->CreateTexture(
-					_w, _h, 1, 0, D3DFMT_A8R8G8B8, D3DPOOL_MANAGED, &pTexture, NULL);
+					_w, _h, 1, 0, D3DFMT_A8R8G8B8, D3DPOOL_MANAGED, &pTexture, nullptr);
 
 				pSurface = pTexture;
 				if (FAILED(hrr))

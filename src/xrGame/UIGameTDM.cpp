@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "UIGameTDM.h"
 
 #include "game_cl_base.h"
@@ -19,7 +19,7 @@
 
 //--------------------------------------------------------------------
 CUIGameTDM::CUIGameTDM()
-	: m_game(NULL)
+	: m_game(nullptr)
 {
 }
 

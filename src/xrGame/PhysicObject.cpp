@@ -1,4 +1,4 @@
-#include "pch_script.h"
+﻿#include "pch_script.h"
 #include "physicobject.h"
 #include "../xrphysics/PhysicsShell.h"
 //#include "Physics.h"
@@ -358,7 +358,7 @@ void CPhysicObject::Load(LPCSTR section)
 	CPHSkeleton::Load(section);
 
 #ifdef CPHYSICOBJECT_CHANGE
-	m_physic_contact_callback = READ_IF_EXISTS(pSettings, r_string, cNameSect_str(), "on_physic_contact", NULL);
+	m_physic_contact_callback = READ_IF_EXISTS(pSettings, r_string, cNameSect_str(), "on_physic_contact", nullptr);
 	if (m_physic_contact_callback && strlen(m_physic_contact_callback))
 	{
 		if (ai().script_engine().functor(m_physic_contact_callback, m_physic_contact_function) == false)
@@ -387,8 +387,8 @@ void CPhysicObject::UpdateCL()
 {
 	inherited::UpdateCL();
 
-	//Если наш физический объект анимированный, то 
-	//двигаем объект за анимацией
+	//Ð•ÑÐ»Ð¸ Ð½Ð°Ñˆ Ñ„Ð¸Ð·Ð¸Ñ‡ÐµÑÐºÐ¸Ð¹ Ð¾Ð±ÑŠÐµÐºÑ‚ Ð°Ð½Ð¸Ð¼Ð¸Ñ€Ð¾Ð²Ð°Ð½Ð½Ñ‹Ð¹, Ñ‚Ð¾ 
+	//Ð´Ð²Ð¸Ð³Ð°ÐµÐ¼ Ð¾Ð±ÑŠÐµÐºÑ‚ Ð·Ð° Ð°Ð½Ð¸Ð¼Ð°Ñ†Ð¸ÐµÐ¹
 	if (m_pPhysicsShell->PPhysicsShellAnimator())
 	{
 		m_pPhysicsShell->AnimatorOnFrame();

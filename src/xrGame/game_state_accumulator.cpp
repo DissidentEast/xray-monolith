@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "game_state_accumulator.h"
 #include "Level.h"
 #include "actor_mp_client.h"
@@ -316,7 +316,7 @@ namespace award_system
 		tmp_fetcher.m_func = func;
 		tmp_fetcher.m_right_arg = right_dist_arg;
 
-		buffer_vector<hits_store::bullet_hit> tmp_fake_buffer(NULL, 0);
+		buffer_vector<hits_store::bullet_hit> tmp_fake_buffer(nullptr, 0);
 		if (m_hits.fetch_hits(tmp_fetcher, tmp_fake_buffer) >= count)
 		{
 			return true;
@@ -384,7 +384,7 @@ namespace award_system
 		tmp_predicate.m_spec_kill = special_kill_type;
 		tmp_predicate.m_weapon_gid = weapon_group_id;
 
-		buffer_vector<kills_store::kill> tmp_buffer(NULL, 0);
+		buffer_vector<kills_store::kill> tmp_buffer(nullptr, 0);
 		if (m_kills.fetch_kills(tmp_predicate, tmp_buffer) >= count)
 			return true;
 

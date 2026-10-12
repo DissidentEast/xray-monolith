@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 
 #include "animation_utils.h"
 #include "../Include/xrRender/Kinematics.h"
@@ -6,7 +6,7 @@
 #include "game_object_space.h"
 
 anim_bone_fix::anim_bone_fix()
-	: bone(NULL), parent(NULL), matrix(Fmatrix().identity())
+	: bone(nullptr), parent(nullptr), matrix(Fmatrix().identity())
 {
 }
 

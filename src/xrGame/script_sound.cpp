@@ -1,4 +1,4 @@
-////////////////////////////////////////////////////////////////////////////
+﻿////////////////////////////////////////////////////////////////////////////
 //	Module 		: script_sound.cpp
 //	Created 	: 06.02.2004
 //  Modified 	: 06.02.2004
@@ -86,7 +86,7 @@ void CScriptSound::Play(CScriptGameObject* object, float delay, int flags)
 {
 	THROW3(m_sound._handle(), "There is no sound", *m_caSoundToPlay);
 	//	Msg							("%6d : CScriptSound::Play (%s), delay %f, flags %d",Device.dwTimeGlobal,m_sound._handle()->file_name(),delay,flags);
-	float volume_mult = script_sound_hook_volume_mult(*m_caSoundToPlay, NULL, object);
+	float volume_mult = script_sound_hook_volume_mult(*m_caSoundToPlay, nullptr, object);
 	if (volume_mult <= EPS_S)
 		return;
 	m_sound.play((object) ? &object->object() : NULL, flags, delay);

@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+﻿#include "StdAfx.h"
 #include "UIMapList.h"
 #include "UIListBox.h"
 #include "UIFrameWindow.h"
@@ -71,7 +71,7 @@ CUIMapList::~CUIMapList()
 void CUIMapList::StartDedicatedServer()
 {
 	string_path ModuleFileName;
-	GetModuleFileName(NULL, ModuleFileName, sizeof(ModuleFileName));
+	GetModuleFileName(nullptr, ModuleFileName, sizeof(ModuleFileName));
 
 	char* ModuleName = nullptr;
 	GetFullPathName(ModuleFileName, sizeof(g_sLaunchWorkingFolder), g_sLaunchWorkingFolder, &ModuleName);

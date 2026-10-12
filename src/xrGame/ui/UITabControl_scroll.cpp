@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+﻿#include "StdAfx.h"
 #include "UITabControl.h"
 #include "UITabButton.h"
 #include "UITabScrollArrows.h"
@@ -369,7 +369,7 @@ void CUITabControl::ApplyStripHitClips()
 			continue;
 		if (!can_scroll && t->Seam() <= 0.0f)
 		{
-			t->SetHitClip(NULL, 0);
+			t->SetHitClip(nullptr, 0);
 			continue;
 		}
 		Fvector2 poly[4];
