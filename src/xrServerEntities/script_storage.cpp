@@ -408,6 +408,12 @@ void CScriptStorage::reinit()
 
 #ifndef USE_LUAJIT_ONE
 	luaL_openlibs(lua());
+	// LuaJIT 2.1 removed math.mod (2.0 kept it via LUA_COMPAT_MOD).
+	// Alias it to math.fmod (identical semantics) for legacy scripts.
+	lua_getglobal(lua(), "math");
+	lua_getfield(lua(), -1, "fmod");
+	lua_setfield(lua(), -2, "mod");
+	lua_pop(lua(), 1);
 	if (strstr(Core.Params, "-nojit"))
 		luaJIT_setmode(lua(), 0, LUAJIT_MODE_ENGINE | LUAJIT_MODE_OFF);
 #else // USE_LUAJIT_ONE

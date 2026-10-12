@@ -20,25 +20,33 @@ if not exist "host\minilua.exe" (
   link /nologo /OPT:REF /OPT:ICF /out:host\minilua.exe minilua.obj || exit /b 1
 )
 
+REM Generate luajit.h from luajit_rolling.h (rolling release version stamp)
+if not exist "luajit.h" (
+  echo [LuaJIT] Generating luajit.h
+  "host\minilua.exe" host\genversion.lua luajit_rolling.h luajit_relver.txt luajit.h || exit /b 1
+)
+
 REM Generate buildvm_arch.h with DynASM
 echo [LuaJIT] Running DynASM to generate host\buildvm_arch.h
 "host\minilua.exe" "%DYNASM%" -LN %DFLAGS% -o "host\buildvm_arch.h" "vm_x86.dasc" || exit /b 1
 
-REM Build buildvm if missing
-if not exist "host\buildvm.exe" (
-  echo [LuaJIT] Building host\buildvm.exe
-  cl /nologo /c /O2 /Ob3 /Oi /Ot /Oy /GT /W3 /fp:precise /MD /GF /GS- /Zi /I "." /I "..\dynasm" host\buildvm.c host\buildvm_peobj.c host\buildvm_lib.c host\buildvm_asm.c host\buildvm_fold.c || exit /b 1
-  link /nologo /OPT:REF /OPT:ICF /out:host\buildvm.exe buildvm.obj buildvm_peobj.obj buildvm_lib.obj buildvm_asm.obj buildvm_fold.obj || exit /b 1
-)
+REM Build buildvm (always: it bakes C-struct offsets into lj_vm.obj, so it
+REM must match the lib mode below; a cached buildvm from the other GC64
+REM mode silently generates a mismatched VM - this exact staleness caused
+REM hours of debugging. See luajit.vcxproj LUAJIT_DISABLE_GC64 comment.)
+del /q host\buildvm.exe host\buildvm.obj host\buildvm_peobj.obj host\buildvm_lib.obj host\buildvm_asm.obj host\buildvm_fold.obj 2>nul
+echo [LuaJIT] Building host\buildvm.exe
+cl /nologo /c /O2 /Ob3 /Oi /Ot /Oy /GT /W3 /fp:precise /MD /GF /GS- /Zi /DLUAJIT_DISABLE_GC64 /I "." /I "..\dynasm" host\buildvm.c host\buildvm_peobj.c host\buildvm_lib.c host\buildvm_asm.c host\buildvm_fold.c || exit /b 1
+link /nologo /OPT:REF /OPT:ICF /out:host\buildvm.exe buildvm.obj buildvm_peobj.obj buildvm_lib.obj buildvm_asm.obj buildvm_fold.obj || exit /b 1
 
 REM Generate VM object and header files
 echo [LuaJIT] Generating lj_vm.obj and headers
 host\buildvm.exe -m peobj -o lj_vm.obj || exit /b 1
-host\buildvm.exe -m bcdef -o lj_bcdef.h lib_base.c lib_math.c lib_bit.c lib_string.c lib_table.c lib_io.c lib_os.c lib_package.c lib_debug.c lib_jit.c lib_ffi.c || exit /b 1
-host\buildvm.exe -m ffdef -o lj_ffdef.h lib_base.c lib_math.c lib_bit.c lib_string.c lib_table.c lib_io.c lib_os.c lib_package.c lib_debug.c lib_jit.c lib_ffi.c || exit /b 1
-host\buildvm.exe -m libdef -o lj_libdef.h lib_base.c lib_math.c lib_bit.c lib_string.c lib_table.c lib_io.c lib_os.c lib_package.c lib_debug.c lib_jit.c lib_ffi.c || exit /b 1
-host\buildvm.exe -m recdef -o lj_recdef.h lib_base.c lib_math.c lib_bit.c lib_string.c lib_table.c lib_io.c lib_os.c lib_package.c lib_debug.c lib_jit.c lib_ffi.c || exit /b 1
-host\buildvm.exe -m vmdef -o jit\vmdef.lua lib_base.c lib_math.c lib_bit.c lib_string.c lib_table.c lib_io.c lib_os.c lib_package.c lib_debug.c lib_jit.c lib_ffi.c || exit /b 1
+host\buildvm.exe -m bcdef -o lj_bcdef.h lib_base.c lib_math.c lib_bit.c lib_buffer.c lib_string.c lib_table.c lib_io.c lib_os.c lib_package.c lib_debug.c lib_jit.c lib_ffi.c || exit /b 1
+host\buildvm.exe -m ffdef -o lj_ffdef.h lib_base.c lib_math.c lib_bit.c lib_buffer.c lib_string.c lib_table.c lib_io.c lib_os.c lib_package.c lib_debug.c lib_jit.c lib_ffi.c || exit /b 1
+host\buildvm.exe -m libdef -o lj_libdef.h lib_base.c lib_math.c lib_bit.c lib_buffer.c lib_string.c lib_table.c lib_io.c lib_os.c lib_package.c lib_debug.c lib_jit.c lib_ffi.c || exit /b 1
+host\buildvm.exe -m recdef -o lj_recdef.h lib_base.c lib_math.c lib_bit.c lib_buffer.c lib_string.c lib_table.c lib_io.c lib_os.c lib_package.c lib_debug.c lib_jit.c lib_ffi.c || exit /b 1
+host\buildvm.exe -m vmdef -o jit\vmdef.lua lib_base.c lib_math.c lib_bit.c lib_buffer.c lib_string.c lib_table.c lib_io.c lib_os.c lib_package.c lib_debug.c lib_jit.c lib_ffi.c || exit /b 1
 host\buildvm.exe -m folddef -o lj_folddef.h lj_opt_fold.c || exit /b 1
 
 echo [LuaJIT] Generation complete

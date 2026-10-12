@@ -1,6 +1,6 @@
 /*
 ** Bytecode instruction format.
-** Copyright (C) 2005-2015 Mike Pall. See Copyright Notice in luajit.h
+** Copyright (C) 2005-2026 Mike Pall. See Copyright Notice in luajit.h
 */
 
 #ifndef _LJ_BC_H
@@ -89,6 +89,8 @@
   _(ISFC,	dst,	___,	var,	___) \
   _(IST,	___,	___,	var,	___) \
   _(ISF,	___,	___,	var,	___) \
+  _(ISTYPE,	var,	___,	lit,	___) \
+  _(ISNUM,	var,	___,	lit,	___) \
   \
   /* Unary ops. */ \
   _(MOV,	dst,	___,	var,	___) \
@@ -96,7 +98,7 @@
   _(UNM,	dst,	___,	var,	unm) \
   _(LEN,	dst,	___,	var,	len) \
   \
-  /* Binary ops. ORDER OPR. VV last, POW must be next. */ \
+  /* Binary ops. ORDER OPR. ORDER ARITH. VV last, POW must be next. */ \
   _(ADDVN,	dst,	var,	num,	add) \
   _(SUBVN,	dst,	var,	num,	sub) \
   _(MULVN,	dst,	var,	num,	mul) \
@@ -143,10 +145,12 @@
   _(TGETV,	dst,	var,	var,	index) \
   _(TGETS,	dst,	var,	str,	index) \
   _(TGETB,	dst,	var,	lit,	index) \
+  _(TGETR,	dst,	var,	var,	index) \
   _(TSETV,	var,	var,	var,	newindex) \
   _(TSETS,	var,	var,	str,	newindex) \
   _(TSETB,	var,	var,	lit,	newindex) \
   _(TSETM,	base,	___,	num,	newindex) \
+  _(TSETR,	var,	var,	var,	newindex) \
   \
   /* Calls and vararg handling. T = tail call. */ \
   _(CALLM,	base,	lit,	lit,	call) \
@@ -181,6 +185,15 @@
   _(JLOOP,	rbase,	___,	lit,	___) \
   \
   _(JMP,	rbase,	___,	jump,	___) \
+  \
+  /* Bit operators. ORDER OPR. ORDER BIT. */ \
+  _(BNOT,	dst,	___,	var,	___) \
+  _(BAND,	dst,	var,	var,	___) \
+  _(BOR,	dst,	var,	var,	___) \
+  _(BXOR,	dst,	var,	var,	___) \
+  _(BSHL,	dst,	var,	var,	___) \
+  _(BSHR,	dst,	var,	var,	___) \
+  _(BSAR,	dst,	var,	var,	___) \
   \
   /* Function headers. I/J = interp/JIT, F/V/C = fixarg/vararg/C func. */ \
   _(FUNCF,	rbase,	___,	___,	___) \
@@ -253,6 +266,11 @@ typedef enum {
 static LJ_AINLINE int bc_isret(BCOp op)
 {
   return (op == BC_RETM || op == BC_RET || op == BC_RET0 || op == BC_RET1);
+}
+
+static LJ_AINLINE int bc_isret_or_tail(BCOp op)
+{
+  return (op == BC_CALLMT || op == BC_CALLT || bc_isret(op));
 }
 
 LJ_DATA const uint16_t lj_bc_mode[];

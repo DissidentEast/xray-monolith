@@ -74,7 +74,12 @@
   <ItemDefinitionGroup>
     <ClCompile>
       <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)host;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_CRT_SECURE_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <!-- GC64 stays OFF on every config: the XR arena pins all Lua memory
+           below 2GB (the x64 VM keeps lua_State* in 32 bits), while the
+           stock GC64 tag/dispatch path assumes high addresses. A uniform
+           mode also keeps the shared lj_vm.obj (one copy in srcdir, used
+           by ALL configs) consistent with the C code. See xr_alloc.c. -->
+      <PreprocessorDefinitions>LUAJIT_DISABLE_GC64;WIN32;NDEBUG;_CRT_SECURE_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <WarningLevel>Level3</WarningLevel>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -169,7 +174,7 @@
       <Message>Generating LuaJIT VM object and headers</Message>
       <Command>"$(ProjectDir)gen_luajit_artifacts.bat" "$(Platform)"</Command>
       <Outputs>lj_vm.obj;lj_bcdef.h;lj_ffdef.h;lj_libdef.h;lj_recdef.h;jit\vmdef.lua;lj_folddef.h;host\minilua.exe;host\buildvm.exe;host\buildvm_arch.h</Outputs>
-      <AdditionalInputs>host\minilua.c;host\buildvm.c;host\buildvm_peobj.c;host\buildvm_lib.c;host\buildvm_asm.c;..\dynasm\dynasm.lua;lj_opt_fold.c;lib_base.c;lib_math.c;lib_bit.c;lib_string.c;lib_table.c;lib_io.c;lib_os.c;lib_package.c;lib_debug.c;lib_jit.c;lib_ffi.c</AdditionalInputs>
+      <AdditionalInputs>host\minilua.c;host\buildvm.c;host\buildvm_peobj.c;host\buildvm_lib.c;host\buildvm_asm.c;..\dynasm\dynasm.lua;lj_opt_fold.c;lib_base.c;lib_math.c;lib_bit.c;lib_buffer.c;lib_string.c;lib_table.c;lib_io.c;lib_os.c;lib_package.c;lib_debug.c;lib_jit.c;lib_ffi.c</AdditionalInputs>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
@@ -185,9 +190,11 @@
     <ClCompile Include="lj_alloc.c" />
     <ClCompile Include="lj_api.c" />
     <ClCompile Include="lj_asm.c" />
+    <ClCompile Include="lj_assert.c" />
     <ClCompile Include="lj_bc.c" />
     <ClCompile Include="lj_bcread.c" />
     <ClCompile Include="lj_bcwrite.c" />
+    <ClCompile Include="lj_buf.c" />
     <ClCompile Include="lj_carith.c" />
     <ClCompile Include="lj_ccall.c" />
     <ClCompile Include="lj_ccallback.c" />
@@ -201,7 +208,6 @@
     <ClCompile Include="lj_debug.c" />
     <ClCompile Include="lj_dispatch.c" />
     <ClCompile Include="lj_profile.c" />
-    <ClCompile Include="lj_allocprof.c" />
     <ClCompile Include="lj_err.c" />
     <ClCompile Include="lj_ffrecord.c" />
     <ClCompile Include="lj_func.c" />
@@ -222,10 +228,14 @@
     <ClCompile Include="lj_opt_sink.c" />
     <ClCompile Include="lj_opt_split.c" />
     <ClCompile Include="lj_parse.c" />
+    <ClCompile Include="lj_prng.c" />
     <ClCompile Include="lj_record.c" />
+    <ClCompile Include="lj_serialize.c" />
     <ClCompile Include="lj_snap.c" />
     <ClCompile Include="lj_state.c" />
     <ClCompile Include="lj_str.c" />
+    <ClCompile Include="lj_strfmt.c" />
+    <ClCompile Include="lj_strfmt_num.c" />
     <ClCompile Include="lj_strscan.c" />
     <ClCompile Include="lj_tab.c" />
     <ClCompile Include="lj_trace.c" />
@@ -235,6 +245,7 @@
     <ClCompile Include="lib_aux.c" />
     <ClCompile Include="lib_base.c" />
     <ClCompile Include="lib_bit.c" />
+    <ClCompile Include="lib_buffer.c" />
     <ClCompile Include="lib_debug.c" />
     <ClCompile Include="lib_ffi.c" />
     <ClCompile Include="lib_init.c" />

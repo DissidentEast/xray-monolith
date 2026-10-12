@@ -1,7 +1,7 @@
 ----------------------------------------------------------------------------
 -- Verbose mode of the LuaJIT compiler.
 --
--- Copyright (C) 2005-2015 Mike Pall. All rights reserved.
+-- Copyright (C) 2005-2026 Mike Pall. All rights reserved.
 -- Released under the MIT license. See Copyright Notice in luajit.h
 ----------------------------------------------------------------------------
 --
@@ -59,11 +59,10 @@
 
 -- Cache some library functions and objects.
 local jit = require("jit")
-assert(jit.version_num == 20004, "LuaJIT core/library version mismatch")
 local jutil = require("jit.util")
 local vmdef = require("jit.vmdef")
 local funcinfo, traceinfo = jutil.funcinfo, jutil.traceinfo
-local type, format = type, string.format
+local type, sub, format = type, string.sub, string.format
 local stdout, stderr = io.stdout, io.stderr
 
 -- Active flag and output file handle.
@@ -90,7 +89,12 @@ end
 local function fmterr(err, info)
   if type(err) == "number" then
     if type(info) == "function" then info = fmtfunc(info) end
-    err = format(vmdef.traceerr[err], info)
+    local fmt = vmdef.traceerr[err]
+    if fmt == "NYI: bytecode %s" then
+      local oidx = 6 * info
+      info = sub(vmdef.bcnames, oidx+1, oidx+6)
+    end
+    err = format(fmt, info)
   end
   return err
 end
@@ -99,11 +103,11 @@ end
 local function dump_trace(what, tr, func, pc, otr, oex)
   if what == "start" then
     startloc = fmtfunc(func, pc)
-    startex = otr and "("..otr.."/"..oex..") " or ""
+    startex = otr and "("..otr.."/"..(oex == -1 and "stitch" or oex)..") " or ""
   else
     if what == "abort" then
       local loc = fmtfunc(func, pc)
-      if loc ~= startloc then
+      if loc != startloc then
 	out:write(format("[TRACE --- %s%s -- %s at %s]\n",
 	  startex, startloc, fmterr(otr, oex), loc))
       else
@@ -116,6 +120,9 @@ local function dump_trace(what, tr, func, pc, otr, oex)
       if ltype == "interpreter" then
 	out:write(format("[TRACE %3s %s%s -- fallback to interpreter]\n",
 	  tr, startex, startloc))
+      elseif ltype == "stitch" then
+	out:write(format("[TRACE %3s %s%s %s %s]\n",
+	  tr, startex, startloc, ltype, fmtfunc(func, pc)))
       elseif link == tr or link == 0 then
 	out:write(format("[TRACE %3s %s%s %s]\n",
 	  tr, startex, startloc, ltype))
@@ -140,7 +147,7 @@ local function dumpoff()
   if active then
     active = false
     jit.attach(dump_trace)
-    if out and out ~= stdout and out ~= stderr then out:close() end
+    if out and out != stdout and out != stderr then out:close() end
     out = nil
   end
 end
@@ -159,9 +166,9 @@ local function dumpon(outfile)
 end
 
 -- Public module functions.
-module(...)
-
-on = dumpon
-off = dumpoff
-start = dumpon -- For -j command line option.
+return {
+  on = dumpon,
+  off = dumpoff,
+  start = dumpon -- For -j command line option.
+}
 

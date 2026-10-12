@@ -7,9 +7,14 @@
 
 typedef long (*PNTAVM)(HANDLE handle, void **addr, ULONG zbits,
 		       size_t *size, ULONG alloctype, ULONG prot);
-extern PNTAVM ntavm;
+/* Private handle: LuaJIT 2.1 keeps its own ntavm file-static, so the arena
+** resolves it itself instead of borrowing it via extern (as in 2.0.4).
+*/
+static PNTAVM xr_ntavm = NULL;
 /* Number of top bits of the lower 32 bits of an address that must be zero.
 ** Apparently 0 gives us full 64 bit addresses and 1 gives us the lower 2GB.
+** Must stay 1: the LuaJIT x64 VM keeps lua_State* in 32 bits
+** (see vm_x86.dasc cpcall), so Lua memory must live below 4GB.
 */
 #define NTAVM_ZEROBITS		1
 
@@ -17,7 +22,8 @@ extern PNTAVM ntavm;
 #define MFAIL			((void *)(MAX_SIZE_T))
 
 // Луаджит выделяет память кусками, кратными 128К
-// Поэтому сделаю два пула по эти размеры
+// Арена 512МБ: 64К чанки x 8192 (как в 2.0.4 - проверенный размер,
+// контигуозные 512МБ в low-2GB резервируются надёжно).
 #define CHUNK_SIZE (64 * 1024)
 #define CHUNK_COUNT 8192
 
@@ -39,10 +45,18 @@ void XR_INIT()
 {
 	if (inited)
 		return;
+	if (!xr_ntavm)
+		xr_ntavm = (PNTAVM)GetProcAddress(GetModuleHandleA("ntdll.dll"),
+		                                  "NtAllocateVirtualMemory");
 	g_heap = NULL;
-	size_t size = CHUNK_SIZE * CHUNK_COUNT;
-	long st = ntavm(INVALID_HANDLE_VALUE, &g_heap, NTAVM_ZEROBITS, &size,
-	                MEM_RESERVE|MEM_COMMIT, PAGE_READWRITE);
+	size_t size = CHUNK_SIZE * (size_t)CHUNK_COUNT;
+	if (xr_ntavm)
+	{
+		long st = xr_ntavm(INVALID_HANDLE_VALUE, &g_heap, NTAVM_ZEROBITS, &size,
+		                MEM_RESERVE|MEM_COMMIT, PAGE_READWRITE);
+		if (st != 0)
+			g_heap = NULL;
+	}
 
 	for (int i = 0; i < CHUNK_COUNT; i++)
 		g_heapMap[i] = 'x';
@@ -50,7 +64,7 @@ void XR_INIT()
 	g_firstFreeChunk = g_heapMap;
 
 #ifdef DEBUG_MEM	
-	sprintf(buf, "XR_INIT create_block %p result=%X\r\n", g_heap, st);
+	sprintf(buf, "XR_INIT create_block %p\r\n", g_heap);
 	OutputDebugString(buf);
 #endif
 	inited = 1;
@@ -62,6 +76,11 @@ void* XR_MMAP(size_t size)
 	sprintf(buf, "XR_MMAP(%Iu)", size);
 	OutputDebugString(buf);
 #endif
+	// No arena (reservation failed): fail loud. Returning high memory
+	// here would crash the VM later (lua_State* must stay 32-bit), while
+	// MFAIL surfaces immediately as a catchable "not enough memory".
+	if (g_heap == NULL)
+		return MFAIL;
 	int chunks = (int)CHUNKS_FROM_SIZE(size); /* heap is 512MB max, count fits int */
 	char* s = find_free(chunks);
 	void* ptr = MFAIL;
@@ -88,6 +107,8 @@ void XR_DESTROY(void* ptr, size_t size)
 	sprintf(buf, "XR_DESTROY(ptr=%p, size=%Iu)", ptr, size);
 	OutputDebugString(buf);
 #endif
+	if (g_heap == NULL)
+		return;
 	char* s = g_heapMap + ((char*)ptr - (char*)g_heap) / CHUNK_SIZE;
 	int count = (int)CHUNKS_FROM_SIZE(size); /* heap is 512MB max, count fits int */
 	for (int i = 0; i < count; i++)
@@ -121,8 +142,6 @@ char* find_free(int size)
 
 void XR_EARLY_INIT()
 {
-	ntavm = (PNTAVM)GetProcAddress(GetModuleHandleA("ntdll.dll"),
-	                               "NtAllocateVirtualMemory");
 	XR_INIT();
 }
 

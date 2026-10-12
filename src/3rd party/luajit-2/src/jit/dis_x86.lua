@@ -1,7 +1,7 @@
 ----------------------------------------------------------------------------
 -- LuaJIT x86/x64 disassembler module.
 --
--- Copyright (C) 2005-2015 Mike Pall. All rights reserved.
+-- Copyright (C) 2005-2026 Mike Pall. All rights reserved.
 -- Released under the MIT license. See Copyright Notice in luajit.h
 ----------------------------------------------------------------------------
 -- This is a helper module used by the LuaJIT machine code dumper module.
@@ -15,19 +15,20 @@
 -- Intel and AMD manuals. The supported instruction set is quite extensive
 -- and reflects what a current generation Intel or AMD CPU implements in
 -- 32 bit and 64 bit mode. Yes, this includes MMX, SSE, SSE2, SSE3, SSSE3,
--- SSE4.1, SSE4.2, SSE4a and even privileged and hypervisor (VMX/SVM)
--- instructions.
+-- SSE4.1, SSE4.2, SSE4a, AVX, AVX2 and even privileged and hypervisor
+-- (VMX/SVM) instructions.
 --
 -- Notes:
 -- * The (useless) a16 prefix, 3DNow and pre-586 opcodes are unsupported.
 -- * No attempt at optimization has been made -- it's fast enough for my needs.
--- * The public API may change when more architectures are added.
 ------------------------------------------------------------------------------
 
 local type = type
 local sub, byte, format = string.sub, string.byte, string.format
 local match, gmatch, gsub = string.match, string.gmatch, string.gsub
 local lower, rep = string.lower, string.rep
+local bit = require("bit")
+local tohex = bit.tohex
 
 -- Map for 1st opcode byte in 32 bit mode. Ugly? Well ... read on.
 local map_opc1_32 = {
@@ -76,7 +77,7 @@ local map_opc1_32 = {
 "movBRi","movBRi","movBRi","movBRi","movBRi","movBRi","movBRi","movBRi",
 "movVRI","movVRI","movVRI","movVRI","movVRI","movVRI","movVRI","movVRI",
 --Cx
-"shift!Bmu","shift!Vmu","retBw","ret","$lesVrm","$ldsVrm","movBmi","movVmi",
+"shift!Bmu","shift!Vmu","retBw","ret","vex*3$lesVrm","vex*2$ldsVrm","movBmi","movVmi",
 "enterBwu","leave","retfBw","retf","int3","intBu","into","iretVS",
 --Dx
 "shift!Bm1","shift!Vm1","shift!Bmc","shift!Vmc","aamBu","aadBu","salc","xlatb",
@@ -101,7 +102,7 @@ local map_opc1_64 = setmetatable({
   [0x44]="rex*r",  [0x45]="rex*rb",  [0x46]="rex*rx",  [0x47]="rex*rxb",
   [0x48]="rex*w",  [0x49]="rex*wb",  [0x4a]="rex*wx",  [0x4b]="rex*wxb",
   [0x4c]="rex*wr", [0x4d]="rex*wrb", [0x4e]="rex*wrx", [0x4f]="rex*wrxb",
-  [0x82]=false, [0x9a]=false, [0xc4]=false, [0xc5]=false, [0xce]=false,
+  [0x82]=false, [0x9a]=false, [0xc4]="vex*3", [0xc5]="vex*2", [0xce]=false,
   [0xd4]=false, [0xd5]=false, [0xd6]=false, [0xea]=false,
 }, { __index = map_opc1_32 })
 
@@ -112,21 +113,21 @@ local map_opc2 = {
 [0]="sldt!Dmp","sgdt!Ump","larVrm","lslVrm",nil,"syscall","clts","sysret",
 "invd","wbinvd",nil,"ud1",nil,"$prefetch!Bm","femms","3dnowMrmu",
 --1x
-"movupsXrm|movssXrm|movupdXrm|movsdXrm",
-"movupsXmr|movssXmr|movupdXmr|movsdXmr",
+"movupsXrm|movssXrvm|movupdXrm|movsdXrvm",
+"movupsXmr|movssXmvr|movupdXmr|movsdXmvr",
 "movhlpsXrm$movlpsXrm|movsldupXrm|movlpdXrm|movddupXrm",
 "movlpsXmr||movlpdXmr",
-"unpcklpsXrm||unpcklpdXrm",
-"unpckhpsXrm||unpckhpdXrm",
+"unpcklpsXrvm||unpcklpdXrvm",
+"unpckhpsXrvm||unpckhpdXrvm",
 "movlhpsXrm$movhpsXrm|movshdupXrm|movhpdXrm",
 "movhpsXmr||movhpdXmr",
 "$prefetcht!Bm","hintnopVm","hintnopVm","hintnopVm",
-"hintnopVm","hintnopVm","hintnopVm","hintnopVm",
+"hintnopVm","hintnopVm","endbr*hintnopVm","hintnopVm",
 --2x
 "movUmx$","movUmy$","movUxm$","movUym$","movUmz$",nil,"movUzm$",nil,
 "movapsXrm||movapdXrm",
 "movapsXmr||movapdXmr",
-"cvtpi2psXrMm|cvtsi2ssXrVmt|cvtpi2pdXrMm|cvtsi2sdXrVmt",
+"cvtpi2psXrMm|cvtsi2ssXrvVmt|cvtpi2pdXrMm|cvtsi2sdXrvVmt",
 "movntpsXmr|movntssXmr|movntpdXmr|movntsdXmr",
 "cvttps2piMrXm|cvttss2siVrXm|cvttpd2piMrXm|cvttsd2siVrXm",
 "cvtps2piMrXm|cvtss2siVrXm|cvtpd2piMrXm|cvtsd2siVrXm",
@@ -142,27 +143,27 @@ local map_opc2 = {
 "cmovlVrm","cmovgeVrm","cmovleVrm","cmovgVrm",
 --5x
 "movmskpsVrXm$||movmskpdVrXm$","sqrtpsXrm|sqrtssXrm|sqrtpdXrm|sqrtsdXrm",
-"rsqrtpsXrm|rsqrtssXrm","rcppsXrm|rcpssXrm",
-"andpsXrm||andpdXrm","andnpsXrm||andnpdXrm",
-"orpsXrm||orpdXrm","xorpsXrm||xorpdXrm",
-"addpsXrm|addssXrm|addpdXrm|addsdXrm","mulpsXrm|mulssXrm|mulpdXrm|mulsdXrm",
-"cvtps2pdXrm|cvtss2sdXrm|cvtpd2psXrm|cvtsd2ssXrm",
+"rsqrtpsXrm|rsqrtssXrvm","rcppsXrm|rcpssXrvm",
+"andpsXrvm||andpdXrvm","andnpsXrvm||andnpdXrvm",
+"orpsXrvm||orpdXrvm","xorpsXrvm||xorpdXrvm",
+"addpsXrvm|addssXrvm|addpdXrvm|addsdXrvm","mulpsXrvm|mulssXrvm|mulpdXrvm|mulsdXrvm",
+"cvtps2pdXrm|cvtss2sdXrvm|cvtpd2psXrm|cvtsd2ssXrvm",
 "cvtdq2psXrm|cvttps2dqXrm|cvtps2dqXrm",
-"subpsXrm|subssXrm|subpdXrm|subsdXrm","minpsXrm|minssXrm|minpdXrm|minsdXrm",
-"divpsXrm|divssXrm|divpdXrm|divsdXrm","maxpsXrm|maxssXrm|maxpdXrm|maxsdXrm",
+"subpsXrvm|subssXrvm|subpdXrvm|subsdXrvm","minpsXrvm|minssXrvm|minpdXrvm|minsdXrvm",
+"divpsXrvm|divssXrvm|divpdXrvm|divsdXrvm","maxpsXrvm|maxssXrvm|maxpdXrvm|maxsdXrvm",
 --6x
-"punpcklbwPrm","punpcklwdPrm","punpckldqPrm","packsswbPrm",
-"pcmpgtbPrm","pcmpgtwPrm","pcmpgtdPrm","packuswbPrm",
-"punpckhbwPrm","punpckhwdPrm","punpckhdqPrm","packssdwPrm",
-"||punpcklqdqXrm","||punpckhqdqXrm",
+"punpcklbwPrvm","punpcklwdPrvm","punpckldqPrvm","packsswbPrvm",
+"pcmpgtbPrvm","pcmpgtwPrvm","pcmpgtdPrvm","packuswbPrvm",
+"punpckhbwPrvm","punpckhwdPrvm","punpckhdqPrvm","packssdwPrvm",
+"||punpcklqdqXrvm","||punpckhqdqXrvm",
 "movPrVSm","movqMrm|movdquXrm|movdqaXrm",
 --7x
-"pshufwMrmu|pshufhwXrmu|pshufdXrmu|pshuflwXrmu","pshiftw!Pmu",
-"pshiftd!Pmu","pshiftq!Mmu||pshiftdq!Xmu",
-"pcmpeqbPrm","pcmpeqwPrm","pcmpeqdPrm","emms|",
+"pshufwMrmu|pshufhwXrmu|pshufdXrmu|pshuflwXrmu","pshiftw!Pvmu",
+"pshiftd!Pvmu","pshiftq!Mvmu||pshiftdq!Xvmu",
+"pcmpeqbPrvm","pcmpeqwPrvm","pcmpeqdPrvm","emms*|",
 "vmreadUmr||extrqXmuu$|insertqXrmuu$","vmwriteUrm||extrqXrm$|insertqXrm$",
 nil,nil,
-"||haddpdXrm|haddpsXrm","||hsubpdXrm|hsubpsXrm",
+"||haddpdXrvm|haddpsXrvm","||hsubpdXrvm|hsubpsXrvm",
 "movVSmMr|movqXrm|movVSmXr","movqMmr|movdquXmr|movdqaXmr",
 --8x
 "joVj","jnoVj","jbVj","jnbVj","jzVj","jnzVj","jbeVj","jaVj",
@@ -180,27 +181,27 @@ nil,nil,
 "bsfVrm","bsrVrm|lzcntVrm|bsrWrm","movsxVrBmt","movsxVrWmt",
 --Cx
 "xaddBmr","xaddVmr",
-"cmppsXrmu|cmpssXrmu|cmppdXrmu|cmpsdXrmu","$movntiVmr|",
-"pinsrwPrWmu","pextrwDrPmu",
-"shufpsXrmu||shufpdXrmu","$cmpxchg!Qmp",
+"cmppsXrvmu|cmpssXrvmu|cmppdXrvmu|cmpsdXrvmu","$movntiVmr|",
+"pinsrwPrvWmu","pextrwDrPmu",
+"shufpsXrvmu||shufpdXrvmu","$cmpxchg!Qmp",
 "bswapVR","bswapVR","bswapVR","bswapVR","bswapVR","bswapVR","bswapVR","bswapVR",
 --Dx
-"||addsubpdXrm|addsubpsXrm","psrlwPrm","psrldPrm","psrlqPrm",
-"paddqPrm","pmullwPrm",
+"||addsubpdXrvm|addsubpsXrvm","psrlwPrvm","psrldPrvm","psrlqPrvm",
+"paddqPrvm","pmullwPrvm",
 "|movq2dqXrMm|movqXmr|movdq2qMrXm$","pmovmskbVrMm||pmovmskbVrXm",
-"psubusbPrm","psubuswPrm","pminubPrm","pandPrm",
-"paddusbPrm","padduswPrm","pmaxubPrm","pandnPrm",
+"psubusbPrvm","psubuswPrvm","pminubPrvm","pandPrvm",
+"paddusbPrvm","padduswPrvm","pmaxubPrvm","pandnPrvm",
 --Ex
-"pavgbPrm","psrawPrm","psradPrm","pavgwPrm",
-"pmulhuwPrm","pmulhwPrm",
+"pavgbPrvm","psrawPrvm","psradPrvm","pavgwPrvm",
+"pmulhuwPrvm","pmulhwPrvm",
 "|cvtdq2pdXrm|cvttpd2dqXrm|cvtpd2dqXrm","$movntqMmr||$movntdqXmr",
-"psubsbPrm","psubswPrm","pminswPrm","porPrm",
-"paddsbPrm","paddswPrm","pmaxswPrm","pxorPrm",
+"psubsbPrvm","psubswPrvm","pminswPrvm","porPrvm",
+"paddsbPrvm","paddswPrvm","pmaxswPrvm","pxorPrvm",
 --Fx
-"|||lddquXrm","psllwPrm","pslldPrm","psllqPrm",
-"pmuludqPrm","pmaddwdPrm","psadbwPrm","maskmovqMrm||maskmovdquXrm$",
-"psubbPrm","psubwPrm","psubdPrm","psubqPrm",
-"paddbPrm","paddwPrm","padddPrm","ud",
+"|||lddquXrm","psllwPrvm","pslldPrvm","psllqPrvm",
+"pmuludqPrvm","pmaddwdPrvm","psadbwPrvm","maskmovqMrm||maskmovdquXrm$",
+"psubbPrvm","psubwPrvm","psubdPrvm","psubqPrvm",
+"paddbPrvm","paddwPrvm","padddPrvm","ud",
 }
 assert(map_opc2[255] == "ud")
 
@@ -208,49 +209,91 @@ assert(map_opc2[255] == "ud")
 local map_opc3 = {
 ["38"] = { -- [66] 0f 38 xx
 --0x
-[0]="pshufbPrm","phaddwPrm","phadddPrm","phaddswPrm",
-"pmaddubswPrm","phsubwPrm","phsubdPrm","phsubswPrm",
-"psignbPrm","psignwPrm","psigndPrm","pmulhrswPrm",
-nil,nil,nil,nil,
+[0]="pshufbPrvm","phaddwPrvm","phadddPrvm","phaddswPrvm",
+"pmaddubswPrvm","phsubwPrvm","phsubdPrvm","phsubswPrvm",
+"psignbPrvm","psignwPrvm","psigndPrvm","pmulhrswPrvm",
+"||permilpsXrvm","||permilpdXrvm",nil,nil,
 --1x
 "||pblendvbXrma",nil,nil,nil,
-"||blendvpsXrma","||blendvpdXrma",nil,"||ptestXrm",
-nil,nil,nil,nil,
+"||blendvpsXrma","||blendvpdXrma","||permpsXrvm","||ptestXrm",
+"||broadcastssXrm","||broadcastsdXrm","||broadcastf128XrlXm",nil,
 "pabsbPrm","pabswPrm","pabsdPrm",nil,
 --2x
 "||pmovsxbwXrm","||pmovsxbdXrm","||pmovsxbqXrm","||pmovsxwdXrm",
 "||pmovsxwqXrm","||pmovsxdqXrm",nil,nil,
-"||pmuldqXrm","||pcmpeqqXrm","||$movntdqaXrm","||packusdwXrm",
-nil,nil,nil,nil,
+"||pmuldqXrvm","||pcmpeqqXrvm","||$movntdqaXrm","||packusdwXrvm",
+"||maskmovpsXrvm","||maskmovpdXrvm","||maskmovpsXmvr","||maskmovpdXmvr",
 --3x
 "||pmovzxbwXrm","||pmovzxbdXrm","||pmovzxbqXrm","||pmovzxwdXrm",
-"||pmovzxwqXrm","||pmovzxdqXrm",nil,"||pcmpgtqXrm",
-"||pminsbXrm","||pminsdXrm","||pminuwXrm","||pminudXrm",
-"||pmaxsbXrm","||pmaxsdXrm","||pmaxuwXrm","||pmaxudXrm",
+"||pmovzxwqXrm","||pmovzxdqXrm","||permdXrvm","||pcmpgtqXrvm",
+"||pminsbXrvm","||pminsdXrvm","||pminuwXrvm","||pminudXrvm",
+"||pmaxsbXrvm","||pmaxsdXrvm","||pmaxuwXrvm","||pmaxudXrvm",
 --4x
-"||pmulddXrm","||phminposuwXrm",
+"||pmulddXrvm","||phminposuwXrm",nil,nil,
+nil,"||psrlvVSXrvm","||psravdXrvm","||psllvVSXrvm",
+--5x
+[0x58] = "||pbroadcastdXrlXm",[0x59] = "||pbroadcastqXrlXm",
+[0x5a] = "||broadcasti128XrlXm",
+--7x
+[0x78] = "||pbroadcastbXrlXm",[0x79] = "||pbroadcastwXrlXm",
+--8x
+[0x8c] = "||pmaskmovXrvVSm",
+[0x8e] = "||pmaskmovVSmXvr",
+--9x
+[0x96] = "||fmaddsub132pHXrvm",[0x97] = "||fmsubadd132pHXrvm",
+[0x98] = "||fmadd132pHXrvm",[0x99] = "||fmadd132sHXrvm",
+[0x9a] = "||fmsub132pHXrvm",[0x9b] = "||fmsub132sHXrvm",
+[0x9c] = "||fnmadd132pHXrvm",[0x9d] = "||fnmadd132sHXrvm",
+[0x9e] = "||fnmsub132pHXrvm",[0x9f] = "||fnmsub132sHXrvm",
+--Ax
+[0xa6] = "||fmaddsub213pHXrvm",[0xa7] = "||fmsubadd213pHXrvm",
+[0xa8] = "||fmadd213pHXrvm",[0xa9] = "||fmadd213sHXrvm",
+[0xaa] = "||fmsub213pHXrvm",[0xab] = "||fmsub213sHXrvm",
+[0xac] = "||fnmadd213pHXrvm",[0xad] = "||fnmadd213sHXrvm",
+[0xae] = "||fnmsub213pHXrvm",[0xaf] = "||fnmsub213sHXrvm",
+--Bx
+[0xb6] = "||fmaddsub231pHXrvm",[0xb7] = "||fmsubadd231pHXrvm",
+[0xb8] = "||fmadd231pHXrvm",[0xb9] = "||fmadd231sHXrvm",
+[0xba] = "||fmsub231pHXrvm",[0xbb] = "||fmsub231sHXrvm",
+[0xbc] = "||fnmadd231pHXrvm",[0xbd] = "||fnmadd231sHXrvm",
+[0xbe] = "||fnmsub231pHXrvm",[0xbf] = "||fnmsub231sHXrvm",
+--Dx
+[0xdc] = "||aesencXrvm", [0xdd] = "||aesenclastXrvm",
+[0xde] = "||aesdecXrvm", [0xdf] = "||aesdeclastXrvm",
 --Fx
 [0xf0] = "|||crc32TrBmt",[0xf1] = "|||crc32TrVmt",
+[0xf7] = "| sarxVrmv| shlxVrmv| shrxVrmv",
 },
 
 ["3a"] = { -- [66] 0f 3a xx
 --0x
-[0x00]=nil,nil,nil,nil,nil,nil,nil,nil,
-"||roundpsXrmu","||roundpdXrmu","||roundssXrmu","||roundsdXrmu",
-"||blendpsXrmu","||blendpdXrmu","||pblendwXrmu","palignrPrmu",
+[0x00]="||permqXrmu","||permpdXrmu","||pblenddXrvmu",nil,
+"||permilpsXrmu","||permilpdXrmu","||perm2f128Xrvmu",nil,
+"||roundpsXrmu","||roundpdXrmu","||roundssXrvmu","||roundsdXrvmu",
+"||blendpsXrvmu","||blendpdXrvmu","||pblendwXrvmu","palignrPrvmu",
 --1x
 nil,nil,nil,nil,
 "||pextrbVmXru","||pextrwVmXru","||pextrVmSXru","||extractpsVmXru",
-nil,nil,nil,nil,nil,nil,nil,nil,
+"||insertf128XrvlXmu","||extractf128XlXmYru",nil,nil,
+nil,nil,nil,nil,
 --2x
-"||pinsrbXrVmu","||insertpsXrmu","||pinsrXrVmuS",nil,
+"||pinsrbXrvVmu","||insertpsXrvmu","||pinsrXrvVmuS",nil,
+--3x
+[0x38] = "||inserti128Xrvmu",[0x39] = "||extracti128XlXmYru",
 --4x
-[0x40] = "||dppsXrmu",
-[0x41] = "||dppdXrmu",
-[0x42] = "||mpsadbwXrmu",
+[0x40] = "||dppsXrvmu",
+[0x41] = "||dppdXrvmu",
+[0x42] = "||mpsadbwXrvmu",
+[0x44] = "||pclmulqdqXrvmu",
+[0x46] = "||perm2i128Xrvmu",
+[0x4a] = "||blendvpsXrvmb",[0x4b] = "||blendvpdXrvmb",
+[0x4c] = "||pblendvbXrvmb",
 --6x
 [0x60] = "||pcmpestrmXrmu",[0x61] = "||pcmpestriXrmu",
 [0x62] = "||pcmpistrmXrmu",[0x63] = "||pcmpistriXrmu",
+[0xdf] = "||aeskeygenassistXrmu",
+--Fx
+[0xf0] = "||| rorxVrmu",
 },
 }
 
@@ -354,17 +397,19 @@ local map_regs = {
 	"mm0", "mm1", "mm2", "mm3", "mm4", "mm5", "mm6", "mm7" }, -- No x64 ext!
   X = { "xmm0", "xmm1", "xmm2", "xmm3", "xmm4", "xmm5", "xmm6", "xmm7",
 	"xmm8", "xmm9", "xmm10", "xmm11", "xmm12", "xmm13", "xmm14", "xmm15" },
+  Y = { "ymm0", "ymm1", "ymm2", "ymm3", "ymm4", "ymm5", "ymm6", "ymm7",
+	"ymm8", "ymm9", "ymm10", "ymm11", "ymm12", "ymm13", "ymm14", "ymm15" },
 }
 local map_segregs = { "es", "cs", "ss", "ds", "fs", "gs", "segr6", "segr7" }
 
 -- Maps for size names.
 local map_sz2n = {
-  B = 1, W = 2, D = 4, Q = 8, M = 8, X = 16,
+  B = 1, W = 2, D = 4, Q = 8, M = 8, X = 16, Y = 32,
 }
 local map_sz2prefix = {
   B = "byte", W = "word", D = "dword",
   Q = "qword",
-  M = "qword", X = "xword",
+  M = "qword", X = "xword", Y = "yword",
   F = "dword", G = "qword", -- No need for sizes/register names for these two.
 }
 
@@ -376,21 +421,24 @@ local function putop(ctx, text, operands)
   local hmax = ctx.hexdump
   if hmax > 0 then
     for i=ctx.start,pos-1 do
-      hex = hex..format("%02X", byte(code, i, i))
+      hex ..= format("%02X", byte(code, i))
     end
     if #hex > hmax then hex = sub(hex, 1, hmax)..". "
-    else hex = hex..rep(" ", hmax-#hex+2) end
+    else hex ..= rep(" ", hmax-#hex+2) end
   end
   if operands then text = text.." "..operands end
   if ctx.o16 then text = "o16 "..text; ctx.o16 = false end
   if ctx.a32 then text = "a32 "..text; ctx.a32 = false end
   if ctx.rep then text = ctx.rep.." "..text; ctx.rep = false end
   if ctx.rex then
-    local t = (ctx.rexw and "w" or "")..(ctx.rexr and "r" or "")..
-	      (ctx.rexx and "x" or "")..(ctx.rexb and "b" or "")
-    if t ~= "" then text = "rex."..t.." "..text end
+    local t = (ctx.rexw ? "w" : "")..(ctx.rexr ? "r" : "")..
+	      (ctx.rexx ? "x" : "")..(ctx.rexb ? "b" : "")..
+	      (ctx.vexl ? "l" : "")
+    if ctx.vexv and ctx.vexv != 0 then t = t.."v"..ctx.vexv end
+    if t != "" then text = ctx.rex.."."..t.." "..gsub(text, "^ ", "")
+    elseif ctx.rex == "vex" then text = gsub("v"..text, "^v ", "") end
     ctx.rexw = false; ctx.rexr = false; ctx.rexx = false; ctx.rexb = false
-    ctx.rex = false
+    ctx.rex = false; ctx.vexl = false; ctx.vexv = false
   end
   if ctx.seg then
     local text2, n = gsub(text, "%[", "["..ctx.seg..":")
@@ -405,6 +453,7 @@ local function putop(ctx, text, operands)
   end
   ctx.out(format("%08x  %s%s\n", ctx.addr+ctx.start, hex, text))
   ctx.mrm = false
+  ctx.vexv = false
   ctx.start = pos
   ctx.imm = nil
 end
@@ -413,7 +462,7 @@ end
 local function clearprefixes(ctx)
   ctx.o16 = false; ctx.seg = false; ctx.lock = false; ctx.rep = false
   ctx.rexw = false; ctx.rexr = false; ctx.rexx = false; ctx.rexb = false
-  ctx.rex = false; ctx.a32 = false
+  ctx.rex = false; ctx.a32 = false; ctx.vexl = false
 end
 
 -- Fallback for incomplete opcodes at the end.
@@ -434,7 +483,7 @@ local function getimm(ctx, pos, n)
   if pos+n-1 > ctx.stop then return incomplete(ctx) end
   local code = ctx.code
   if n == 1 then
-    local b1 = byte(code, pos, pos)
+    local b1 = byte(code, pos)
     return b1
   elseif n == 2 then
     local b1, b2 = byte(code, pos, pos+1)
@@ -450,9 +499,9 @@ end
 -- Process pattern string and generate the operands.
 local function putpat(ctx, name, pat)
   local operands, regs, sz, mode, sp, rm, sc, rx, sdisp
-  local code, pos, stop = ctx.code, ctx.pos, ctx.stop
+  local code, pos, stop, vexl = ctx.code, ctx.pos, ctx.stop, ctx.vexl
 
-  -- Chars used: 1DFGIMPQRSTUVWXacdfgijmoprstuwxyz
+  -- Chars used: 1DFGHIMPQRSTUVWXYabcdfgijlmoprstuvwxyz
   for p in gmatch(pat, ".") do
     local x = nil
     if p == "V" or p == "U" then
@@ -467,37 +516,46 @@ local function putpat(ctx, name, pat)
     elseif p == "B" then
       sz = "B"
       regs = ctx.rex and map_regs.B64 or map_regs.B
-    elseif match(p, "[WDQMXFG]") then
+    elseif match(p, "[WDQMXYFG]") then
       sz = p
+      if sz == "X" and vexl then sz = "Y"; ctx.vexl = false end
       regs = map_regs[sz]
     elseif p == "P" then
-      sz = ctx.o16 and "X" or "M"; ctx.o16 = false
+      sz = ctx.o16 ? "X" : "M"; ctx.o16 = false
+      if sz == "X" and vexl then sz = "Y"; ctx.vexl = false end
       regs = map_regs[sz]
+    elseif p == "H" then
+      name ..= ctx.rexw ? "d" : "s"
+      ctx.rexw = false
     elseif p == "S" then
-      name = name..lower(sz)
+      name ..= lower(sz)
     elseif p == "s" then
       local imm = getimm(ctx, pos, 1); if not imm then return end
-      x = imm <= 127 and format("+0x%02x", imm)
-		     or format("-0x%02x", 256-imm)
-      pos = pos+1
+      x = imm <= 127 ? format("+0x%02x", imm)
+		     : format("-0x%02x", 256-imm)
+      pos += 1
     elseif p == "u" then
       local imm = getimm(ctx, pos, 1); if not imm then return end
       x = format("0x%02x", imm)
-      pos = pos+1
+      pos += 1
+    elseif p == "b" then
+      local imm = getimm(ctx, pos, 1); if not imm then return end
+      x = regs[imm/16+1]
+      pos += 1
     elseif p == "w" then
       local imm = getimm(ctx, pos, 2); if not imm then return end
       x = format("0x%x", imm)
-      pos = pos+2
+      pos += 2
     elseif p == "o" then -- [offset]
       if ctx.x64 then
 	local imm1 = getimm(ctx, pos, 4); if not imm1 then return end
 	local imm2 = getimm(ctx, pos+4, 4); if not imm2 then return end
 	x = format("[0x%08x%08x]", imm2, imm1)
-	pos = pos+8
+	pos += 8
       else
 	local imm = getimm(ctx, pos, 4); if not imm then return end
 	x = format("[0x%08x]", imm)
-	pos = pos+4
+	pos += 4
       end
     elseif p == "i" or p == "I" then
       local n = map_sz2n[sz]
@@ -510,21 +568,21 @@ local function putpat(ctx, name, pat)
 	local imm = getimm(ctx, pos, n); if not imm then return end
 	if sz == "Q" and (imm < 0 or imm > 0x7fffffff) then
 	  imm = (0xffffffff+1)-imm
-	  x = format(imm > 65535 and "-0x%08x" or "-0x%x", imm)
+	  x = format(imm > 65535 ? "-0x%08x" : "-0x%x", imm)
 	else
-	  x = format(imm > 65535 and "0x%08x" or "0x%x", imm)
+	  x = format(imm > 65535 ? "0x%08x" : "0x%x", imm)
 	end
       end
-      pos = pos+n
+      pos += n
     elseif p == "j" then
       local n = map_sz2n[sz]
       if n == 8 then n = 4 end
       local imm = getimm(ctx, pos, n); if not imm then return end
-      if sz == "B" and imm > 127 then imm = imm-256
-      elseif imm > 2147483647 then imm = imm-4294967296 end
-      pos = pos+n
+      if sz == "B" and imm > 127 then imm -= 256
+      elseif imm > 2147483647 then imm -= 4294967296 end
+      pos += n
       imm = imm + pos + ctx.addr
-      if imm > 4294967295 and not ctx.x64 then imm = imm-4294967296 end
+      if imm > 4294967295 and not ctx.x64 then imm -= 4294967296 end
       ctx.imm = imm
       if sz == "W" then
 	x = format("word 0x%04x", imm%65536)
@@ -532,11 +590,11 @@ local function putpat(ctx, name, pat)
 	local lo = imm % 0x1000000
 	x = format("0x%02x%06x", (imm-lo) / 0x1000000, lo)
       else
-	x = format("0x%08x", imm)
+	x = "0x"..tohex(imm)
       end
     elseif p == "R" then
-      local r = byte(code, pos-1, pos-1)%8
-      if ctx.rexb then r = r + 8; ctx.rexb = false end
+      local r = byte(code, pos-1) & 7
+      if ctx.rexb then r += 8; ctx.rexb = false end
       x = regs[r+1]
     elseif p == "a" then x = regs[1]
     elseif p == "c" then x = "cl"
@@ -547,25 +605,25 @@ local function putpat(ctx, name, pat)
 	mode = ctx.mrm
 	if not mode then
 	  if pos > stop then return incomplete(ctx) end
-	  mode = byte(code, pos, pos)
-	  pos = pos+1
+	  mode = byte(code, pos)
+	  pos += 1
 	end
-	rm = mode%8; mode = (mode-rm)/8
-	sp = mode%8; mode = (mode-sp)/8
+	rm = mode & 7; mode >>= 3
+	sp = mode & 7; mode >>= 3
 	sdisp = ""
 	if mode < 3 then
 	  if rm == 4 then
 	    if pos > stop then return incomplete(ctx) end
-	    sc = byte(code, pos, pos)
-	    pos = pos+1
-	    rm = sc%8; sc = (sc-rm)/8
-	    rx = sc%8; sc = (sc-rx)/8
-	    if ctx.rexx then rx = rx + 8; ctx.rexx = false end
+	    sc = byte(code, pos)
+	    pos += 1
+	    rm = sc & 7; sc >>= 3
+	    rx = sc & 7; sc >>= 3
+	    if ctx.rexx then rx += 8; ctx.rexx = false end
 	    if rx == 4 then rx = nil end
 	  end
 	  if mode > 0 or rm == 5 then
 	    local dsz = mode
-	    if dsz ~= 1 then dsz = 4 end
+	    if dsz != 1 then dsz = 4 end
 	    local disp = getimm(ctx, pos, dsz); if not disp then return end
 	    if mode == 0 then rm = nil end
 	    if rm or rx or (not sc and ctx.x64 and not ctx.a32) then
@@ -579,26 +637,26 @@ local function putpat(ctx, name, pat)
 	    else
 	      sdisp = format(ctx.x64 and not ctx.a32 and
 		not (disp >= 0 and disp <= 0x7fffffff)
-		and "0xffffffff%08x" or "0x%08x", disp)
+		? "0xffffffff%08x" : "0x%08x", disp)
 	    end
-	    pos = pos+dsz
+	    pos += dsz
 	  end
 	end
-	if rm and ctx.rexb then rm = rm + 8; ctx.rexb = false end
-	if ctx.rexr then sp = sp + 8; ctx.rexr = false end
+	if rm and ctx.rexb then rm += 8; ctx.rexb = false end
+	if ctx.rexr then sp += 8; ctx.rexr = false end
       end
       if p == "m" then
 	if mode == 3 then x = regs[rm+1]
 	else
-	  local aregs = ctx.a32 and map_regs.D or ctx.aregs
+	  local aregs = ctx.a32 ? map_regs.D : ctx.aregs
 	  local srm, srx = "", ""
 	  if rm then srm = aregs[rm+1]
 	  elseif not sc and ctx.x64 and not ctx.a32 then srm = "rip" end
 	  ctx.a32 = false
 	  if rx then
-	    if rm then srm = srm.."+" end
+	    if rm then srm ..= "+" end
 	    srx = aregs[rx+1]
-	    if sc > 0 then srx = srx.."*"..(2^sc) end
+	    if sc > 0 then srx = srx.."*"..(1 << sc) end
 	  end
 	  x = format("[%s%s%s]", srm, srx, sdisp)
 	end
@@ -616,14 +674,19 @@ local function putpat(ctx, name, pat)
 	else
 	  x = "CR"..sp
 	end
+      elseif p == "v" then
+	if ctx.vexv then
+	  x = regs[ctx.vexv+1]; ctx.vexv = false
+	end
       elseif p == "y" then x = "DR"..sp
       elseif p == "z" then x = "TR"..sp
+      elseif p == "l" then vexl = false
       elseif p == "t" then
       else
 	error("bad pattern `"..pat.."'")
       end
     end
-    if x then operands = operands and operands..", "..x or x end
+    if x then operands = operands ? operands..", "..x : x end
   end
   ctx.pos = pos
   return putop(ctx, name, operands)
@@ -638,8 +701,8 @@ local function getmrm(ctx)
   if not mrm then
     local pos = ctx.pos
     if pos > ctx.stop then return nil end
-    mrm = byte(ctx.code, pos, pos)
-    ctx.pos = pos+1
+    mrm = byte(ctx.code, pos)
+    ctx.pos = pos + 1
     ctx.mrm = mrm
   end
   return mrm
@@ -651,7 +714,7 @@ local function dispatch(ctx, opat, patgrp)
   if match(opat, "%|") then -- MMX/SSE variants depending on prefix.
     local p
     if ctx.rep then
-      p = ctx.rep=="rep" and "%|([^%|]*)" or "%|[^%|]*%|[^%|]*%|([^%|]*)"
+      p = ctx.rep == "rep" ? "%|([^%|]*)" : "%|[^%|]*%|[^%|]*%|([^%|]*)"
       ctx.rep = false
     elseif ctx.o16 then p = "%|[^%|]*%|([^%|]*)"; ctx.o16 = false
     else p = "^[^%|]*" end
@@ -663,7 +726,7 @@ local function dispatch(ctx, opat, patgrp)
   end
   if match(opat, "%$") then -- reg$mem variants.
     local mrm = getmrm(ctx); if not mrm then return incomplete(ctx) end
-    opat = match(opat, mrm >= 192 and "^[^%$]*" or "%$(.*)")
+    opat = match(opat, mrm >= 192 ? "^[^%$]*" : "%$(.*)")
     if opat == "" then return unknown(ctx) end
   end
   if opat == "" then return unknown(ctx) end
@@ -675,9 +738,8 @@ end
 -- Get a pattern from an opcode map and dispatch to handler.
 local function dispatchmap(ctx, opcmap)
   local pos = ctx.pos
-  local opat = opcmap[byte(ctx.code, pos, pos)]
-  pos = pos + 1
-  ctx.pos = pos
+  local opat = opcmap[byte(ctx.code, pos)]
+  ctx.pos = pos + 1
   return dispatch(ctx, opat)
 end
 
@@ -692,11 +754,12 @@ map_act = {
   B = putpat, W = putpat, D = putpat, Q = putpat,
   V = putpat, U = putpat, T = putpat,
   M = putpat, X = putpat, P = putpat,
-  F = putpat, G = putpat,
+  F = putpat, G = putpat, Y = putpat,
+  H = putpat,
 
   -- Collect prefixes.
   [":"] = function(ctx, name, pat)
-    ctx[pat == ":" and name or sub(pat, 2)] = name
+    ctx[pat == ":" ? name : sub(pat, 2)] = name
     if ctx.pos - ctx.start > 5 then return unknown(ctx) end -- Limit #prefixes.
   end,
 
@@ -708,7 +771,7 @@ map_act = {
   -- Use named subtable for opcode group.
   ["!"] = function(ctx, name, pat)
     local mrm = getmrm(ctx); if not mrm then return incomplete(ctx) end
-    return dispatch(ctx, map_opcgroup[name][((mrm-(mrm%8))/8)%8+1], sub(pat, 2))
+    return dispatch(ctx, map_opcgroup[name][((mrm >> 3) & 7)+1], sub(pat, 2))
   end,
 
   -- o16,o32[,o64] variants.
@@ -740,12 +803,30 @@ map_act = {
     return dispatch(ctx, map_opcvm[ctx.mrm])
   end,
 
+  -- Special NOP for endbr64/endbr32.
+  endbr = function(ctx, name, pat)
+    if ctx.rep then
+      local pos = ctx.pos
+      local b = byte(ctx.code, pos)
+      local text
+      if b == 0xfa then text = "endbr64"
+      elseif b == 0xfb then text = "endbr64"
+      end
+      if text then
+	ctx.pos = pos + 1
+	ctx.rep = nil
+	return putop(ctx, text)
+      end
+    end
+    return dispatch(ctx, pat)
+  end,
+
   -- Floating point opcode dispatch.
   fp = function(ctx, name, pat)
     local mrm = getmrm(ctx); if not mrm then return incomplete(ctx) end
-    local rm = mrm%8
-    local idx = pat*8 + ((mrm-rm)/8)%8
-    if mrm >= 192 then idx = idx + 64 end
+    local rm = mrm & 7
+    local idx = ((byte(pat) - 0x30) << 3) | ((mrm >> 3) & 7)
+    if mrm >= 192 then idx += 64 end
     local opat = map_opcfp[idx]
     if type(opat) == "table" then opat = opat[rm+1] end
     return dispatch(ctx, opat)
@@ -753,14 +834,64 @@ map_act = {
 
   -- REX prefix.
   rex = function(ctx, name, pat)
-    if ctx.rex then return unknown(ctx) end -- Only 1 REX prefix allowed.
+    if ctx.rex then return unknown(ctx) end -- Only 1 REX or VEX prefix allowed.
     for p in gmatch(pat, ".") do ctx["rex"..p] = true end
-    ctx.rex = true
+    ctx.rex = "rex"
+  end,
+
+  -- VEX prefix.
+  vex = function(ctx, name, pat)
+    if ctx.rex then return unknown(ctx) end -- Only 1 REX or VEX prefix allowed.
+    ctx.rex = "vex"
+    local pos = ctx.pos
+    if ctx.mrm then
+      ctx.mrm = nil
+      pos -= 1
+    end
+    local b = byte(ctx.code, pos)
+    if not b then return incomplete(ctx) end
+    pos += 1
+    if b < 128 then ctx.rexr = true end
+    local m = 1
+    if pat == "3" then
+      m = b & 0x1f
+      if b & 0x20 == 0 then ctx.rexb = true end
+      if b & 0x40 == 0 then ctx.rexx = true end
+      b = byte(ctx.code, pos)
+      if not b then return incomplete(ctx) end
+      pos += 1
+      if b & 0x80 then ctx.rexw = true end
+    end
+    ctx.pos = pos
+    local map
+    if m == 1 then map = map_opc2
+    elseif m == 2 then map = map_opc3["38"]
+    elseif m == 3 then map = map_opc3["3a"]
+    else return unknown(ctx) end
+    local p = b & 3
+    if p == 1 then ctx.o16 = "o16"
+    elseif p == 2 then ctx.rep = "rep"
+    elseif p == 3 then ctx.rep = "repne" end
+    if b & 4 != 0 then ctx.vexl = true end
+    ctx.vexv = ~(b >> 3) & 15
+    return dispatchmap(ctx, map)
   end,
 
   -- Special case for nop with REX prefix.
   nop = function(ctx, name, pat)
-    return dispatch(ctx, ctx.rex and pat or "nop")
+    return dispatch(ctx, ctx.rex ? pat : "nop")
+  end,
+
+  -- Special case for 0F 77.
+  emms = function(ctx, name, pat)
+    if ctx.rex != "vex" then
+      return putop(ctx, "emms")
+    elseif ctx.vexl then
+      ctx.vexl = false
+      return putop(ctx, "zeroall")
+    else
+      return putop(ctx, "zeroupper")
+    end
   end,
 }
 
@@ -769,8 +900,8 @@ map_act = {
 -- Disassemble a block of code.
 local function disass_block(ctx, ofs, len)
   if not ofs then ofs = 0 end
-  local stop = len and ofs+len or #ctx.code
-  ofs = ofs + 1
+  local stop = len ? ofs+len : #ctx.code
+  ofs += 1
   ctx.start = ofs
   ctx.pos = ofs
   ctx.stop = stop
@@ -778,11 +909,11 @@ local function disass_block(ctx, ofs, len)
   ctx.mrm = false
   clearprefixes(ctx)
   while ctx.pos <= stop do dispatchmap(ctx, ctx.map1) end
-  if ctx.pos ~= ctx.start then incomplete(ctx) end
+  if ctx.pos != ctx.start then incomplete(ctx) end
 end
 
 -- Extended API: create a disassembler context. Then call ctx:disass(ofs, len).
-local function create_(code, addr, out)
+local function create(code, addr, out)
   local ctx = {}
   ctx.code = code
   ctx.addr = (addr or 0) - 1
@@ -796,8 +927,8 @@ local function create_(code, addr, out)
   return ctx
 end
 
-local function create64_(code, addr, out)
-  local ctx = create_(code, addr, out)
+local function create64(code, addr, out)
+  local ctx = create(code, addr, out)
   ctx.x64 = true
   ctx.map1 = map_opc1_64
   ctx.aregs = map_regs.Q
@@ -805,32 +936,32 @@ local function create64_(code, addr, out)
 end
 
 -- Simple API: disassemble code (a string) at address and output via out.
-local function disass_(code, addr, out)
-  create_(code, addr, out):disass()
+local function disass(code, addr, out)
+  create(code, addr, out):disass()
 end
 
-local function disass64_(code, addr, out)
-  create64_(code, addr, out):disass()
+local function disass64(code, addr, out)
+  create64(code, addr, out):disass()
 end
 
 -- Return register name for RID.
-local function regname_(r)
+local function regname(r)
   if r < 8 then return map_regs.D[r+1] end
   return map_regs.X[r-7]
 end
 
-local function regname64_(r)
+local function regname64(r)
   if r < 16 then return map_regs.Q[r+1] end
   return map_regs.X[r-15]
 end
 
 -- Public module functions.
-module(...)
-
-create = create_
-create64 = create64_
-disass = disass_
-disass64 = disass64_
-regname = regname_
-regname64 = regname64_
+return {
+  create = create,
+  create64 = create64,
+  disass = disass,
+  disass64 = disass64,
+  regname = regname,
+  regname64 = regname64
+}
 
