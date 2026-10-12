@@ -16,6 +16,7 @@
 #include<fstream>
 #include <iostream>
 #include <string>
+#include "log_format.h"
 
 XRCORE_API xrCore Core;
 extern XRCORE_API u32 build_id;
@@ -161,11 +162,11 @@ void xrCore::_initialize(LPCSTR _ApplicationName, LogCallback cb, BOOL init_fs, 
 #endif
 #endif
 		FS._initialize(flags, 0, fs_fname);
-		Msg("'%s' build %d, %s\n", "xrCore", build_id, build_date);
+		MsgFmt("'{}' build {}, {}\n", "xrCore", build_id, build_date);
 
 		// demonized: Print modded exes version
-		Msg("%s version %s\n", get_modded_exes_name(), get_modded_exes_version_string().c_str());
-		Msg("Game started: %s\n", timeInDMYHMSMMM().c_str());
+		MsgFmt("{} version {}\n", get_modded_exes_name(), get_modded_exes_version_string());
+		MsgFmt("Game started: {}\n", timeInDMYHMSMMM());
 		EFS._initialize();
 #ifdef DEBUG
 #ifndef _EDITOR
