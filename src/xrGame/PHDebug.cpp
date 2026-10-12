@@ -363,7 +363,7 @@ void _cdecl DBG_OutText(LPCSTR s,...)
 	string1024 t;
 	va_list   marker;
 	va_start  (marker,s);
-	vsprintf(t,s,marker);
+	vsnprintf(t,sizeof(t),s,marker);
 	va_end    (marker);
 	DBG_DrawPHAbstruct(xr_new<SPHDBGOutText>(t));
 }
@@ -1119,7 +1119,7 @@ virtual	void _cdecl DBG_OutText( LPCSTR s,... )
 	string1024 t;
 	va_list   marker;
 	va_start  (marker,s);
-	vsprintf(t,s,marker);
+	vsnprintf(t,sizeof(t),s,marker);
 	va_end    (marker);
 	DBG_DrawPHAbstruct(xr_new<SPHDBGOutText>(t));
 }

@@ -130,15 +130,14 @@ void xrCore::_initialize(LPCSTR _ApplicationName, LogCallback cb, BOOL init_fs, 
 		{
 			Msg("Found commandline file!");
 			std::string line;
-			char temp[2048];
-			sprintf(temp, Params);
-			strcat(temp, " ");
+			std::string acc = Params ? Params : "";
+			acc += " ";
 			while (std::getline(cmdlineTxt, line))
 			{
-				strcat(temp, line.c_str());
-				strcat(temp, " ");
+				acc += line;
+				acc += " ";
 			}
-			Params = xr_strdup(temp);
+			Params = xr_strdup(acc.c_str());
 		}
 		cmdlineTxt.close();
 	}

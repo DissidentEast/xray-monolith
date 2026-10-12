@@ -92,7 +92,7 @@ IC xr_string __cdecl make_xrstr(LPCSTR format, ...)
 	va_start(args, format);
 
 	char temp[4096];
-	vsprintf(temp, format, args);
+	vsnprintf(temp, sizeof(temp), format, args);
 
 	return xr_string(temp);
 }

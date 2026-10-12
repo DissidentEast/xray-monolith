@@ -1429,7 +1429,7 @@ void CActor::RPC_UpdateFaction()
 			LPCSTR faction_name = real_faction();
 			discord_gameinfo.faction = faction_name;
 			char buffer[128];
-			sprintf(buffer, "st_faction_%s", faction_name);
+			xr_sprintf(buffer, "st_faction_%s", faction_name);
 			snprintf(discord_gameinfo.faction_name, 128, xr_ToUTF8(*CStringTable().translate(buffer)));
 		}
 	}
@@ -1445,7 +1445,7 @@ void CActor::RPC_UpdateRank()
 		{
 			LPCSTR rank = actor_rank();
 			char rank_name[100];
-			sprintf(rank_name, "st_rank_%s", rank);
+			xr_sprintf(rank_name, "st_rank_%s", rank);
 			snprintf(discord_gameinfo.rank_name, 128, xr_ToUTF8(*CStringTable().translate(rank_name)));
 		}
 	}
