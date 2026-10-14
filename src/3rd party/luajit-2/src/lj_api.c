@@ -26,6 +26,60 @@
 #include "lj_strscan.h"
 #include "lj_strfmt.h"
 
+/* -- GC helpers ---------------------------------------------------------- */
+
+/*
+** Ported from OpenXRay/LuaJIT c937ecbd ("[GC] Added option to collect garbage
+** before timeout expires"): lua_gc(L, LUA_GCTIMEOUT, usec) runs as many GC
+** steps as fit into a microsecond budget instead of until a byte count is
+** reached. Result: -1 unsupported platform, 0 timed out, 1 fully collected.
+**
+** NOTE (deliberate, matches upstream patch): this *disables* the automatic
+** incremental GC afterwards (threshold = LJ_MAX_MEM, same convention as
+** LUA_GCSTOP) - the caller owns the GC cadence and is expected to call this
+** periodically (e.g. once a frame with a ~1-3 ms budget). Without periodic
+** calls the heap grows until the arena is exhausted, so do not fire it once
+** and forget it. Use collectgarbage("restart") to hand control back.
+*/
+#if LJ_TARGET_WINDOWS
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
+
+static uint64_t lj_gc_hirestime(void)
+{
+  LARGE_INTEGER cnt;
+  QueryPerformanceCounter(&cnt);
+  return (uint64_t)cnt.QuadPart;
+}
+#elif LJ_TARGET_POSIX
+#include <time.h>
+
+static uint64_t lj_gc_hirestime(void)
+{
+  struct timespec ts;
+  clock_gettime(CLOCK_MONOTONIC_RAW, &ts);
+  return (uint64_t)ts.tv_sec * 1000000000ULL + (uint64_t)ts.tv_nsec;
+}
+#endif
+
+static int lj_gc_step_timeout(lua_State *L, uint32_t timeout_usec)
+{
+#if LJ_TARGET_WINDOWS || LJ_TARGET_POSIX
+  int res = 0;
+  uint64_t deadline = lj_gc_hirestime() + (uint64_t)timeout_usec * 1000ULL;
+
+  while (lj_gc_hirestime() < deadline) {
+    if (lj_gc_step(L) > 0) {
+      res = 1;
+      break;
+    }
+  }
+  return res;
+#else
+  return -1;
+#endif
+}
+
 /* -- Common helper functions --------------------------------------------- */
 
 #define lj_checkapi_slot(idx) \
@@ -1280,6 +1334,11 @@ LUA_API int lua_gc(lua_State *L, int what, int data)
     break;
   case LUA_GCISRUNNING:
     res = (g->gc.threshold != LJ_MAX_MEM);
+    break;
+  case LUA_GCTIMEOUT:
+    res = lj_gc_step_timeout(L, (uint32_t)data);
+    if (res >= 0)
+      g->gc.threshold = LJ_MAX_MEM;  /* Caller owns the cadence now. */
     break;
   default:
     res = -1;  /* Invalid option. */
