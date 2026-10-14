@@ -1,0 +1,12 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "servers": {
+      "xray-monolith": {
+        "type": "local",
+        "command": ["python", "tools/xray-mcp/server.py"],
+        "cwd": "."
+      }
+    }
+  }
+}
