@@ -33,7 +33,9 @@ echo [LuaJIT] Running DynASM to generate host\buildvm_arch.h
 REM Build buildvm (always: it bakes C-struct offsets into lj_vm.obj, so it
 REM must match the lib mode below; a cached buildvm from the other GC64
 REM mode silently generates a mismatched VM - this exact staleness caused
-REM hours of debugging. See luajit.vcxproj LUAJIT_DISABLE_GC64 comment.)
+REM hours of debugging. Must stay in sync with luajit.vcxproj, which is
+REM pinned to LUAJIT_DISABLE_GC64 - see the comment there for why GC64
+REM cannot be enabled on x64 with this VM.)
 del /q host\buildvm.exe host\buildvm.obj host\buildvm_peobj.obj host\buildvm_lib.obj host\buildvm_asm.obj host\buildvm_fold.obj 2>nul
 echo [LuaJIT] Building host\buildvm.exe
 cl /nologo /c /O2 /Ob3 /Oi /Ot /Oy /GT /W3 /fp:precise /MD /GF /GS- /Zi /DLUAJIT_DISABLE_GC64 /I "." /I "..\dynasm" host\buildvm.c host\buildvm_peobj.c host\buildvm_lib.c host\buildvm_asm.c host\buildvm_fold.c || exit /b 1

@@ -14,7 +14,9 @@ static PNTAVM xr_ntavm = NULL;
 /* Number of top bits of the lower 32 bits of an address that must be zero.
 ** Apparently 0 gives us full 64 bit addresses and 1 gives us the lower 2GB.
 ** Must stay 1: the LuaJIT x64 VM keeps lua_State* in 32 bits
-** (see vm_x86.dasc cpcall), so Lua memory must live below 4GB.
+** (vm_x86.dasc writes SAVE_L as a dword and frames are one-slot, see the
+** LUAJIT_DISABLE_GC64 note in luajit.vcxproj), so Lua memory must live
+** below 4GB.
 */
 #define NTAVM_ZEROBITS		1
 

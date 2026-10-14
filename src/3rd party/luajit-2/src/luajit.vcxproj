@@ -74,11 +74,23 @@
   <ItemDefinitionGroup>
     <ClCompile>
       <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)host;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <!-- GC64 stays OFF on every config: the XR arena pins all Lua memory
-           below 2GB (the x64 VM keeps lua_State* in 32 bits), while the
-           stock GC64 tag/dispatch path assumes high addresses. A uniform
-           mode also keeps the shared lj_vm.obj (one copy in srcdir, used
-           by ALL configs) consistent with the C code. See xr_alloc.c. -->
+      <!-- GC64 stays OFF (LUAJIT_DISABLE_GC64) on every config, and this is
+           NOT a config preference - the vendored x64 assembler can only run
+           this mode. vm_x86.dasc (unmodified upstream 2.1) emits one-slot Lua
+           frames (LJ_FR2=0: `mov [BASE-8],RB` / `mov [BASE-4],PC`) and stores
+           the C frame's lua_State*/PC in 32-bit slots (`SAVE_L`/`SAVE_PC` are
+           dwords, written with `mov SAVE_L, CARG1d`). GC64 needs two-slot
+           frames and 64-bit link fields, so with the flag dropped the very
+           first VM entry (lj_vm_cpcall from lj_newstate) throws and every
+           error unwind dies in lj_err_unwind_win: cframe_L() reads a slot the
+           asm only wrote 32 bits of (seen as `mov rdx,[rsi+20h]` on a
+           truncated lua_State*). There is no x64 GC64 backend in this VM to
+           port to; writing one means extending vm_x86.dasc + the CFRAME_*
+           handshake in lj_frame.h, i.e. the VM work upstream 2.1 never
+           shipped. Keeping the XR arena low-2GB (xr_alloc.c) is also only
+           legal because gcrefs are 32-bit absolute pointers in this mode.
+           Also: the shared lj_vm.obj in srcdir is one copy used by ALL
+           configs, so the mode must stay uniform to match the C code. -->
       <PreprocessorDefinitions>LUAJIT_DISABLE_GC64;WIN32;NDEBUG;_CRT_SECURE_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <WarningLevel>Level3</WarningLevel>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
