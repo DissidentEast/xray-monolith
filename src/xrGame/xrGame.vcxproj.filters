@@ -5328,6 +5328,9 @@
     <ClInclude Include="GamePersistent.h">
       <Filter>Core\Client\Game Persistent</Filter>
     </ClInclude>
+    <ClInclude Include="LuaHook.h">
+      <Filter>Core\Client\Game Persistent</Filter>
+    </ClInclude>
     <ClInclude Include="Level.h">
       <Filter>Core\Client\Level</Filter>
     </ClInclude>
@@ -8919,6 +8922,9 @@
       <Filter>Core\Client\Effects\Core</Filter>
     </ClCompile>
     <ClCompile Include="GamePersistent.cpp">
+      <Filter>Core\Client\Game Persistent</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaHook.cpp">
       <Filter>Core\Client\Game Persistent</Filter>
     </ClCompile>
     <ClCompile Include="Level.cpp">

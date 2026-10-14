@@ -1130,6 +1130,7 @@
     <ClInclude Include="GalantineArtifact.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GamePersistent.h" />
+    <ClInclude Include="LuaHook.h" />
     <ClInclude Include="gamespy\CdkeyDecode\base32.h" />
     <ClInclude Include="gamespy\CdkeyDecode\cdkeydecode.h" />
     <ClInclude Include="GameTask.h" />
@@ -2849,6 +2850,10 @@
       <PrecompiledHeaderOutputFile>$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
     </ClCompile>
     <ClCompile Include="GamePersistent.cpp">
+      <PrecompiledHeaderFile>pch_script.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
+    </ClCompile>
+    <ClCompile Include="LuaHook.cpp">
       <PrecompiledHeaderFile>pch_script.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(IntDir)$(ProjectName)_script.pch</PrecompiledHeaderOutputFile>
     </ClCompile>

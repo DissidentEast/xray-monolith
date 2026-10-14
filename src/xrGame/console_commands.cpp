@@ -40,6 +40,7 @@
 #include "zone_effector.h"
 #include "GameTask.h"
 #include "MainMenu.h"
+#include "LuaHook.h"
 #include "saved_game_wrapper.h"
 #include "level_graph.h"
 #include "game_graph.h"
@@ -1912,6 +1913,42 @@ public:
 		IConsole_Command::fill_tips(tips, mode);
 	}
 };
+
+// LuaHook test console: executes a snippet on the game lua_State right now
+// (main thread) and prints the result. Same core as the HTTP hook (MCP).
+class CCC_LuaHook : public IConsole_Command
+{
+public:
+	CCC_LuaHook(LPCSTR N) : IConsole_Command(N) { bEmptyArgsHandled = false; };
+
+	virtual void Execute(LPCSTR args)
+	{
+		if (!xr_strlen(args))
+		{
+			Log("* Specify Lua code to run!");
+			return;
+		}
+		xr_string result, error;
+		if (LuaHook::ExecDirect(args, 5000, result, error))
+			Msg("* lua_hook: %s", result.c_str());
+		else
+			Msg("! lua_hook: %s", error.c_str());
+	}
+
+	virtual void Status(TStatus& S)
+	{
+		xr_strcpy(S, "<lua code> (executes on the game lua_State, prints result)");
+	}
+
+	virtual void Save(IWriter* F)
+	{
+	}
+
+	virtual void fill_tips(vecTips& tips, u32 mode)
+	{
+		IConsole_Command::fill_tips(tips, mode);
+	}
+};
 class CCC_FreezeTime : public IConsole_Command
 {
 public:
@@ -2734,6 +2771,7 @@ void CCC_RegisterCommands()
 	CMD3(CCC_Mask, "g_unlimitedammo", &psActorFlags, AF_UNLIMITEDAMMO);
 	CMD1(CCC_Script, "run_script");
 	CMD1(CCC_ScriptCommand, "run_string");
+	CMD1(CCC_LuaHook, "lua_hook");
 	CMD1(CCC_TimeFactor, "time_factor");
 #endif // DEBUG
 
@@ -2747,6 +2785,7 @@ void CCC_RegisterCommands()
 		CMD3(CCC_Mask, "g_unlimitedammo", &psActorFlags, AF_UNLIMITEDAMMO);
 		CMD1(CCC_Script, "run_script");
 		CMD1(CCC_ScriptCommand, "run_string");
+		CMD1(CCC_LuaHook, "lua_hook");
 		//CMD3(CCC_Mask, "g_no_clip", &psActorFlags, AF_NO_CLIP);
 		CMD1(CCC_PHGravity, "ph_gravity");
 		CMD3(CCC_Mask, "log_missing_ini", &FS.m_Flags, FS.flPrintLTX);

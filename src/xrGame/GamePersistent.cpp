@@ -26,6 +26,7 @@
 #include "../xrServerEntities/script_engine.h"
 
 #include "holder_custom.h"
+#include "LuaHook.h"
 #include "game_cl_base.h"
 #include "xrserver_objects_alife_monsters.h"
 #include "../xrServerEntities/xrServer_Object_Base.h"
@@ -111,6 +112,7 @@ CGamePersistent::CGamePersistent(void)
 
 CGamePersistent::~CGamePersistent(void)
 {
+	LuaHook::Shutdown();
 	FS.r_close(pDemoFile);
 	Device.seqFrame.Remove(this);
 	Engine.Event.Handler_Detach(eDemoStart, this);
@@ -702,6 +704,10 @@ extern CUISequencer* g_tutorial2;
 
 void CGamePersistent::OnFrame()
 {
+	// Automated Lua test hook (MCP lua_exec / console lua_hook).
+	// Main thread, every frame incl. menu: executes queued requests.
+	LuaHook::Pump();
+
 	if (Device.dwPrecacheFrame == 5 && m_intro_event.empty())
 	{
 		m_intro_event.bind(this, &CGamePersistent::game_loaded);
