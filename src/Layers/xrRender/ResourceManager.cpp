@@ -53,9 +53,6 @@ IBlender* CResourceManager::_GetBlender(LPCSTR Name)
 
 	LPSTR N = LPSTR(Name);
 	map_Blender::iterator I = m_blenders.find(N);
-#ifdef _EDITOR
-	if (I==m_blenders.end())	return 0;
-#else
 	//	TODO: DX10: When all shaders are ready switch to common path
 #if defined(USE_DX10) || defined(USE_DX11)
 	if (I == m_blenders.end())
@@ -69,7 +66,6 @@ IBlender* CResourceManager::_GetBlender(LPCSTR Name)
 		Debug.fatal(DEBUG_INFO, "Shader '%s' not found in library.", Name);
 		return 0;
 	}
-#endif
 	else return I->second;
 }
 
@@ -188,10 +184,6 @@ Shader* CResourceManager::_cpp_Create(IBlender* B, LPCSTR s_shader, LPCSTR s_tex
 	C.HudElement = false;
 #endif
 
-#ifdef _EDITOR
-	if (!C.BT)			{ ELog.Msg(mtError,"Can't find shader '%s'",s_shader); return 0; }
-	C.bEditor			= TRUE;
-#endif
 
 	// Parse names
 	_ParseList(C.L_textures, s_textures);
@@ -280,9 +272,7 @@ Shader* CResourceManager::_cpp_Create(IBlender* B, LPCSTR s_shader, LPCSTR s_tex
 Shader* CResourceManager::_cpp_Create(LPCSTR s_shader, LPCSTR s_textures, LPCSTR s_constants, LPCSTR s_matrices)
 {
 	//#ifndef DEDICATED_SERVER
-#ifndef _EDITOR
 	if (!g_dedicated_server)
-#endif
 	{
 		//	TODO: DX10: When all shaders are ready switch to common path
 #if defined(USE_DX10) || defined(USE_DX11)
@@ -294,9 +284,7 @@ Shader* CResourceManager::_cpp_Create(LPCSTR s_shader, LPCSTR s_textures, LPCSTR
 #endif	//	USE_DX10
 		//#else
 	}
-#ifndef _EDITOR
 	else
-#endif
 	{
 		return NULL;
 	}
@@ -306,16 +294,12 @@ Shader* CResourceManager::_cpp_Create(LPCSTR s_shader, LPCSTR s_textures, LPCSTR
 Shader* CResourceManager::Create(IBlender* B, LPCSTR s_shader, LPCSTR s_textures, LPCSTR s_constants, LPCSTR s_matrices)
 {
 	//#ifndef DEDICATED_SERVER
-#ifndef _EDITOR
 	if (!g_dedicated_server)
-#endif
 	{
 		return _cpp_Create(B, s_shader, s_textures, s_constants, s_matrices);
 		//#else
 	}
-#ifndef _EDITOR
 	else
-#endif
 	{
 		return NULL;
 		//#endif
@@ -325,9 +309,7 @@ Shader* CResourceManager::Create(IBlender* B, LPCSTR s_shader, LPCSTR s_textures
 Shader* CResourceManager::Create(LPCSTR s_shader, LPCSTR s_textures, LPCSTR s_constants, LPCSTR s_matrices)
 {
 	//#ifndef DEDICATED_SERVER
-#ifndef _EDITOR
 	if (!g_dedicated_server)
-#endif
 	{
 		//	TODO: DX10: When all shaders are ready switch to common path
 #if defined(USE_DX10) || defined(USE_DX11)
@@ -350,18 +332,14 @@ Shader* CResourceManager::Create(LPCSTR s_shader, LPCSTR s_textures, LPCSTR s_co
 			}
 		}
 #else	//	USE_DX10
-#ifndef _EDITOR
 		if (_lua_HasShader(s_shader))
 			return _lua_Create(s_shader, s_textures);
 		else
-#endif
 			return _cpp_Create(s_shader, s_textures, s_constants, s_matrices);
 #endif	//	USE_DX10
 	}
 		//#else
-#ifndef _EDITOR
 	else
-#endif
 	{
 		return NULL;
 	}
@@ -434,6 +412,9 @@ void CResourceManager::DeferredUnload()
 
 void CResourceManager::UnloadAllTexturesOnLevelUnload()
 {
+	// the level just released its meshes: hand the zero-refcount blocks back before the next one
+	Memory.mem_compact();
+
 	if (!RDEVICE.b_is_Ready)
 		return;
 
@@ -467,25 +448,6 @@ void CResourceManager::UnloadAllTexturesOnLevelUnload()
         texture->Unload();
 }
 
-#ifdef _EDITOR
-void	CResourceManager::ED_UpdateTextures(AStringVec* names)
-{
-	// 1. Unload
-	if (names){
-		for (u32 nid=0; nid<names->size(); nid++)
-		{
-			map_TextureIt I = m_textures.find	((*names)[nid].c_str());
-			if (I!=m_textures.end())	I->second->Unload();
-		}
-	}else{
-		for (map_TextureIt t=m_textures.begin(); t!=m_textures.end(); t++)
-			t->second->Unload();
-	}
-
-	// 2. Load
-	// DeferredUpload	();
-}
-#endif
 
 Shader* CResourceManager::_CreateShader(Shader* InShader)
 {

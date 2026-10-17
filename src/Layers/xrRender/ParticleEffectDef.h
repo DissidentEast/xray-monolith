@@ -126,31 +126,6 @@ namespace PS
 	public:
 		DEFINE_VECTOR(EParticleAction*, EPAVec, EPAVecIt);
 		EPAVec m_EActionList;
-#ifdef _EDITOR // DIRTY HACK TO MAKE PARTICLE IMPORT AND EXPORT WORK 
-	public:
-		void __stdcall  	FindActionByName	(LPCSTR new_name, bool& res);
-		bool __stdcall  	NameOnAfterEdit					(PropValue* sender, shared_str& edit_val);
-		bool __stdcall  	CollisionFrictionOnAfterEdit	(PropValue* sender, float& edit_val);
-		void __stdcall  	CollisionFrictionOnBeforeEdit	(PropValue* sender, float& edit_val);
-		void __stdcall  	CollisionFrictionOnDraw			(PropValue* sender, xr_string& draw_val);
-		bool __stdcall  	CollisionCutoffOnAfterEdit		(PropValue* sender, float& edit_val);
-		void __stdcall  	CollisionCutoffOnBeforeEdit		(PropValue* sender, float& edit_val);
-		void __stdcall  	CollisionCutoffOnDraw			(PropValue* sender, xr_string& draw_val);
-		void __stdcall  	OnActionEditClick	(ButtonValue* sender, bool& bDataModified, bool& bSafe);
-	    void __stdcall  	OnFrameResize		(PropValue* sender);
-	    void __stdcall  	OnShaderChange		(PropValue* sender);
-	    void __stdcall  	OnFlagChange		(PropValue* sender);
-		void __stdcall  	OnControlClick		(ButtonValue* sender, bool& bDataModified, bool& bSafe);
-		void __stdcall  	OnActionsClick		(ButtonValue* sender, bool& bDataModified, bool& bSafe);
-        bool __stdcall  	OnAfterActionNameEdit(PropValue* sender, shared_str& edit_val);
-		void				FillProp		   	(LPCSTR pref, ::PropItemVec& items, ::ListItem* owner);
-		void				Copy				(const CPEDef& src);
-		BOOL				Equal				(const CPEDef* pe);
-		void 				Render				(const Fmatrix& parent);
-		static PFunction*	FindCommandPrototype(LPCSTR src, LPCSTR& dest);
-		void __stdcall  	FillActionList		(ChooseItemVec& items, void* param);
-        bool 				Validate 			(bool bMsg);
-#endif // DIRTY HACK TO MAKE PARTICLE IMPORT AND EXPORT WORK 
 		void Compile(EPAVec& v);
 		// DIRTY HACK TO MAKE PARTICLE IMPORT AND EXPORT WORK #endif
 	};

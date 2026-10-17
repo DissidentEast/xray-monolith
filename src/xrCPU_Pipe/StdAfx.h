@@ -16,10 +16,6 @@
 #define ENGINE_API
 #define ECORE_API
 
-#ifdef _EDITOR
-#	include "skeletonX.h"
-#	include "skeletoncustom.h"
-#else // _EDITOR
 #include "../xrCore/xrCore.h"
 #include "../Layers/xrRender/SkeletonXVertRender.h"
 #include "../xrEngine/bone.h"
@@ -27,7 +23,6 @@
 #include "../xrEngine/Render.h"
 #include "../xrEngine/Device.h"
 #include "../Layers/xrRender/light.h"
-#endif // _EDITOR
 
 #include "xrCPU_Pipe.h"
 #include "ttapi.h"

@@ -480,8 +480,12 @@ void NET_Compressor::DumpStats(bool brief)
 		unlucky_hits += it->second.unlucky_attempts;
 		if (!brief)
 		{
+			// a bucket with no hits yet would divide by zero here
+			const u32 avg = it->second.hit_count
+				? iFloor(float(it->second.compressed_size) / float(it->second.hit_count))
+				: 0;
 			Msg("size[%d] count[%d] unlucky[%d] avg_c[%d]", it->first, it->second.hit_count,
-			    it->second.unlucky_attempts, iFloor(float(it->second.compressed_size) / float(it->second.hit_count)));
+			    it->second.unlucky_attempts, avg);
 		}
 	}
 	Msg("total   [%d]", total_hits);

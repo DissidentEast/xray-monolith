@@ -541,7 +541,6 @@ int ps_r__portal_traverse_stats = 0;
 float r_rain_exp = 1.f;
 float r_rain_k = 99.0f;
 
-#ifndef _EDITOR
 #include	"../../xrEngine/xr_ioconsole.h"
 #include	"../../xrEngine/xr_ioc_cmd.h"
 #include	"../../xrEngine/shader_bus.h"
@@ -1835,4 +1834,3 @@ void xrRender_initconsole()
 	//	CMD3(CCC_Mask,		"r2_sun_ignore_portals",		&ps_r2_ls_flags,			R2FLAG_SUN_IGNORE_PORTALS);
     CMD4(CCC_Integer, "r_particles_real_dt", &ps_r2_particle_dt, 0, 1);
 }
-#endif

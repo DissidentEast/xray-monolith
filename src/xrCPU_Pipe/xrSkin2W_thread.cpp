@@ -38,7 +38,7 @@ void __stdcall xrSkin4W_thread(vertRender* D,
 
 	u32 nWorkers = ttapi_GetWorkersCount();
 
-	if (vCount < (nWorkers * 64))
+	if (nWorkers < 2 || vCount < (nWorkers * 64))
 	{
 		skin4W_func(D, S, vCount, Bones);
 		return;

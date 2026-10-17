@@ -127,7 +127,9 @@ struct XRCORE_API str_value_hash
 
 class IWriter;
 
-class XRCORE_API str_container : public intrusive_base_impl<DeletionPolicy::Immediate, CounterPolicy::NonAtomic, false>
+// Immediate deletion means the destructor runs at zero, so the count is touched from every
+// thread that copies a shared_str: it has to be atomic or the pool can be freed while in use
+class XRCORE_API str_container : public intrusive_base_impl<DeletionPolicy::Immediate, CounterPolicy::Atomic, false>
 {
 private:
 	struct pool_block {

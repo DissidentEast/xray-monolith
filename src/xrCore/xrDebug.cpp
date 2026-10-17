@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #pragma hdrstop
 
-#ifndef _EDITOR
 
 #include "xrdebug.h"
 #include "resource.h"
@@ -368,4 +367,3 @@ void xrDebug::_initialize(const bool& dedicated)
 
 #endif
 
-#endif

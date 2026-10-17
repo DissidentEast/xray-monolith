@@ -880,7 +880,6 @@
     <ClInclude Include="..\alife_human_brain_save.h" />
     <ClInclude Include="..\alife_human_object_handler.h" />
     <ClInclude Include="..\alife_human_object_handler_inline.h" />
-    <ClInclude Include="..\alife_human_object_handler_save.h" />
     <ClInclude Include="..\alife_interaction_manager.h" />
     <ClInclude Include="..\alife_interaction_manager_inline.h" />
     <ClInclude Include="..\alife_level_registry.h" />

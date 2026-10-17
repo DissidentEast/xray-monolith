@@ -141,7 +141,6 @@ class cl_VPtexgen : public R_constant_setup
 static cl_VPtexgen binder_VPtexgen;
 
 // fog
-#ifndef _EDITOR
 class cl_fog_plane : public R_constant_setup
 {
 	u32 marker;
@@ -229,7 +228,6 @@ static class cl_wind_params : public R_constant_setup
 	}
 } binder_wind_params;
 
-#endif
 
 
 // times
@@ -490,7 +488,6 @@ static class cl_heatvision_args2 : public R_constant_setup
 //--DSR-- HeatVision_end
 
 
-#ifndef _EDITOR
 // D-Light0
 class cl_sun0_color : public R_constant_setup
 {
@@ -606,7 +603,6 @@ class cl_sky_color : public R_constant_setup
 	}
 };
 static cl_sky_color binder_sky_color;
-#endif
 
 static class cl_screen_res : public R_constant_setup
 {
@@ -1485,13 +1481,11 @@ void CBlender_Compile::SetMapping()
 	r_Constant("m_texgen", &binder_texgen);
 	r_Constant("mVPTexgen", &binder_VPtexgen);
 
-#ifndef _EDITOR
 	// fog-params
 	r_Constant("fog_plane", &binder_fog_plane);
 	r_Constant("fog_params", &binder_fog_params);
 	r_Constant("fog_color", &binder_fog_color);
 	r_Constant("wind_params", &binder_wind_params);
-#endif
 	// time
 	r_Constant("timers", &binder_times);
 	r_Constant("timers_game", &binder_game_times);
@@ -1503,7 +1497,6 @@ void CBlender_Compile::SetMapping()
 	r_Constant("eye_direction_lerp", &binder_eye_DL); // crookr
 	r_Constant("eye_normal", &binder_eye_N);
 
-#ifndef _EDITOR
 	// global-lighting (env params)
 	r_Constant("L_sun_color", &binder_sun0_color);
 	r_Constant("L_sun_dir_w", &binder_sun0_dir_w);
@@ -1511,7 +1504,6 @@ void CBlender_Compile::SetMapping()
 	//	r_Constant				("L_lmap_color",	&binder_lm_color);
 	r_Constant("L_hemi_color", &binder_hemi_color);
 	r_Constant("L_ambient", &binder_amb_color);
-#endif
 
 	r_Constant("screen_res", &binder_screen_res);
 	r_Constant("ogse_c_screen", &binder_screen_params);

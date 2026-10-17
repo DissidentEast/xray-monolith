@@ -153,11 +153,10 @@ CPhysicsShell* P_build_Shell(IPhysicsShellHolder* obj, bool not_active_state, LP
 	return P_build_Shell(obj, not_active_state, f_bones);
 }
 
-static BONE_P_MAP bone_map = BONE_P_MAP();
-
 CPhysicsShell* P_build_Shell(IPhysicsShellHolder* obj, bool not_active_state, U16Vec& fixed_bones)
 {
-	bone_map.clear();
+	// local, not a file static: P_build_Shell can be re-entered while a fracture builds a shell
+	BONE_P_MAP bone_map = BONE_P_MAP();
 	CPhysicsShell* pPhysicsShell = 0;
 	if (!fixed_bones.empty())
 		for (U16It it = fixed_bones.begin(); it != fixed_bones.end(); it++)

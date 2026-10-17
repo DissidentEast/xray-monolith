@@ -527,11 +527,7 @@ private:
 extern ENGINE_API CRenderDevice Device;
 extern ENGINE_API CRenderDevice* DevicePtr;
 
-#ifndef _EDITOR
 #define RDEVICE Device
-#else
-#define RDEVICE EDevice
-#endif
 
 #ifdef ECO_RENDER
 extern ENGINE_API float refresh_rate;

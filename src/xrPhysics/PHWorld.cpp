@@ -546,6 +546,10 @@ void CPHWorld::FrameStep(dReal step)
 
 	if (ph_console::g_bDebugDumpPhysicsStep && it_number > 20)
 		Msg("!!!TOO MANY PHYSICS STEPS PER FRAME = %d !!!", it_number);
+	// shortcut: cap catch-up steps, else one long frame compounds into an unresponsive one.
+	// raise the cap if physics must stay real-time on slow machines, or slow machines drift
+	if (it_number > 4)
+		it_number = 4;
 	for (UINT i = 0; i < it_number; ++i)
 		Step();
 	b_processing = false;

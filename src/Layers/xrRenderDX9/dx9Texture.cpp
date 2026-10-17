@@ -9,9 +9,7 @@
 #include <d3dx9.h>
 #pragma warning(default:4995)
 
-#ifndef _EDITOR
 #include "../xrRender/dxRenderDeviceRender.h"
-#endif
 
 // #include "std_classes.h"
 // #include "xr_avi.h"
@@ -29,11 +27,7 @@ void fix_texture_name(LPSTR fn)
 }
 
 extern ENGINE_API int g_current_renderer;
-#ifndef _EDITOR
 ENGINE_API bool is_enough_address_space_available();
-#else
-  bool is_enough_address_space_available(){return true;}
-#endif
 
 int get_texture_load_lod(LPCSTR fn)
 {
@@ -373,10 +367,6 @@ ID3DBaseTexture* CRender::texture_load(LPCSTR fRName, u32& ret_msize)
 	if (FS.exist(fn, "$game_textures$", fname, ".dds")) goto _DDS;
 
 
-#ifdef _EDITOR
-	ELog.Msg(mtError,"Can't find texture '%s'",fname);
-	return 0;
-#else
 
 	Msg("! Can't find texture '%s'", fname);
 	R_ASSERT(FS.exist(fn,"$game_textures$", "ed\\ed_not_existing_texture",".dds"));
@@ -384,7 +374,6 @@ ID3DBaseTexture* CRender::texture_load(LPCSTR fRName, u32& ret_msize)
 
 	//	Debug.fatal(DEBUG_INFO,"Can't find texture '%s'",fname);
 
-#endif
 
 _DDS:
 	{
@@ -561,7 +550,6 @@ _BUMP_from_base:
 	{
 		Msg("! auto-generated bump map: %s", fname);
 		//////////////////
-#ifndef _EDITOR
 		if (strstr(fname, "_bump#"))
 		{
 			R_ASSERT2(FS.exist(fn,"$game_textures$", "ed\\ed_dummy_bump#", ".dds"), "ed_dummy_bump#");
@@ -580,7 +568,6 @@ _BUMP_from_base:
 			img_size = S->length();
 			goto _DDS_2D;
 		}
-#endif
 		//////////////////
 
 		*strstr(fname, "_bump") = 0;

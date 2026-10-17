@@ -144,9 +144,7 @@ void CInifile::InsertIntoDATA(xr_unordered_flat_map<shared_str, Items>& FinalDat
 }
 
 CInifile::CInifile(IReader* F, LPCSTR path
-#ifndef _EDITOR
                    , allow_include_func_t allow_include_func
-#endif
 )
 {
 	PROF_EVENT("CInifile::CInifile IReader");
@@ -156,9 +154,7 @@ CInifile::CInifile(IReader* F, LPCSTR path
 	m_flags.set(eReadOnly, TRUE);
 	m_flags.set(eOverrideNames, FALSE);
 	Load(F, path
-#ifndef _EDITOR
 	     , allow_include_func
-#endif
 	);
 }
 
@@ -167,9 +163,7 @@ CInifile::CInifile(LPCSTR szFileName,
                    BOOL bLoad,
                    BOOL SaveAtEnd,
                    u32 sect_count
-#ifndef _EDITOR
                    , allow_include_func_t allow_include_func
-#endif
 )
 
 {
@@ -213,9 +207,7 @@ CInifile::CInifile(LPCSTR szFileName,
 			if (sect_count)
 				DATA.reserve(sect_count);
 			Load(R, path
-#ifndef _EDITOR
 			     , allow_include_func
-#endif
 			);
 			FS.r_close(R);
 		}
@@ -267,7 +259,10 @@ IC BOOL is_empty_line_now(IReader* F)
 // Regex pattern cache (added before Load function)
 static const std::regex& GetCachedRegex(const xr_string& pattern)
 {
+	// configs can be parsed from more than one thread: the cache and its rehash are not thread safe
+	static xrCriticalSection RegexCS;
 	static xr_unordered_flat_map<xr_string, std::regex> g_RegexCache;
+	xrCriticalSectionGuard guard(RegexCS);
 	auto it = g_RegexCache.find(pattern);
 	if (it == g_RegexCache.end())
 	{
@@ -332,15 +327,14 @@ void CInifile::loadFile(
 		const string_path name,
 		string_path currentFileName,
 		int depth
-	#ifndef _EDITOR
 		, allow_include_func_t allow_include_func
-	#endif
 	)
 {
-#ifndef _EDITOR
 	if (!allow_include_func || allow_include_func(_fn))
-#endif
 	{
+		// a config that includes itself (or a cycle of configs) would recurse until the stack is gone
+		if (depth > 32)
+			return;
 		IReader* I = FS.r_open(_fn);
 		R_ASSERT3(I, "Can't find include file:", name);
 
@@ -352,9 +346,7 @@ void CInifile::loadFile(
 			false,
 			currentFileName,
 			depth
-#ifndef _EDITOR
 			, allow_include_func
-#endif
 		);
 
 		FS.r_close(I);
@@ -456,9 +448,7 @@ void CInifile::LTXLoad (
 		BOOL bIsRootFile,
 		string_path currentFileName,
 		int depth
-#ifndef _EDITOR
 		, allow_include_func_t allow_include_func
-#endif
 	)
 {
 	static shared_str DLTX_DELETE = "DLTX_DELETE";
@@ -603,9 +593,7 @@ void CInifile::LTXLoad (
 					ModFileName.c_str(),
 					currentFileName,
 					d
-#ifndef _EDITOR
 					, allow_include_func
-#endif
 				);
 				d += dt;
 			}
@@ -695,9 +683,7 @@ void CInifile::LTXLoad (
 							_name,
 							currentFileName,
 							depth + 1
-#ifndef _EDITOR
 							, allow_include_func
-#endif
 						);
 					}
 				}
@@ -709,9 +695,7 @@ void CInifile::LTXLoad (
 						inc_name,
 						currentFileName,
 						depth + 1
-#ifndef _EDITOR
 						, allow_include_func
-#endif
 					);
 			}
 
@@ -1294,9 +1278,7 @@ CInifile::Items CInifile::EvaluateSection(
 };
 
 void CInifile::Load(IReader* F, LPCSTR path
-#ifndef _EDITOR
                     , allow_include_func_t allow_include_func
-#endif
 )
 {
 	R_ASSERT(F);
@@ -1324,9 +1306,7 @@ void CInifile::Load(IReader* F, LPCSTR path
 		true,
 		currentFileName,
 		0
-#ifndef _EDITOR
 		, allow_include_func
-#endif
 	);
 
 	// Sort items by depth and name
@@ -1673,11 +1653,7 @@ u32 CInifile::r_u32(LPCSTR S, LPCSTR L) const
 u64 CInifile::r_u64(LPCSTR S, LPCSTR L) const
 {
 	LPCSTR C = r_string(S, L);
-#ifndef _EDITOR
 	return _strtoui64(C, NULL, 10);
-#else
-    return (u64)_atoi64(C);
-#endif
 }
 
 s64 CInifile::r_s64(LPCSTR S, LPCSTR L) const
@@ -1908,22 +1884,14 @@ void CInifile::w_u32(LPCSTR S, LPCSTR L, u32 V, LPCSTR comment)
 void CInifile::w_u64(LPCSTR S, LPCSTR L, u64 V, LPCSTR comment)
 {
 	string128 temp;
-#ifndef _EDITOR
 	_ui64toa_s(V, temp, sizeof(temp), 10);
-#else
-    _ui64toa(V, temp, 10);
-#endif
 	w_string(S, L, temp, comment);
 }
 
 void CInifile::w_s64(LPCSTR S, LPCSTR L, s64 V, LPCSTR comment)
 {
 	string128 temp;
-#ifndef _EDITOR
 	_i64toa_s(V, temp, sizeof(temp), 10);
-#else
-    _i64toa(V, temp, 10);
-#endif
 	w_string(S, L, temp, comment);
 }
 

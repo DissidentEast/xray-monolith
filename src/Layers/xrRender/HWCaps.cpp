@@ -4,14 +4,11 @@
 #include "hwcaps.h"
 #include "hw.h"
 
-#ifndef _EDITOR
 #include <nvapi.h>
 //	#include "ATI/atimgpud.h"
-#endif
 
 namespace
 {
-#ifndef _EDITOR
 	u32 GetNVGpuNum()
 	{
 		NvLogicalGpuHandle logicalGPUs[NVAPI_MAX_LOGICAL_GPUS];
@@ -99,12 +96,6 @@ namespace
 
 		return res;
 	}
-#else
-u32 GetGpuNum()
-{
-	return 2;
-}
-#endif
 }
 
 #if !defined(USE_DX10) && !defined(USE_DX11)
@@ -165,9 +156,6 @@ void CHWCaps::Update()
 
 	// *******1********** Compatibility : vertex shader
 	if (0 == raster_major) geometry_major = 0; // Disable VS if no PS
-#ifdef _EDITOR
-	geometry_major		= 0;
-#endif
 
 	//
 	bTableFog = FALSE; //BOOL	(caps.RasterCaps&D3DPRASTERCAPS_FOGTABLE);

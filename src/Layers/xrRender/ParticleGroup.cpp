@@ -3,9 +3,7 @@
 
 #include "../../xrParticles/psystem.h"
 
-#ifndef _EDITOR
 #include "../../xrServerEntities/smart_cast.h"
-#endif
 
 #include "ParticleGroup.h"
 #include "PSLibrary.h"
@@ -32,18 +30,6 @@ void CPGDef::SetName(LPCSTR name)
 	m_Name = name;
 }
 
-#ifdef _EDITOR
-void CPGDef::Clone	(CPGDef* source)
-{
-	m_Name			= "<invalid_name>";
-    m_Flags			= source->m_Flags;
-    m_fTimeLimit	= source->m_fTimeLimit;
-
-    m_Effects.resize(source->m_Effects.size(),0);		
-    for (EffectIt d_it=m_Effects.begin(),s_it=source->m_Effects.begin(); s_it!=source->m_Effects.end(); s_it++,d_it++)
-    	*d_it		= xr_new<SEffect>(**s_it);
-}
-#endif
 
 //------------------------------------------------------------------------------
 // I/O part
@@ -266,7 +252,10 @@ void CParticleGroup::SItem::StartRelatedChild(CParticleEffect* emitter, LPCSTR e
 
 void CParticleGroup::SItem::StopRelatedChild(u32 idx)
 {
-	VERIFY(idx<_children_related.size());
+	// particle removal swaps the last particle into the dead slot, so this list can be shorter
+	// than the particle count and idx can point past it: stop the wrong child or read out of bounds
+	if (idx >= _children_related.size())
+		return;
 	dxRender_Visual*& V = _children_related[idx];
 	((CParticleEffect*)V)->Stop(TRUE);
 	_children_free.push_back(V);
@@ -299,11 +288,7 @@ void CParticleGroup::SItem::StartFreeChild(CParticleEffect* emitter, LPCSTR nm, 
 	}
 	else
 	{
-#ifdef _EDITOR
-        Msg			("!Can't use looped effect '%s' as 'On Birth' child for group.",nm);
-#else
 		Debug.fatal(DEBUG_INFO, "Can't use looped effect '%s' as 'On Birth' child for group.", nm);
-#endif
 	}
 }
 
@@ -408,7 +393,9 @@ void CParticleGroup::SItem::OnFrame(u32 u_dt, const CPGDef::SEffect& def, Fbox& 
 				PAPI::Particle* particles;
 				u32 p_cnt;
 				PAPI::ParticleManager()->GetParticles(E->GetHandleEffect(), particles, p_cnt);
-				VERIFY(p_cnt==_children_related.size());
+				// the child list can be shorter than the particle count once particles start dying
+				if (p_cnt > _children_related.size())
+					p_cnt = _children_related.size();
 				if (p_cnt)
 				{
 					for (u32 i = 0; i < p_cnt; i++)

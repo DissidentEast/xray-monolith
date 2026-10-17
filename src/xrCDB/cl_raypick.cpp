@@ -35,11 +35,6 @@ namespace RAPID
  { return (DWORD&)x; }
 	IC BOOL TestAABB(const Fvector& bMax, const Fvector& rP, const Fvector& rD, Fvector& coord)
 	{
-#ifdef _EDITOR
-    	Fbox		BB;
-        BB.set		(-bMax.x,-bMax.y,-bMax.z,bMax.x,bMax.y,bMax.z);
-        return 		BB.Pick2(rP,rD,coord);
-#else
 		BOOL Inside = TRUE;
 		Fvector MaxT, bMin;
 		MaxT.set(-1.f, -1.f, -1.f);
@@ -127,7 +122,6 @@ namespace RAPID
 			return false;
 #endif
 		}
-#endif
 	}
 
 	void XRCollide::raypick_fast(const box* B, const Fvector& rC, const Fvector& rD)

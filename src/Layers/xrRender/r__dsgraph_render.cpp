@@ -492,10 +492,11 @@ void CDSGraphManager::r_dsgraph_capture_static()
 					continue;
 				}
 
-				xr_vector<u32> masks;
-				masks.reserve(frustums.size());
+				// reused across sectors: a fresh vector here is one alloc/free per sector per frame
+				m_sector_masks.clear();
 				for (CFrustum& frustum_node : frustums)
-					masks.push_back(frustum_node.getMask());
+					m_sector_masks.push_back(frustum_node.getMask());
+				xr_vector<u32>& masks = m_sector_masks;
 
 				if (dbg)
 				{

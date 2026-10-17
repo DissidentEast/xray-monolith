@@ -202,6 +202,10 @@ MultipacketReciever::RecievePacket(const void* packet_data, u32 packet_sz, u32 p
 	if (header->tag != NET_TAG_MERGED && header->tag != NET_TAG_NONMERGED)
 		return;
 
+	// packet_sz comes from the network: below this the size below underflows into a huge memcpy
+	if (packet_sz <= sizeof(MultipacketHeader))
+		return;
+
 	Compressor.Decompress(data, sizeof(data),
 	                      (u8*)packet_data + sizeof(MultipacketHeader), packet_sz - sizeof(MultipacketHeader)
 	);

@@ -80,7 +80,7 @@ LPCSTR CConsole::GetString(LPCSTR cmd) const
 	if (!cc)
 		return NULL;
 
-	static IConsole_Command::TStatus stat;
+	static thread_local IConsole_Command::TStatus stat;
 	cc->Status(stat);
 	return stat;
 }

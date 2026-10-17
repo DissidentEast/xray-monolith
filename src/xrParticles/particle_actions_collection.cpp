@@ -1671,7 +1671,6 @@ void PAVortex::Transform(const Fmatrix& m)
 static int noise_start = 1;
 extern void noise3Init();
 
-#ifndef _EDITOR
 
 #include <xmmintrin.h>
 #include "../xrCPU_Pipe/ttapi.h"
@@ -1862,43 +1861,6 @@ void PATurbulence::Execute(ParticleEffect* effect, const float dt, float& tm_max
 	}
 }
 
-#else
-
-void PATurbulence::Execute(ParticleEffect *effect, const float dt, float& tm_max)
-{
-	if ( noise_start ) {
-		noise_start = 0;
-		noise3Init();
-	};
-
-    pVector pV;
-    pVector vX;
-    pVector vY;
-    pVector vZ;
-    age		+= dt;
-    for(u32 i = 0; i < effect->p_count; i++)
-    {
-        Particle &m = effect->particles[i];
-
-        pV.mad(m.pos,offset,age);
-        vX.set(pV.x+epsilon,pV.y,pV.z);
-        vY.set(pV.x,pV.y+epsilon,pV.z);
-        vZ.set(pV.x,pV.y,pV.z+epsilon);
-
-        pVector D;
-        float d	=	fractalsum3(pV, frequency, octaves);
-        D.x 	= 	(fractalsum3(vX, frequency, octaves) - d)*(float)magnitude;
-        D.y 	= 	(fractalsum3(vY, frequency, octaves) - d)*(float)magnitude;
-        D.z 	= 	(fractalsum3(vZ, frequency, octaves) - d)*(float)magnitude;
-
-        float velMagOrig 	= m.vel.magnitude();
-        m.vel.add	(D);
-        float	velMagNow 	= m.vel.magnitude();
-        float	valMagScale = velMagOrig/velMagNow;
-        m.vel.mul(valMagScale);
-	}
-}
-#endif
 
 
 void PATurbulence::Transform(const Fmatrix& m)

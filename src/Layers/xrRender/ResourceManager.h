@@ -115,9 +115,6 @@ public:
 
 	// Editor cooperation
 	void ED_UpdateBlender(LPCSTR Name, IBlender* data);
-#ifdef _EDITOR
-	void							ED_UpdateTextures	(AStringVec* names);
-#endif
 
 	// Low level resource creation
 	CTexture* _CreateTexture(LPCSTR Name);

@@ -377,14 +377,6 @@ public:
 	void OnDeviceDestroy();
 
 	// editor-related
-#ifdef _EDITOR
-public:
-    float ed_from_time;
-    float ed_to_time;
-public:
-    void ED_Reload();
-    float GetGameTime() { return fGameTime; }
-#else // #ifdef _EDITOR
 # ifdef INGAME_EDITOR
     float GetGameTime() { return fGameTime; }
 # endif // #ifdef INGAME_EDITOR
@@ -406,7 +398,6 @@ public:
 
 	Fvector2 sun_hp[24];
 
-#endif // #ifdef _EDITOR
 
 	CInifile* m_ambients_config;
 	CInifile* m_sound_channels_config;

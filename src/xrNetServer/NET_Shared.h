@@ -6,9 +6,7 @@
 	#define XRNETSERVER_API
 //__declspec(dllimport)
 
-#ifndef _EDITOR
 		#pragma comment(lib,	"xrNetServer"	)
-#endif
 #endif
 
 #include "../xrCore/net_utils.h"

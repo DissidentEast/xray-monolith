@@ -286,8 +286,7 @@ u32 CTrade::GetItemPrice(PIItem pItem, bool b_buying, bool b_free)
 	{
 		u8 max_uses = eatable_item->GetMaxUses();
 		u8 remaining_uses = eatable_item->GetRemainingUses();
-		result = result * remaining_uses / max_uses;
-		if (result < 1) result = 1;
+		result = (u32)((u64)result * remaining_uses / max_uses);
 	}
 
 	clamp<u32>(result, 1, 1000000);

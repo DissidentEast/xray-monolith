@@ -21,15 +21,6 @@
 *   Returns int with capablity bit set.
 *
 ****************************************************/
-#ifdef _EDITOR
-int _cpuid ( _processor_info *pinfo )
-{
-    ZeroMemory(pinfo, sizeof(_processor_info));
-
-    pinfo->feature = _CPU_FEATURE_MMX | _CPU_FEATURE_SSE;
-    return pinfo->feature;
-}
-#else
 
 DWORD countSetBits(ULONG_PTR bitMask)
 {
@@ -183,4 +174,3 @@ int _cpuid(_processor_info* pinfo)
 
 	return pinfo->feature;
 }
-#endif

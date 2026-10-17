@@ -62,6 +62,8 @@ public:
 
 	virtual void add_Static(IRenderVisual* pVisual, CFrustum& frustum, u32 planes);
 	virtual void add_Static_MultiFrustum(IRenderVisual* pVisual, const xr_vector<CFrustum>& frustums, const xr_vector<u32>& masks);
+	// scratch reused by add_leaf_Static so the per-sector mask list does not allocate every frame
+	xr_vector<u32> m_sector_masks;
 	void add_leaf_Static(dxRender_Visual* pVisual);
 	void add_leafs_Static(xr_vector<dxRender_Visual*>& children);
 	void add_leafs_Static(xr_vector<IRenderVisual*>& children);

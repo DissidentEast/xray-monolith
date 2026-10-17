@@ -8,26 +8,6 @@
 
 #pragma once
 
-IC u32 CAutosaveManager::autosave_interval() const
-{
-	return (m_autosave_interval);
-}
-
-IC u32 CAutosaveManager::last_autosave_time() const
-{
-	return (m_last_autosave_time);
-}
-
-IC void CAutosaveManager::update_autosave_time()
-{
-	m_last_autosave_time = Device.dwTimeGlobal;
-}
-
-IC void CAutosaveManager::delay_autosave()
-{
-	m_last_autosave_time += m_delay_autosave_interval;
-}
-
 IC u32 CAutosaveManager::not_ready_count() const
 {
 	return (m_not_ready_count);

@@ -376,10 +376,6 @@ ID3DBaseTexture* CRender::texture_load(LPCSTR fRName, u32& ret_msize, bool bStag
 	if (FS.exist(fn, "$game_textures$", fname, ".dds")) goto _DDS;
 
 
-#ifdef _EDITOR
-	ELog.Msg(mtError,"Can't find texture '%s'",fname);
-	return 0;
-#else
 
 	Msg("! Can't find texture '%s'", fname);
 	R_ASSERT(FS.exist(fn,"$game_textures$", "ed\\ed_not_existing_texture",".dds"));
@@ -387,7 +383,6 @@ ID3DBaseTexture* CRender::texture_load(LPCSTR fRName, u32& ret_msize, bool bStag
 
 	//	Debug.fatal(DEBUG_INFO,"Can't find texture '%s'",fname);
 
-#endif
 
 _DDS:
 	{

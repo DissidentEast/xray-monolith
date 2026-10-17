@@ -3,12 +3,11 @@
 
 #include "ParticleEffect.h"
 #include "CHudInitializer.h"
-#include <tbb/parallel_for.h>
-#include <tbb/blocked_range.h>
+// tbb headers used to be included here and pulled in a hard link to tbb12.dll via their
+// own #pragma comment(lib); nothing in this file uses TBB, parallel work goes through
+// xr_parallel_for in xrCore/_thread_types.h
 
-#ifndef _EDITOR
 #include <xmmintrin.h>
-#endif
 
 using namespace PAPI;
 using namespace PS;
@@ -329,7 +328,6 @@ void CParticleEffect::OnDeviceDestroy()
 	}
 }
 
-#ifndef _EDITOR
 //----------------------------------------------------
 IC void FillSprite_fpu(FVF::LIT*& pv, const Fvector& T, const Fvector& R, const Fvector& pos, const Fvector2& lt,
                        const Fvector2& rb, float r1, float r2, u32 clr, float angle)
@@ -677,7 +675,6 @@ void CParticleEffect::Render(float)
 
 			if (dwCount)
 			{
-#ifndef _EDITOR
 				CHudInitializer initalizer(false);
 				if (GetHudMode())
 				{
@@ -685,7 +682,6 @@ void CParticleEffect::Render(float)
 					RImplementation.rmNear();
 					ApplyTexgen(Device.mFullTransform);
 				}
-#endif
 
 				RCache.set_xform_world(Fidentity);
 				RCache.set_Geometry(geom);
@@ -695,179 +691,15 @@ void CParticleEffect::Render(float)
 					                    : CULL_NONE);
 				RCache.Render(D3DPT_TRIANGLELIST, dwOffset, 0, dwCount, 0, dwCount / 2);
 				RCache.set_CullMode(CULL_CCW);
-#ifndef _EDITOR
 				if (GetHudMode())
 				{
 					RImplementation.rmNormal();
 					initalizer.SetDefaultMode();
 					ApplyTexgen(Device.mFullTransform);
 				}
-#endif
 			}
 		}
 	}
 }
 
 
-#else
-
-//----------------------------------------------------
-IC void FillSprite	(FVF::LIT*& pv, const Fvector& T, const Fvector& R, const Fvector& pos, const Fvector2& lt, const Fvector2& rb, float r1, float r2, u32 clr, float angle)
-{
-	float sa	= _sin(angle);  
-	float ca	= _cos(angle);  
-	Fvector Vr, Vt;
-	Vr.x 		= T.x*r1*sa+R.x*r1*ca;
-	Vr.y 		= T.y*r1*sa+R.y*r1*ca;
-	Vr.z 		= T.z*r1*sa+R.z*r1*ca;
-	Vt.x 		= T.x*r2*ca-R.x*r2*sa;
-	Vt.y 		= T.y*r2*ca-R.y*r2*sa;
-	Vt.z 		= T.z*r2*ca-R.z*r2*sa;
-
-	Fvector 	a,b,c,d;
-	a.sub		(Vt,Vr);
-	b.add		(Vt,Vr);
-	c.invert	(a);
-	d.invert	(b);
-	pv->set		(d.x+pos.x,d.y+pos.y,d.z+pos.z, clr, lt.x,rb.y);	pv++;
-	pv->set		(a.x+pos.x,a.y+pos.y,a.z+pos.z, clr, lt.x,lt.y);	pv++;
-	pv->set		(c.x+pos.x,c.y+pos.y,c.z+pos.z, clr, rb.x,rb.y);	pv++;
-	pv->set		(b.x+pos.x,b.y+pos.y,b.z+pos.z,	clr, rb.x,lt.y);	pv++;
-}
-
-IC void FillSprite	(FVF::LIT*& pv, const Fvector& pos, const Fvector& dir, const Fvector2& lt, const Fvector2& rb, float r1, float r2, u32 clr, float angle)
-{
-	float sa	= _sin(angle);  
-	float ca	= _cos(angle);  
-	const Fvector& T 	= dir;
-	Fvector R; 	R.crossproduct(T,RDEVICE.vCameraDirection).normalize_safe();
-	Fvector Vr, Vt;
-	Vr.x 		= T.x*r1*sa+R.x*r1*ca;
-	Vr.y 		= T.y*r1*sa+R.y*r1*ca;
-	Vr.z 		= T.z*r1*sa+R.z*r1*ca;
-	Vt.x 		= T.x*r2*ca-R.x*r2*sa;
-	Vt.y 		= T.y*r2*ca-R.y*r2*sa;
-	Vt.z 		= T.z*r2*ca-R.z*r2*sa;
-
-	Fvector 	a,b,c,d;
-	a.sub		(Vt,Vr);
-	b.add		(Vt,Vr);
-	c.invert	(a);
-	d.invert	(b);
-	pv->set		(d.x+pos.x,d.y+pos.y,d.z+pos.z, clr, lt.x,rb.y);	pv++;
-	pv->set		(a.x+pos.x,a.y+pos.y,a.z+pos.z, clr, lt.x,lt.y);	pv++;
-	pv->set		(c.x+pos.x,c.y+pos.y,c.z+pos.z, clr, rb.x,rb.y);	pv++;
-	pv->set		(b.x+pos.x,b.y+pos.y,b.z+pos.z,	clr, rb.x,lt.y);	pv++;
-}
-
-void CParticleEffect::Render(float )
-{
-	u32			dwOffset,dwCount;
-	// Get a pointer to the particles in gp memory
-    PAPI::Particle* particles;
-    u32 			p_cnt;
-    ParticleManager()->GetParticles(m_HandleEffect,particles,p_cnt);
-
-	if(p_cnt>0){
-		if (m_Def&&m_Def->m_Flags.is(CPEDef::dfSprite)){
-			FVF::LIT* pv_start	= (FVF::LIT*)RCache.Vertex.Lock(p_cnt*4*4,geom->vb_stride,dwOffset);
-			FVF::LIT* pv		= pv_start;
-
-			for(u32 i = 0; i < p_cnt; i++){
-				PAPI::Particle &m = particles[i];
-
-				Fvector2 lt,rb;
-				lt.set			(0.f,0.f);
-				rb.set			(1.f,1.f);
-				if (m_Def->m_Flags.is(CPEDef::dfFramed)) m_Def->m_Frame.CalculateTC(iFloor(float(m.frame)/255.f),lt,rb);
-				float r_x		= m.size.x*0.5f;
-				float r_y		= m.size.y*0.5f;
-				if (m_Def->m_Flags.is(CPEDef::dfVelocityScale)){
-					float speed	= m.vel.magnitude();
-					r_x			+= speed*m_Def->m_VelocityScale.x;
-					r_y			+= speed*m_Def->m_VelocityScale.y;
-				}
-				if (m_Def->m_Flags.is(CPEDef::dfAlignToPath)){
-					float speed	= m.vel.magnitude();
-                    if ((speed<EPS_S)&&m_Def->m_Flags.is(CPEDef::dfWorldAlign)){
-                    	Fmatrix	M;  	
-                        M.setXYZ			(m_Def->m_APDefaultRotation);
-                        if (m_RT_Flags.is(flRT_XFORM)){
-                            Fvector p;
-                            m_XFORM.transform_tiny(p,m.pos);
-	                        M.mulA_43		(m_XFORM);
-                            FillSprite		(pv,M.k,M.i,p,lt,rb,r_x,r_y,m.color,m.rot.x);
-                        }else{
-                            FillSprite		(pv,M.k,M.i,m.pos,lt,rb,r_x,r_y,m.color,m.rot.x);
-                        }
-                    }else if ((speed>=EPS_S)&&m_Def->m_Flags.is(CPEDef::dfFaceAlign)){
-                    	Fmatrix	M;  		M.identity();
-                        M.k.div				(m.vel,speed);            
-                        M.j.set 			(0,1,0);	if (_abs(M.j.dotproduct(M.k))>.99f)  M.j.set(0,0,1);
-                        M.i.crossproduct	(M.j,M.k);	M.i.normalize	();
-                        M.j.crossproduct   	(M.k,M.i);	M.j.normalize  ();
-                        if (m_RT_Flags.is(flRT_XFORM)){
-                            Fvector p;
-                            m_XFORM.transform_tiny(p,m.pos);
-	                        M.mulA_43		(m_XFORM);
-                            FillSprite		(pv,M.j,M.i,p,lt,rb,r_x,r_y,m.color,m.rot.x);
-                        }else{
-                            FillSprite		(pv,M.j,M.i,m.pos,lt,rb,r_x,r_y,m.color,m.rot.x);
-                        }
-                    }else{
-						Fvector 			dir;
-                        if (speed>=EPS_S)	dir.div	(m.vel,speed);
-                        else				dir.setHP(-m_Def->m_APDefaultRotation.y,-m_Def->m_APDefaultRotation.x);
-                        if (m_RT_Flags.is(flRT_XFORM)){
-                            Fvector p,d;
-                            m_XFORM.transform_tiny	(p,m.pos);
-                            m_XFORM.transform_dir	(d,dir);
-                            FillSprite	(pv,p,d,lt,rb,r_x,r_y,m.color,m.rot.x);
-                        }else{
-                            FillSprite	(pv,m.pos,dir,lt,rb,r_x,r_y,m.color,m.rot.x);
-                        }
-                    }
-				}else{
-					if (m_RT_Flags.is(flRT_XFORM)){
-						Fvector p;
-						m_XFORM.transform_tiny	(p,m.pos);
-						FillSprite	(pv,RDEVICE.vCameraTop,RDEVICE.vCameraRight,p,lt,rb,r_x,r_y,m.color,m.rot.x);
-					}else{
-						FillSprite	(pv,RDEVICE.vCameraTop,RDEVICE.vCameraRight,m.pos,lt,rb,r_x,r_y,m.color,m.rot.x);
-					}
-				}
-			}
-			dwCount 			= u32(pv-pv_start);
-			RCache.Vertex.Unlock(dwCount,geom->vb_stride);
-			if (dwCount)    
-			{
-#ifndef _EDITOR
-				CHudInitializer initalizer(false);
-				if (GetHudMode())
-				{
-					initalizer.SetHudMode();
-					RImplementation.rmNear();
-					ApplyTexgen(Device.mFullTransform);
-				}
-#endif
-
-				RCache.set_xform_world	(Fidentity);
-				RCache.set_Geometry		(geom);
-
-                RCache.set_CullMode		(m_Def->m_Flags.is(CPEDef::dfCulling)?(m_Def->m_Flags.is(CPEDef::dfCullCCW)?CULL_CCW:CULL_CW):CULL_NONE);
-				RCache.Render	   		(D3DPT_TRIANGLELIST,dwOffset,0,dwCount,0,dwCount/2);
-                RCache.set_CullMode		(CULL_CCW	); 
-#ifndef _EDITOR
-				if(GetHudMode())
-				{
-					RImplementation.rmNormal();
-					initalizer.SetDefaultMode();
-					ApplyTexgen(Device.mFullTransform);
-				}
-#endif
-			}
-		}
-	}
-}
-
-#endif  // _EDITOR

@@ -3,13 +3,8 @@
 
 #include "ParticleEffectDef.h"
 #include "ParticleEffect.h"
-#ifdef _EDITOR
-	#include "UI_ToolsCustom.h"
-	#include "ParticleEffectActions.h"
-#else
 #define AnsiString std::string
 #include "ParticleEffectActions.h"
-#endif
 
 //---------------------------------------------------------------------------
 using namespace PAPI;
@@ -42,9 +37,6 @@ CPEDef::CPEDef()
 
 CPEDef::~CPEDef()
 {
-#ifdef _EDITOR
-	for (EPAVecIt it=m_EActionList.begin(); it!=m_EActionList.end(); it++) xr_delete(*it);
-#endif
 }
 
 u32 CPEDef::GetUStep()
@@ -150,9 +142,6 @@ void CPEDef::ExecuteCollision(PAPI::Particle* particles, u32 p_cnt, float dt, CP
 			if (dist >= EPS)
 			{
 				dir.div(dist);
-#ifdef _EDITOR
-				if (Tools->RayPick(m.posB,dir,dist,&pt,&n)){
-#else
 				collide::rq_result RQ;
 				collide::rq_target RT = m_Flags.is(dfCollisionDyn) ? collide::rqtBoth : collide::rqtStatic;
 				if (g_pGameLevel->ObjectSpace.RayPick(m.posB, dir, dist, RT, RQ,NULL))
@@ -168,7 +157,6 @@ void CPEDef::ExecuteCollision(PAPI::Particle* particles, u32 p_cnt, float dt, CP
 						Fvector* verts = g_pGameLevel->ObjectSpace.GetStaticVerts();
 						n.mknormal(verts[T->verts[0]], verts[T->verts[1]], verts[T->verts[2]]);
 					}
-#endif
 					pick_cnt++;
 					if (cb && (pick_cnt == 1)) if (!cb(owner, m, pt, n)) break;
 					if (m_Flags.is(dfCollisionDel))

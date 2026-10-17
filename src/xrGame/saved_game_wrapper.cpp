@@ -35,7 +35,7 @@ bool CSavedGameWrapper::saved_game_exist(LPCSTR saved_game_name)
 
 bool CSavedGameWrapper::valid_saved_game(IReader& stream)
 {
-	if (stream.length() < 8)
+	if (stream.length() < 3 * sizeof(u32))
 		return (false);
 
 	if (stream.r_u32() != u32(-1))
@@ -121,13 +121,24 @@ CSavedGameWrapper::CSavedGameWrapper(LPCSTR saved_game_name)
 	}
 
 	{
-		R_ASSERT2(reader.find_chunk(OBJECT_CHUNK_DATA), "Can't find chunk OBJECT_CHUNK_DATA!");
-		u32 count = reader.r_u32();
-		VERIFY(count > 0);
-		CSE_ALifeDynamicObject* object = CALifeObjectRegistry::get_object(reader);
-		VERIFY(object->ID == 0);
-		auto* actor = smart_cast<CSE_ALifeCreatureActor*>(object);
-		VERIFY(actor);
+		CSE_ALifeDynamicObject* object = nullptr;
+		CSE_ALifeCreatureActor* actor = nullptr;
+		// save data is user-supplied: bail out instead of trusting the chunk walk
+		if (reader.find_chunk(OBJECT_CHUNK_DATA))
+		{
+			reader.r_u32(); // count, unused
+			object = CALifeObjectRegistry::get_object(reader);
+			if (object && object->ID == 0)
+				actor = smart_cast<CSE_ALifeCreatureActor*>(object);
+		}
+		if (!actor)
+		{
+			xr_free(source_data);
+			m_actor_health = 1.f;
+			m_level_id = _LEVEL_ID(-1);
+			m_level_name = "";
+			return;
+		}
 
 		m_actor_health = actor->get_health();
 
@@ -143,6 +154,7 @@ CSavedGameWrapper::CSavedGameWrapper(LPCSTR saved_game_name)
 			{
 				chunk->close();
 				F_entity_Destroy(object);
+				xr_free(source_data);
 				m_level_id = _LEVEL_ID(-1);
 				m_level_name = "";
 				return;
@@ -171,6 +183,7 @@ CSavedGameWrapper::CSavedGameWrapper(LPCSTR saved_game_name)
 		if (!FS.exist(file_name, "$game_spawn$", spawn_file_name, ".spawn"))
 		{
 			F_entity_Destroy(object);
+			xr_free(source_data);
 			m_level_id = _LEVEL_ID(-1);
 			m_level_name = "";
 			return;
@@ -189,6 +202,7 @@ CSavedGameWrapper::CSavedGameWrapper(LPCSTR saved_game_name)
 		if (!spawn)
 		{
 			F_entity_Destroy(object);
+			xr_free(source_data);
 			m_level_id = _LEVEL_ID(-1);
 			m_level_name = "";
 			return;
@@ -204,6 +218,7 @@ CSavedGameWrapper::CSavedGameWrapper(LPCSTR saved_game_name)
 			if (!spawn)
 			{
 				F_entity_Destroy(object);
+				xr_free(source_data);
 				m_level_id = _LEVEL_ID(-1);
 				m_level_name = "";
 				return;
@@ -216,6 +231,7 @@ CSavedGameWrapper::CSavedGameWrapper(LPCSTR saved_game_name)
 			F_entity_Destroy(object);
 			if (b_destroy_spawn)
 				FS.r_close(spawn);
+			xr_free(source_data);
 			m_level_id = _LEVEL_ID(-1);
 			m_level_name = "";
 			return;

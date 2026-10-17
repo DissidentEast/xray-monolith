@@ -12,9 +12,6 @@ class IUIShader;
 typedef FactoryPtr<IUIShader> wm_shader;
 //#include "../Include/xrRender/WallMarkArray.h"
 
-#ifdef _EDITOR
-//. #error you cant include this file in borland
-#endif
 // refs
 class ENGINE_API IRenderable;
 //class ENGINE_API IRenderVisual;
@@ -31,11 +28,7 @@ class CGameFont;
 class CObject;
 //class IRenderDetailModel;
 
-#ifndef _EDITOR
 extern const float fLightSmoothFactor;
-#else
-const float fLightSmoothFactor = 4.f;
-#endif
 //////////////////////////////////////////////////////////////////////////
 // definition (Dynamic Light)
 class ENGINE_API IRender_Light:

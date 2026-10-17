@@ -193,14 +193,12 @@ namespace ALife
 		return(eHitTypeMax);
 #endif
 	}
-#ifndef	_EDITOR
 	extern xr_token hit_types_token [ ];
 
 	IC LPCSTR g_cafHitType2String(EHitType tHitType)
 	{
 		return get_token_name(hit_types_token, tHitType);
 	}
-#endif
 	DEFINE_VECTOR(int, INT_VECTOR, INT_IT);
 	DEFINE_VECTOR(_OBJECT_ID, OBJECT_VECTOR, OBJECT_IT);
 	DEFINE_VECTOR(CSE_ALifeInventoryItem*, ITEM_P_VECTOR, ITEM_P_IT);

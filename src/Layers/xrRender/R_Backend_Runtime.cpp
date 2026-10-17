@@ -16,9 +16,7 @@
 void CBackend::OnFrameEnd()
 {
 	//#ifndef DEDICATED_SERVER
-#ifndef _EDITOR
 	if (!g_dedicated_server)
-#endif
 	{
 #if defined(USE_DX10) || defined(USE_DX11)
 		HW.pContext->ClearState();
@@ -40,9 +38,7 @@ void CBackend::OnFrameEnd()
 void CBackend::OnFrameBegin()
 {
 	//#ifndef DEDICATED_SERVER
-#ifndef _EDITOR
 	if (!g_dedicated_server)
-#endif
 	{
 		PGO(Msg("PGO:*****frame[%d]*****",RDEVICE.dwFrame));
 #if defined(USE_DX10) || defined(USE_DX11)
@@ -143,9 +139,6 @@ void CBackend::Invalidate()
 
 	for (u32 ps_it = 0; ps_it < mtMaxPixelShaderTextures;) textures_ps[ps_it++] = 0;
 	for (u32 vs_it = 0; vs_it < mtMaxVertexShaderTextures;) textures_vs[vs_it++] = 0;
-#ifdef _EDITOR
-	for (u32 m_it =0; m_it< 8;)		matrices	[m_it++]	= 0;
-#endif
 }
 
 void CBackend::set_ClipPlanes(u32 _enable, Fplane* _planes /*=NULL */, u32 count/* =0*/)

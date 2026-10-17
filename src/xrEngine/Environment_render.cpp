@@ -2,16 +2,12 @@
 #pragma hdrstop
 
 #include "Environment.h"
-#ifndef _EDITOR
 #include "render.h"
-#endif
 #include "xr_efflensflare.h"
 #include "rain.h"
 #include "thunderbolt.h"
 
-#ifndef _EDITOR
 # include "igame_level.h"
-#endif
 /*
 //////////////////////////////////////////////////////////////////////////
 // half box def
@@ -90,9 +86,7 @@ const u32 v_clouds_fvf = D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_SPECULAR;
 //BOOL bNeed_re_create_env = FALSE;
 void CEnvironment::RenderSky(bool only_MV)
 {
-#ifndef _EDITOR
 	if (0 == g_pGameLevel) return;
-#endif
 
 	m_pRender->RenderSky(*this, only_MV);
 	/*
@@ -146,9 +140,7 @@ void CEnvironment::RenderSky(bool only_MV)
 
 void CEnvironment::RenderClouds()
 {
-#ifndef _EDITOR
 	if (0 == g_pGameLevel) return;
-#endif
 	// draw clouds
 	if (fis_zero(CurrentEnv->clouds_color.w, EPS_L)) return;
 
@@ -196,18 +188,14 @@ void CEnvironment::RenderClouds()
 
 void CEnvironment::RenderFlares()
 {
-#ifndef _EDITOR
 	if (0 == g_pGameLevel) return;
-#endif
 	// 1
 	eff_LensFlare->Render(FALSE, TRUE, TRUE);
 }
 
 void CEnvironment::RenderLast()
 {
-#ifndef _EDITOR
 	if (0 == g_pGameLevel) return;
-#endif
 	// 2
 	eff_Rain->Render();
 	eff_Thunderbolt->Render();
@@ -281,10 +269,3 @@ void CEnvironment::OnDeviceDestroy()
 	CurrentEnv->destroy();
 }
 
-#ifdef _EDITOR
-void CEnvironment::ED_Reload()
-{
-    OnDeviceDestroy();
-    OnDeviceCreate();
-}
-#endif

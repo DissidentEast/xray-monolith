@@ -29,11 +29,7 @@ const u32 BIG_FILE_READER_WINDOW_SIZE = 1024 * 1024;
 
 CLocatorAPI* xr_FS = NULL;
 
-#ifdef _EDITOR
-# define FSLTX "fs.ltx"
-#else
 # define FSLTX "fsgame.ltx"
-#endif
 
 std::experimental::filesystem::path fsRoot;
 
@@ -404,8 +400,10 @@ void CLocatorAPI::LoadArchive(archive& A, LPCSTR entrypoint)
 		string_path name, full;
 		string1024 buffer_start;
 		u16 buffer_size = hdr->r_u16();
-		VERIFY(buffer_size < sizeof(name) + 4 * sizeof(u32));
-		VERIFY(buffer_size < sizeof(buffer_start));
+		// archive headers come from mod data: clamp before the read, the tail after the 16-byte
+		// header is copied into name below and must leave room for the terminator
+		if (buffer_size < 4 * sizeof(u32) || buffer_size - 4 * sizeof(u32) >= sizeof(name))
+			break;
 		u8* buffer = (u8*)&*buffer_start;
 		hdr->r(buffer, buffer_size);
 
@@ -498,20 +496,25 @@ void CLocatorAPI::ProcessArchive(LPCSTR _path)
 
 void CLocatorAPI::unload_archive(CLocatorAPI::archive& A)
 {
-	files_it I = m_files.begin();
-	for (; I != m_files.end(); ++I)
+	// erase every file of this archive, not just the first one: the rest would stay registered
+	// with a closed archive behind them and crash the next open
+	for (;;)
 	{
-		const file& entry = *I;
-		if (entry.vfs == A.vfs_idx)
+		files_it I = m_files.begin();
+		for (; I != m_files.end(); ++I)
 		{
-#ifndef MASTER_GOLD
-            Msg("unregistering file [%s]", I->name);
-#endif // #ifndef MASTER_GOLD
-			char* str = LPSTR(I->name);
-			xr_free(str);
-			m_files.erase(I);
-			break;
+			if (I->vfs == A.vfs_idx)
+				break;
 		}
+		if (I == m_files.end())
+			break;
+
+#ifndef MASTER_GOLD
+		Msg("unregistering file [%s]", I->name);
+#endif // #ifndef MASTER_GOLD
+		char* str = LPSTR(I->name);
+		xr_free(str);
+		m_files.erase(I);
 	}
 	A.close();
 }
@@ -1409,9 +1412,6 @@ IWriter* CLocatorAPI::w_open(LPCSTR path, LPCSTR _fname)
 	xr_strlwr(fname); //,".$");
 	if (path && path[0]) update_path(fname, path, fname);
 	CFileWriter* W = xr_new<CFileWriter>(fname, false);
-#ifdef _EDITOR
-    if (!W->valid()) xr_delete(W);
-#endif
 	return W;
 }
 
@@ -1422,9 +1422,6 @@ IWriter* CLocatorAPI::w_open_ex(LPCSTR path, LPCSTR _fname)
 	xr_strlwr(fname); //,".$");
 	if (path && path[0]) update_path(fname, path, fname);
 	CFileWriter* W = xr_new<CFileWriter>(fname, true);
-#ifdef _EDITOR
-    if (!W->valid()) xr_delete(W);
-#endif
 	return W;
 }
 

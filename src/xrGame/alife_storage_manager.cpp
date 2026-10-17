@@ -163,8 +163,6 @@ void CALifeStorageManager::load(void* buffer, const u32& buffer_size, LPCSTR fil
 
 	if (!g_pGameLevel)
 		return;
-
-	Level().autosave_manager().on_game_loaded();
 }
 
 bool CALifeStorageManager::load(LPCSTR save_name_no_check)

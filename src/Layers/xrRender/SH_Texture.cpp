@@ -3,9 +3,7 @@
 
 #include "ResourceManager.h"
 
-#ifndef _EDITOR
 #include "../../xrEngine/render.h"
-#endif
 
 #include "../../xrEngine/tntQAVI.h"
 #include "../../xrEngine/xrTheora_Surface.h"
@@ -244,9 +242,7 @@ void CTexture::Load()
 
 	Preload();
 	//#ifndef		DEDICATED_SERVER
-#ifndef _EDITOR
 	if (!g_dedicated_server)
-#endif
 	{
 		// Check for OGM
 		string_path fn;

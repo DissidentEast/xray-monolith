@@ -131,10 +131,6 @@ if (b_is_Ready) return; // prevent double call
 Statistic = xr_new<CStats>();
 Log ("Starting RENDER device...");
 
-#ifdef _EDITOR
-psCurrentVidMode[0] = dwWidth;
-psCurrentVidMode[1] = dwHeight;
-#endif
 
 HW.CreateDevice (m_hWnd);
 dwWidth = HW.DevPP.BackBufferWidth ;
@@ -210,10 +206,6 @@ PROTECT_API void CRenderDevice::Create()
 	SetupGPU(m_pRender);
 	Log("Starting RENDER device...");
 
-#ifdef _EDITOR
-    psCurrentVidMode[0] = dwWidth;
-    psCurrentVidMode[1] = dwHeight;
-#endif // #ifdef _EDITOR
 
 	fFOV = 90.f;
 	fASPECT = 1.f;

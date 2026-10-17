@@ -396,6 +396,9 @@ u32 xrServer::OnDelayedMessage(NET_Packet& P, ClientID sender) // Non-Zero means
 #endif
 	xrClientData* CL = ID_to_client(sender);
 	//R_ASSERT2						(CL, make_string("packet type [%d]",type).c_str());
+	// a client that disconnected mid-packet is already out of net_players: nothing to process
+	if (!CL)
+		return 0;
 
 	switch (type)
 	{
@@ -472,6 +475,9 @@ u32 xrServer::OnMessage(NET_Packet& P, ClientID sender) // Non-Zero means broadc
 	VERIFY(verify_entities());
 #endif
 	xrClientData* CL = ID_to_client(sender);
+	// the client may have been dropped between the queueing and this callback: nothing to process
+	if (!CL)
+		return 0;
 
 	switch (type)
 	{
@@ -502,6 +508,15 @@ u32 xrServer::OnMessage(NET_Packet& P, ClientID sender) // Non-Zero means broadc
 		break;
 	case M_EVENT_PACK:
 		{
+			// a pack inside a pack recurses with 16KB of stack per level: ~60 levels is a 200 byte
+			// packet. The server only ever sends these, so refuse to recurse
+			static u32 pack_depth = 0;
+			if (pack_depth)
+			{
+				Msg("! M_EVENT_PACK inside M_EVENT_PACK, dropped");
+				break;
+			}
+			pack_depth++;
 			NET_Packet tmpP;
 			while (!P.r_eof())
 			{
@@ -510,6 +525,7 @@ u32 xrServer::OnMessage(NET_Packet& P, ClientID sender) // Non-Zero means broadc
 
 				OnMessage(tmpP, sender);
 			};
+			pack_depth--;
 		}
 		break;
 	case M_CL_UPDATE:

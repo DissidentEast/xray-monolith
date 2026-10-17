@@ -58,11 +58,11 @@ DWORD WINAPI ttapiThreadProc(LPVOID lpParameter)
 			SwitchToThread();
 		}
 
-		// Slow
+		// Slow: yield between checks instead of parking for 100ms, so a dispatch is not
+		// serialised behind a sleeping helper. Short enough to matter, long enough to idle
 		while (pParams->vlFlag)
 		{
-			Sleep(100);
-			//Msg( "Shit" );
+			Sleep(1);
 		}
 
 	process:
@@ -87,24 +87,6 @@ typedef struct tagTHREADNAME_INFO
 	DWORD dwThreadID;
 	DWORD dwFlags;
 } THREADNAME_INFO;
-
-void SetThreadName(DWORD dwThreadID, LPCSTR szThreadName)
-{
-	THREADNAME_INFO info;
-	{
-		info.dwType = 0x1000;
-		info.szName = szThreadName;
-		info.dwThreadID = dwThreadID;
-		info.dwFlags = 0;
-	}
-	__try
-	{
-		RaiseException(0x406D1388, 0, sizeof(info) / sizeof(DWORD), (ULONG_PTR*)&info);
-	}
-	__except (EXCEPTION_CONTINUE_EXECUTION)
-	{
-	}
-}
 
 DWORD ttapi_Init(_processor_info* ID)
 {
@@ -132,7 +114,9 @@ DWORD ttapi_Init(_processor_info* ID)
 	// NEW: Set to reasonable constants for modern architectures.
 	// 4096 is a standard spin count for _mm_pause loops before yielding.
 	ttapi_dwFastIter = 4096;
-	ttapi_dwSlowIter = 0; // Modern schedulers prefer immediate yield over slow-spinning
+	// the middle rung used to yield after dwSlowIter SwitchToThread calls; with it at 0 every
+	// dispatch landed in the Sleep below, so a mesh waited up to 100ms for a helper to wake
+	ttapi_dwSlowIter = 4096;
 
 	// 4. Allocate Control Structures
 	// Helper threads count
@@ -187,6 +171,9 @@ DWORD ttapi_GetWorkersCount()
 // Assume that caller is smart enough to use ttapi_GetWorkersCount() to get number of available slots
 VOID ttapi_AddWorker(LPPTTAPI_WORKER_FUNC lpWorkerFunc, LPVOID lpvWorkerFuncParams)
 {
+	if (ttapi_assigned_workers >= ttapi_workers_count)
+		return; // no free slot: writing past the array would smear the heap
+
 	// Assigning parameters
 	ttapi_worker_params[ttapi_assigned_workers].lpWorkerFunc = lpWorkerFunc;
 	ttapi_worker_params[ttapi_assigned_workers].lpvWorkerFuncParams = lpvWorkerFuncParams;
@@ -196,6 +183,9 @@ VOID ttapi_AddWorker(LPPTTAPI_WORKER_FUNC lpWorkerFunc, LPVOID lpvWorkerFuncPara
 
 VOID ttapi_RunAllWorkers()
 {
+	if (ttapi_assigned_workers == 0)
+		return; // nothing was added; (0 - 1) would walk 4 billion entries
+
 	DWORD ttapi_thread_workers = (ttapi_assigned_workers - 1);
 	//unsigned __int64 Start,Stop;
 

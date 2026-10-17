@@ -94,9 +94,9 @@ struct rpc_info
 	char reputation[128];
 	char level_name[128];
 	char gamemode[128];
-	LPCSTR currenttime;
-	LPCSTR faction;
-	LPCSTR level;
+	char currenttime[128]; // owned: read by the discord thread, so it cannot be a borrowed pointer
+	char faction[128];  // idem: level and Lua storage can move under the reader
+	char level[128];
 };
 
 struct rpc_strings

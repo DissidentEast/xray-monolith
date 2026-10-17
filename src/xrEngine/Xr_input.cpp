@@ -5,9 +5,7 @@
 #include "IInputReceiver.h"
 //#include "../include/editor/ide.hpp"
 
-#ifndef _EDITOR
 # include "xr_input_xinput.h"
-#endif
 CInput* pInput = NULL;
 IInputReceiver dummyController;
 
@@ -227,7 +225,6 @@ void CInput::KeyUpdate()
 		KBState[od[idx].dwOfs] = od[idx].dwData & 0x80;
 	}
 
-#ifndef _EDITOR
 	bool b_alt_tab = false;
 
 	if (!b_altF4 && KBState[DIK_F4] && (KBState[DIK_RMENU] || KBState[DIK_LMENU]))
@@ -238,12 +235,9 @@ void CInput::KeyUpdate()
 	}
 
 
-#endif
 	if (b_altF4) return;
 
-#ifndef _EDITOR
 	if (Device.dwPrecacheFrame == 0)
-#endif
 	{
 		for (u32 i = 0; i < dwElements; i++)
 		{
@@ -256,10 +250,8 @@ void CInput::KeyUpdate()
 			else
 			{
 				cbStack.back()->IR_OnKeyboardRelease(key);
-#ifndef _EDITOR
 				if (key == DIK_TAB && (iGetAsyncKeyState(DIK_RMENU) || iGetAsyncKeyState(DIK_LMENU)))
 					b_alt_tab = true;
-#endif
 			}
 		}
 
@@ -268,15 +260,12 @@ void CInput::KeyUpdate()
 				cbStack.back()->IR_OnKeyboardHold(i);
 	}
 
-#ifndef _EDITOR
 	if (b_alt_tab) {
 		BOOL fullscreen = (g_screenmode == 2);
 		if (fullscreen)
 			SendMessage(Device.m_hWnd, WM_SYSCOMMAND, SC_MINIMIZE, 0);
 	}
-#endif
 	/*
-	#ifndef _EDITOR
 	//update xinput if exist
 	for( DWORD iUserIndex=0; iUserIndex<DXUT_MAX_CONTROLLERS; iUserIndex++ )
 	{
@@ -309,7 +298,6 @@ void CInput::KeyUpdate()
 	set_vibration (0, 0);
 	}
 	//xinput
-	#endif
 	*/
 }
 
@@ -448,10 +436,8 @@ void CInput::MouseUpdate()
 		if (hr != S_OK) return;
 	};
 
-#ifndef _EDITOR
 	if (Device.dwPrecacheFrame)
 		return;
-#endif
 	BOOL mouse_prev[COUNT_MOUSE_BUTTONS];
 
 	mouse_prev[0] = mouseState[0];
@@ -658,12 +644,16 @@ void CInput::iCapture(IInputReceiver* p)
 
 void CInput::iRelease(IInputReceiver* p)
 {
+	if (cbStack.empty())
+		return;
+
 	if (p == cbStack.back())
 	{
 		cbStack.back()->IR_OnDeactivate();
 		cbStack.pop_back();
-		IInputReceiver* ir = cbStack.back();
-		ir->IR_OnActivate();
+		// the level was the last receiver (disconnect): nothing left to hand input to
+		if (!cbStack.empty())
+			cbStack.back()->IR_OnActivate();
 	}
 	else
 	{
@@ -778,7 +768,5 @@ bool CInput::get_exclusive_mode()
 void CInput::feedback(u16 s1, u16 s2, float time)
 {
 	stop_vibration_time = RDEVICE.fTimeGlobal + time;
-#ifndef _EDITOR
 	//. set_vibration (s1, s2);
-#endif
 }

@@ -1,20 +1,14 @@
 #include "stdafx.h"
 #pragma once
 
-#ifndef _EDITOR
 #include "render.h"
-#endif
 #include "Thunderbolt.h"
 #include "igame_persistent.h"
 #include "LightAnimLibrary.h"
 
-#ifdef _EDITOR
-#include "ui_toolscustom.h"
-#else
 #include "igame_level.h"
 #include "../xrcdb/xr_area.h"
 #include "xr_object.h"
-#endif
 
 SThunderboltDesc::SThunderboltDesc() :
 	m_GradientTop(0),
@@ -170,9 +164,6 @@ shared_str CEffect_Thunderbolt::AppendDef(CEnvironment& environment, CInifile* p
 BOOL CEffect_Thunderbolt::RayPick(const Fvector& s, const Fvector& d, float& dist)
 {
 	BOOL bRes = TRUE;
-#ifdef _EDITOR
-    bRes = Tools->RayPick(s, d, dist, 0, 0);
-#else
 	collide::rq_result RQ;
 	CObject* E = g_pGameLevel->CurrentViewEntity();
 	bRes = g_pGameLevel->ObjectSpace.RayPick(s, d, dist, collide::rqtBoth, RQ, E);
@@ -191,7 +182,6 @@ BOOL CEffect_Thunderbolt::RayPick(const Fvector& s, const Fvector& d, float& dis
 		}
 		else return false;
 	}
-#endif
 	return bRes;
 }
 

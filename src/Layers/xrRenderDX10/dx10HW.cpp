@@ -20,18 +20,11 @@
 #include "StateManager\dx10SamplerStateCache.h"
 #include "StateManager\dx10StateCache.h"
 
-#ifndef _EDITOR
 void fill_vid_mode_list(CHW* _hw);
 void free_vid_mode_list();
 
 void fill_render_mode_list();
 void free_render_mode_list();
-#else
-void	fill_vid_mode_list			(CHW* _hw)	{}
-void	free_vid_mode_list			()			{}
-void	fill_render_mode_list		()			{}
-void	free_render_mode_list		()			{}
-#endif
 
 CHW HW;
 
@@ -693,10 +686,8 @@ void CHW::CreateDevice(HWND hwnd, bool move_window)
         size_t memory = Desc.DedicatedVideoMemory;
         Msg("*     Texture memory: %d M", memory / (1024 * 1024));
 
-#ifndef _EDITOR
         updateWindowProps(hwnd);
         fill_vid_mode_list(this);
-#endif
     } else {
         size_t memory = Desc.DedicatedVideoMemory;
         Msg("*     Texture memory: %d M", memory / (1024 * 1024));
@@ -773,9 +764,7 @@ void CHW::DestroyDevice()
 
     DestroyD3D();
 
-#ifndef _EDITOR
     free_vid_mode_list();
-#endif
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -937,9 +926,7 @@ R_CHK				(pDevice->GetDepthStencilSurface	(&pBaseZB));
 #ifdef DEBUG
 R_CHK				(pDevice->CreateStateBlock			(D3DSBT_ALL,&dwDebugSB));
 #endif
-#ifndef _EDITOR
 updateWindowProps	(hwnd);
-#endif
 */
 }
 
@@ -1268,7 +1255,6 @@ struct _uniq_mode
 	bool operator()(LPCSTR _other) { return !stricmp(_val, _other); }
 };
 
-#ifndef _EDITOR
 
 /*
 void free_render_mode_list()
@@ -1511,4 +1497,3 @@ void CHW::UpdateViews()
 
     pDepthStencil->Release();
 }
-#endif

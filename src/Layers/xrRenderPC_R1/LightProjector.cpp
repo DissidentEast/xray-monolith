@@ -9,9 +9,7 @@
 #include "../xrRender/lighttrack.h"
 #include "../xrServerEntities/smart_cast.h"
 
-#ifndef _EDITOR
 #include "../../xrCPU_Pipe/ttapi.h"
-#endif
 
 
 // tir2.xrdemo		-> 45.2

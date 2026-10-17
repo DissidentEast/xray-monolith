@@ -77,9 +77,7 @@ public:
 	typedef Root::iterator RootIt;
 	typedef Root::const_iterator RootCIt;
 
-#ifndef _EDITOR
 	typedef xr_delegate<bool(LPCSTR)> allow_include_func_t;
-#endif
 	static CInifile* Create(LPCSTR szFileName, BOOL ReadOnly = TRUE);
 	static void Destroy(CInifile*);
 
@@ -93,9 +91,7 @@ private:
 	string_path m_file_name;
 	Root DATA;
 	void Load(IReader* F, LPCSTR path
-#ifndef _EDITOR
 	          , allow_include_func_t allow_include_func = NULL
-#endif
 	);
 public:
 	enum { eSaveAtEnd = (1 << 0), eReadOnly = (1 << 1), eOverrideNames = (1 << 2), };
@@ -103,9 +99,7 @@ public:
 	Flags8 m_flags;
 	CInifile(IReader* F,
 	         LPCSTR path = 0
-#ifndef _EDITOR
 	         , allow_include_func_t allow_include_func = NULL
-#endif
 	);
 
 	CInifile(LPCSTR szFileName,
@@ -113,9 +107,7 @@ public:
 	         BOOL bLoadAtStart = TRUE,
 	         BOOL SaveAtEnd = TRUE,
 	         u32 sect_count = 0
-#ifndef _EDITOR
 	         , allow_include_func_t allow_include_func = NULL
-#endif
 	);
 
 	virtual ~CInifile();
@@ -223,9 +215,7 @@ private:
 		BOOL bIsRootFile,
 		string_path currentFileName,
 		int depth
-#ifndef _EDITOR
 		, allow_include_func_t allow_include_func = NULL
-#endif
 	);
 private:
 	void loadFile(
@@ -234,9 +224,7 @@ private:
 		const string_path name,
 		string_path currentFileName,
 		int depth
-#ifndef _EDITOR
 		, allow_include_func_t allow_include_func
-#endif
 	);
 	void StashCurrentSection(
 		Sect*& CurrentBase,

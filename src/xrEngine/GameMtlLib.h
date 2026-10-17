@@ -36,9 +36,6 @@
 #define GAMEMTL_NONE_IDX u16(-1)
 #define GAMEMTL_FILENAME "gamemtl.xr"
 
-#ifdef _EDITOR
-#define GM_NON_GAME
-#endif
 #ifdef _MAX_PLUGIN
 #define GM_NON_GAME
 #endif
@@ -50,12 +47,7 @@
 #endif
 
 #ifndef MTL_EXPORT_API
-#ifdef _EDITOR
-#include "ElTree.hpp"
-#define MTL_EXPORT_API ECORE_API
-#else
 #define MTL_EXPORT_API ENGINE_API
-#endif
 #endif
 
 #ifdef GM_NON_GAME
@@ -148,9 +140,6 @@ public:
 	void Load(IReader& fs);
 	void Save(IWriter& fs);
 	IC int GetID() { return ID; }
-#ifdef _EDITOR
-    void FillProp(PropItemVec& values, ListItem* owner);
-#endif
 };
 
 DEFINE_VECTOR(SGameMtl*, GameMtlVec, GameMtlIt);
@@ -201,18 +190,6 @@ public:
 #else // GM_NON_GAME
 	FactoryPtr<IWallMarkArray> m_pCollideMarks;
 #endif // GM_NON_GAME
-#ifdef _EDITOR
-    PropValue* propBreakingSounds;
-    PropValue* propStepSounds;
-    PropValue* propCollideSounds;
-    PropValue* propCollideParticles;
-    PropValue* propCollideMarks;
-    void __stdcall OnFlagChange (PropValue* sender);
-    void __stdcall OnParentClick (ButtonValue* sender, bool& bModif, bool& bSafe);
-    void __stdcall OnCommandClick(ButtonValue* sender, bool& bModif, bool& bSafe);
-    void __stdcall FillChooseMtl(ChooseItemVec& items, void* param);
-    void CopyFrom(SGameMtlPair* parent);
-#endif
 public:
 	SGameMtlPair(CGameMtlLibrary* owner)
 	{
@@ -242,10 +219,6 @@ public:
 	void Load(IReader& fs);
 	IC int GetParent() { return ID_parent; }
 	BOOL SetParent(int parent);
-#ifdef _EDITOR
-    void FillProp(PropItemVec& values);
-    void TransferFromParent(SGameMtlPair* parent);
-#endif
 #ifdef DEBUG
     LPCSTR dbg_Name();
 #endif
@@ -262,11 +235,9 @@ class MTL_EXPORT_API CGameMtlLibrary
 	GameMtlVec materials;
 	GameMtlPairVec material_pairs;
 
-#ifndef _EDITOR
 	// game part
 	u32 material_count;
 	GameMtlPairVec material_pairs_rt;
-#endif
 public:
 	CGameMtlLibrary();
 
@@ -281,10 +252,8 @@ public:
 
 	IC void Unload()
 	{
-#ifndef _EDITOR
 		material_count = 0;
 		material_pairs_rt.clear();
-#endif
 		for (GameMtlIt m_it = materials.begin(); materials.end() != m_it; ++m_it)
 			xr_delete(*m_it);
 		materials.clear();
@@ -320,24 +289,8 @@ public:
 		GameMtlIt it = GetMaterialIt(name);
 		return (it == materials.end()) ? GAMEMTL_NONE_ID : (*it)->ID;
 	}
-#ifdef _EDITOR
-    // editor
-    SGameMtl* AppendMaterial (SGameMtl* parent);
-    void RemoveMaterial (LPCSTR name);
-    IC SGameMtl* GetMaterialByID (int ID)
-    {
-        GameMtlIt it=GetMaterialItByID(ID);
-        return materials.end() != it?*it:0;
-    }
-    IC SGameMtl* GetMaterial (LPCSTR name)
-    {
-        GameMtlIt it = GetMaterialIt(name);
-        return materials.end() != it ? *it : 0;
-    }
-#else
 	// game
 	IC SGameMtl* GetMaterialByID(s32 id) { return GetMaterialByIdx(GetMaterialIdx(id)); }
-#endif
 	IC u16 GetMaterialIdx(int ID)
 	{
 		GameMtlIt it = GetMaterialItByID(ID);
@@ -364,32 +317,12 @@ public:
 	IC u32 CountMaterial() { return materials.size(); }
 
 	// material pair routine
-#ifdef _EDITOR
-    void CopyMtlPairs (SGameMtl* from, SGameMtl* to);
-    BOOL UpdateMtlPairs (SGameMtl* src);
-    BOOL UpdateMtlPairs ();
-    LPCSTR MtlPairToName (int mtl0, int mtl1);
-    void NameToMtlPair (LPCSTR name, int& mtl0, int& mtl1);
-    void MtlNameToMtlPair (LPCSTR name, int& mtl0, int& mtl1);
-    SGameMtlPair* CreateMaterialPair (int m0, int m1, SGameMtlPair* parent=0);
-    SGameMtlPair* AppendMaterialPair (int m0, int m1, SGameMtlPair* parent=0);
-    void RemoveMaterialPair (LPCSTR name);
-    void RemoveMaterialPair (GameMtlPairIt rem_it);
-    void RemoveMaterialPair (int mtl);
-    void RemoveMaterialPair (int mtl0, int mtl1);
-    GameMtlPairIt GetMaterialPairIt (int id);
-    SGameMtlPair* GetMaterialPair(int id);
-    GameMtlPairIt GetMaterialPairIt(int mtl0, int mtl1);
-    SGameMtlPair* GetMaterialPair(int mtl0, int mtl1);
-    SGameMtlPair* GetMaterialPair(LPCSTR name);
-#else
 	// game
 	IC SGameMtlPair* GetMaterialPair(u16 idx0, u16 idx1)
 	{
 		R_ASSERT((idx0 < material_count) && (idx1 < material_count));
 		return material_pairs_rt[idx1 * material_count + idx0];
 	}
-#endif
 	IC GameMtlPairIt FirstMaterialPair() { return material_pairs.begin(); }
 	IC GameMtlPairIt LastMaterialPair() { return material_pairs.end(); }
 

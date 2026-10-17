@@ -64,7 +64,6 @@ public:
 	float m_volumetric_distance;
 
 #ifndef XRCPU_PIPE_EXPORTS
-#ifndef _EDITOR
 	CDSGraphManager GMLight = CDSGraphManager(u32(0),
 #if RENDER==R_R1
 		u32(STYPE_RENDERABLE),
@@ -72,7 +71,6 @@ public:
 		u32(STYPE_RENDERABLE + STYPE_RENDERABLESHADOW),
 #endif
 		{ true,false,false,false,true,false,false });
-#endif
 #endif
 
 	float virtual_size;

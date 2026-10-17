@@ -30,20 +30,9 @@
 #include <objbase.h>
 #pragma warning(pop)
 
-#ifdef _EDITOR
-	log_fn_ptr_type* pLog = NULL;
-
-void __cdecl al_log(char* msg)
-{
-	Log(msg);
-}
-#endif
 
 ALDeviceList::ALDeviceList()
 {
-#ifdef _EDITOR
-    pLog = al_log;
-#endif
 
 	Enumerate();
 }

@@ -19,6 +19,8 @@ class XRCORE_API NET_Packet
 public:
 	void construct(const void* data, unsigned size)
 	{
+		if (size >= NET_PacketSizeLimit)
+			return; // network supplied: never copy past the buffer, drop the packet instead
 		memcpy(B.data, data, size);
 		B.count = size;
 	}

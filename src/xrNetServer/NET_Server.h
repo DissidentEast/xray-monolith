@@ -167,8 +167,6 @@ protected:
 	IDirectPlay8Server* NET;
 	IDirectPlay8Address* net_Address_device;
 
-	NET_Compressor net_Compressor;
-
 	PlayersMonitor net_players;
 	//xrCriticalSection		csPlayers;
 	//xr_vector<IClient*>	net_Players;

@@ -45,9 +45,6 @@ private:
 class ECORE_API dxRender_Visual : public IRenderVisual
 {
 public:
-#ifdef _EDITOR
-    ogf_desc					desc		;
-#endif
 	u32							dbg_id		;
 	shared_str					dbg_name	;
 	shared_str					dbg_shader	;

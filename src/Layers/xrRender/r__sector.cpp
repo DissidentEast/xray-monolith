@@ -188,7 +188,7 @@ void CSector::traverse(CFrustum &&F, CDSGraphManager& DM)
 			continue;
 		}
 
-		if (DM.i_options & CDSGraphManager::VQ_FADE | CDSGraphManager::VQ_SSA && psDeviceFlags.test(rsDrawPortals))
+		if ((DM.i_options & (CDSGraphManager::VQ_FADE | CDSGraphManager::VQ_SSA)) && psDeviceFlags.test(rsDrawPortals))
 			DM.fade_portal(PORTAL, 1.f);
 		else
 		{

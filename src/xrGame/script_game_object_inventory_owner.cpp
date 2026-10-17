@@ -723,17 +723,15 @@ void CScriptGameObject::TransferMoney(int money, CScriptGameObject* pForWho)
 	CInventoryOwner* pOtherOwner = smart_cast<CInventoryOwner*>(&pForWho->object());
 	VERIFY(pOtherOwner);
 
-	if (pOurOwner->get_money() < money)
+	if (money > 0 && pOurOwner->get_money() < (u32)money)
 	{
 		ai().script_engine().script_log(ScriptStorage::eLuaMessageTypeError, "Character does not have enought money");
 		return;
 	}
 
     // Leave negative money transfer possibility intact, unknown how it is used in 3rd party
-    u32 current_money = pOurOwner->get_money();
     GiveMoneySafe(pOurOwner, -money, true);
-    int transfered_money = pOurOwner->get_money() - current_money;
-    GiveMoneySafe(pOtherOwner, transfered_money, true);
+    GiveMoneySafe(pOtherOwner, money, true);
 }
 
 void CScriptGameObject::GiveMoney(int money)

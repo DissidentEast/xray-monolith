@@ -603,9 +603,7 @@ void SetupExceptionHandler(const bool& dedicated)
 // MiniDumpFilterMemory |
 // MiniDumpScanMemory |
 // MiniDumpWithUnloadedModules |
-# ifndef _EDITOR
         MiniDumpWithIndirectlyReferencedMemory |
-# endif // _EDITOR
 // MiniDumpFilterModulePaths |
 // MiniDumpWithProcessThreadData |
 // MiniDumpWithPrivateReadWriteMemory |
@@ -625,9 +623,7 @@ void SetupExceptionHandler(const bool& dedicated)
 // MiniDumpFilterMemory |
 // MiniDumpScanMemory |
 // MiniDumpWithUnloadedModules |
-# ifndef _EDITOR
                    MiniDumpWithIndirectlyReferencedMemory |
-# endif // _EDITOR
 // MiniDumpFilterModulePaths |
 // MiniDumpWithProcessThreadData |
 // MiniDumpWithPrivateReadWriteMemory |
@@ -793,10 +789,8 @@ void format_message(LPSTR buffer, const u32& buffer_size)
 	LocalFree(message);
 }
 
-#ifndef _EDITOR
 #include <errorrep.h>
 #pragma comment( lib, "faultrep.lib" )
-#endif //-!_EDITOR
 
 #ifdef NO_BUG_TRAP
 //AVO: simplify function
@@ -943,9 +937,7 @@ LONG WINAPI UnhandledFilter(_EXCEPTION_POINTERS* pExceptionInfo)
 
 #endif // USE_OWN_ERROR_MESSAGE_WINDOW
 
-#ifndef _EDITOR
     ReportFault(pExceptionInfo, 0);
-#endif
 
     if (!previous_filter)
     {
@@ -1012,11 +1004,7 @@ void _terminate()
         __FILE__,
         __LINE__,
 #endif
-#ifndef _EDITOR
         __FUNCTION__,
-#else // _EDITOR
-        "",
-#endif // _EDITOR
         assertion_info
         );
 

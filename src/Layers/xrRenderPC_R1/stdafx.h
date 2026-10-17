@@ -34,7 +34,6 @@
 
 #include "../../xrCore/profiler.h"
 
-#ifndef _EDITOR
 #include "../../xrEngine/igame_level.h"
 
 #include "../xrRender/blenders\blender.h"
@@ -42,7 +41,6 @@
 #include "../../xrParticles/psystem.h"
 #include "../xrRender/xrRender_console.h"
 #include "FStaticRender.h"
-#endif
 
 #define		TEX_POINT_ATT	"internal\\internal_light_attpoint"
 #define		TEX_SPOT_ATT	"internal\\internal_light_attclip"

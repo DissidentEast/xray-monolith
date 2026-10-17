@@ -187,20 +187,18 @@ void CEventAPI::OnFrame()
 #ifdef DEBUG
     msRead();
 #endif
-	CS.Enter();
-	if (Events_Deferred.empty())
+	// take the queue and dispatch outside the lock: a handler may defer more work, and that work
+	// belongs to the next frame (deferring into the queue we are walking means an endless frame)
+	xr_vector<Deferred> batch;
 	{
-		CS.Leave();
-		return;
+		xrCriticalSectionGuard g(CS);
+		batch.swap(Events_Deferred);
 	}
-	for (u32 I = 0; I < Events_Deferred.size(); I++)
+	for (Deferred DEF : batch)
 	{
-		Deferred& DEF = Events_Deferred[I];
 		Signal(DEF.E, DEF.P1, DEF.P2);
-		Destroy(Events_Deferred[I].E);
+		Destroy(DEF.E);
 	}
-	Events_Deferred.clear();
-	CS.Leave();
 }
 
 BOOL CEventAPI::Peek(LPCSTR EName)
@@ -227,6 +225,6 @@ BOOL CEventAPI::Peek(LPCSTR EName)
 void CEventAPI::_destroy()
 {
 	Dump();
-	if (Events.empty()) Events.clear();
-	if (Events_Deferred.empty()) Events_Deferred.clear();
+	Events.clear();
+	Events_Deferred.clear();
 }

@@ -294,6 +294,8 @@ void xrLogger::InternalCloseLog()
 	InternalPrintAllRecords();
 	InternalFlushLog();
 
+	// hold the log thread's write lock so it cannot be inside a write on this writer
+	xrCriticalSectionGuard flush(&logFlushGuard);
 	IWriter* tempCopy = (IWriter*)logFile;
 	logFile = nullptr;
 
@@ -375,6 +377,8 @@ void xrLogger::InternalPrintRecord()
 		}
 
 		// demonized: add tempLogData in case the logFile initialization takes time
+		// same lock InternalCloseLog takes: it frees the writer when the main thread closes the log
+		xrCriticalSectionGuard flush(&logFlushGuard);
 		if (logFile != nullptr)
 		{
 			IWriter* mutableWritter = (IWriter*)logFile;
@@ -434,7 +438,7 @@ void xrLogger::LogThreadEntry()
 	{
 		if (!bIsAlive)
 		{
-			CloseHandle(hLogThread);
+			// no CloseHandle here: UnpauseLogging() still signals this handle from other threads
 			return;
 		}
 		

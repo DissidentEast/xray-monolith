@@ -10,18 +10,11 @@
 #include "HW.h"
 #include "../../xrEngine/XR_IOConsole.h"
 
-#ifndef _EDITOR
 void fill_vid_mode_list(CHW* _hw);
 void free_vid_mode_list();
 
 void fill_render_mode_list();
 void free_render_mode_list();
-#else
-    void	fill_vid_mode_list			(CHW* _hw)	{}
-    void	free_vid_mode_list			()			{}
-    void	fill_render_mode_list		()			{}
-    void	free_render_mode_list		()			{}
-#endif
 
 CHW HW;
 
@@ -56,7 +49,6 @@ void CHW::Reset(HWND hwnd)
 	_RELEASE(pBaseZB);
 	_RELEASE(pBaseRT);
 
-#ifndef _EDITOR
 	//#ifndef DEDICATED_SERVER
 	//	BOOL	bWindowed		= !psDeviceFlags.is	(rsFullscreen);
 	//#else
@@ -87,7 +79,6 @@ void CHW::Reset(HWND hwnd)
 #endif //-VSYNC_FIX
 	//-AVO
 
-#endif //-_EDITOR
 
 	while (TRUE)
 	{
@@ -101,9 +92,7 @@ void CHW::Reset(HWND hwnd)
 #ifdef DEBUG
     R_CHK				(pDevice->CreateStateBlock			(D3DSBT_ALL,&dwDebugSB));
 #endif
-#ifndef _EDITOR
 	updateWindowProps(hwnd);
-#endif
 }
 
 //xr_token*				vid_mode_token = NULL;
@@ -121,9 +110,7 @@ void CHW::CreateD3D()
 
 	LPCSTR _name = "xrd3d9-null.dll";
 
-#ifndef _EDITOR
 	if (!g_dedicated_server)
-#endif
 		_name = "d3d9.dll";
 
 
@@ -186,17 +173,11 @@ void CHW::DestroyDevice()
     _SHOW_REF				("refCount:dwDebugSB",dwDebugSB);
     _RELEASE				(dwDebugSB);
 #endif
-#ifdef _EDITOR
-    _RELEASE				(HW.pDevice);
-#else
 	_SHOW_REF("DeviceREF:", HW.pDevice);
 	_RELEASE(HW.pDevice);
-#endif
 	DestroyD3D();
 
-#ifndef _EDITOR
 	free_vid_mode_list();
-#endif
 }
 
 extern void GetMonitorResolution(u32& horizontal, u32& vertical);
@@ -204,14 +185,12 @@ extern void GetMonitorPosition(int& x, int& y);
 void CHW::selectResolution(u32& dwWidth, u32& dwHeight, BOOL bWindowed)
 {
 	fill_vid_mode_list(this);
-#ifndef _EDITOR
 	if (g_dedicated_server)
 	{
 		dwWidth = 640;
 		dwHeight = 480;
 	}
 	else
-#endif
 	{
 		if (psCurrentVidMode[0] == 0 || psCurrentVidMode[1] == 0)
 			GetMonitorResolution(psCurrentVidMode[0], psCurrentVidMode[1]);
@@ -230,7 +209,6 @@ void CHW::selectResolution(u32& dwWidth, u32& dwHeight, BOOL bWindowed)
 		}
 		else
 		{
-#ifndef _EDITOR
 			string64 buff;
 			xr_sprintf(buff, sizeof(buff), "%dx%d", psCurrentVidMode[0], psCurrentVidMode[1]);
 
@@ -243,7 +221,6 @@ void CHW::selectResolution(u32& dwWidth, u32& dwHeight, BOOL bWindowed)
 
 			dwWidth = psCurrentVidMode[0];
 			dwHeight = psCurrentVidMode[1];
-#endif
 		}
 	}
 	//#endif
@@ -263,12 +240,8 @@ void CHW::CreateDevice(HWND m_hWnd, bool move_window)
 
 	BOOL bWindowed = TRUE;
 
-#ifndef _EDITOR
 	if (!g_dedicated_server)
 		bWindowed = (g_screenmode != 2);
-#else
-    bWindowed				= 1;
-#endif
 
 	DevAdapter = D3DADAPTER_DEFAULT;
 	{
@@ -377,9 +350,7 @@ void CHW::CreateDevice(HWND m_hWnd, bool move_window)
 	D3DPRESENT_PARAMETERS& P = DevPP;
 	ZeroMemory(&P, sizeof(P));
 
-#ifndef _EDITOR
 	selectResolution(P.BackBufferWidth, P.BackBufferHeight, bWindowed);
-#endif
 	// Back buffer
 	//.	P.BackBufferWidth		= dwWidth;
 	//. P.BackBufferHeight		= dwHeight;
@@ -470,10 +441,8 @@ void CHW::CreateDevice(HWND m_hWnd, bool move_window)
 	u32 memory = pDevice->GetAvailableTextureMem();
 	Msg("*     Texture memory: %d M", memory / (1024 * 1024));
 	Msg("*          DDI-level: %2.1f", float(D3DXGetDriverLevel(pDevice)) / 100.f);
-#ifndef _EDITOR
 	updateWindowProps(m_hWnd);
 	fill_vid_mode_list(this);
-#endif
 }
 
 u32 CHW::selectPresentInterval()
@@ -597,10 +566,8 @@ BOOL CHW::support(D3DFORMAT fmt, DWORD type, DWORD usage)
 void CHW::updateWindowProps(HWND m_hWnd)
 {
 	BOOL bWindowed = TRUE;
-#ifndef _EDITOR
 	if (!g_dedicated_server)
 		bWindowed = (g_screenmode != 2);
-#endif
 
 	// Set window properties depending on what mode were in.
 	if (bWindowed)
@@ -663,7 +630,6 @@ void CHW::updateWindowProps(HWND m_hWnd)
 		SetWindowLong(m_hWnd, GWL_EXSTYLE, WS_EX_TOPMOST);
 	}
 
-#ifndef _EDITOR
 	if (!g_dedicated_server)
 	{
 		ShowCursor(FALSE);
@@ -673,7 +639,6 @@ void CHW::updateWindowProps(HWND m_hWnd)
 		MapWindowPoints(m_hWnd, nullptr, reinterpret_cast<LPPOINT>(&winRect), 2);
 		ClipCursor(&winRect);
 	}
-#endif
 }
 
 
@@ -687,7 +652,6 @@ struct _uniq_mode
 	bool operator()(LPCSTR _other) { return !stricmp(_val, _other); }
 };
 
-#ifndef _EDITOR
 
 /*
 void free_render_mode_list()
@@ -815,4 +779,3 @@ void fill_vid_mode_list(CHW* _hw)
 #endif // DEBUG
 	}
 }
-#endif

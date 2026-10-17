@@ -111,16 +111,14 @@ void xrCore::_initialize(LPCSTR _ApplicationName, xrLogger::LogCallback cb, BOOL
 		if (cmdlineTxt)
 		{
 			Msg("Found commandline file!");
+			std::string temp = Params;
 			std::string line;
-			char temp[2048];
-			sprintf(temp, Params);
-			strcat(temp, " ");
 			while (std::getline(cmdlineTxt, line))
 			{
-				strcat(temp, line.c_str());
-				strcat(temp, " ");
+				temp += " ";
+				temp += line;
 			}
-			Params = xr_strdup(temp);
+			Params = xr_strdup(temp.c_str());
 		}
 		cmdlineTxt.close();
 
@@ -133,9 +131,6 @@ void xrCore::_initialize(LPCSTR _ApplicationName, xrLogger::LogCallback cb, BOOL
 			flags |= CLocatorAPI::flBuildCopy;
 		if (Core.ParamsData.test(ECoreParams::ebuild))
 			flags |= CLocatorAPI::flBuildCopy | CLocatorAPI::flEBuildCopy;
-#ifdef _EDITOR // for EDITORS - no cache
-		flags &= ~CLocatorAPI::flCacheFiles;
-#endif // _EDITOR
 		flags |= CLocatorAPI::flScanAppRoot;
 		FS._initialize(flags, 0, fs_fname);
 		Msg("'%s' build %d, %s\n", "xrCore", build_id, build_date);
@@ -145,19 +140,15 @@ void xrCore::_initialize(LPCSTR _ApplicationName, xrLogger::LogCallback cb, BOOL
 		Msg("Game started: %s\n", timeInDMYHMSMMM().c_str());
 		EFS._initialize();
 #ifdef DEBUG
-#ifndef _EDITOR
 		Msg("Process heap 0x%08x", GetProcessHeap());
-#endif
 #endif // DEBUG
 	}
 	xrLogger::AddLogCallback(cb);
 	init_counter++;
 }
 
-#ifndef _EDITOR
 #include "compression_ppmd_stream.h"
 extern compression::ppmd::stream* trained_model;
-#endif
 void xrCore::_destroy()
 {
 	--init_counter;
@@ -168,14 +159,12 @@ void xrCore::_destroy()
 		xr_delete(xr_FS);
 		xr_delete(xr_EFS);
 
-#ifndef _EDITOR
 		if (trained_model)
 		{
 			void* buffer = trained_model->buffer();
 			xr_free(buffer);
 			xr_delete(trained_model);
 		}
-#endif
 		xr_free(Params);
 		Memory._destroy();
 	}
@@ -184,12 +173,8 @@ void xrCore::_destroy()
 #ifndef XRCORE_STATIC
 
 //. why ???
-#ifdef _EDITOR
-BOOL WINAPI DllEntryPoint(HINSTANCE hinstDLL, DWORD ul_reason_for_call, LPVOID lpvReserved)
-#else
 //BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD ul_reason_for_call, LPVOID lpvReserved)
 BOOL DllMainXrCore(HANDLE hinstDLL, DWORD ul_reason_for_call, LPVOID lpvReserved)
-#endif
 {
 	switch (ul_reason_for_call)
 	{

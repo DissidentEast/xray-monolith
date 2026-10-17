@@ -7,11 +7,7 @@
 
 #include "FHierrarhyVisual.h"
 #include "../../xrEngine/Fmesh.h"
-#ifndef _EDITOR
 #include "../../xrEngine/render.h"
-#else
-#include "../../Include/xrAPI/xrAPI.h"
-#endif
 
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
@@ -51,13 +47,9 @@ void FHierrarhyVisual::Load(const char* N, IReader* data, u32 dwFlags)
 		children.resize(cnt);
 		for (u32 i = 0; i < cnt; i++)
 		{
-#ifdef _EDITOR
-			THROW;
-#else
 			u32 ID = data->r_u32();
 			children[i] = ::Render->getVisual(ID);
 			((dxRender_Visual*)children[i])->setID(i + 1);
-#endif
 		}
 		bDontDelete = TRUE;
 	}

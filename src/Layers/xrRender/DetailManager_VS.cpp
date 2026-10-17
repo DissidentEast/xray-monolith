@@ -3,13 +3,8 @@
 
 #include "detailmanager.h"
 
-#ifdef _EDITOR
-#	include "igame_persistent.h"
-#	include "environment.h"
-#else
 #	include "../../xrEngine/igame_persistent.h"
 #	include "../../xrEngine/environment.h"
-#endif
 
 #include "../xrRenderDX10/dx10BufferUtils.h"
 
@@ -242,17 +237,11 @@ void CDetailManager::hw_Render_dump(ref_constant x_array, u32 var_id, u32 lod_id
 	vis_list& list = m_visibles[var_id];
 
 	Fvector c_sun, c_ambient, c_hemi;
-#ifndef _EDITOR
 	CEnvDescriptor& desc = *g_pGamePersistent->Environment().CurrentEnv;
 	c_sun.set(desc.sun_color.x, desc.sun_color.y, desc.sun_color.z);
 	c_sun.mul(.5f);
 	c_ambient.set(desc.ambient.x, desc.ambient.y, desc.ambient.z);
 	c_hemi.set(desc.hemi_color.x, desc.hemi_color.y, desc.hemi_color.z);
-#else
-	c_sun.set				(1,1,1);	c_sun.mul(.5f);
-	c_ambient.set			(1,1,1);
-	c_hemi.set				(1,1,1);
-#endif
 
 	VERIFY(objects.size()<=list.size());
 

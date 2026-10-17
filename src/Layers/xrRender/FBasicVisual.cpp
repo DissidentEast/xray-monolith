@@ -5,9 +5,7 @@
 #include "stdafx.h"
 #pragma hdrstop
 
-#ifndef _EDITOR
 #	include "../../xrEngine/render.h"
-#endif // #ifndef _EDITOR
 
 #include "fbasicvisual.h"
 #include "../../xrEngine/fmesh.h"
@@ -76,10 +74,6 @@ void dxRender_Visual::Load(const char* N, IReader* data, u32)
 	}
 
 	// desc
-#ifdef _EDITOR
-    if (data->find_chunk(OGF_S_DESC)) 
-	    desc.Load		(*data);
-#endif
 }
 
 //--DSR-- HeatVision_start
@@ -165,9 +159,6 @@ void dxRender_Visual::Copy(dxRender_Visual* pFrom)
 	PCOPY(Type);
 	PCOPY(shader);
 	PCOPY(vis);
-#ifdef _EDITOR
-	PCOPY(desc);
-#endif
 	PCOPY(flags);
 	PCOPY(dbg_id);
 	PCOPY(dbg_name);

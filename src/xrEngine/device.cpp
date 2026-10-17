@@ -487,7 +487,11 @@ void CRenderDevice::on_idle()
     // TODO: Try to move this upper
     secondary_tasks.run(&XRay::Engine::PreRenderPostTransformsThread);
 	if (mt_calc_bones)
+	{
 		secondary_tasks.run(&XRay::Engine::CalculateBonesThread);
+		// GameThread below steps physics, which writes the same bone matrices: do not overlap them
+		secondary_tasks.wait();
+	}
 	else
 		XRay::Engine::CalculateBonesThread();
 

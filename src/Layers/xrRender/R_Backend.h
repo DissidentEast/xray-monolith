@@ -216,9 +216,6 @@ private:
 	CTexture* textures_cs [mtMaxComputeShaderTextures]; // 4 vs
 #	endif
 #endif	//	USE_DX10
-#ifdef _EDITOR
-	CMatrix*						matrices	[8	];	// matrices are supported only for FFP
-#endif
 
 	void Invalidate();
 public:
@@ -302,10 +299,6 @@ public:
 	void set_Textures(STextureList* T);
 	IC void set_Textures(ref_texture_list& T) { set_Textures(&*T); }
 
-#ifdef _EDITOR
-	IC	void						set_Matrices		(SMatrixList* M);
-	IC	void						set_Matrices		(ref_matrix_list& M)				{ set_Matrices(&*M);			}
-#endif
 
 	IC void set_Element(ShaderElement* S, u32 pass = 0);
 	IC void set_Element(ref_selement& S, u32 pass = 0) { set_Element(&*S, pass); }
@@ -525,8 +518,6 @@ private:
 
 extern ECORE_API CBackend RCache;
 
-#ifndef _EDITOR
 #	include "D3DUtils.h"
-#endif
 
 #endif

@@ -130,17 +130,6 @@ public:
 #ifdef _LW_EXPORT
     void ParseObjectMotion(LWItemID object);
 #endif
-#ifdef _EDITOR
-    void FindNearestKey (float t, float& min_k, float& max_k, float eps=EPS_L);
-    void CreateKey (float t, const Fvector& P, const Fvector& R);
-    void DeleteKey (float t);
-    void NormalizeKeys ();
-    int KeyCount ();
-    CEnvelope* Envelope (EChannelType et=ctPositionX) {return envs[et];}
-    BOOL ScaleKeys (float from_time, float to_time, float scale_factor);
-    BOOL NormalizeKeys(float from_time, float to_time, float speed);
-    float GetLength(float* mn = 0, float* mx = 0);
-#endif
 };
 
 //--------------------------------------------------------------------------

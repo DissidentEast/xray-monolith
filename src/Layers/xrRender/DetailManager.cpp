@@ -10,17 +10,9 @@
 
 #include "../../xrCore/profiler.h"
 
-#ifdef _EDITOR
-#	include "ESceneClassList.h"
-#	include "Scene.h"
-#	include "SceneObject.h"
-#	include "igame_persistent.h"
-#	include "environment.h"
-#else
 #	include "../../xrEngine/igame_persistent.h"
 #	include "../../xrEngine/environment.h"
 #   include <xmmintrin.h>
-#endif
 
 
 const float dbgOffset = 0.f;
@@ -174,7 +166,6 @@ CDetailManager::~CDetailManager()
 
 /*
 */
-#ifndef _EDITOR
 
 /*
 void dump	(CDetailManager::vis_list& lst)
@@ -264,7 +255,6 @@ void CDetailManager::Load()
 		Device.seqParallelRender.push_back(xr_make_delegate(this, &CDetailManager::MT_CALC));
 	}
 }
-#endif
 void CDetailManager::Unload()
 {
 	auto I = std::find(Device.seqParallelRender.begin(), Device.seqParallelRender.end(), xr_make_delegate(this, &CDetailManager::MT_CALC));
@@ -357,12 +347,10 @@ void CDetailManager::UpdateVisibleM()
 						continue; // invisible-view frustum
 					}
 				}
-#ifndef _EDITOR
 				if (!RImplementation.HOM.visible(S.vis))
 				{
 					continue; // invisible-occlusion
 				}
-#endif
 				// Add to visibility structures
 				if (RDEVICE.dwFrame > S.frame)
 				{
@@ -485,10 +473,8 @@ void CDetailManager::Render()
 {
 	PROF_EVENT("Render details");
 
-#ifndef _EDITOR
 	if (0 == dtFS) return;
 	if (!psDeviceFlags.is(rsDetails)) return;
-#endif
 
 	// Always ensure per-frame detail visibility/cache are prepared before drawing.
 	// In MT mode this acts as a synchronization point with the worker task.
@@ -497,11 +483,7 @@ void CDetailManager::Render()
 	RDEVICE.Statistic->RenderDUMP_DT_Render.Begin();
 	g_pGamePersistent->m_pGShaderConstants->m_blender_mode.w = 1.0f; //--#SM+#-- Флaa нaчaлa ?aндa?a o?aвu [begin of grass render]
 
-#ifndef _EDITOR
 	float factor = g_pGamePersistent->Environment().wind_strength_factor;
-#else
-	float factor			= 0.3f;
-#endif
 	swing_current.lerp(swing_desc[0], swing_desc[1], factor);
 
 	RCache.set_CullMode(CULL_NONE);
@@ -520,11 +502,9 @@ void __stdcall CDetailManager::MT_CALC()
 {
 	PROF_EVENT("MT_CALC details");
 
-#ifndef _EDITOR
 	if (0 == RImplementation.Details) return; // possibly deleted
 	if (0 == dtFS) return;
 	if (!psDeviceFlags.is(rsDetails)) return;
-#endif
 
 	xrCriticalSectionGuard guard(m_mt_calc_guard);
 	const u32 current_frame = RDEVICE.dwFrame;

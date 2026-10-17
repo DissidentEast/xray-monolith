@@ -57,14 +57,9 @@ CSoundRender_Core::CSoundRender_Core()
 
 CSoundRender_Core::~CSoundRender_Core()
 {
-#ifdef _EDITOR
-	ETOOLS::destroy_model		(geom_ENV);
-	ETOOLS::destroy_model		(geom_SOM);
-#else
 	xr_delete(geom_ENV);
 	xr_delete(geom_SOM);
 	xr_delete(pSysNotification);
-#endif
 }
 
 void CSoundRender_Core::_initialize(int stage)
@@ -180,11 +175,7 @@ void CSoundRender_Core::set_geometry_occ(CDB::MODEL* M)
 
 void CSoundRender_Core::set_geometry_som(IReader* I)
 {
-#ifdef _EDITOR
-	ETOOLS::destroy_model	(geom_SOM);
-#else
 	xr_delete(geom_SOM);
-#endif
 	if (0 == I) return;
 
 	// check version
@@ -204,18 +195,6 @@ void CSoundRender_Core::set_geometry_som(IReader* I)
 		float occ;
 	};
 	// Create AABB-tree
-#ifdef _EDITOR
-	CDB::Collector*	CL			= ETOOLS::create_collector();
-	while (!geom->eof()){
-		SOM_poly				P;
-		geom->r					(&P,sizeof(P));
-        ETOOLS::collector_add_face_pd		(CL,P.v1,P.v2,P.v3,*(u32*)&P.occ,0.01f);
-		if (P.b2sided)
-			ETOOLS::collector_add_face_pd	(CL,P.v3,P.v2,P.v1,*(u32*)&P.occ,0.01f);
-	}
-	geom_SOM					= ETOOLS::create_model_cl(CL);
-    ETOOLS::destroy_collector	(CL);
-#else
 	CDB::Collector CL;
 	while (!geom->eof())
 	{
@@ -227,18 +206,13 @@ void CSoundRender_Core::set_geometry_som(IReader* I)
 	}
 	geom_SOM = xr_new<CDB::MODEL>();
 	geom_SOM->build(CL.getV(), int(CL.getVS()), CL.getT(), int(CL.getTS()));
-#endif
 
 	geom->close();
 }
 
 void CSoundRender_Core::set_geometry_env(IReader* I)
 {
-#ifdef _EDITOR
-	ETOOLS::destroy_model	(geom_ENV);
-#else
 	xr_delete(geom_ENV);
-#endif
 	if (0 == I) return;
 	if (0 == s_environment) return;
 
@@ -277,13 +251,8 @@ void CSoundRender_Core::set_geometry_env(IReader* I)
 		R_ASSERT(id_back<(u16)ids.size());
 		T->dummy = u32(ids[id_back] << 16) | u32(ids[id_front]);
 	}
-#ifdef _EDITOR
-	geom_ENV			= ETOOLS::create_model(verts, H.vertcount, tris, H.facecount);
-	env_apply			();
-#else
 	geom_ENV = xr_new<CDB::MODEL>();
 	geom_ENV->build(verts, H.vertcount, tris, H.facecount);
-#endif
 	geom_ch->close();
 	geom->close();
 	xr_free(_data);
@@ -451,18 +420,11 @@ CSoundRender_Environment* CSoundRender_Core::get_environment(const Fvector& P)
 		if (geom_ENV)
 		{
 			Fvector dir = {0, -1, 0};
-#ifdef _EDITOR
-			ETOOLS::ray_options		(CDB::OPT_ONLYNEAREST);
-			ETOOLS::ray_query		(geom_ENV,P,dir,1000.f);
-			if (ETOOLS::r_count()){
-				CDB::RESULT*		r	= ETOOLS::r_begin();
-#else
 			geom_DB.ray_options(CDB::OPT_ONLYNEAREST);
 			geom_DB.ray_query(geom_ENV, P, dir, 1000.f);
 			if (geom_DB.r_count())
 			{
 				CDB::RESULT* r = geom_DB.r_begin();
-#endif
 				CDB::TRI* T = geom_ENV->get_tris() + r->id;
 				Fvector* V = geom_ENV->get_verts();
 				Fvector tri_norm;
@@ -512,46 +474,3 @@ void CSoundRender_Core::object_relcase(CObject* obj)
 	}
 }
 
-#ifdef _EDITOR
-void CSoundRender_Core::set_user_env(CSound_environment* E)
-{
-	if ((0 == E) && !bUserEnvironment) return;
-
-	if (E)
-	{
-		s_user_environment	= *((CSoundRender_Environment*)E);
-		bUserEnvironment	= TRUE;
-	}
-	else 
-	{
-		bUserEnvironment	= FALSE;
-	}
-	env_apply			();
-}
-
-void CSoundRender_Core::refresh_env_library()
-{
-	env_unload			();
-	env_load			();
-	env_apply			();
-}
-void CSoundRender_Core::refresh_sources()
-{
-	for (u32 eit=0; eit<s_emitters.size(); eit++)
-    	s_emitters[eit]->stop(FALSE);
-	for (const auto& kv : s_sources)
-	{
-		CSoundRender_Source* s = kv.second;
-    	s->unload		();
-		s->load			(*s->fname);
-    }
-}
-void CSoundRender_Core::set_environment_size	(CSound_environment* src_env, CSound_environment** dst_env)
-{
-	
-}
-void CSoundRender_Core::set_environment	(u32 id, CSound_environment** dst_env)
-{
-	
-}
-#endif

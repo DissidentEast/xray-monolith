@@ -149,15 +149,12 @@ void xrMemory::_destroy()
 void xrMemory::mem_compact()
 {
 	PROF_EVENT("mem_compact");
-#ifdef DEBUG_MEMORY_MANAGER
-	RegFlushKey(HKEY_CLASSES_ROOT);
-	RegFlushKey(HKEY_CURRENT_USER);
-	if (g_allow_heap_min)
-		_heapmin();
-	HeapCompact(GetProcessHeap(), 0);
-	if (g_pStringContainer) g_pStringContainer->clean();
-	if (g_pSharedMemoryContainer) g_pSharedMemoryContainer->clean();
-#endif
+	// Only the shared-memory pool: clean() frees blocks whose refcount is 0 and takes the
+	// container's own lock, so it cannot race a MT thread docking new mesh data.
+	// HeapCompact and the string-pool sweep stay off: the latter frees memory that live
+	// shared_str values still point at.
+	if (g_pSharedMemoryContainer)
+		g_pSharedMemoryContainer->clean();
 }
 
 #ifdef DEBUG_MEMORY_MANAGER
@@ -284,11 +281,3 @@ char* xr_strdup(const char* string)
 	return memory;
 }
 
-XRCORE_API BOOL is_stack_ptr(void* _ptr)
-{
-	int local_value = 0;
-	void* ptr_refsound = _ptr;
-	void* ptr_local = &local_value;
-	ptrdiff_t difference = (ptrdiff_t)_abs(s64(ptrdiff_t(ptr_local) - ptrdiff_t(ptr_refsound)));
-	return (difference < (512 * 1024));
-}

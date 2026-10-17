@@ -3,7 +3,6 @@
 
 #include "IGame_Persistent.h"
 
-#ifndef _EDITOR
 #include "environment.h"
 # include "x_ray.h"
 # include "IGame_Level.h"
@@ -12,11 +11,7 @@
 # include "ps_instance.h"
 # include "CustomHUD.h"
 # include "perlin.h"
-#endif
 
-#ifdef _EDITOR
-bool g_dedicated_server = false;
-#endif
 
 #ifdef INGAME_EDITOR
 # include "editor_environment_manager.hpp"
@@ -47,9 +42,7 @@ IGame_Persistent::IGame_Persistent()
 	PerlinNoise1D->SetAmplitude(0.66666f);
 
 #ifndef INGAME_EDITOR
-#ifndef _EDITOR
 	pEnvironment = xr_new<CEnvironment>();
-#endif
 #else // #ifdef INGAME_EDITOR
     if (RDEVICE.editor())
         pEnvironment = xr_new<editor::environment::manager>();
@@ -66,9 +59,7 @@ IGame_Persistent::~IGame_Persistent()
 	RDEVICE.seqAppEnd.Remove(this);
 	RDEVICE.seqAppActivate.Remove(this);
 	RDEVICE.seqAppDeactivate.Remove(this);
-#ifndef _EDITOR
 	xr_delete(pEnvironment);
-#endif
 	xr_delete(m_pGShaderConstants); //--#SM+#--
 
 	VERIFY(m_textures_prefetch_config);
@@ -86,9 +77,7 @@ void IGame_Persistent::OnAppDeactivate()
 
 void IGame_Persistent::OnAppStart()
 {
-#ifndef _EDITOR
 	Environment().load();
-#endif
 
 	// Texture Prefetch Config
 	string_path file_name;
@@ -107,14 +96,10 @@ void IGame_Persistent::OnAppStart()
 
 void IGame_Persistent::OnAppEnd()
 {
-#ifndef _EDITOR
 	Environment().unload();
-#endif
 	OnGameEnd();
 
-#ifndef _EDITOR
 	DEL_INSTANCE(g_hud);
-#endif
 }
 
 
@@ -142,10 +127,8 @@ void IGame_Persistent::Start(LPCSTR op)
 	{
 		if (*m_game_params.m_game_type)
 			OnGameStart();
-#ifndef _EDITOR
 		if (g_hud)
 		DEL_INSTANCE(g_hud);
-#endif
 	}
 	else 
 		UpdateGameType();
@@ -153,28 +136,23 @@ void IGame_Persistent::Start(LPCSTR op)
 
 void IGame_Persistent::Disconnect()
 {
-#ifndef _EDITOR
 	// clear "need to play" particles
 	destroy_particles(true);
 
 	if (g_hud)
 	DEL_INSTANCE(g_hud);
 	//. g_hud->OnDisconnected ();
-#endif
 }
 
 void IGame_Persistent::OnGameStart()
 {
-#ifndef _EDITOR
 	// LoadTitle("st_prefetching_objects");
 	LoadTitle();
 	if (!Core.ParamsData.test(ECoreParams::noprefetch))
 		Prefetch();
-#endif
 }
 
 xr_task_group prefetch_task;
-#ifndef _EDITOR
 void IGame_Persistent::Prefetch()
 {
 	Msg("* [x-ray]: Prefetching Data");
@@ -266,24 +244,19 @@ void IGame_Persistent::Prefetch()
 	Msg("* [prefetch] time:   %d ms", iFloor(p_time));
 	Msg("* [prefetch] memory: %lldKb", p_mem / 1024);
 }
-#endif
 
 
 void IGame_Persistent::OnGameEnd()
 {
-#ifndef _EDITOR
 	ObjectPool.clear();
 	Render->models_Clear(TRUE);
-#endif
 }
 
 void IGame_Persistent::OnFrame()
 {
-#ifndef _EDITOR
 
 	if (!Device.Paused() || Device.dwPrecacheFrame)
 		Environment().OnFrame();
-#endif
 }
 
 void IGame_Persistent::UpdateParticles()
@@ -313,7 +286,6 @@ void IGame_Persistent::UpdateParticles()
 
 void IGame_Persistent::destroy_particles(bool all_particles)
 {
-#ifndef _EDITOR
 	ps_needtoplay.clear();
 
 	// delete active particles
@@ -332,14 +304,11 @@ void IGame_Persistent::destroy_particles(bool all_particles)
 	}
 
 	VERIFY(ps_needtoplay.empty() && (!all_particles || ps_active.empty()));
-#endif
 }
 
 void IGame_Persistent::OnAssetsChanged()
 {
-#ifndef _EDITOR
 	Device.m_pRender->OnAssetsChanged(); //Resources->m_textures_description.Load();
-#endif
 }
 
 void IGame_Persistent::GrassBendersUpdate(u16 id, u8& data_idx, u32& data_frame, Fvector& position, float init_radius, float init_str, bool CheckDistance)

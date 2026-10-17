@@ -38,14 +38,13 @@ public:
 	sound_event* Handler;
 protected:
 	// Collider
-#ifndef _EDITOR
 	CDB::COLLIDER geom_DB;
-#endif
 	CDB::MODEL* geom_SOM;
 	CDB::MODEL* geom_MODEL;
 	CDB::MODEL* geom_ENV;
 
 	// Containers
+	xrCriticalSection s_sources_lock; // i_create_source runs from the sound thread and the game thread
 	xr_unordered_map<xr_string, CSoundRender_Source*> s_sources;
 	xr_vector<CSoundRender_Emitter*> s_emitters;
 	u32 s_emitters_u; // emitter update marker
@@ -105,14 +104,6 @@ public:
 	virtual void get_listener(CSoundRender_Environment& env)=0;
 	virtual void commit()=0;
 
-#ifdef _EDITOR
-	virtual SoundEnvironment_LIB*		get_env_library			()																{ return s_environment; }
-	virtual void						refresh_env_library		();
-	virtual void						set_user_env			(CSound_environment* E);
-	virtual void						refresh_sources			();
-    virtual void						set_environment			(u32 id, CSound_environment** dst_env);
-    virtual void						set_environment_size	(CSound_environment* src_env, CSound_environment** dst_env);
-#endif
 public:
 	CSoundRender_Source* i_create_source(LPCSTR name);
 	void i_destroy_source(CSoundRender_Source* S);
