@@ -240,25 +240,25 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseR4|x64'">
     <OutDir>$(xrGameDir)bin_dbg\</OutDir>
-    <TargetName>ProfiledDX11</TargetName>
+    <TargetName>AnomalyDX11</TargetName>
     <IntDir>$(xrIntDir)$(ProjectName)\</IntDir>
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ProfiledDX11|x64'">
     <OutDir>$(xrGameDir)bin_dbg\</OutDir>
-    <TargetName>AnomalyDX11</TargetName>
+    <TargetName>ProfiledDX11</TargetName>
     <IntDir>$(xrIntDir)$(ProjectName)\</IntDir>
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='VerifiedDX11|x64'">
     <OutDir>$(xrGameDir)bin_dbg\</OutDir>
-    <TargetName>VerifiedDX11ASAN</TargetName>
+    <TargetName>VerifiedDX11</TargetName>
     <IntDir>$(xrIntDir)$(ProjectName)\</IntDir>
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='VerifiedDX11ASAN|x64'">
     <OutDir>$(xrGameDir)bin_dbg\</OutDir>
-    <TargetName>VerifiedDX11NoAVX</TargetName>
+    <TargetName>VerifiedDX11ASAN</TargetName>
     <IntDir>$(xrIntDir)$(ProjectName)\</IntDir>
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
@@ -294,13 +294,13 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseR1|x64'">
     <OutDir>$(xrGameDir)bin_dbg\</OutDir>
-    <TargetName>VerifiedDX8</TargetName>
+    <TargetName>AnomalyDX8</TargetName>
     <IntDir>$(xrIntDir)$(ProjectName)\</IntDir>
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='VerifiedDX8|x64'">
     <OutDir>$(xrGameDir)bin_dbg\</OutDir>
-    <TargetName>AnomalyDX8</TargetName>
+    <TargetName>VerifiedDX8</TargetName>
     <IntDir>$(xrIntDir)$(ProjectName)\</IntDir>
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
