@@ -334,7 +334,7 @@ void CUIActorMenu::OnInventoryAction(PIItem pItem, u16 action_type)
 							string256 kind;
 							_GetItem(m_sort_kinds[mode], i, kind);
 
-							if (pItem->m_kind != NULL && pItem->m_kind.equal(kind))
+							if (pItem->m_kind && pItem->m_kind.equal(kind))
 							{
 								CUICellItem* itm = create_cell_item(pItem);
 								lst_to_add->SetItem(itm);
@@ -547,7 +547,7 @@ void CUIActorMenu::FilterActorBagList(int mode)
 				string256 kind;
 				_GetItem(m_sort_kinds[mode], i, kind);
 
-				if (iitm->m_kind != NULL && iitm->m_kind.equal(kind))
+				if (iitm->m_kind && iitm->m_kind.equal(kind))
 				{
 					CUICellItem* itm = create_cell_item(iitm);
 					m_pInventoryBagList->SetItem(itm);
@@ -884,7 +884,7 @@ bool CUIActorMenu::ToBag(CUICellItem* itm, bool b_use_cursor_pos)
 				string256 kind;
 				_GetItem(m_sort_kinds[current_sort_mode()], i, kind);
 
-				if (iitm->m_kind != NULL && iitm->m_kind.equal(kind))
+				if (iitm->m_kind && iitm->m_kind.equal(kind))
 				{
 					if (b_use_cursor_pos)
 						new_owner->SetItem(citm, old_owner->GetDragItemPosition());

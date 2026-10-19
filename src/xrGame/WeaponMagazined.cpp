@@ -1530,7 +1530,7 @@ void CWeaponMagazined::InitAddons()
 				scope_2dtexactive = 0;//crookr
 			}
 
-			if (!g_dedicated_server && scope_tex_name != NULL)
+			if (!g_dedicated_server && scope_tex_name)
 			{
 				m_UIScope = xr_new<CUIWindow>();
 				createWpnScopeXML();

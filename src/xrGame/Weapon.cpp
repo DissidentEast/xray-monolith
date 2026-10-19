@@ -80,7 +80,7 @@ float CWeapon::SDS_Radius(bool alt) {
 			}
 		}
 
-		if (scope_tex_name != 0) {
+		if (scope_tex_name) {
 			auto item = listScopeRadii.find(scope_tex_name);
 			if (item != listScopeRadii.end()) {
 				return item->second;

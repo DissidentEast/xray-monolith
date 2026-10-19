@@ -223,6 +223,7 @@ public:
 
 	str_c operator*() const { return p_ ? p_->value : 0; }
 	bool operator!() const { return p_ == 0; }
+	[[nodiscard]] explicit operator bool() const { return p_ != nullptr; }
 	char operator[](size_t id) { return p_->value[id]; }
 	str_c c_str() const { return p_ ? p_->value : 0; }
 
@@ -262,10 +263,17 @@ namespace std
 	public:
 		size_t operator()(const shared_str& s) const
 		{
-			return xr_hash<str_value*>()(const_cast<str_value*>(s._get()));
+			return s._get() ? s._get()->hash : 0;
 		}
 	};
 }
+
+// comparing a shared_str against nullptr is always a bug: use operator bool / c_str instead
+bool operator==(const shared_str&, std::nullptr_t) = delete;
+bool operator!=(const shared_str&, std::nullptr_t) = delete;
+
+bool operator==(std::nullptr_t, const shared_str&) = delete;
+bool operator!=(std::nullptr_t, const shared_str&) = delete;
 
 // res_ptr == res_ptr
 // res_ptr != res_ptr

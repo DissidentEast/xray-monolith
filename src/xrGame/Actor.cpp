@@ -1342,7 +1342,7 @@ void CActor::UpdateCL()
 			}
 
 			//Level
-			if (g_pGameLevel && g_pGameLevel->name() != NULL)
+			if (g_pGameLevel && g_pGameLevel->name())
 			{
 				snprintf(discord_gameinfo.level_name, 128, xr_ToUTF8(*CStringTable().translate(g_pGameLevel->name())));
 				srand(time(0));
@@ -2056,7 +2056,7 @@ void CActor::shedule_Update(u32 DT)
 				}
 				else if (m_pVehicleWeLookingAt)
 				{
-					m_sDefaultObjAction = m_pVehicleWeLookingAt->m_sUseAction == 0
+					m_sDefaultObjAction = m_pVehicleWeLookingAt->m_sUseAction
 						                      ? m_sCarCharacterUseAction
 						                      : m_pVehicleWeLookingAt->m_sUseAction;
 				}

@@ -1190,7 +1190,7 @@ CInifile::Items CInifile::EvaluateSection(
 			{
 				// If we have a modification, check if it's valid (has a value)
 				if (mod_it != overrideData.end()) {
-					if (mod_it->second == NULL) {
+					if (!mod_it->second) {
 						mod_it++; // Skip modification with empty value
 						continue;
 					}
@@ -1239,7 +1239,7 @@ CInifile::Items CInifile::EvaluateSection(
 					// Apply all mods for this key (e.g., <item, then >newitem1, then >newitem3)
 					while (mod_it != overrideData.end() && xr_strcmp((*mod_it->first) + 1, active_key) == 0)
 					{
-						if (exists_in_output && mod_it->second != NULL)
+						if (exists_in_output && mod_it->second)
 						{
 							ModifyListType op = static_cast<ModifyListType>((*mod_it->first)[0]);
 

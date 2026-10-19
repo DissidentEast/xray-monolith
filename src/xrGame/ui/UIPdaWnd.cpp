@@ -267,7 +267,7 @@ void CUIPdaWnd::Show(bool status)
 	{
 		InventoryUtilities::SendInfoToActor("ui_pda");
 
-		if (m_sActiveSection == NULL || strcmp(m_sActiveSection.c_str(), "") == 0)
+		if (!m_sActiveSection || strcmp(m_sActiveSection.c_str(), "") == 0)
 		{
 			SetActiveSubdialog("eptTasks");
 			UITabControl->SetActiveTab("eptTasks");
