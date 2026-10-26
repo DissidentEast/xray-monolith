@@ -226,8 +226,13 @@ void str_container::dump()
 {
 	cs.Enter();
 	FILE* F = fopen("d:\\$str_dump$.txt", "w");
-	impl->dump(F);
-	fclose(F);
+	if (!F)
+		F = fopen("$str_dump$.txt", "w");
+	if (F)
+	{
+		impl->dump(F);
+		fclose(F);
+	}
 	cs.Leave();
 }
 
