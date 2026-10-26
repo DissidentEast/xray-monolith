@@ -912,6 +912,8 @@ public:
     DECLARE_SCRIPT_REGISTER_FUNCTION
 };
 
+float GetActorVisibility();
+
 extern bool isActorAccelerated(u32 mstate, bool ZoomMode);
 
 IC CActorCondition& CActor::conditions() const

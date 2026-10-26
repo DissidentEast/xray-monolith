@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #pragma hdrstop
 
+#include <cstddef>
 #include "xr_input.h"
 #include "IInputReceiver.h"
 //#include "../include/editor/ide.hpp"
@@ -470,15 +471,15 @@ void CInput::MouseUpdate()
 	{
 		switch (od[i].dwOfs)
 		{
-		case DIMOFS_X:
+		case offsetof(DIMOUSESTATE, lX):
 			offs[0] += od[i].dwData;
 			timeStamp[0] = od[i].dwTimeStamp;
 			break;
-		case DIMOFS_Y:
+		case offsetof(DIMOUSESTATE, lY):
 			offs[1] += od[i].dwData;
 			timeStamp[1] = od[i].dwTimeStamp;
 			break;
-		case DIMOFS_Z:
+		case offsetof(DIMOUSESTATE, lZ):
 			offs[2] += od[i].dwData;
 			timeStamp[2] = od[i].dwTimeStamp;
 			break;

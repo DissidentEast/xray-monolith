@@ -35,7 +35,6 @@ ICF u32 get_pool(size_t size)
 	else return pid;
 }
 
-#define PURE_ALLOC
 #define PURE_MEMORY_FILL_ZERO
 #define PURE_MEMORY_ALIGNMENT 1 << 4
 

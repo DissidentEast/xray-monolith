@@ -19,14 +19,18 @@ void dxImGuiRender::Copy(IImGuiRender& _in)
 void dxImGuiRender::SetState(ImDrawData* data)
 {
 #if defined(USE_DX11) || defined(USE_DX10)
+#if defined(USE_DX10)
+    D3D_VIEWPORT VP = { 0, 0, static_cast<UINT>(data->DisplaySize.x), static_cast<UINT>(data->DisplaySize.y), 0, 1.f };
+#else
     D3D_VIEWPORT VP = { 0, 0, data->DisplaySize.x, data->DisplaySize.y, 0, 1.f };
+#endif
 #if defined(USE_DX11)
     HW.pContext->RSSetViewports(1, &VP);
 #else
     HW.pDevice->RSSetViewports(1, &VP);
 #endif
 #else
-    D3DVIEWPORT9 VP = { 0, 0, data->DisplaySize.x, data->DisplaySize.y, 0, 1.f };
+    D3DVIEWPORT9 VP = { 0, 0, static_cast<DWORD>(data->DisplaySize.x), static_cast<DWORD>(data->DisplaySize.y), 0, 1.f };
     HW.pDevice->SetViewport(&VP);
 #endif
 

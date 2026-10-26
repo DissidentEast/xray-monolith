@@ -682,16 +682,18 @@ void CLevel::ProcessSpawnEvents()
 		}
 
         // If the object was in alife, but now its absent, skip it
-        auto spawn_data_it = spawn_events_data_copy.find(obj_id);
-        if (spawn_data_it != spawn_events_data_copy.end())
         {
-            if (spawn_data_it->second.hasAlifeObject)
+            auto spawn_data_it = spawn_events_data_copy.find(obj_id);
+            if (spawn_data_it != spawn_events_data_copy.end())
             {
-                auto obj = ai().alife().objects().object(obj_id);
-                if (!obj || !obj->m_bOnline)
+                if (spawn_data_it->second.hasAlifeObject)
                 {
-                    if (spawn_antifreeze_debug) Msg("![ProcessSpawnEvents] object absent or offline, do not spawn, section %s, obj_id %d, parent_id %d, event_id %d", section.c_str(), obj_id, parent_id, dest);
-                    continue;
+                    auto obj = ai().alife().objects().object(obj_id);
+                    if (!obj || !obj->m_bOnline)
+                    {
+                        if (spawn_antifreeze_debug) Msg("![ProcessSpawnEvents] object absent or offline, do not spawn, section %s, obj_id %d, parent_id %d, event_id %d", section.c_str(), obj_id, parent_id, dest);
+                        continue;
+                    }
                 }
             }
         }        
