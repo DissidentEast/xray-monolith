@@ -560,12 +560,14 @@ void CHW::CreateDevice(HWND hwnd, bool move_window)
         create_device_flags |= D3D11_CREATE_DEVICE_DEBUG;
     }
 
-    // create device
+    // create device on the adapter selected in CreateD3D() (the one that owns the target monitor/m_pOutput).
+    // Passing nullptr here would create it on the default adapter, which on multi-GPU systems may not own m_pOutput.
+    // D3D11CreateDevice requires D3D_DRIVER_TYPE_UNKNOWN when an explicit adapter is supplied.
     ID3D11Device* device;
     ID3D11DeviceContext* context;
     R_CHK(D3D11CreateDevice(
-        nullptr,
-        D3D_DRIVER_TYPE_HARDWARE,
+        m_pAdapter,
+        D3D_DRIVER_TYPE_UNKNOWN,
         nullptr,
         create_device_flags,
         pFeatureLevels,
